@@ -1,5 +1,3 @@
 # BeMe
 
 BeMe Android
-
-
