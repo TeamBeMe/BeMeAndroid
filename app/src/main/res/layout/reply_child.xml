@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img_replychild_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_ellipse" />
+
+    <TextView
+        android:id="@+id/txt_replychild_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="genie_self"
+        app:layout_constraintBottom_toBottomOf="@+id/img_replychild_profile"
+        app:layout_constraintStart_toEndOf="@+id/img_replychild_profile"
+        app:layout_constraintTop_toTopOf="@+id/img_replychild_profile" />
+
+    <TextView
+        android:id="@+id/txt_replychild_comment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="12dp"
+        android:text="척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다.."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_replychild_id" />
+
+    <TextView
+        android:id="@+id/txt_replychild_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="12월 23일"
+        app:layout_constraintStart_toStartOf="@+id/txt_replychild_comment"
+        app:layout_constraintTop_toBottomOf="@+id/txt_replychild_comment" />
+
+    <TextView
+        android:id="@+id/txt_replychild_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="답글 달기"
+        app:layout_constraintStart_toEndOf="@+id/txt_replychild_time"
+        app:layout_constraintTop_toTopOf="@+id/txt_replychild_time" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
