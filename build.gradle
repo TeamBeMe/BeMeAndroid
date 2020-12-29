@@ -1,14 +1,39 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+ext.ReporterType = org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+apply plugin: "org.jlleitschuh.gradle.ktlint"
+
+ktlint {
+    version = "0.34.2"
+    debug = true
+    verbose = true
+    android = false
+    outputToConsole = true
+    reporters = [ReporterType.PLAIN, ReporterType.CHECKSTYLE]
+    ignoreFailures = true
+    enableExperimentalRules = true
+    additionalEditorconfigFile = file("/some/additional/.editorconfig")
+    kotlinScriptAdditionalPaths {
+        include fileTree("scripts/")
+    }
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
+    }
+}
+
 buildscript {
     ext.kotlin_version = "1.4.21"
     repositories {
         google()
         jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:8.2.0"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -19,6 +44,10 @@ allprojects {
         google()
         jcenter()
     }
+}
+
+subprojects {
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
 }
 
 task clean(type: Delete) {
