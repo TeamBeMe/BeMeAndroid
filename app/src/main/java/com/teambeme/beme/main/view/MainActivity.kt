@@ -1,20 +1,17 @@
 package com.teambeme.beme.main.view
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.teambeme.beme.R
+import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.databinding.ActivityMainBinding
 import com.teambeme.beme.main.adapter.MainViewPagerAdapter
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setViewPagerAdapter(this)
         setBottomNavigationSelectListener(binding.bnvMain)
     }
