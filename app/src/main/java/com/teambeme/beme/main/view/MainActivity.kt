@@ -1,6 +1,7 @@
 package com.teambeme.beme.main.view
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -8,8 +9,10 @@ import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.databinding.ActivityMainBinding
 import com.teambeme.beme.main.adapter.MainViewPagerAdapter
+import com.teambeme.beme.main.viewmodel.MainViewModel
 
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
+    private val mainViewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setViewPagerAdapter(this)
