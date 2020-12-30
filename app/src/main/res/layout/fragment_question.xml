@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/question_shape_background"
+        tools:context=".home.view.QuestionFragment">
+
+        <ImageButton
+            android:id="@+id/img_question_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_lock"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_question_info"
+            style="@style/question_info_style"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_question_lock"
+            tools:text="[ 미래에 관한 질문 ]" />
+
+        <TextView
+            android:id="@+id/txt_question_date"
+            style="@style/question_info_style"
+            app:layout_constraintEnd_toEndOf="@+id/txt_question_info"
+            app:layout_constraintStart_toStartOf="@+id/txt_question_info"
+            app:layout_constraintTop_toBottomOf="@+id/txt_question_info"
+            tools:text="2020.12.24" />
+
+        <TextView
+            android:id="@+id/txt_question_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:textAlignment="center"
+            android:textColor="@color/home_white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_question_date"
+            tools:text="이번 주말을 후회 없이\n보내는 방법은 무엇인가요?" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
