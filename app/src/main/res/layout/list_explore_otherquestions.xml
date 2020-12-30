@@ -1,122 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/explore_otherquestions_shape"
-    android:layout_marginBottom="12dp"
-    android:paddingStart="18dp"
-    android:paddingEnd="18dp"
-    android:paddingTop="20dp"
-    android:paddingBottom="18dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/txt_otherquestionslist_title"
-        android:layout_width="wrap_content"
+    <data>
+        <variable
+            name="otherquestions"
+            type="com.teambeme.beme.explore.model.OtherquestionsData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="질문제목"
-        android:textSize="16sp"
-        android:textColor="#000000"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:background="@drawable/explore_otherquestions_shape"
+        android:layout_marginBottom="12dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="18dp">
 
-    <TextView
-        android:id="@+id/txt_otherquestionslist_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="카테고리"
-        android:textSize="12sp"
-        android:textColor="#636366"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/txt_otherquestionslist_title"
-        app:layout_constraintStart_toStartOf="@id/txt_otherquestionslist_title"/>
+        <TextView
+            android:id="@+id/txt_otherquestionslist_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="질문제목"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/txt_otherquestionslist_dot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="·"
-        android:textSize="10sp"
-        android:textColor="#000000"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        app:layout_constraintStart_toEndOf="@id/txt_otherquestionslist_category"
-        app:layout_constraintEnd_toStartOf="@id/txt_otherquestionslist_time"
-        app:layout_constraintTop_toTopOf="@id/txt_otherquestionslist_category"
-        app:layout_constraintBottom_toBottomOf="@id/txt_otherquestionslist_category"/>
+        <TextView
+            android:id="@+id/txt_otherquestionslist_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="카테고리"
+            android:textSize="12sp"
+            android:textColor="#636366"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/txt_otherquestionslist_title"
+            app:layout_constraintStart_toStartOf="@id/txt_otherquestionslist_title" />
 
-    <TextView
-        android:id="@+id/txt_otherquestionslist_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="작성시간"
-        android:textSize="10sp"
-        android:textColor="#3A3A3C"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        app:layout_constraintStart_toEndOf="@id/txt_otherquestionslist_dot"
-        app:layout_constraintTop_toTopOf="@id/txt_otherquestionslist_category"
-        app:layout_constraintBottom_toBottomOf="@id/txt_otherquestionslist_category"/>
-    <TextView
-        android:id="@+id/txt_otherquestionslist_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="답변내용"
-        android:textSize="14sp"
-        android:textColor="#000000"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/txt_otherquestionslist_category"
-        app:layout_constraintStart_toStartOf="@+id/txt_otherquestionslist_title"/>
+        <TextView
+            android:id="@+id/txt_otherquestionslist_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="·"
+            android:textSize="10sp"
+            android:textColor="#000000"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintStart_toEndOf="@id/txt_otherquestionslist_category"
+            app:layout_constraintEnd_toStartOf="@id/txt_otherquestionslist_time"
+            app:layout_constraintTop_toTopOf="@id/txt_otherquestionslist_category"
+            app:layout_constraintBottom_toBottomOf="@id/txt_otherquestionslist_category" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_otherquestionslist_profile"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/img_profile_sample"
-        android:layout_marginTop="9dp"
-        app:layout_constraintTop_toBottomOf="@+id/txt_otherquestionslist_content"
-        app:layout_constraintStart_toStartOf="@+id/txt_otherquestionslist_title"/>
+        <TextView
+            android:id="@+id/txt_otherquestionslist_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="작성시간"
+            android:textSize="10sp"
+            android:textColor="#3A3A3C"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintStart_toEndOf="@id/txt_otherquestionslist_dot"
+            app:layout_constraintTop_toTopOf="@id/txt_otherquestionslist_category"
+            app:layout_constraintBottom_toBottomOf="@id/txt_otherquestionslist_category" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="아이디"
-        android:textSize="14sp"
-        android:textColor="#000000"
-        android:layout_marginStart="12dp"
-        app:layout_constraintStart_toEndOf="@+id/img_otherquestionslist_profile"
-        app:layout_constraintTop_toTopOf="@+id/img_otherquestionslist_profile"
-        app:layout_constraintBottom_toBottomOf="@id/img_otherquestionslist_profile"/>
+        <TextView
+            android:id="@+id/txt_otherquestionslist_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="답변내용"
+            android:textSize="14sp"
+            android:textColor="#000000"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/txt_otherquestionslist_category"
+            app:layout_constraintStart_toStartOf="@+id/txt_otherquestionslist_title" />
 
-    <ImageButton
-        android:id="@+id/btn_otherquestionslist_showdetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_showdetail_black"
-        android:background="@android:color/transparent"
-        android:layout_marginEnd="6dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/txt_otherquestionslist_title"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_otherquestionslist_profile"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/img_profile_sample"
+            android:layout_marginTop="9dp"
+            app:layout_constraintTop_toBottomOf="@+id/txt_otherquestionslist_content"
+            app:layout_constraintStart_toStartOf="@+id/txt_otherquestionslist_title" />
 
-    <ImageButton
-        android:id="@+id/btn_otherquestionslist_reply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_reply"
-        android:background="@android:color/transparent"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toStartOf="@id/btn_otherquestionslist_bookmark"
-        app:layout_constraintTop_toTopOf="@id/btn_otherquestionslist_bookmark"
-        app:layout_constraintBottom_toBottomOf="@id/btn_otherquestionslist_bookmark"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디"
+            android:textSize="14sp"
+            android:textColor="#000000"
+            android:layout_marginStart="12dp"
+            app:layout_constraintStart_toEndOf="@+id/img_otherquestionslist_profile"
+            app:layout_constraintTop_toTopOf="@+id/img_otherquestionslist_profile"
+            app:layout_constraintBottom_toBottomOf="@id/img_otherquestionslist_profile" />
 
-    <ImageButton
-        android:id="@+id/btn_otherquestionslist_bookmark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_bookmark"
-        android:background="@android:color/transparent"
-        app:layout_constraintTop_toTopOf="@+id/img_otherquestionslist_profile"
-        app:layout_constraintBottom_toBottomOf="@+id/img_otherquestionslist_profile"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <ImageButton
+            android:id="@+id/btn_otherquestionslist_showdetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_showdetail_black"
+            android:background="@android:color/transparent"
+            android:layout_marginEnd="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/txt_otherquestionslist_title" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageButton
+            android:id="@+id/btn_otherquestionslist_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_reply"
+            android:background="@android:color/transparent"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toStartOf="@id/btn_otherquestionslist_bookmark"
+            app:layout_constraintTop_toTopOf="@id/btn_otherquestionslist_bookmark"
+            app:layout_constraintBottom_toBottomOf="@id/btn_otherquestionslist_bookmark" />
+
+        <ImageButton
+            android:id="@+id/btn_otherquestionslist_bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bookmark"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toTopOf="@+id/img_otherquestionslist_profile"
+            app:layout_constraintBottom_toBottomOf="@+id/img_otherquestionslist_profile"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
