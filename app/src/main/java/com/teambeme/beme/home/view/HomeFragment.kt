@@ -7,10 +7,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentHomeBinding
 import com.teambeme.beme.home.adapter.QuestionPagerAdapter
 import com.teambeme.beme.home.viewmodel.HomeViewModel
+import kotlin.math.abs
 
 class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by activityViewModels()
@@ -21,9 +26,17 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        val compositePageTransformer = getPageTransformer()
         val questionPagerAdapter = QuestionPagerAdapter()
+
         binding.vpHomeQuestionSlider.apply {
             adapter = questionPagerAdapter
+            clipToPadding = false
+            clipChildren = false
+            offscreenPageLimit = 4
+            setPageTransformer(compositePageTransformer)
+            setPadding(80, 0, 80, 0)
+            getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         }
 
         homeViewModel.setDummyQuestions()
@@ -32,5 +45,15 @@ class HomeFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun getPageTransformer(): ViewPager2.PageTransformer {
+        val compositePageTransformer = CompositePageTransformer()
+        compositePageTransformer.addTransformer(MarginPageTransformer(40))
+        compositePageTransformer.addTransformer { page, position ->
+            val scaleRatio = 1 - abs(position)
+            page.scaleY = 0.95f + scaleRatio * 0.05f
+        }
+        return compositePageTransformer
     }
 }
