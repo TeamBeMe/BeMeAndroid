@@ -36,6 +36,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         binding.vpMain.apply {
             adapter = viewPagerAdapter
             registerOnPageChangeCallback(PageChangeCallBack())
+            requestDisallowInterceptTouchEvent(false)
         }
     }
 

@@ -8,7 +8,7 @@ import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
 import com.teambeme.beme.home.model.Question
 
-class QuestionPagerAdapter() :
+class QuestionPagerAdapter :
     RecyclerView.Adapter<QuestionPagerAdapter.QuestionViewHolder>() {
     private var questionList = mutableListOf<Question>()
 
