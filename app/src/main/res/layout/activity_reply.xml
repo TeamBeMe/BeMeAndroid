@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="24dp"
-            android:text="댓글"
+            tools:text="댓글"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_reply_arrow" />
@@ -57,11 +57,13 @@
             android:layout_marginBottom="14dp"
             android:background="@drawable/border_layout"
             android:ems="10"
+            tools:hint="댓글 작성"
             android:inputType="textPersonName"
+            android:text="@{replyViewModel.editContent}"
             android:paddingStart="15dp"
-            android:text="Name"
+            android:paddingEnd="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView3"
+            app:layout_constraintEnd_toStartOf="@+id/txt_reply_add"
             app:layout_constraintStart_toStartOf="parent" />
 
 
@@ -76,26 +78,28 @@
             app:layout_constraintBottom_toTopOf="@+id/edttext_reply_content" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/txt_reply_add"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:text="완료"
+            tools:text="완료"
             android:textSize="15sp"
+            android:onClick="@{() -> replyViewModel.addReplyClicked()}"
             app:layout_constraintBottom_toBottomOf="@+id/edttext_reply_content"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintEnd_toStartOf="@+id/img_reply_secret"
             app:layout_constraintTop_toTopOf="@+id/edttext_reply_content"
             app:layout_constraintBaseline_toBaselineOf="@id/edttext_reply_content"
             app:layout_constraintVertical_bias="0.49" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/img_reply_secret"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="28dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            android:onClick="@{() -> replyViewModel.secretButtonClicked()}"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_reply_add"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="@+id/txt_reply_add"
             app:srcCompat="@drawable/ic_secret_off" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
