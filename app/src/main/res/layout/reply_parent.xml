@@ -6,13 +6,13 @@
     <data>
 
         <variable
-            name="replyViewModel"
-            type="com.teambeme.beme.reply.viewmodel.ReplyViewModel" />
+            name="replyParentData"
+            type="com.teambeme.beme.reply.model.ReplyParentData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/img_replyparent_profile"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             tools:text="genie_self"
-            android:text="@{replyViewModel.replyParentId}"
+            android:text="@{replyParentData.txt_id}"
             app:layout_constraintBottom_toBottomOf="@+id/img_replyparent_profile"
             app:layout_constraintStart_toEndOf="@+id/img_replyparent_profile"
             app:layout_constraintTop_toTopOf="@+id/img_replyparent_profile" />
@@ -37,20 +37,19 @@
             android:id="@+id/txt_replyparent_comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
             android:layout_marginTop="12dp"
-            android:text="@{replyViewModel.replyParentComment}"
-            tools:text="척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다.."
+            android:text="@{replyParentData.txt_comment}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_replyparent_id" />
+            app:layout_constraintStart_toStartOf="@+id/txt_replyparent_id"
+            app:layout_constraintTop_toBottomOf="@+id/txt_replyparent_id"
+            tools:text="척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다.." />
 
         <TextView
             android:id="@+id/txt_replyparent_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@{replyViewModel.replyParentTime}"
+            android:text="@{replyParentData.txt_time}"
             tools:text="12월 23일"
             app:layout_constraintStart_toStartOf="@+id/txt_replyparent_comment"
             app:layout_constraintTop_toBottomOf="@+id/txt_replyparent_comment" />
@@ -60,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            tools:text="답글 달기"
+            android:text="답글 달기"
             app:layout_constraintStart_toEndOf="@+id/txt_replyparent_time"
             app:layout_constraintTop_toTopOf="@+id/txt_replyparent_time" />
 
@@ -68,9 +67,8 @@
             android:id="@+id/txt_replyparent_open"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            tools:text="답글 보기"
-            android:onClick="@{() -> replyViewModel.replyOpenClicked()}"
+            android:layout_marginTop="12dp"
+            android:text="답글 보기"
             app:layout_constraintStart_toStartOf="@+id/txt_replyparent_time"
             app:layout_constraintTop_toBottomOf="@+id/txt_replyparent_time" />
 

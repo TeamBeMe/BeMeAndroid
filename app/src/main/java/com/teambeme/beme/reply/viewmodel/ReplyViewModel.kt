@@ -4,8 +4,12 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.teambeme.beme.reply.model.ReplyData
+import com.teambeme.beme.reply.model.ReplyParentData
+import com.teambeme.beme.reply.model.initReplyList
 
 class ReplyViewModel : ViewModel() {
+
     private val _replyParentId = MutableLiveData<String>()
     val replyParentId: LiveData<String>
         get() = _replyParentId
@@ -60,24 +64,18 @@ class ReplyViewModel : ViewModel() {
     val isAddClicked: LiveData<Boolean>
         get() = _isAddClicked
 
-    fun addReplyClicked() {
-        _isAddClicked.value = true
-    }
-
     private val _isSecretClicked = MutableLiveData<Boolean>()
     val isSecretClicked: LiveData<Boolean>
         get() = _isSecretClicked
-
-    fun secretButtonClicked() {
-        _isSecretClicked.value = true
-    }
 
     private val _isOpenClicked = MutableLiveData<Boolean>()
     val isOpenClicked: LiveData<Boolean>
         get() = _isOpenClicked
 
-    fun replyOpenClicked() {
-        _isOpenClicked.value = true
+    fun initail(){
+        _isOpenClicked.value = false
+        _isAddClicked.value = false
+        _isSecretClicked.value = false
     }
 
     init {
@@ -85,4 +83,95 @@ class ReplyViewModel : ViewModel() {
         _isAddClicked.value = false
         _isSecretClicked.value = false
     }
+
+
+    fun addReplyClicked() {
+        _isAddClicked.value = true
+    }
+    fun addReplyClickedFalse() {
+        _isAddClicked.value = false
+    }
+
+
+
+    fun secretButtonClicked() {
+        _isSecretClicked.value = true
+    }
+    fun secretButtonClickedFalse() {
+        _isSecretClicked.value = false
+    }
+
+
+
+    fun replyOpenClicked() {
+        _isOpenClicked.value = true
+    }
+
+    fun replyOpenClickedFalse() {
+        _isOpenClicked.value = false
+    }
+
+    private val _replyParentData = MutableLiveData<MutableList<ReplyParentData>>()
+    val replyParentData: LiveData<MutableList<ReplyParentData>>
+        get()=_replyParentData
+
+    fun setDummyParentReply(){
+        val dummyParentReply=listOf(
+            ReplyParentData(
+                txt_id = "asdf",
+                txt_comment = "a척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..f",
+                txt_time = "12월24일",
+                data_child = initReplyList()
+            ),
+            ReplyParentData(
+                txt_id = "asdf",
+                txt_comment = "척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..f",
+                txt_time = "12월22일",
+
+            ),
+            ReplyParentData(
+                txt_id = "asdf",
+                txt_comment = "척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..",
+                txt_time = "12월24일",
+                data_child = initReplyList()
+            )
+        )
+        _replyParentData.value=dummyParentReply.toMutableList()
+    }
+
+    private val _replyData = MutableLiveData<MutableList<ReplyData>>()
+    val replyData: LiveData<MutableList<ReplyData>>
+        get()=_replyData
+
+    fun setChildData(child:List<ReplyData>){
+        _replyData.value=child.toMutableList()
+    }
+
+    fun setDummyReply(){
+        val dummyReply=listOf(
+            ReplyData(
+                txt_id = "asdf",
+                txt_comment = "asdfsdafwsdfkjewfulsdglnkvdflnkbvdfiuglewrjflksdf",
+                txt_time = "12월24일"
+            ),
+            ReplyData(
+                txt_id = "asdf",
+                txt_comment = "asdfsdafwsdfkjewfulsdglnkvdflnkbvdfiuglewrjflksdf",
+                txt_time = "12월24일"
+            ),
+            ReplyData(
+                txt_id = "asdf",
+                txt_comment = "asdfsdafwsdfkjewfulsdglnkvdflnkbvdfiuglewrjflksdf",
+                txt_time = "12월24일"
+            )
+        )
+        _replyData.value=dummyReply.toMutableList()
+    }
+
+
+
+
+
+
+
 }
