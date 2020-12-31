@@ -1,5 +1,6 @@
 package com.teambeme.beme.reply.viewmodel
 
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -72,35 +73,24 @@ class ReplyViewModel : ViewModel() {
     val isOpenClicked: LiveData<Boolean>
         get() = _isOpenClicked
 
-    fun initail(){
-        _isOpenClicked.value = false
-        _isAddClicked.value = false
-        _isSecretClicked.value = false
-    }
-
-    init {
-        _isOpenClicked.value = false
-        _isAddClicked.value = false
-        _isSecretClicked.value = false
-    }
-
 
     fun addReplyClicked() {
         _isAddClicked.value = true
+        Log.d("check", "check")
     }
+
     fun addReplyClickedFalse() {
         _isAddClicked.value = false
     }
 
 
-
     fun secretButtonClicked() {
         _isSecretClicked.value = true
     }
+
     fun secretButtonClickedFalse() {
         _isSecretClicked.value = false
     }
-
 
 
     fun replyOpenClicked() {
@@ -113,10 +103,10 @@ class ReplyViewModel : ViewModel() {
 
     private val _replyParentData = MutableLiveData<MutableList<ReplyParentData>>()
     val replyParentData: LiveData<MutableList<ReplyParentData>>
-        get()=_replyParentData
+        get() = _replyParentData
 
-    fun setDummyParentReply(){
-        val dummyParentReply=listOf(
+    fun setDummyParentReply() {
+        val dummyParentReply = listOf(
             ReplyParentData(
                 txt_id = "asdf",
                 txt_comment = "a척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..f",
@@ -128,7 +118,7 @@ class ReplyViewModel : ViewModel() {
                 txt_comment = "척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..f",
                 txt_time = "12월22일",
 
-            ),
+                ),
             ReplyParentData(
                 txt_id = "asdf",
                 txt_comment = "척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..",
@@ -136,19 +126,19 @@ class ReplyViewModel : ViewModel() {
                 data_child = initReplyList()
             )
         )
-        _replyParentData.value=dummyParentReply.toMutableList()
+        _replyParentData.value = dummyParentReply.toMutableList()
     }
 
     private val _replyData = MutableLiveData<MutableList<ReplyData>>()
     val replyData: LiveData<MutableList<ReplyData>>
-        get()=_replyData
+        get() = _replyData
 
-    fun setChildData(child:List<ReplyData>){
-        _replyData.value=child.toMutableList()
+    fun setChildData(child: List<ReplyData>) {
+        _replyData.value = child.toMutableList()
     }
 
-    fun setDummyReply(){
-        val dummyReply=listOf(
+    fun setDummyReply() {
+        val dummyReply = listOf(
             ReplyData(
                 txt_id = "asdf",
                 txt_comment = "asdfsdafwsdfkjewfulsdglnkvdflnkbvdfiuglewrjflksdf",
@@ -165,13 +155,8 @@ class ReplyViewModel : ViewModel() {
                 txt_time = "12월24일"
             )
         )
-        _replyData.value=dummyReply.toMutableList()
+        _replyData.value = dummyReply.toMutableList()
     }
-
-
-
-
-
 
 
 }

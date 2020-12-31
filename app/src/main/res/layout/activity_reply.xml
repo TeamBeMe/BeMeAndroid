@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="replyViewModel"
             type="com.teambeme.beme.reply.viewmodel.ReplyViewModel" />
+        <variable
+            name="replyActivity"
+            type="com.teambeme.beme.reply.view.ReplyActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,7 +82,7 @@
             android:layout_marginBottom="14dp"
             app:layout_constraintBottom_toTopOf="@+id/edttext_reply_content" />
 
-        <TextView
+        <Button
             android:id="@+id/txt_reply_add"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

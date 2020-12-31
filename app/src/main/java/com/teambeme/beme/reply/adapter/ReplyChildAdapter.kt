@@ -17,7 +17,7 @@ class ReplyChildAdapter() :
         ReplyChildDiffCallback
     ) {
 
-    inner class ReplyChildViewHolder(private val binding: ReplyChildBinding) :
+    class ReplyChildViewHolder(private val binding: ReplyChildBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(data: ReplyData) {
             binding.replyData=data

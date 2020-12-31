@@ -2,6 +2,7 @@ package com.teambeme.beme.reply.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.MutableLiveData
@@ -14,61 +15,69 @@ import com.teambeme.beme.reply.model.ReplyParentData
 import com.teambeme.beme.reply.model.initReplyList
 import com.teambeme.beme.reply.model.initReplyParentList
 import com.teambeme.beme.reply.viewmodel.ReplyViewModel
-import java.util.*
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 
 class ReplyActivity : BindingActivity<ActivityReplyBinding>(R.layout.activity_reply) {
-    private val replyViewModel:ReplyViewModel by viewModels()
+    private val replyViewModel: ReplyViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val replyAdapter=ReplyParentAdapter(this,replyViewModel)
-        binding.lifecycleOwner=this
-        binding.rcvReplyParent.adapter=replyAdapter
-        binding.rcvReplyParent.layoutManager=LinearLayoutManager(this)
+        val replyAdapter = ReplyParentAdapter(this, replyViewModel)
+        binding.lifecycleOwner = this
+        binding.rcvReplyParent.apply {
+            adapter = replyAdapter
+            layoutManager = LinearLayoutManager(this@ReplyActivity)
+        }
         replyViewModel.setDummyParentReply()
 
 
-        replyViewModel.replyParentData.observe(this){it ->
-            it?.let{ replyAdapter.replaceReplyList(it)}
+        replyViewModel.replyParentData.observe(this) { it ->
+            it?.let { replyAdapter.replaceReplyList(it) }
         }
 
         replyViewModel.isOpenClicked.observe(this) {
             openClickListener(it)
         }
 
-        replyViewModel.isAddClicked.observe(this){it->
-            it?.let{addClickListner(it)}
+        replyViewModel.isAddClicked.observe(this) { it ->
+            it?.let { addClickListner(it) }
         }
 
-        replyViewModel.isSecretClicked.observe(this){
+        replyViewModel.isSecretClicked.observe(this) {
             secretClickListener(it)
         }
 
 
     }
 
-    private fun openClickListener(isOpenClicked:Boolean){
-        if(isOpenClicked){
-            Toast.makeText(this,"cc",Toast.LENGTH_SHORT).show()
+    fun onClicktoast() {
+        Toast.makeText(applicationContext, "cc", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun openClickListener(isOpenClicked: Boolean) {
+        if (isOpenClicked) {
+            Toast.makeText(this, "cc", Toast.LENGTH_SHORT).show()
             replyViewModel.replyOpenClickedFalse()
         }
     }
 
-    private fun addClickListner(isAddClicked:Boolean){
-        if(isAddClicked){
-            Toast.makeText(this,"bb",Toast.LENGTH_SHORT).show()
+    private fun addClickListner(isAddClicked: Boolean) {
+        if (isAddClicked) {
+            Toast.makeText(this, "bb", Toast.LENGTH_SHORT).show()
             replyViewModel.addReplyClickedFalse()
+        } else {
+            Toast.makeText(this, "bb", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun secretClickListener(isSecretClicked:Boolean){
-        if(isSecretClicked){
+    private fun secretClickListener(isSecretClicked: Boolean) {
+        if (isSecretClicked) {
             binding.imgReplySecret.setImageResource(R.drawable.ic_secret_on)
-            Toast.makeText(this,"aa",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "aa", Toast.LENGTH_SHORT).show()
             replyViewModel.secretButtonClickedFalse()
         }
     }
+
     private fun initViewModel() {
         //replyViewModel = ViewModelProvider(this).get(ReplyViewModel::class.java)
     }
