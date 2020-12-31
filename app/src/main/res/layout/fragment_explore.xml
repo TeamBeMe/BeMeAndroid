@@ -141,6 +141,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="28dp"
                     android:orientation="vertical"
+                    setOtherquestions="@{exploreViewModel.otherquestionsList}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
