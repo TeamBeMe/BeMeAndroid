@@ -19,6 +19,10 @@
             android:layout_width="304dp"
             android:layout_height="96dp"
             android:background="@drawable/explore_otherminds_title_shape"
+            android:paddingStart="18dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -26,11 +30,12 @@
                 android:id="@+id/txt_otherminds_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
+                android:layout_marginEnd="8dp"
                 android:text="@{otherminds.title}"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_othermindslist_showdetail"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,8 +43,6 @@
                 android:id="@+id/btn_othermindslist_showdetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_showdetail"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -52,6 +55,10 @@
             android:layout_width="304dp"
             android:layout_height="132dp"
             android:background="@drawable/explore_otherminds_content_shape"
+            android:paddingStart="18dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/constraintlayout_othermindslist_title">
 
@@ -62,8 +69,6 @@
                 android:text="@{otherminds.content}"
                 android:textColor="#000000"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
