@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentExploreBinding
 import com.teambeme.beme.explore.adapter.OthermindsRcvAdapter
+import com.teambeme.beme.explore.adapter.OtherquestionsRcvAdapter
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
 
 class ExploreFragment : Fragment() {
@@ -24,12 +25,15 @@ class ExploreFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
         binding.exploreViewModel = exploreViewModel
         exploreViewModel.setDummyOtherminds()
+        exploreViewModel.setDummyOtherquestions()
         setAdapter(binding)
         return binding.root
     }
 
     private fun setAdapter(binding: FragmentExploreBinding) {
-        val adapter = OthermindsRcvAdapter()
-        binding.rcvExploreOtherminds.adapter = adapter
+        val othermindsAdapter = OthermindsRcvAdapter()
+        val otherquestionsAdapter = OtherquestionsRcvAdapter()
+        binding.rcvExploreOtherminds.adapter = othermindsAdapter
+        binding.rcvExploreOtherquestions.adapter = otherquestionsAdapter
     }
 }
