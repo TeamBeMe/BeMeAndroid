@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="28dp"
-                android:layout_marginTop="38dp"
+                android:layout_marginTop="36dp"
                 android:fontFamily="@font/notosanskr_medium"
                 android:text="최근 활동"
                 android:textColor="#000"
@@ -71,6 +71,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title_recent_activities"
                 tools:listitem="@layout/item_recent_activities" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/rcv_recent_activities"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/btn_notification_to_see_more_background"
+                android:text="더보기"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                android:layout_marginHorizontal="28dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="28dp"
+                android:fontFamily="@font/notosanskr_medium"/>
+
+
+
 
 
 
