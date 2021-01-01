@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="aa"
+            type="com.teambeme.beme.notification.NotificationActivity" />
     </data>
 
     <ScrollView
