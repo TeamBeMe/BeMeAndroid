@@ -2,15 +2,14 @@ package com.teambeme.beme.util
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.graphics.Color
 import android.view.View
 
-object TransparentStatusBarObject {
+object StatusBarUtil {
     @SuppressLint("InlinedApi")
     @Suppress("DEPRECATION")
-    fun setStatusBar(activity: Activity) {
+    fun setStatusBar(activity: Activity, color: Int) {
         activity.window?.decorView?.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        activity.window?.statusBarColor = Color.TRANSPARENT
+        activity.window?.statusBarColor = color
     }
 }
