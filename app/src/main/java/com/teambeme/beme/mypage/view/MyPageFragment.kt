@@ -1,5 +1,6 @@
 package com.teambeme.beme.mypage.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import com.teambeme.beme.main.adapter.MainViewPagerAdapter
 import com.teambeme.beme.mypage.adapter.MyPageViewPagerAdapter
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 
+
 class MyPageFragment : Fragment() {
     private lateinit var binding: FragmentMyPageBinding
     private val mypageViewModel:MyPageViewModel by activityViewModels()
@@ -31,6 +33,7 @@ class MyPageFragment : Fragment() {
         binding= DataBindingUtil.inflate(inflater,R.layout.fragment_my_page, container, false)
         setViewPagerAdapter(childFragmentManager)
         return binding.root
+
     }
     private fun setViewPagerAdapter(fragmentManager: FragmentManager) {
         val viewpagerAdapter:MyPageViewPagerAdapter=MyPageViewPagerAdapter(fragmentManager)
