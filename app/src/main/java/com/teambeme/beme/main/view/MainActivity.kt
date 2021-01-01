@@ -1,5 +1,6 @@
 package com.teambeme.beme.main.view
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
@@ -10,7 +11,7 @@ import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.databinding.ActivityMainBinding
 import com.teambeme.beme.main.adapter.MainViewPagerAdapter
 import com.teambeme.beme.main.viewmodel.MainViewModel
-import com.teambeme.beme.util.TransparentStatusBarObject
+import com.teambeme.beme.util.StatusBarUtil
 
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val mainViewModel: MainViewModel by viewModels()
@@ -18,16 +19,30 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         super.onCreate(savedInstanceState)
         setViewPagerAdapter(this)
         setBottomNavigationSelectListener(binding.bnvMain)
-        TransparentStatusBarObject.setStatusBar(this)
     }
 
     private fun setBottomNavigationSelectListener(bottomNavigationView: BottomNavigationView) {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_main_home -> binding.vpMain.currentItem = 0
-                R.id.menu_main_explore -> binding.vpMain.currentItem = 1
-                R.id.menu_main_following -> binding.vpMain.currentItem = 2
-                R.id.menu_main_mypage -> binding.vpMain.currentItem = 3
+                R.id.menu_main_home -> {
+                    binding.vpMain.currentItem = 0
+                    StatusBarUtil.setStatusBar(this, Color.BLACK)
+                }
+                R.id.menu_main_explore -> {
+                    binding.vpMain.currentItem = 1
+                    StatusBarUtil.setStatusBar(
+                        this,
+                        resources.getColor(R.color.explore_background_gray, null)
+                    )
+                }
+                R.id.menu_main_following -> {
+                    binding.vpMain.currentItem = 2
+                    StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
+                }
+                R.id.menu_main_mypage -> {
+                    binding.vpMain.currentItem = 3
+                    StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
+                }
             }
             true
         }
