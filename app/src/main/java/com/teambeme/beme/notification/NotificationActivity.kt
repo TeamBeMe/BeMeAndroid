@@ -34,6 +34,8 @@ class NotificationActivity : AppCompatActivity() {
 
         )
 
+        backQuestionAdapter.notifyDataSetChanged()
+
 
     }
 }
