@@ -13,13 +13,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="22dp">
+        android:layout_marginBottom="22dp"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/notification_profile_pic"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/test_item_recent_activities"
+            android:src="@drawable/ic_default_profile_pic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
