@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeMe">
         <activity android:name=".notification.NotificationActivity"></activity>
-
+        <activity android:name=".reply.view.ReplyActivity"></activity>
         <activity android:name=".main.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

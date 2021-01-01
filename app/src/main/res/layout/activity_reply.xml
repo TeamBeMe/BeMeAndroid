@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="replyViewModel"
+            type="com.teambeme.beme.reply.viewmodel.ReplyViewModel" />
+        <variable
+            name="replyActivity"
+            type="com.teambeme.beme.reply.view.ReplyActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".reply.view.ReplyActivity">
+
+
+        <ImageView
+            android:id="@+id/img_reply_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="13dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:id="@+id/txt_reply_reply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="24dp"
+            android:text="댓글"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_reply_arrow" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_reply_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_reply_reply"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/edttext_reply_content"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="14dp"
+            android:background="@drawable/border_layout"
+            android:ems="10"
+            android:hint="댓글 작성"
+            android:inputType="textPersonName"
+            android:text="@{replyViewModel.editContent}"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txt_reply_add"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DFDFDF"
+            android:layout_marginBottom="14dp"
+            app:layout_constraintBottom_toTopOf="@+id/edttext_reply_content" />
+
+        <Button
+            android:id="@+id/txt_reply_add"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="완료"
+            android:textSize="15sp"
+            android:onClick="@{() -> replyViewModel.addReplyClicked()}"
+            app:layout_constraintBottom_toBottomOf="@+id/edttext_reply_content"
+            app:layout_constraintEnd_toStartOf="@+id/img_reply_secret"
+            app:layout_constraintTop_toTopOf="@+id/edttext_reply_content"
+            app:layout_constraintBaseline_toBaselineOf="@id/edttext_reply_content"
+            app:layout_constraintVertical_bias="0.49" />
+
+        <ImageView
+            android:id="@+id/img_reply_secret"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="28dp"
+            android:onClick="@{() -> replyViewModel.secretButtonClicked()}"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_reply_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_reply_add"
+            app:srcCompat="@drawable/ic_secret_off" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
