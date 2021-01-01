@@ -1,5 +1,7 @@
 package com.teambeme.beme.home.view
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +26,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         val compositePageTransformer = getPageTransformer()
         val questionPagerAdapter = QuestionPagerAdapter()
@@ -55,5 +57,13 @@ class HomeFragment : Fragment() {
             page.scaleY = 0.95f + scaleRatio * 0.05f
         }
         return compositePageTransformer
+    }
+
+    @SuppressLint("InlinedApi")
+    @Suppress("DEPRECATION")
+    private fun setStatusBarColor() {
+        activity?.window?.decorView?.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        activity?.window?.statusBarColor = Color.BLACK
     }
 }
