@@ -17,7 +17,7 @@ class BackQuestionAdapter (private val context: Context) :
         return BackQuestionViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = backQuestions.size
+    override fun getItemCount(): Int = 7
 
     override fun onBindViewHolder(holder: BackQuestionViewHolder, position: Int) {
         holder.bind(backQuestions[position])
