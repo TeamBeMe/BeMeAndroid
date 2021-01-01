@@ -19,6 +19,8 @@ class MyWriteAdapter :
         fun bind(write: MyWrite) {
             binding.myWrite = write
         }
+
+        val secret = binding.imgMywriteSecret
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyWriteViewHolder {
@@ -30,6 +32,11 @@ class MyWriteAdapter :
 
     override fun onBindViewHolder(holder: MyWriteViewHolder, position: Int) {
         holder.bind(getItem(position))
+        with(holder) {
+            if (writeList[position].isSecret) {
+                secret.setImageResource(R.drawable.ic_secret_on)
+            }
+        }
     }
 
     private class MyWriteDiffUtil : DiffUtil.ItemCallback<MyWrite>() {

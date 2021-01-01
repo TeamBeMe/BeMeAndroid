@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".mypage.view.MyPageFragment" >
+        tools:context=".mypage.view.MyPageFragment">
 
         <ImageView
             android:id="@+id/img_mypage_setting"
@@ -25,8 +25,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_mypage_profile"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="64dp"
             android:src="@drawable/ic_mp_profile"
@@ -38,52 +38,54 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            tools:text="sushi_isthebest"
-            android:text="TextView"
+            android:text="sushi_isthebest"
+            android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/img_mypage_profile"
-            app:layout_constraintTop_toTopOf="@+id/img_mypage_profile" />
+            app:layout_constraintTop_toTopOf="@+id/img_mypage_profile"
+            tools:text="sushi_isthebest" />
 
         <TextView
             android:id="@+id/txt_mypage_attend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@drawable/tag_layout"
             android:paddingStart="8dp"
             android:paddingTop="4dp"
-            android:paddingBottom="4dp"
             android:paddingEnd="8dp"
-            tools:text="연속 출석 11"
-            android:text="TextView"
+            android:paddingBottom="4dp"
+            android:text="연속 출석 11"
             app:layout_constraintStart_toStartOf="@+id/txt_mypage_name"
-            app:layout_constraintTop_toBottomOf="@+id/txt_mypage_name" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_mypage_name"
+            tools:text="연속 출석 11" />
 
         <TextView
             android:id="@+id/txt_mypage_ans"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            tools:text="답한 질문 202"
-            android:background="@drawable/tag_layout"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
             android:layout_marginLeft="10dp"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:text="답한 질문 202"
             app:layout_constraintStart_toEndOf="@+id/txt_mypage_attend"
-            app:layout_constraintTop_toTopOf="@+id/txt_mypage_attend" />
+            app:layout_constraintTop_toTopOf="@+id/txt_mypage_attend"
+            tools:text="답한 질문 202" />
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_mypage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="40dp"
-            app:tabIndicatorColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_mypage_profile">
+            app:layout_constraintTop_toBottomOf="@+id/img_mypage_profile"
+            app:tabIndicatorColor="@color/black"
+            app:tabSelectedTextColor="@color/black">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -96,13 +98,20 @@
                 android:text="스크랩" />
 
         </com.google.android.material.tabs.TabLayout>
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/vp_mypage"
+
+        <com.teambeme.beme.util.NestedScrollableHost
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tab_mypage" />
+            app:layout_constraintTop_toBottomOf="@+id/tab_mypage">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/vp_mypage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.teambeme.beme.util.NestedScrollableHost>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

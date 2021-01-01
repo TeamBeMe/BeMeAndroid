@@ -23,7 +23,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="40dp"
             android:text="@{myScrap.question}"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{myScrap.categori}"
+            android:text="@{`[  `+myScrap.categori+`에 관한 질문  ]  · `}"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/txt_myscrap_question"
             app:layout_constraintTop_toBottomOf="@+id/txt_myscrap_question"
@@ -52,39 +52,37 @@
             app:layout_constraintTop_toTopOf="@+id/txt_myscrap_categori"
             tools:text="5분 전" />
 
-        <TextView
-            android:id="@+id/txt_myscrap_content"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="20dp"
-            android:text="@{myScrap.content}"
-            tools:text="저는 며칠 전 퇴사를 했어요. 수많은 고민 끝에 결국 저질렀습니다. 몇 년간 원해왔던 일이라 꿈만 같아요. 제가 스스로의 힘으로 하고 싶은 걸 해볼 수 있는 시간적 여유를 가지게 된 게 정말 만족스러워요. 앞으로 저에게는 정말 다양한 가능성들이 있으니..."
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/txt_myscrap_categori"
-            app:layout_constraintTop_toBottomOf="@+id/txt_myscrap_categori" />
 
         <ImageView
             android:id="@+id/img_myscrap_profile"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/txt_myscrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/txt_myscrap_content"
+            app:layout_constraintStart_toStartOf="@+id/txt_myscrap_categori"
+            app:layout_constraintTop_toBottomOf="@+id/txt_myscrap_categori"
             app:srcCompat="@drawable/ic_mp_profile" />
 
         <TextView
             android:id="@+id/txt_myscrap_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="8dp"
             android:text="@{myScrap.userId}"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/img_myscrap_profile"
             app:layout_constraintStart_toEndOf="@+id/img_myscrap_profile"
             app:layout_constraintTop_toTopOf="@+id/img_myscrap_profile" />
+
+        <ImageView
+            android:id="@+id/img_myscrap_scrap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/img_myscrap_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginRight="20dp"
+            app:layout_constraintTop_toTopOf="@+id/img_myscrap_profile"
+            app:srcCompat="@drawable/ic_scrap_on_mypage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
