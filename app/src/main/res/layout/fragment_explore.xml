@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="exploreViewModel"
             type="com.teambeme.beme.explore.viewmodel.ExploreViewModel" />
@@ -74,6 +75,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_explore_otherminds"
+                    setOtherminds="@{exploreViewModel.othermindsList}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="28dp"
@@ -81,7 +83,6 @@
                     android:layout_marginBottom="30dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    setOtherminds="@{exploreViewModel.othermindsList}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -131,21 +132,112 @@
                     app:layout_constraintTop_toBottomOf="@id/txt_explore_descOfOtherquestions"
                     app:tabIndicatorColor="#000000"
                     app:tabSelectedTextColor="#000000"
-                    app:tabTextColor="#8E8E93" />
+                    android:backgroundTint="@android:color/transparent"
+                    app:tabTextColor="#8E8E93">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@android:color/transparent"
+                        android:text="최신" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@android:color/transparent"
+                        android:text="인기" />
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tablayout_explore_sort"
+                    android:background="#C9C9C9"/>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_explore_otherquestions"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:paddingStart="28dp"
+                    android:paddingTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/tablayout_explore_sort">
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipCornerRadius="4dp"
+                        app:chipBackgroundColor="#ffffff"
+                        app:chipStrokeWidth="1dp"
+                        app:chipStrokeColor="#C9C9C9"
+                        android:textColor="#636366"
+                        android:text="가치관" />
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipCornerRadius="4dp"
+                        app:chipBackgroundColor="#ffffff"
+                        app:chipStrokeWidth="1dp"
+                        app:chipStrokeColor="#C9C9C9"
+                        android:textColor="#636366"
+                        android:text="사랑" />
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipCornerRadius="4dp"
+                        app:chipBackgroundColor="#ffffff"
+                        app:chipStrokeWidth="1dp"
+                        app:chipStrokeColor="#C9C9C9"
+                        android:textColor="#636366"
+                        android:text="일상" />
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipCornerRadius="4dp"
+                        app:chipBackgroundColor="#ffffff"
+                        app:chipStrokeWidth="1dp"
+                        app:chipStrokeColor="#C9C9C9"
+                        android:textColor="#636366"
+                        android:text="이야기" />
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipCornerRadius="4dp"
+                        app:chipBackgroundColor="#ffffff"
+                        app:chipStrokeWidth="1dp"
+                        app:chipStrokeColor="#C9C9C9"
+                        android:textColor="#636366"
+                        android:text="미래" />
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipCornerRadius="4dp"
+                        app:chipBackgroundColor="#ffffff"
+                        app:chipStrokeWidth="1dp"
+                        app:chipStrokeColor="#C9C9C9"
+                        android:textColor="#636366"
+                        android:text="의미" />
+
+                </com.google.android.material.chip.ChipGroup>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_explore_otherquestions"
+                    setOtherquestions="@{exploreViewModel.otherquestionsList}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="28dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="28dp"
                     android:orientation="vertical"
-                    setOtherquestions="@{exploreViewModel.otherquestionsList}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tablayout_explore_sort"
+                    app:layout_constraintTop_toBottomOf="@id/chip_explore_otherquestions"
                     tools:listitem="@layout/list_explore_otherquestions" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
