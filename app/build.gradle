@@ -54,6 +54,4 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     //Material 관련 컴포넌트 사용
     implementation 'com.google.android.material:material:1.2.0-alpha06'
-    //Glide 사용
-
-}
+    }
