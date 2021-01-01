@@ -96,4 +96,5 @@ class ExploreViewModel : ViewModel() {
         )
         _otherquestionsList.value = dummyOtherquestionsList.toMutableList()
     }
+
 }

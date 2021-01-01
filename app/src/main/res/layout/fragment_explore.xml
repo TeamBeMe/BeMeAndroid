@@ -113,13 +113,25 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/txt_explore_descOfOtherquestions"
+                    android:id="@+id/txt_explore_descOfRecent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="나와 같은 질문에 다른 사람들은 이렇게 답했어요"
+                    android:text="내가 답한 질문에 대한 다른 사람들의 최신 답변이에요"
                     android:textColor="#636366"
                     android:textSize="13sp"
+                    app:layout_constraintStart_toStartOf="@id/txt_explore_titleOfOtherquestions"
+                    app:layout_constraintTop_toBottomOf="@id/txt_explore_titleOfOtherquestions" />
+
+                <TextView
+                    android:id="@+id/txt_explore_descOfExciting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="내가 관심있어 할 다른 사람들의 답변이에요"
+                    android:textColor="#636366"
+                    android:textSize="13sp"
+                    android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="@id/txt_explore_titleOfOtherquestions"
                     app:layout_constraintTop_toBottomOf="@id/txt_explore_titleOfOtherquestions" />
 
@@ -128,11 +140,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginTop="12dp"
+                    android:backgroundTint="@android:color/transparent"
                     app:layout_constraintStart_toStartOf="@id/txt_explore_titleOfOtherquestions"
-                    app:layout_constraintTop_toBottomOf="@id/txt_explore_descOfOtherquestions"
+                    app:layout_constraintTop_toBottomOf="@id/txt_explore_descOfRecent"
                     app:tabIndicatorColor="#000000"
                     app:tabSelectedTextColor="#000000"
-                    android:backgroundTint="@android:color/transparent"
                     app:tabTextColor="#8E8E93">
 
                     <com.google.android.material.tabs.TabItem
@@ -145,15 +157,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@android:color/transparent"
-                        android:text="인기" />
+                        android:text="흥미" />
 
                 </com.google.android.material.tabs.TabLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tablayout_explore_sort"
-                    android:background="#C9C9C9"/>
+                    android:background="#C9C9C9"
+                    app:layout_constraintTop_toBottomOf="@+id/tablayout_explore_sort" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chip_explore_otherquestions"
@@ -162,66 +174,72 @@
                     android:paddingStart="28dp"
                     android:paddingTop="8dp"
                     app:layout_constraintTop_toBottomOf="@id/tablayout_explore_sort">
+
                     <com.google.android.material.chip.Chip
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:chipCornerRadius="4dp"
-                        app:chipBackgroundColor="#ffffff"
-                        app:chipStrokeWidth="1dp"
-                        app:chipStrokeColor="#C9C9C9"
+                        android:text="가치관"
                         android:textColor="#636366"
-                        android:text="가치관" />
+                        app:chipBackgroundColor="#ffffff"
+                        app:chipCornerRadius="4dp"
+                        app:chipStrokeColor="#C9C9C9"
+                        app:chipStrokeWidth="1dp" />
+
                     <com.google.android.material.chip.Chip
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:chipCornerRadius="4dp"
-                        app:chipBackgroundColor="#ffffff"
-                        app:chipStrokeWidth="1dp"
-                        app:chipStrokeColor="#C9C9C9"
+                        android:text="사랑"
                         android:textColor="#636366"
-                        android:text="사랑" />
+                        app:chipBackgroundColor="#ffffff"
+                        app:chipCornerRadius="4dp"
+                        app:chipStrokeColor="#C9C9C9"
+                        app:chipStrokeWidth="1dp" />
+
                     <com.google.android.material.chip.Chip
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:chipCornerRadius="4dp"
-                        app:chipBackgroundColor="#ffffff"
-                        app:chipStrokeWidth="1dp"
-                        app:chipStrokeColor="#C9C9C9"
+                        android:text="일상"
                         android:textColor="#636366"
-                        android:text="일상" />
+                        app:chipBackgroundColor="#ffffff"
+                        app:chipCornerRadius="4dp"
+                        app:chipStrokeColor="#C9C9C9"
+                        app:chipStrokeWidth="1dp" />
+
                     <com.google.android.material.chip.Chip
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:chipCornerRadius="4dp"
-                        app:chipBackgroundColor="#ffffff"
-                        app:chipStrokeWidth="1dp"
-                        app:chipStrokeColor="#C9C9C9"
+                        android:text="이야기"
                         android:textColor="#636366"
-                        android:text="이야기" />
+                        app:chipBackgroundColor="#ffffff"
+                        app:chipCornerRadius="4dp"
+                        app:chipStrokeColor="#C9C9C9"
+                        app:chipStrokeWidth="1dp" />
+
                     <com.google.android.material.chip.Chip
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:chipCornerRadius="4dp"
-                        app:chipBackgroundColor="#ffffff"
-                        app:chipStrokeWidth="1dp"
-                        app:chipStrokeColor="#C9C9C9"
+                        android:text="미래"
                         android:textColor="#636366"
-                        android:text="미래" />
+                        app:chipBackgroundColor="#ffffff"
+                        app:chipCornerRadius="4dp"
+                        app:chipStrokeColor="#C9C9C9"
+                        app:chipStrokeWidth="1dp" />
+
                     <com.google.android.material.chip.Chip
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:chipCornerRadius="4dp"
-                        app:chipBackgroundColor="#ffffff"
-                        app:chipStrokeWidth="1dp"
-                        app:chipStrokeColor="#C9C9C9"
+                        android:text="의미"
                         android:textColor="#636366"
-                        android:text="의미" />
+                        app:chipBackgroundColor="#ffffff"
+                        app:chipCornerRadius="4dp"
+                        app:chipStrokeColor="#C9C9C9"
+                        app:chipStrokeWidth="1dp" />
 
                 </com.google.android.material.chip.ChipGroup>
 
