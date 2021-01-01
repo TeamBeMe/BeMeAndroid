@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BeMe">
+        <activity android:name=".notification.NotificationActivity"></activity>
         <activity android:name=".reply.view.ReplyActivity"></activity>
         <activity android:name=".main.view.MainActivity">
             <intent-filter>
