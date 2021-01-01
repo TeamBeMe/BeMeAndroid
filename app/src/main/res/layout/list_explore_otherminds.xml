@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="otherminds"
+            type="com.teambeme.beme.explore.model.OthermindsData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_othermindslist_title"
+            android:layout_width="304dp"
+            android:layout_height="96dp"
+            android:background="@drawable/explore_otherminds_title_shape"
+            android:paddingStart="18dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/txt_otherminds_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@{otherminds.title}"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_othermindslist_showdetail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_othermindslist_showdetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_showdetail"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_othermindslist_content"
+            android:layout_width="304dp"
+            android:layout_height="132dp"
+            android:background="@drawable/explore_otherminds_content_shape"
+            android:paddingStart="18dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/constraintlayout_othermindslist_title">
+
+            <TextView
+                android:id="@+id/txt_othermindslist_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{otherminds.content}"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
