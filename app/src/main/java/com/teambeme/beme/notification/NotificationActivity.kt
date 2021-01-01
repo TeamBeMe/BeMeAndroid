@@ -54,6 +54,8 @@ class NotificationActivity : AppCompatActivity() {
             RecentActivitiesData("aaa님이 \"이번주를 후회없이 보내는 방법\"에 대한 나의 글에 댓글을 달았습니다.11")
             )
 
+
+
         backQuestionAdapter.notifyDataSetChanged()
         recentActivitiesAdapter.notifyDataSetChanged()
 
