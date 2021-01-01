@@ -1,4 +1,4 @@
-package com.teambeme.beme.explore
+package com.teambeme.beme.util
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -8,7 +8,7 @@ import com.teambeme.beme.explore.adapter.OtherquestionsRcvAdapter
 import com.teambeme.beme.explore.model.OthermindsData
 import com.teambeme.beme.explore.model.OtherquestionsData
 
-object ExploreBinding {
+object BindingAdapters {
     @BindingAdapter("setOtherminds")
     @JvmStatic
     fun setOtherminds(recyclerView: RecyclerView, otherminds: List<OthermindsData>?) {
