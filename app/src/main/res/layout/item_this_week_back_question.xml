@@ -32,15 +32,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:layout_width="8dp"
-            android:layout_height="14dp"
-            android:background="#FFFFFF"
-            android:padding="30dp"
-            android:src="@drawable/ic_notification_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_btn_delete_2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/item_this_week_back_question_content"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:clickable="true"/>
 
 
 
