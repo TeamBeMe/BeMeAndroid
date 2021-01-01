@@ -8,13 +8,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemMyscrapBinding
-import com.teambeme.beme.databinding.ItemMywriteBinding
 import com.teambeme.beme.mypage.model.MyScrap
-import com.teambeme.beme.mypage.model.MyWrite
 
 class MyScrapAdapter :
     ListAdapter<MyScrap, MyScrapAdapter.MyScrapViewHolder>(MyScrapDiffUtil()) {
     private var scrapList = mutableListOf<MyScrap>()
+
     class MyScrapViewHolder(private val binding: ItemMyscrapBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(scrap: MyScrap) {
@@ -24,7 +23,7 @@ class MyScrapAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyScrapViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding : ItemMyscrapBinding =
+        val binding: ItemMyscrapBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_myscrap, parent, false)
         return MyScrapViewHolder(binding)
     }
@@ -40,6 +39,7 @@ class MyScrapAdapter :
         override fun areContentsTheSame(oldItem: MyScrap, newItem: MyScrap) =
             (oldItem == newItem)
     }
+
     fun replaceScrapList(list: List<MyScrap>) {
         scrapList = list.toMutableList()
         submitList(scrapList)

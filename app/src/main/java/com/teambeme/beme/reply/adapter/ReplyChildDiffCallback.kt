@@ -17,5 +17,4 @@ object ReplyChildDiffCallback : DiffUtil.ItemCallback<ReplyData>() {
     ): Boolean {
         return oldItem == newItem
     }
-
 }

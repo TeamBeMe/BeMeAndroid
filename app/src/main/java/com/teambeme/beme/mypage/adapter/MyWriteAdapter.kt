@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemMywriteBinding
-import com.teambeme.beme.mypage.model.MyScrap
 import com.teambeme.beme.mypage.model.MyWrite
 
 class MyWriteAdapter :
     ListAdapter<MyWrite, MyWriteAdapter.MyWriteViewHolder>(MyWriteDiffUtil()) {
     private var writeList = mutableListOf<MyWrite>()
+
     class MyWriteViewHolder(private val binding: ItemMywriteBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(write: MyWrite) {
@@ -23,7 +23,7 @@ class MyWriteAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyWriteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding :ItemMywriteBinding=
+        val binding: ItemMywriteBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_mywrite, parent, false)
         return MyWriteViewHolder(binding)
     }
@@ -39,6 +39,7 @@ class MyWriteAdapter :
         override fun areContentsTheSame(oldItem: MyWrite, newItem: MyWrite) =
             (oldItem == newItem)
     }
+
     fun replaceWriteList(list: List<MyWrite>) {
         writeList = list.toMutableList()
         submitList(writeList)
