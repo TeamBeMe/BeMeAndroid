@@ -10,6 +10,7 @@ import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.databinding.ActivityMainBinding
 import com.teambeme.beme.main.adapter.MainViewPagerAdapter
 import com.teambeme.beme.main.viewmodel.MainViewModel
+import com.teambeme.beme.util.TransparentStatusBarObject
 
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val mainViewModel: MainViewModel by viewModels()
@@ -17,6 +18,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         super.onCreate(savedInstanceState)
         setViewPagerAdapter(this)
         setBottomNavigationSelectListener(binding.bnvMain)
+        TransparentStatusBarObject.setStatusBar(this)
     }
 
     private fun setBottomNavigationSelectListener(bottomNavigationView: BottomNavigationView) {
