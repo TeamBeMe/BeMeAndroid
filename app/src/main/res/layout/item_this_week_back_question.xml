@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="backQuestionData"
+            type="com.teambeme.beme.notification.BackQuestionData" />
 
     </data>
 
@@ -20,7 +23,7 @@
             android:layout_marginVertical="12dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="36dp"
-            android:text='"가장 좋아하는 음식은 무엇인가요?"'
+            android:text="@{backQuestionData.back_question}"
             android:textColor="#000"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
