@@ -1,6 +1,6 @@
 package com.teambeme.beme.notification
 
-data class RecentActivityData(
+data class RecentActivitiesData(
     val notifi_profile_pic :String,
     val notifi_message : String
 )
