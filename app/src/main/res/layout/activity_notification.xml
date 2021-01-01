@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="aa"
+            name="notificationActivityBinding"
             type="com.teambeme.beme.notification.NotificationActivity" />
     </data>
 
