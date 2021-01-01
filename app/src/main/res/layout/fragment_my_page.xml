@@ -98,20 +98,28 @@
                 android:text="스크랩" />
 
         </com.google.android.material.tabs.TabLayout>
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DFDFDF"
+            android:layout_marginBottom="14dp"
+            app:layout_constraintTop_toBottomOf="@+id/tab_mypage" />
+
 
         <com.teambeme.beme.util.NestedScrollableHost
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tab_mypage">
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vp_mypage"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
         </com.teambeme.beme.util.NestedScrollableHost>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
