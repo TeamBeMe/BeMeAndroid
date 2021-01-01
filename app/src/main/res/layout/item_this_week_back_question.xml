@@ -31,7 +31,7 @@
         <ImageButton
             android:layout_width="8dp"
             android:layout_height="14dp"
-            android:background="#FFFFFFF"
+            android:background="#FFFFFF"
             android:padding="30dp"
             android:src="@drawable/ic_notification_close"
             app:layout_constraintBottom_toBottomOf="parent"
