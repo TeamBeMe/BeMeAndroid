@@ -12,5 +12,143 @@
         android:layout_height="match_parent"
         tools:context=".answer.view.AnswerActivity">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_answer_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/btn_answer_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_answer_complete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:text="완료"
+                    android:textColor="@color/answer_text_gray"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/txt_answer_question"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="28dp"
+            android:text="이번 주말을 후회 없이\n 보낼 수 있는 방법은 무엇인가요?"
+            android:textColor="@color/answer_text_black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tb_answer_toolbar" />
+
+        <TextView
+            android:id="@+id/txt_answer_info"
+            style="@style/answer_info_style"
+            android:layout_marginTop="24dp"
+            android:text="[ 미래에 관한 2번째 질문 ]"
+            app:layout_constraintStart_toStartOf="@+id/txt_answer_question"
+            app:layout_constraintTop_toBottomOf="@+id/txt_answer_question" />
+
+        <TextView
+            android:id="@+id/txt_answer_data"
+            style="@style/answer_info_style"
+            android:layout_marginTop="8dp"
+            android:text="2020.12.24"
+            app:layout_constraintStart_toStartOf="@+id/txt_answer_info"
+            app:layout_constraintTop_toBottomOf="@+id/txt_answer_info" />
+
+        <View
+            android:id="@+id/divider_answer_top"
+            style="@style/answer_divider"
+            android:layout_marginTop="16dp"
+            android:background="@color/answer_text_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_answer_data" />
+
+        <EditText
+            android:id="@+id/txt_answer_answer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="30dp"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="답변을 써주세요"
+            android:textColor="@color/answer_text_black"
+            android:textColorHint="@color/answer_text_gray"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/divider_answer_bottom"
+            app:layout_constraintTop_toBottomOf="@+id/divider_answer_top" />
+
+        <View
+            android:id="@+id/divider_answer_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="100dp"
+            android:background="@color/answer_text_gray"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_answer_make_public"
+            style="@style/answer_setting"
+            android:layout_marginTop="16dp"
+            android:text="답변 공개하기"
+            app:layout_constraintTop_toBottomOf="@+id/divider_answer_bottom" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_answer_public"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="28dp"
+            android:checked="false"
+            android:thumb="@drawable/switch_thumb"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_answer_make_public"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_answer_make_public"
+            app:track="@drawable/answer_switch_selector" />
+
+        <TextView
+            android:id="@+id/txt_answer_reply_cancel"
+            style="@style/answer_setting"
+            android:layout_marginTop="28dp"
+            android:text="댓글 기능 해제"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_answer_make_public" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_answer_reply_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="28dp"
+            android:checked="false"
+            android:thumb="@drawable/switch_thumb"
+            app:layout_constraintBottom_toBottomOf="@id/txt_answer_reply_cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_answer_reply_cancel"
+            app:track="@drawable/answer_switch_selector" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

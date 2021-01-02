@@ -20,4 +20,26 @@
     <style name="question_content_style" parent="question_question_style">
         <item name="android:textStyle">normal</item>
     </style>
+
+    <style name="answer_info_style">
+        <item name="android:textColor">@color/answer_text_info_gray</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="answer_divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="background">@color/answer_text_gray</item>
+    </style>
+
+    <style name="answer_setting">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:textColor">@color/answer_text_black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+    </style>
 </resources>
