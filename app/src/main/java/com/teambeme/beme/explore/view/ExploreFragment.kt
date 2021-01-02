@@ -50,7 +50,8 @@ class ExploreFragment : Fragment() {
                 }
             }
         })
-      
+    }
+
     private fun setTabSelectedListener(binding: FragmentExploreBinding) {
         binding.tablayoutExploreSort.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
