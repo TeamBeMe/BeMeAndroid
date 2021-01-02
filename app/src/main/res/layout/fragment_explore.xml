@@ -75,7 +75,6 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_explore_otherminds"
-                    setOtherminds="@{exploreViewModel.othermindsList}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="28dp"
