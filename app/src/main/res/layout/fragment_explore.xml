@@ -73,21 +73,27 @@
                     app:layout_constraintStart_toStartOf="@id/txt_explore_titleOfOtherminds"
                     app:layout_constraintTop_toBottomOf="@id/txt_explore_titleOfOtherminds" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcv_explore_otherminds"
-                    setOtherminds="@{exploreViewModel.othermindsList}"
+                <com.teambeme.beme.util.NestedScrollableHost
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="28dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="30dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_explore_descOfOtherminds"
-                    tools:listitem="@layout/list_explore_otherminds" />
+                    app:layout_constraintTop_toBottomOf="@id/txt_explore_descOfOtherminds">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcv_explore_otherminds"
+                        setOtherminds="@{exploreViewModel.othermindsList}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/list_explore_otherminds" />
+
+                </com.teambeme.beme.util.NestedScrollableHost>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -95,7 +101,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintlayout_explore_otherquestions"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:background="#ffffff"
                 android:paddingBottom="40dp"
                 app:layout_constraintTop_toBottomOf="@+id/constraintlayout_explore_otherminds">
@@ -251,11 +257,13 @@
                     android:layout_marginStart="28dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="28dp"
+                    android:layout_marginBottom="40dp"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/chip_explore_otherquestions"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     tools:listitem="@layout/list_explore_otherquestions" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
