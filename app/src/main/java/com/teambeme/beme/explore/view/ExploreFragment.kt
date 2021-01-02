@@ -27,6 +27,7 @@ class ExploreFragment : Fragment() {
         exploreViewModel.setDummyOtherminds()
         exploreViewModel.setDummyOtherquestions()
         setAdapter(binding)
+        setObserve(binding)
         return binding.root
     }
 
@@ -35,5 +36,15 @@ class ExploreFragment : Fragment() {
         val otherquestionsAdapter = OtherquestionsRcvAdapter()
         binding.rcvExploreOtherminds.adapter = othermindsAdapter
         binding.rcvExploreOtherquestions.adapter = otherquestionsAdapter
+    }
+
+    private fun setObserve(binding: FragmentExploreBinding) {
+        exploreViewModel.othermindsList.observe(viewLifecycleOwner, { othermindsList ->
+            othermindsList?.let {
+                if (binding.rcvExploreOtherminds.adapter != null) with(binding.rcvExploreOtherminds.adapter as OthermindsRcvAdapter) {
+                    submitList(othermindsList)
+                }
+            }
+        })
     }
 }
