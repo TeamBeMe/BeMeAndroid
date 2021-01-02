@@ -1,10 +1,12 @@
-package com.teambeme.beme.notification
+package com.teambeme.beme.notification.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.databinding.ItemThisWeekBackQuestionBinding
+import com.teambeme.beme.notification.model.BackQuestionData
+import com.teambeme.beme.notification.viewholder.BackQuestionViewHolder
 
 class BackQuestionAdapter (private val context: Context) :
     RecyclerView.Adapter<BackQuestionViewHolder>(){

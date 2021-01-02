@@ -1,12 +1,12 @@
-package com.teambeme.beme.notification
+package com.teambeme.beme.notification.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.teambeme.beme.databinding.ActivityNotificationBinding
 import com.teambeme.beme.databinding.ItemRecentActivitiesBinding
+import com.teambeme.beme.notification.model.RecentActivitiesData
+import com.teambeme.beme.notification.viewholder.RecentActivitiesViewHolder
 
 
 class RecentActivitiesAdapter (private val context: Context) :
@@ -23,7 +23,7 @@ class RecentActivitiesAdapter (private val context: Context) :
 
     override fun getItemCount(): Int = recentActivitiesList.size
 
-    override fun onBindViewHolder(holder:  RecentActivitiesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecentActivitiesViewHolder, position: Int) {
         holder.bind(recentActivitiesList[position])
     }
 

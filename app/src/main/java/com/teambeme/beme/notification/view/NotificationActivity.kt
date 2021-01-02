@@ -1,4 +1,4 @@
-package com.teambeme.beme.notification
+package com.teambeme.beme.notification.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,6 +6,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ActivityNotificationBinding
+import com.teambeme.beme.notification.model.BackQuestionData
+import com.teambeme.beme.notification.model.RecentActivitiesData
+import com.teambeme.beme.notification.adapter.BackQuestionAdapter
+import com.teambeme.beme.notification.adapter.RecentActivitiesAdapter
 
 class NotificationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotificationBinding
