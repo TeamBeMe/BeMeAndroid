@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.google.android.material.tabs.TabLayout
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentExploreBinding
@@ -29,6 +30,7 @@ class ExploreFragment : Fragment() {
         exploreViewModel.setDummyOtherquestions()
         setAdapter(binding)
         setTabSelectedListener(binding)
+        setSnapHelper(binding)
         return binding.root
     }
 
@@ -61,5 +63,10 @@ class ExploreFragment : Fragment() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         }
         )
+    }
+
+    private fun setSnapHelper(binding: FragmentExploreBinding) {
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(binding.rcvExploreOtherminds)
     }
 }
