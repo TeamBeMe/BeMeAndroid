@@ -1,4 +1,4 @@
-package com.teambeme.beme.notification.view
+package com.teambeme.beme.notification
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

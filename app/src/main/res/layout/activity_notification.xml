@@ -7,7 +7,7 @@
 
         <variable
             name="notificationActivityBinding"
-            type="com.teambeme.beme.notification.view.NotificationActivity" />
+            type="com.teambeme.beme.notification.NotificationActivity" />
     </data>
 
     <ScrollView
@@ -19,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".notification.view.NotificationActivity">
+            tools:context=".notification.NotificationActivity">
 
             <TextView
                 android:id="@+id/title_this_week_back_question"
