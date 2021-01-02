@@ -10,22 +10,10 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.teambeme.beme.explore.adapter.OthermindsRcvAdapter
 import com.teambeme.beme.explore.adapter.OtherquestionsRcvAdapter
-import com.teambeme.beme.explore.model.OthermindsData
 import com.teambeme.beme.explore.model.OtherquestionsData
 
 object BindingAdapters {
-    @BindingAdapter("setOtherminds")
-    @JvmStatic
-    fun setOtherminds(recyclerView: RecyclerView, otherminds: List<OthermindsData>?) {
-        if (recyclerView.adapter != null) with(recyclerView.adapter as OthermindsRcvAdapter) {
-            otherminds?.let {
-                submitList(otherminds)
-            }
-        }
-    }
-
     @BindingAdapter("setOtherquestions")
     @JvmStatic
     fun setOtherquestions(

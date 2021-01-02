@@ -29,6 +29,7 @@ class ExploreFragment : Fragment() {
         exploreViewModel.setDummyOtherminds()
         exploreViewModel.setDummyOtherquestions()
         setAdapter(binding)
+        setObserve(binding)
         setTabSelectedListener(binding)
         setSnapHelper(binding)
         return binding.root
@@ -41,6 +42,15 @@ class ExploreFragment : Fragment() {
         binding.rcvExploreOtherquestions.adapter = otherquestionsAdapter
     }
 
+    private fun setObserve(binding: FragmentExploreBinding) {
+        exploreViewModel.othermindsList.observe(viewLifecycleOwner, { othermindsList ->
+            othermindsList?.let {
+                if (binding.rcvExploreOtherminds.adapter != null) with(binding.rcvExploreOtherminds.adapter as OthermindsRcvAdapter) {
+                    submitList(othermindsList)
+                }
+            }
+        })
+      
     private fun setTabSelectedListener(binding: FragmentExploreBinding) {
         binding.tablayoutExploreSort.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
