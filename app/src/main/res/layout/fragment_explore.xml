@@ -76,7 +76,6 @@
                 <com.teambeme.beme.util.NestedScrollableHost
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="30dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -88,7 +87,10 @@
                         android:id="@+id/rcv_explore_otherminds"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:clipToPadding="false"
                         android:orientation="horizontal"
+                        android:paddingStart="22dp"
+                        android:paddingEnd="22dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/list_explore_otherminds" />
 
@@ -275,12 +277,30 @@
                     android:layout_marginBottom="40dp"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/btn_explore_showmore"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/scrollview_explore_chip"
                     tools:listitem="@layout/list_explore_otherquestions" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_explore_showmore"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginEnd="28dp"
+                    android:layout_marginBottom="152dp"
+                    android:backgroundTint="#000000"
+                    android:paddingTop="11dp"
+                    android:paddingBottom="16dp"
+                    android:text="더보기"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    app:cornerRadius="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rcv_explore_otherquestions" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

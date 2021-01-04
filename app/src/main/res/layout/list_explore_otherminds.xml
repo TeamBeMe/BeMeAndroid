@@ -12,7 +12,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp">
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintlayout_othermindslist_title"
