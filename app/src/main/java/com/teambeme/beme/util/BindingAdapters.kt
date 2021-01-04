@@ -54,8 +54,12 @@ object BindingAdapters {
 
     @BindingAdapter("android:text")
     @JvmStatic
-    fun setEditTextString(view: EditText, text: String) {
-        if (view.text.toString() != text) view.setText(text)
+    fun setEditTextString(view: EditText, text: String?) {
+        if (text == null) {
+            view.setText("")
+        } else {
+            if (view.text.toString() != text) view.setText(text)
+        }
     }
 
     @BindingAdapter("textAttrChanged")

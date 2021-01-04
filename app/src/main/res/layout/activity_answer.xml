@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="answerViewModel"
+            type="com.teambeme.beme.answer.viewmodel.AnswerViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,6 +99,7 @@
             android:background="@null"
             android:gravity="top"
             android:hint="답변을 써주세요"
+            android:text="@={answerViewModel.answer}"
             android:textColor="@color/answer_text_black"
             android:textColorHint="@color/answer_text_gray"
             android:textSize="12sp"
