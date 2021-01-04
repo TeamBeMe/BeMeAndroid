@@ -26,10 +26,12 @@ class ExploreFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
         binding.exploreViewModel = exploreViewModel
+        binding.lifecycleOwner = this
         exploreViewModel.setDummyOtherminds()
         exploreViewModel.setDummyOtherquestions()
         setAdapter(binding)
         setObserve(binding)
+        setClickListenerForPlusData(binding)
         setTabSelectedListener(binding)
         setSnapHelper(binding)
         return binding.root
@@ -79,5 +81,11 @@ class ExploreFragment : Fragment() {
     private fun setSnapHelper(binding: FragmentExploreBinding) {
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.rcvExploreOtherminds)
+    }
+
+    private fun setClickListenerForPlusData(binding: FragmentExploreBinding) {
+        binding.btnExploreShowmore.setOnClickListener {
+            exploreViewModel.plusDummyOtherquestions()
+        }
     }
 }
