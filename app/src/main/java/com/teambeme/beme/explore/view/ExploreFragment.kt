@@ -45,13 +45,13 @@ class ExploreFragment : Fragment() {
     }
 
     private fun setObserve(binding: FragmentExploreBinding) {
-        exploreViewModel.othermindsList.observe(viewLifecycleOwner, { othermindsList ->
+        exploreViewModel.othermindsList.observe(viewLifecycleOwner) { othermindsList ->
             othermindsList?.let {
                 if (binding.rcvExploreOtherminds.adapter != null) with(binding.rcvExploreOtherminds.adapter as OthermindsRcvAdapter) {
                     submitList(othermindsList)
                 }
             }
-        })
+        }
     }
 
     private fun setTabSelectedListener(binding: FragmentExploreBinding) {
