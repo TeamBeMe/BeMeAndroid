@@ -15,6 +15,7 @@ class ReplyActivity : BindingActivity<ActivityReplyBinding>(R.layout.activity_re
     private val replyViewModel: ReplyViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.replyViewModel = replyViewModel
         val replyAdapter = ReplyParentAdapter(this, replyViewModel)
         binding.lifecycleOwner = this
         binding.rcvReplyParent.apply {

@@ -1,15 +1,34 @@
 package com.teambeme.beme.mypage.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.mypage.model.MyScrap
 import com.teambeme.beme.mypage.model.MyWrite
+import com.teambeme.beme.mypage.model.MyWriteFilter
 
 class MyPageViewModel:ViewModel(){
     private val _mypageWriteData=MutableLiveData<MutableList<MyWrite>>()
     val mypageWriteData: LiveData<MutableList<MyWrite>>
         get()=_mypageWriteData
+
+    private val _scrapFilter = MutableLiveData<String>()
+    val scrapFilter: LiveData<String>
+        get() = _scrapFilter
+
+    fun setScrapFilter(scrapFilter: String) {
+        _scrapFilter.value = scrapFilter
+    }
+
+    private val _mywriteFilter=MutableLiveData<MyWriteFilter>()
+    val mywriteFilter: LiveData<MyWriteFilter>
+        get()=_mywriteFilter
+
+    fun setWriteFilter(range:String,category:String){
+        val myfilter=MyWriteFilter(range,category)
+        _mywriteFilter.value=myfilter
+    }
 
     fun setDummyWrite(){
         val dummyWrite=listOf(
@@ -74,4 +93,41 @@ class MyPageViewModel:ViewModel(){
         )
         _mypageScrapData.value=dummyScrap.toMutableList()
     }
+    fun addDummyScrap(){
+        val dummyScrap=
+            MyScrap(
+                question = "요즘 내 가무엇인가요?",
+                categori = "[미랭",
+                time="5분 전",
+                userId = "iron man"
+            )
+        _mypageScrapData.value?.add(dummyScrap)
+    }
+
+    private val _isScrapFilterClicked = MutableLiveData<Boolean>()
+    val isScrapFilterClicked: LiveData<Boolean>
+        get() = _isScrapFilterClicked
+
+
+    fun scrapFilterOnClick() {
+        _isScrapFilterClicked.value = true
+    }
+
+    fun scrapFilterOnClickFalse() {
+        _isScrapFilterClicked.value = false
+    }
+
+    private val _isWriteFilterClicked = MutableLiveData<Boolean>()
+    val isWriteFilterClicked: LiveData<Boolean>
+        get() = _isWriteFilterClicked
+
+
+    fun writeFilterOnClick() {
+        _isWriteFilterClicked.value = true
+    }
+
+    fun writeFilterOnClickFalse() {
+        _isWriteFilterClicked.value = false
+    }
+
 }
