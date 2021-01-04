@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "answer_record_table")
 data class AnswerData(
     @PrimaryKey
-    val questionId: Long,
+    var questionId: Long,
     @ColumnInfo(name = "answer")
-    val answer: String
+    var answer: String
 )
