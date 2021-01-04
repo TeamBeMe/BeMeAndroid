@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "answer_record_table")
-data class AnswerDatas(
+data class AnswerData(
     @PrimaryKey
     val questionId: Long,
     @ColumnInfo(name = "answer")
