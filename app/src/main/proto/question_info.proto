@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "com.teambeme.beme";
+option java_multiple_files = true;
+
+message AnswerInfo {
+  int32 question_id = 1;
+  string answer = 2;
+}
