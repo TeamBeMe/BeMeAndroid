@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id "com.google.protobuf" version "0.8.12"
 }
 
 android {
@@ -67,4 +68,22 @@ dependencies {
 
     // DataStore
     implementation "androidx.datastore:datastore-core:1.0.0-alpha05"
+    // Protobuf
+    implementation  "com.google.protobuf:protobuf-javalite:3.10.0"
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.10.0"
+    }
+
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+        }
+    }
 }
