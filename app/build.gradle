@@ -65,25 +65,4 @@ dependencies {
     // Retrofit & Gson
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-
-    // DataStore
-    implementation "androidx.datastore:datastore-core:1.0.0-alpha05"
-    // Protobuf
-    implementation  "com.google.protobuf:protobuf-javalite:3.10.0"
-}
-
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:3.10.0"
-    }
-
-    generateProtoTasks {
-        all().each { task ->
-            task.builtins {
-                java {
-                    option 'lite'
-                }
-            }
-        }
-    }
 }
