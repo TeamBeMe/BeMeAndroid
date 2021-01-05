@@ -311,12 +311,13 @@ footer(optional)
 - BaseViewContoller로 쉬운 DataBinding과 생명주기 관찰
 - NestedScrollableHost로 중첩 ViewPager2 이슈 해결
 - Status Bar의 색상 바꾸기
-- BindingAdapter로 View의 값을 설정하기
+- [BindingAdapter로 View의 속성 정의, 설정](https://github.com/TeamBeMe/BeMeAndroid/blob/l2hyunwoo_docs/document/BindingAdapter.md)
 - InverseBindingAdapter로 View의 값들 가져오기
 - PageTransformer로 ViewPager2에 전환 애니메이션 주기
-- DiffUtil을 적용한 ListAdapter
+- [DiffUtil을 적용한 ListAdapter](https://github.com/TeamBeMe/BeMeAndroid/blob/l2hyunwoo_docs/document/ListAdapterWithDiffUtil.md)
 - [검색 필터 바텀시트 구성하고 뷰모델을 통해 값을 받아와 봅시다](https://github.com/TeamBeMe/BeMeAndroid/blob/l2hyunwoo_docs/document/BottomSheetDialogFragment.md)
 - [맨 밑까지 스크롤을 할 때 더보기 버튼 띄우기](https://github.com/TeamBeMe/BeMeAndroid/blob/l2hyunwoo_docs/document/ScrollAddMoreButton.md)
+- [SnapHelper로 RecyclerView에 ViewPager 효과 주기](https://github.com/TeamBeMe/BeMeAndroid/blob/l2hyunwoo_docs/document/SnapHelperWithRecyclerView.md)
 
 ## [BeMeetingLog](https://www.notion.so/fun-beMeAndroid-6a0ac949cb294ca8b619d8736ffcc477)
-
+- 회의록 노션에 기록
