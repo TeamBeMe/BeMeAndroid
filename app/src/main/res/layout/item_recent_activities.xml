@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="recentActivitiesData"
+            name="recentActivities"
             type="com.teambeme.beme.notification.model.RecentActivitiesData" />
 
     </data>
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="52dp"
             android:lineHeight="18dp"
-            android:text="@{recentActivitiesData.notifi_message}"
+            android:text="@{recentActivities.notifi_message}"
             android:textColor="#000"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"

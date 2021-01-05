@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="backQuestionData"
+            name="backQuestion"
             type="com.teambeme.beme.notification.model.BackQuestionData" />
 
     </data>
@@ -24,7 +24,7 @@
             android:layout_marginVertical="12dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="36dp"
-            android:text="@{backQuestionData.back_question}"
+            android:text="@{backQuestion.back_question}"
             android:textColor="#000"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"

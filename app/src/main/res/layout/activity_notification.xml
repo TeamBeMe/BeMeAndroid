@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="notificationActivityBinding"
-            type="com.teambeme.beme.notification.NotificationActivity" />
+            name="notificationVM"
+            type="com.teambeme.beme.notification.viewmodel.NotificationViewModel" />
     </data>
 
     <ScrollView
@@ -80,6 +80,7 @@
                 tools:listitem="@layout/item_recent_activities" />
 
             <Button
+                android:id="@+id/btn_recentActivities_show_more"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="28dp"
