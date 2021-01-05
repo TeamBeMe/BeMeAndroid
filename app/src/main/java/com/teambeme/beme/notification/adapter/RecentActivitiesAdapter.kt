@@ -25,6 +25,7 @@ class RecentActivitiesAdapter (private val context: Context) :
 
     override fun onBindViewHolder(holder: RecentActivitiesViewHolder, position: Int) {
         holder.bind(recentActivitiesList[position])
+
     }
 
 
