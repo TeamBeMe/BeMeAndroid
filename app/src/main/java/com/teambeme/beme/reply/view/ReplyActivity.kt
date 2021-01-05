@@ -3,6 +3,7 @@ package com.teambeme.beme.reply.view
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
@@ -14,6 +15,7 @@ class ReplyActivity : BindingActivity<ActivityReplyBinding>(R.layout.activity_re
     private val replyViewModel: ReplyViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.replyViewModel = replyViewModel
         val replyAdapter = ReplyParentAdapter(this, replyViewModel)
         binding.lifecycleOwner = this
         binding.rcvReplyParent.apply {
