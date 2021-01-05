@@ -9,7 +9,8 @@ object BindingConversions {
 
     @BindingAdapter("userPicUrl")
     @JvmStatic
-    fun loadImage(imageView: ImageView, url : String){
-        Glide.with(imageView.context).load(url).error(R.drawable.ic_default_profile_pic).into(imageView)
+    fun loadImage(imageView: ImageView, url: String) {
+        Glide.with(imageView.context).load(url).error(R.drawable.ic_default_profile_pic)
+            .into(imageView)
     }
 }
