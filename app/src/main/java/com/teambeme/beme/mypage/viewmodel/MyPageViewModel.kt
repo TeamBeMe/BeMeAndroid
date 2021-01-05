@@ -94,14 +94,63 @@ class MyPageViewModel:ViewModel(){
         _mypageScrapData.value=dummyScrap.toMutableList()
     }
     fun addDummyScrap(){
-        val dummyScrap=
+        val dummyScrap=listOf(
             MyScrap(
-                question = "요즘 내 가무엇인가요?",
-                categori = "[미랭",
+                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
+                categori = "[ 미래에 관한 질문 ]",
                 time="5분 전",
-                userId = "iron man"
+                userId = "iron man1"
+            ),
+            MyScrap(
+                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
+                categori = "[ 미래에 관한 질문 ]",
+                time="5분 전",
+                userId = "iron man2"
+            ),
+            MyScrap(
+                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
+                categori = "[ 미래에 관한 질문 ]",
+                time="5분 전",
+                userId = "iron man3"
+            ),
+            MyScrap(
+                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
+                categori = "[ 미래에 관한 질문 ]",
+                time="5분 전",
+                userId = "iron man4"
             )
-        _mypageScrapData.value?.add(dummyScrap)
+        )
+        _mypageScrapData.value?.addAll(dummyScrap.toMutableList())
+
+    }
+    fun addDummyWrite(){
+        val dummyWrite=listOf(
+            MyWrite(
+                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
+                categori = "으음",
+                time="5분 전",
+                isSecret = false
+            ),
+            MyWrite(
+                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
+                categori = "행복",
+                time="5분 전",
+                isSecret = true
+            ),
+            MyWrite(
+                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
+                categori = "사랑",
+                time="5분 전",
+                isSecret = false
+            ),
+            MyWrite(
+                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
+                categori = "미래",
+                time="5분 전",
+                isSecret = false
+            )
+        )
+        _mypageWriteData.value?.addAll(dummyWrite.toMutableList())
     }
 
     private val _isScrapFilterClicked = MutableLiveData<Boolean>()

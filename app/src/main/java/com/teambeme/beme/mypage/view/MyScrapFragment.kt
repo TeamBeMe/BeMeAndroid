@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentMyScrapBinding
 import com.teambeme.beme.mypage.adapter.MyScrapAdapter
@@ -28,10 +29,7 @@ class MyScrapFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_scrap, container, false)
         binding.mpViewModel = mypageViewModel
         scrapAdapter = MyScrapAdapter()
-        binding.rcvMyscrap.apply {
-            adapter = scrapAdapter
-            layoutManager = LinearLayoutManager(context)
-        }
+        setAdapter()
         mypageViewModel.setDummyScrap()
 
         mypageViewModel.mypageScrapData.observe(viewLifecycleOwner) { it ->
@@ -43,6 +41,7 @@ class MyScrapFragment : Fragment() {
         mypageViewModel.scrapFilter.observe(viewLifecycleOwner) {
             getSheetDataListener(it)
         }
+        setClickListenerForPlusData(binding)
         return binding.root
     }
 
@@ -57,7 +56,36 @@ class MyScrapFragment : Fragment() {
         }
     }
 
+    private fun setAdapter() {
+        scrapAdapter = MyScrapAdapter()
+        binding.rcvMyscrap.apply {
+            layoutManager = LinearLayoutManager(context)
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    val lastVisiblePosition =
+                        (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                    val itemTotalCount = adapter!!.itemCount - 1
+                    if (lastVisiblePosition == itemTotalCount) {
+                        binding.btnScrapShowmore.visibility = View.VISIBLE
+                    } else {
+                        binding.btnScrapShowmore.visibility = View.GONE
+                    }
+                    super.onScrolled(recyclerView, dx, dy)
+                }
+            })
+            adapter = scrapAdapter
+        }
+    }
+
     private fun getSheetDataListener(category: String) {
         Toast.makeText(context, category, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setClickListenerForPlusData(binding: FragmentMyScrapBinding) {
+        binding.btnScrapShowmore.setOnClickListener {
+            binding.btnScrapShowmore.visibility = View.GONE
+            mypageViewModel.addDummyScrap()
+            scrapAdapter.submitList(mypageViewModel.mypageScrapData.value?.toMutableList())
+        }
     }
 }
