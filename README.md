@@ -28,7 +28,7 @@
   <tr>
   	<td>
       <p>
-        ❤ SOPT 26기 앱잼 OUNCE 팀 안드로이드 개발자
+        ♥️ SOPT 26기 앱잼 OUNCE 팀 안드로이드 개발자
       </p>
       <p>
         🧡 사이드 프로젝트 MARU 안드로이드 리드 개발자
@@ -48,7 +48,7 @@
     </td>
     <td>
       <p>
-        ❤ SOPT 27기 안드로이드 파트 YB
+        ♥️ SOPT 27기 안드로이드 파트 YB
       </p>
       <p>
         🧡 서울여자대학교 디지털미디어학과 3학년
@@ -68,7 +68,7 @@
     </td>
     <td>
       <p>
-        ❤ SOPT 27기 안드로이드파트 YB
+        ♥️ SOPT 27기 안드로이드파트 YB
       </p>
       <p>
         🧡 상명대학교 컴퓨터과학과
@@ -82,7 +82,7 @@
     </td>
     <td>
       <p>
-        ❤ SOPT 27기 안드 파트 YB
+        ♥️ SOPT 27기 안드 파트 YB
       </p>
       <p>
         🧡 SOPT 27기 이기상 스터디 참여
@@ -103,35 +103,46 @@
   </tr>
   <tr>
     <td>
-        <p> 홈 </p>
-        <p> 글쓰기 </p>
-        <p> 팔로잉팔로워 검색 기능 작업 </p>
-        <p> 프로젝트 Setting </p>
-        <p> Util 기능 </p>
+      <ul>
+        <li> 홈 </li>
+        <li> 글쓰기 </li>
+        <li> 팔로잉팔로워 검색 기능 작업 </li>
+        <li> 프로젝트 Setting </li>
+        <li> Util 기능 </li>
+      </ul>
     </td>
     <td>
-        <p> 탐색탭 Fragment </p>
-        <p> 팔로잉탭 Fragment </p>
-        <p> 같은 질문에 대한 다른 답변들 Fragment </p>
-        <p> 팔로잉탭 모두보기 Fragment UI작업 </p>
+      <ul>
+        <li> 탐색탭 Fragment </li>
+        <li> 팔로잉탭 Fragment </li>
+        <li> 같은 질문에 대한 다른 답변들 Fragment </li>
+        <li> 팔로잉탭 모두보기 Fragment UI작업 </li>
+      </ul>
     </td>
     <td>
-        <p> 마이페이지 </p>
-        <p> 상세페이지 </p>
+      <ul>
+        <li> 마이페이지 </li>
+        <li> 상세페이지 </li>
+      </ul>
     </td>
     <td>
-        <p> 알림 뷰 </p>
-        <p> 푸시 알림 구현 </p>
-        <p> 로그인 & 회원가입 뷰 구현  </p>
+      <ul>
+        <li> 알림 뷰 </li>
+        <li> 푸시 알림 구현 </li>
+        <li> 로그인 & 회원가입 뷰 구현 </li>
+      </ul>
     </td>
   </tr>
 </table>
 
 ## BeMe
 
-<img src = "https://user-images.githubusercontent.com/54518925/103659994-6c046d80-4fb0-11eb-9ce6-7d9b708e0696.png" width = "70%" />
+<p align="center">
+  <img src = "https://user-images.githubusercontent.com/54518925/103659994-6c046d80-4fb0-11eb-9ce6-7d9b708e0696.png" width = "70%" />
+</p>
 
-**나를 알아가는 질문 다이어리 BeMe**
+<h3 align="center"> 나를 알아가는 질문 다이어리 BeMe </h3></br>
+
 
 > 나는 어떻게 살고 싶은 지, 무엇을 중요하게 생각하는 지
 >
@@ -144,7 +155,7 @@
 
 ## BeMe's Coding Convention
 ### Kotlin Style Guide
-OUNCE는 [Google의 Kotlin Coding Style Guide](https://developer.android.com/kotlin/style-guide)를 따릅니다
+BeMe는 [Google의 Kotlin Coding Style Guide](https://developer.android.com/kotlin/style-guide)를 따릅니다
 
 ### Class Layout
 다음과 같은 순서 클래스를 구성합니다
@@ -228,11 +239,8 @@ footer(optional)
 ```
 
 ### Issue Number
-
 - BeMe는 이슈 단위 커밋으로 기능 개발을 관리합니다
-
 - GitHub에서 이슈를 트래킹을 할 수 있게 Issue Number를 커밋 메시지에 넣어줍니다
-
 
 ### TYPE
 - FEAT: 새로운 기능 개발
@@ -271,11 +279,10 @@ footer(optional)
 ## Tech Spec
 
 - App Architecture based on MVVM Architecture
-
-  <img src="/Users/l2hyunwoo/Desktop/2020 SOPT/27기 SOPT/BeMe/스크린샷 2021-01-05 오후 1.33.06.png" alt="스크린샷 2021-01-05 오후 1.33.06" style="zoom:50%;" />
-
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/54518925/103668648-aa9f2580-4fba-11eb-9698-7f4645f8f073.png" style="zoom:50%;" />
+</p>
 - Android Jetpack
-
   - MVVM 패턴 구성을 위한
     - ViewModel
     - LiveData
@@ -293,7 +300,6 @@ footer(optional)
 - 네트워크 송/수신 데이터 상태 파악을 위한 OkHttp
 
 - 서버통신을 위한
-
   - Retrofit
   - Gson
 
@@ -304,5 +310,9 @@ footer(optional)
 - BaseViewContoller로 쉬운 DataBinding과 생명주기 관찰
 - NestedScrollableHost로 중첩 ViewPager2 이슈 해결
 - Status Bar의 색상 바꾸기
-- BindingAdapter/InverseBindingAdapter로 View의 값들 가져오기/설정하기
+- BindingAdapter로 View의 값을 설정하기
+- InverseBindingAdapter로 View의 값들 가져오기
 - PageTransformer로 ViewPager2에 전환 애니메이션 주기
+- DiffUtil을 적용한 ListAdapter
+- 검색 필터 바텀시트 구성하고 뷰모델을 통해 값을 받아와 봅시다
+- 맨 밑까지 스크롤을 할 때 더보기 버튼 띄우기
