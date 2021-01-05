@@ -282,6 +282,7 @@ footer(optional)
 <p align="center">
   <img src="https://user-images.githubusercontent.com/54518925/103668648-aa9f2580-4fba-11eb-9698-7f4645f8f073.png" style="zoom:50%;" />
 </p>
+
 - Android Jetpack
   - MVVM 패턴 구성을 위한
     - ViewModel
@@ -291,7 +292,7 @@ footer(optional)
   - 유동적인 Fragment Paging을 위한 ViewPager2
   - 비동기 작업을 위한 Coroutine
   - 생명주기를 관찰하여 정확한 문제 파악을 위한 AndroidX LifeCycle
-  - 쉽고 깔끔한 코딩을 위한 Android KTX
+  - 쉽고 깔끔한 코딩을 위한 안드로이드 코틀린 확장함수 Android KTX
 
 - 코틀린 공식 가이드메 맞춘 클린 코드를 작성하기 위한 ktlint
 
@@ -314,5 +315,5 @@ footer(optional)
 - InverseBindingAdapter로 View의 값들 가져오기
 - PageTransformer로 ViewPager2에 전환 애니메이션 주기
 - DiffUtil을 적용한 ListAdapter
-- 검색 필터 바텀시트 구성하고 뷰모델을 통해 값을 받아와 봅시다
-- 맨 밑까지 스크롤을 할 때 더보기 버튼 띄우기
+- [검색 필터 바텀시트 구성하고 뷰모델을 통해 값을 받아와 봅시다](https://github.com/TeamBeMe/BeMeAndroid/blob/l2hyunwoo_docs/document/BottomSheetDialogFragment.md)
+- [맨 밑까지 스크롤을 할 때 더보기 버튼 띄우기](https://github.com/TeamBeMe/BeMeAndroid/blob/l2hyunwoo_docs/document/ScrollAddMoreButton.md)
