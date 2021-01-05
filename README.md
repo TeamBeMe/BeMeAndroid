@@ -317,3 +317,6 @@ footer(optional)
 - DiffUtil을 적용한 ListAdapter
 - [검색 필터 바텀시트 구성하고 뷰모델을 통해 값을 받아와 봅시다](https://github.com/TeamBeMe/BeMeAndroid/blob/l2hyunwoo_docs/document/BottomSheetDialogFragment.md)
 - [맨 밑까지 스크롤을 할 때 더보기 버튼 띄우기](https://github.com/TeamBeMe/BeMeAndroid/blob/l2hyunwoo_docs/document/ScrollAddMoreButton.md)
+
+## [BeMeetingLog](https://www.notion.so/fun-beMeAndroid-6a0ac949cb294ca8b619d8736ffcc477)
+
