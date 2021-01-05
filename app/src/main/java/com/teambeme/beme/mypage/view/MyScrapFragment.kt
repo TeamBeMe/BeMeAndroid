@@ -18,15 +18,12 @@ import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 
 class MyScrapFragment : Fragment() {
     private lateinit var binding: FragmentMyScrapBinding
-
-    // private lateinit var scrapAdapter: MyScrapAdapter
     private val mypageViewModel: MyPageViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_scrap, container, false)
         binding.lifecycleOwner = this
         binding.myPageViewModel = mypageViewModel
