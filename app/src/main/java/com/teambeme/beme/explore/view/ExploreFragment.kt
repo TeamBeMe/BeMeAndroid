@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import com.google.android.material.tabs.TabLayout
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentExploreBinding
+import com.teambeme.beme.databinding.ListExploreOtherquestionsBinding
 import com.teambeme.beme.explore.adapter.OthermindsRcvAdapter
 import com.teambeme.beme.explore.adapter.OtherquestionsRcvAdapter
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
@@ -29,7 +30,6 @@ class ExploreFragment : Fragment() {
         binding.lifecycleOwner = this
         exploreViewModel.setDummyOtherminds()
         exploreViewModel.setDummyOtherquestions()
-        setAdapter(binding)
         setObserve(binding)
         setClickListenerForPlusData(binding)
         setTabSelectedListener(binding)
@@ -37,9 +37,15 @@ class ExploreFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setAdapter(binding)
+    }
+
     private fun setAdapter(binding: FragmentExploreBinding) {
-        val othermindsAdapter = OthermindsRcvAdapter()
-        val otherquestionsAdapter = OtherquestionsRcvAdapter()
+        val othermindsAdapter = OthermindsRcvAdapter(requireView().context)
+        val otherquestionsAdapter =
+            OtherquestionsRcvAdapter<ListExploreOtherquestionsBinding>(R.layout.list_explore_otherquestions)
         binding.rcvExploreOtherminds.adapter = othermindsAdapter
         binding.rcvExploreOtherquestions.adapter = otherquestionsAdapter
     }
@@ -49,6 +55,13 @@ class ExploreFragment : Fragment() {
             othermindsList?.let {
                 if (binding.rcvExploreOtherminds.adapter != null) with(binding.rcvExploreOtherminds.adapter as OthermindsRcvAdapter) {
                     submitList(othermindsList)
+                }
+            }
+        }
+        exploreViewModel.otherquestionsList.observe(viewLifecycleOwner) { otherquestionsList ->
+            otherquestionsList?.let {
+                if (binding.rcvExploreOtherquestions.adapter != null) with(binding.rcvExploreOtherquestions.adapter as OtherquestionsRcvAdapter<*>) {
+                    submitList(otherquestionsList)
                 }
             }
         }
