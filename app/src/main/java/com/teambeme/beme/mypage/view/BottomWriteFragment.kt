@@ -22,7 +22,8 @@ class BottomWriteFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.item_bottom_write, container, false)
-        binding.mpViewModel = mypageViewModel
+        binding.myPageViewModel = mypageViewModel
+        binding.lifecycleOwner = this
         binding.txtWritesheetApply.setOnClickListener {
             applyFilter()
             dismiss()

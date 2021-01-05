@@ -18,7 +18,8 @@ import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 
 class MyScrapFragment : Fragment() {
     private lateinit var binding: FragmentMyScrapBinding
-    private lateinit var scrapAdapter: MyScrapAdapter
+
+    // private lateinit var scrapAdapter: MyScrapAdapter
     private val mypageViewModel: MyPageViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,9 +28,10 @@ class MyScrapFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_scrap, container, false)
-        binding.mpViewModel = mypageViewModel
-        scrapAdapter = MyScrapAdapter()
-        setAdapter()
+        binding.lifecycleOwner = this
+        binding.myPageViewModel = mypageViewModel
+        val scrapAdapter = MyScrapAdapter()
+        setAdapter(scrapAdapter)
         mypageViewModel.setDummyScrap()
 
         mypageViewModel.mypageScrapData.observe(viewLifecycleOwner) { it ->
@@ -41,7 +43,7 @@ class MyScrapFragment : Fragment() {
         mypageViewModel.scrapFilter.observe(viewLifecycleOwner) {
             getSheetDataListener(it)
         }
-        setClickListenerForPlusData(binding)
+        setClickListenerForPlusData(binding, scrapAdapter)
         return binding.root
     }
 
@@ -56,10 +58,9 @@ class MyScrapFragment : Fragment() {
         }
     }
 
-    private fun setAdapter() {
-        scrapAdapter = MyScrapAdapter()
+    private fun setAdapter(scrapAdapter: MyScrapAdapter) {
         binding.rcvMyscrap.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(requireContext())
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val lastVisiblePosition =
@@ -78,10 +79,13 @@ class MyScrapFragment : Fragment() {
     }
 
     private fun getSheetDataListener(category: String) {
-        Toast.makeText(context, category, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), category, Toast.LENGTH_SHORT).show()
     }
 
-    private fun setClickListenerForPlusData(binding: FragmentMyScrapBinding) {
+    private fun setClickListenerForPlusData(
+        binding: FragmentMyScrapBinding,
+        scrapAdapter: MyScrapAdapter
+    ) {
         binding.btnScrapShowmore.setOnClickListener {
             binding.btnScrapShowmore.visibility = View.GONE
             mypageViewModel.addDummyScrap()

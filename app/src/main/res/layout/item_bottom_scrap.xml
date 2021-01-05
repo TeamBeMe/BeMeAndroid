@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="mpViewModel"
+            name="myPageViewModel"
             type="com.teambeme.beme.mypage.viewmodel.MyPageViewModel" />
 
     </data>

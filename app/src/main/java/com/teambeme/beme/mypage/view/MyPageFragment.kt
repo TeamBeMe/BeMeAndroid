@@ -22,6 +22,7 @@ class MyPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
+        binding.lifecycleOwner = this
         setViewPagerAdapter(childFragmentManager)
         return binding.root
     }

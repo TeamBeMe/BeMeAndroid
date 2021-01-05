@@ -20,15 +20,16 @@ import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 class MyWriteFragment : Fragment() {
     private lateinit var binding: FragmentMyWriteBinding
     private val mypageViewModel: MyPageViewModel by activityViewModels()
-    private lateinit var writeAdapter: MyWriteAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_write, container, false)
-        binding.mpViewModel = mypageViewModel
-        setAdapter()
+        binding.lifecycleOwner = this
+        binding.myPageViewModel = mypageViewModel
+        val writeAdapter = MyWriteAdapter()
+        setAdapter(writeAdapter)
         mypageViewModel.setDummyWrite()
         mypageViewModel.mypageWriteData.observe(viewLifecycleOwner) { it ->
             it.let { writeAdapter.replaceWriteList(it) }
@@ -39,12 +40,13 @@ class MyWriteFragment : Fragment() {
         mypageViewModel.mywriteFilter.observe(viewLifecycleOwner) {
             getSheetDataListener(it)
         }
-        setClickListenerForPlusData(binding)
+        setClickListenerForPlusData(binding, writeAdapter)
         return binding.root
     }
 
     private fun getSheetDataListener(filter: MyWriteFilter) {
-        Toast.makeText(context, filter.category + "," + filter.range, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), filter.category + "," + filter.range, Toast.LENGTH_SHORT)
+            .show()
     }
 
     private fun filterClickListener(isFilterClicked: Boolean) {
@@ -58,10 +60,9 @@ class MyWriteFragment : Fragment() {
         }
     }
 
-    private fun setAdapter() {
-        writeAdapter = MyWriteAdapter()
+    private fun setAdapter(writeAdapter: MyWriteAdapter) {
         binding.rcvMywrite.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(requireContext())
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val lastVisiblePosition =
@@ -79,7 +80,10 @@ class MyWriteFragment : Fragment() {
         }
     }
 
-    private fun setClickListenerForPlusData(binding: FragmentMyWriteBinding) {
+    private fun setClickListenerForPlusData(
+        binding: FragmentMyWriteBinding,
+        writeAdapter: MyWriteAdapter
+    ) {
         binding.btnWriteShowmore.setOnClickListener {
             binding.btnWriteShowmore.visibility = View.GONE
             mypageViewModel.addDummyWrite()

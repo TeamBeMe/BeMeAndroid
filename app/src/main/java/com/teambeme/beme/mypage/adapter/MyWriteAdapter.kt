@@ -18,11 +18,6 @@ class MyWriteAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(write: MyWrite) {
             binding.myWrite = write
-            if (write.isSecret) {
-                binding.imgMywriteSecret.setImageResource(R.drawable.ic_secret_on)
-            } else {
-                binding.imgMywriteSecret.setImageResource(R.drawable.ic_secret_off)
-            }
         }
     }
 
