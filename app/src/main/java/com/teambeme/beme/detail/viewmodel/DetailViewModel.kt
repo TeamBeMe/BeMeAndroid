@@ -1,15 +1,15 @@
-package com.teambeme.beme.reply.viewmodel
+package com.teambeme.beme.detail.viewmodel
 
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.reply.model.ReplyData
-import com.teambeme.beme.reply.model.ReplyParentData
-import com.teambeme.beme.reply.model.initReplyList
+import com.teambeme.beme.detail.model.ReplyData
+import com.teambeme.beme.detail.model.ReplyParentData
+import com.teambeme.beme.detail.model.initReplyList
 
-class ReplyViewModel : ViewModel() {
+class DetailViewModel : ViewModel() {
 
     private val _replyParentId = MutableLiveData<String>()
     val replyParentId: LiveData<String>

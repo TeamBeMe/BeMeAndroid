@@ -1,4 +1,4 @@
-package com.teambeme.beme.reply.adapter
+package com.teambeme.beme.detail.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ReplyChildBinding
-import com.teambeme.beme.reply.model.ReplyData
+import com.teambeme.beme.detail.model.ReplyData
 
 class ReplyChildAdapter() :
     ListAdapter<ReplyData, ReplyChildAdapter.ReplyChildViewHolder>(

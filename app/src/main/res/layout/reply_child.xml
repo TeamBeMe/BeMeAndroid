@@ -8,7 +8,7 @@
 
         <variable
             name="replyData"
-            type="com.teambeme.beme.reply.model.ReplyData" />
+            type="com.teambeme.beme.detail.model.ReplyData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

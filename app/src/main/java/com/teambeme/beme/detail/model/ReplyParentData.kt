@@ -1,4 +1,4 @@
-package com.teambeme.beme.reply.model
+package com.teambeme.beme.detail.model
 
 data class ReplyParentData(
     val txt_id: String,

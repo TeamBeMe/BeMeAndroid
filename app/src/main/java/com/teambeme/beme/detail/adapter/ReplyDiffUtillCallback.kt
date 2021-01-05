@@ -1,7 +1,7 @@
-package com.teambeme.beme.reply.adapter
+package com.teambeme.beme.detail.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.teambeme.beme.reply.model.ReplyParentData
+import com.teambeme.beme.detail.model.ReplyParentData
 
 object ReplyDiffUtillCallback : DiffUtil.ItemCallback<ReplyParentData>() {
     override fun areItemsTheSame(

@@ -1,4 +1,4 @@
-package com.teambeme.beme.reply.adapter
+package com.teambeme.beme.detail.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ReplyParentBinding
-import com.teambeme.beme.reply.model.ReplyParentData
-import com.teambeme.beme.reply.model.initReplyList
-import com.teambeme.beme.reply.viewmodel.ReplyViewModel
+import com.teambeme.beme.detail.model.ReplyParentData
+import com.teambeme.beme.detail.model.initReplyList
+import com.teambeme.beme.detail.viewmodel.DetailViewModel
 
-class ReplyParentAdapter(private val context: Context, private val viewModel: ReplyViewModel) :
+class ReplyParentAdapter(private val context: Context, private val viewModel: DetailViewModel) :
     ListAdapter<ReplyParentData, ReplyParentAdapter.ReplyParentViewHolder>(
         ReplyDiffUtillCallback
     ) {

@@ -7,7 +7,7 @@
 
         <variable
             name="replyParentData"
-            type="com.teambeme.beme.reply.model.ReplyParentData" />
+            type="com.teambeme.beme.detail.model.ReplyParentData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

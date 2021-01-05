@@ -13,7 +13,7 @@
             android:name=".answer.view.AnswerActivity"
             android:exported="true" />
         <activity android:name=".notification.NotificationActivity" />
-        <activity android:name=".reply.view.ReplyActivity" />
+        <activity android:name=".detail.view.DetailActivity" />
         <activity android:name=".main.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

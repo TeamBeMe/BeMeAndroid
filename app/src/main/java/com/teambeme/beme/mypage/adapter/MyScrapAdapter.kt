@@ -1,5 +1,6 @@
 package com.teambeme.beme.mypage.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemMyscrapBinding
+import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.mypage.model.MyScrap
 
 class MyScrapAdapter :
@@ -30,6 +32,11 @@ class MyScrapAdapter :
 
     override fun onBindViewHolder(holder: MyScrapViewHolder, position: Int) {
         holder.bind(getItem(position))
+        holder.itemView.setOnClickListener { view ->
+            val intent = Intent(view.context, DetailActivity::class.java)
+            view.context.startActivity(intent)
+
+        }
     }
 
     private class MyScrapDiffUtil : DiffUtil.ItemCallback<MyScrap>() {
