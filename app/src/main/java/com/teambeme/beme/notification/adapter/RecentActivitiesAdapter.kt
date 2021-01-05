@@ -6,6 +6,7 @@ import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.text.buildSpannedString
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -25,14 +26,15 @@ class RecentActivitiesAdapter :
 
     inner class RecentActivitiesViewHolder(private val binding: ItemRecentActivitiesBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(recentActivitiesData: RecentActivitiesData) {
             binding.recentActivities = recentActivitiesData
 
-            Glide
-                .with(itemView)
-                .load(recentActivitiesData.userPicUrl)
-                .placeholder(R.drawable.ic_default_profile_pic)
-                .error(R.drawable.ic_default_profile_pic).into(binding.notificationProfilePic)
+//            Glide
+//                .with(itemView)
+//                .load(recentActivitiesData.userPicUrl)
+//                .placeholder(R.drawable.ic_default_profile_pic)
+//                .error(R.drawable.ic_default_profile_pic).into(binding.notificationProfilePic)
         }
     }
 

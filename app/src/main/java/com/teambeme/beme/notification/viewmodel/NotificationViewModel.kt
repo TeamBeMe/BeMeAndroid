@@ -18,7 +18,7 @@ class NotificationViewModel : ViewModel() {
 
 
     private val dummyNotiRecentList = mutableListOf(
-        RecentActivitiesData("aaa", "","aaa님이 \"이번주를 후회없이 보내는 방법\"에 대한 나의 글에 댓글을 달았습니다.1"),
+        RecentActivitiesData("aaa", "https://t1.daumcdn.net/cfile/tistory/2616FD35574F9F522C","aaa님이 \"이번주를 후회없이 보내는 방법\"에 대한 나의 글에 댓글을 달았습니다.1"),
         RecentActivitiesData("aaa", "","aaa님이 \"이번주를 후회없이 보내는 방법\"에 대한 나의 글에 댓글을 달았습니다.2"),
         RecentActivitiesData("aaa", "","aaa님이 \"이번주를 후회없이 보내는 방법\"에 대한 나의 글에 댓글을 달았습니다.3"),
         RecentActivitiesData("aaa", "","aaa님이 \"이번주를 후회없이 보내는 방법\"에 대한 나의 글에 댓글을 달았습니다.4"),
