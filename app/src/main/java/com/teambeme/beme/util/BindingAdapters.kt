@@ -8,25 +8,9 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.teambeme.beme.explore.adapter.OtherquestionsRcvAdapter
-import com.teambeme.beme.explore.model.OtherquestionsData
 
 object BindingAdapters {
-    @BindingAdapter("setOtherquestions")
-    @JvmStatic
-    fun setOtherquestions(
-        recyclerView: RecyclerView,
-        otherquestions: MutableList<OtherquestionsData>?
-    ) {
-        if (recyclerView.adapter != null) with(recyclerView.adapter as OtherquestionsRcvAdapter) {
-            otherquestions?.let {
-                submitList(otherquestions)
-            }
-        }
-    }
-
     @BindingAdapter("setCategory")
     @JvmStatic
     fun setCategory(textView: TextView, category: String) {

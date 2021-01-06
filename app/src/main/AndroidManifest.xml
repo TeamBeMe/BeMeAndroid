@@ -13,6 +13,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.BeMe">
+        <activity android:name=".explore.view.ExploreDetailActivity"></activity>
         <activity
             android:name=".answer.view.AnswerActivity"
             android:exported="true" />
