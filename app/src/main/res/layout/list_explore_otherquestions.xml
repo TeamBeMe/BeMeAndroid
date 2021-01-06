@@ -109,17 +109,6 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageButton
-            android:id="@+id/btn_otherquestionslist_reply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_reply"
-            app:layout_constraintBottom_toBottomOf="@id/btn_otherquestionslist_bookmark"
-            app:layout_constraintEnd_toStartOf="@id/btn_otherquestionslist_bookmark"
-            app:layout_constraintTop_toTopOf="@id/btn_otherquestionslist_bookmark" />
-
-        <ImageButton
             android:id="@+id/btn_otherquestionslist_bookmark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

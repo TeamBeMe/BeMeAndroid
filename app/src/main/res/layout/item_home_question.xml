@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="question"
             type="com.teambeme.beme.home.model.Question" />
@@ -31,6 +33,7 @@
             style="@style/question_info_style"
             android:layout_marginTop="20dp"
             android:text="@{question.info}"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/img_question_lock"
@@ -40,6 +43,7 @@
             android:id="@+id/txt_question_date"
             style="@style/question_info_style"
             android:text="@{question.date}"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/txt_question_info"
             app:layout_constraintStart_toStartOf="@+id/txt_question_info"
             app:layout_constraintTop_toBottomOf="@+id/txt_question_info"
@@ -50,7 +54,7 @@
             style="@style/question_question_style"
             android:layout_marginTop="32dp"
             android:text="@{question.title}"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_question_date"
@@ -61,10 +65,27 @@
             style="@style/question_content_style"
             android:layout_marginTop="16dp"
             android:text="@{question.content}"
+            android:textSize="12sp"
+            android:visibility="@{question.isPast == true ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_question_title"
             tools:text="저는 몇일 전 퇴사를 했어요. 그래서 웅앵웅웅앵 수많은 고민 끝에 저질렀답니다. 엄청난 실수이었지만 저는 해낼 수가 있었고 없었고 웅웅웅" />
+
+        <Button
+            android:id="@+id/btn_home_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginBottom="60dp"
+            android:background="@drawable/home_answer_button"
+            android:paddingVertical="16dp"
+            android:text="답변하기"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:visibility="@{question.isPast == true ? View.GONE : View.VISIBLE}"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

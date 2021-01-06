@@ -64,7 +64,6 @@
             android:ems="10"
             android:hint="댓글 작성"
             android:inputType="textPersonName"
-            android:text="@{replyViewModel.editContent}"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             app:layout_constraintBottom_toBottomOf="parent"

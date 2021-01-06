@@ -10,7 +10,7 @@
             type="com.teambeme.beme.explore.viewmodel.ExploreViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".explore.view.ExploreFragment">
@@ -73,21 +73,28 @@
                     app:layout_constraintStart_toStartOf="@id/txt_explore_titleOfOtherminds"
                     app:layout_constraintTop_toBottomOf="@id/txt_explore_titleOfOtherminds" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcv_explore_otherminds"
-                    setOtherminds="@{exploreViewModel.othermindsList}"
+                <com.teambeme.beme.util.NestedScrollableHost
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="30dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_explore_descOfOtherminds"
-                    tools:listitem="@layout/list_explore_otherminds" />
+                    app:layout_constraintTop_toBottomOf="@id/txt_explore_descOfOtherminds">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcv_explore_otherminds"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        android:paddingStart="22dp"
+                        android:paddingEnd="22dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/list_explore_otherminds" />
+
+                </com.teambeme.beme.util.NestedScrollableHost>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -95,7 +102,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintlayout_explore_otherquestions"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:background="#ffffff"
                 android:paddingBottom="40dp"
                 app:layout_constraintTop_toBottomOf="@+id/constraintlayout_explore_otherminds">
@@ -113,13 +120,25 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/txt_explore_descOfOtherquestions"
+                    android:id="@+id/txt_explore_descOfRecent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="나와 같은 질문에 다른 사람들은 이렇게 답했어요"
+                    android:text="내가 답한 질문에 대한 다른 사람들의 최신 답변이에요"
                     android:textColor="#636366"
                     android:textSize="13sp"
+                    app:layout_constraintStart_toStartOf="@id/txt_explore_titleOfOtherquestions"
+                    app:layout_constraintTop_toBottomOf="@id/txt_explore_titleOfOtherquestions" />
+
+                <TextView
+                    android:id="@+id/txt_explore_descOfExciting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="내가 관심있어 할 다른 사람들의 답변이에요"
+                    android:textColor="#636366"
+                    android:textSize="13sp"
+                    android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="@id/txt_explore_titleOfOtherquestions"
                     app:layout_constraintTop_toBottomOf="@id/txt_explore_titleOfOtherquestions" />
 
@@ -128,11 +147,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginTop="12dp"
+                    android:backgroundTint="@android:color/transparent"
                     app:layout_constraintStart_toStartOf="@id/txt_explore_titleOfOtherquestions"
-                    app:layout_constraintTop_toBottomOf="@id/txt_explore_descOfOtherquestions"
+                    app:layout_constraintTop_toBottomOf="@id/txt_explore_descOfRecent"
                     app:tabIndicatorColor="#000000"
                     app:tabSelectedTextColor="#000000"
-                    android:backgroundTint="@android:color/transparent"
                     app:tabTextColor="#8E8E93">
 
                     <com.google.android.material.tabs.TabItem
@@ -145,85 +164,107 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@android:color/transparent"
-                        android:text="인기" />
+                        android:text="흥미" />
 
                 </com.google.android.material.tabs.TabLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tablayout_explore_sort"
-                    android:background="#C9C9C9"/>
+                    android:background="#C9C9C9"
+                    app:layout_constraintTop_toBottomOf="@+id/tablayout_explore_sort" />
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chip_explore_otherquestions"
+                <HorizontalScrollView
+                    android:id="@+id/scrollview_explore_chip"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:paddingStart="28dp"
-                    android:paddingTop="8dp"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
                     app:layout_constraintTop_toBottomOf="@id/tablayout_explore_sort">
-                    <com.google.android.material.chip.Chip
-                        style="@style/Widget.MaterialComponents.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:chipCornerRadius="4dp"
-                        app:chipBackgroundColor="#ffffff"
-                        app:chipStrokeWidth="1dp"
-                        app:chipStrokeColor="#C9C9C9"
-                        android:textColor="#636366"
-                        android:text="가치관" />
-                    <com.google.android.material.chip.Chip
-                        style="@style/Widget.MaterialComponents.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:chipCornerRadius="4dp"
-                        app:chipBackgroundColor="#ffffff"
-                        app:chipStrokeWidth="1dp"
-                        app:chipStrokeColor="#C9C9C9"
-                        android:textColor="#636366"
-                        android:text="사랑" />
-                    <com.google.android.material.chip.Chip
-                        style="@style/Widget.MaterialComponents.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:chipCornerRadius="4dp"
-                        app:chipBackgroundColor="#ffffff"
-                        app:chipStrokeWidth="1dp"
-                        app:chipStrokeColor="#C9C9C9"
-                        android:textColor="#636366"
-                        android:text="일상" />
-                    <com.google.android.material.chip.Chip
-                        style="@style/Widget.MaterialComponents.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:chipCornerRadius="4dp"
-                        app:chipBackgroundColor="#ffffff"
-                        app:chipStrokeWidth="1dp"
-                        app:chipStrokeColor="#C9C9C9"
-                        android:textColor="#636366"
-                        android:text="이야기" />
-                    <com.google.android.material.chip.Chip
-                        style="@style/Widget.MaterialComponents.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:chipCornerRadius="4dp"
-                        app:chipBackgroundColor="#ffffff"
-                        app:chipStrokeWidth="1dp"
-                        app:chipStrokeColor="#C9C9C9"
-                        android:textColor="#636366"
-                        android:text="미래" />
-                    <com.google.android.material.chip.Chip
-                        style="@style/Widget.MaterialComponents.Chip.Filter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:chipCornerRadius="4dp"
-                        app:chipBackgroundColor="#ffffff"
-                        app:chipStrokeWidth="1dp"
-                        app:chipStrokeColor="#C9C9C9"
-                        android:textColor="#636366"
-                        android:text="의미" />
 
-                </com.google.android.material.chip.ChipGroup>
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chip_explore_otherquestions"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:paddingStart="28dp"
+                        android:paddingTop="8dp"
+                        app:singleLine="true"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_explore_1"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="가치관"
+                            android:textColor="@color/explore_chiptext_selector"
+                            app:chipBackgroundColor="@color/explore_chip_selector"
+                            app:chipCornerRadius="4dp"
+                            app:chipStrokeColor="@color/explore_chipstroke_selector"
+                            app:chipStrokeWidth="1dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_explore_2"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="사랑"
+                            android:textColor="@color/explore_chiptext_selector"
+                            app:chipBackgroundColor="@color/explore_chip_selector"
+                            app:chipCornerRadius="4dp"
+                            app:chipStrokeColor="@color/explore_chipstroke_selector"
+                            app:chipStrokeWidth="1dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_explore_3"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="일상"
+                            android:textColor="@color/explore_chiptext_selector"
+                            app:chipBackgroundColor="@color/explore_chip_selector"
+                            app:chipCornerRadius="4dp"
+                            app:chipStrokeColor="@color/explore_chipstroke_selector"
+                            app:chipStrokeWidth="1dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_explore_4"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="이야기"
+                            android:textColor="@color/explore_chiptext_selector"
+                            app:chipBackgroundColor="@color/explore_chip_selector"
+                            app:chipCornerRadius="4dp"
+                            app:chipStrokeColor="@color/explore_chipstroke_selector"
+                            app:chipStrokeWidth="1dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_explore_5"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="미래"
+                            android:textColor="@color/explore_chiptext_selector"
+                            app:chipBackgroundColor="@color/explore_chip_selector"
+                            app:chipCornerRadius="4dp"
+                            app:chipStrokeColor="@color/explore_chipstroke_selector"
+                            app:chipStrokeWidth="1dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_explore_6"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="의미"
+                            android:textColor="@color/explore_chiptext_selector"
+                            app:chipBackgroundColor="@color/explore_chip_selector"
+                            app:chipCornerRadius="4dp"
+                            app:chipStrokeColor="@color/explore_chipstroke_selector"
+                            app:chipStrokeWidth="1dp" />
+
+                    </com.google.android.material.chip.ChipGroup>
+                </HorizontalScrollView>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_explore_otherquestions"
@@ -233,16 +274,37 @@
                     android:layout_marginStart="28dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="28dp"
+                    android:layout_marginBottom="40dp"
+                    android:nestedScrollingEnabled="false"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toTopOf="@id/btn_explore_showmore"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/chip_explore_otherquestions"
+                    app:layout_constraintTop_toBottomOf="@id/scrollview_explore_chip"
                     tools:listitem="@layout/list_explore_otherquestions" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_explore_showmore"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginEnd="28dp"
+                    android:layout_marginBottom="152dp"
+                    android:backgroundTint="#000000"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="16dp"
+                    android:text="더보기"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    app:cornerRadius="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rcv_explore_otherquestions" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

@@ -18,6 +18,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setViewPagerAdapter(this)
+        LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
         setBottomNavigationSelectListener(binding.bnvMain)
     }
 

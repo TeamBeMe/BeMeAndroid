@@ -13,4 +13,9 @@
     <color name="home_background_gray">#2c2c2e</color>
     <color name="question_stroke">#c9c9c9</color>
     <color name="explore_background_gray">#e9e9e9</color>
+    <color name="answer_text_gray">#c9c9c9</color>
+    <color name="answer_text_black">#000000</color>
+    <color name="answer_text_info_gray">#636366</color>
+    <color name="answer_text_info_black">#1c1c1e</color>
+    <color name="answer_switch_off">#c4c4c4</color>
 </resources>
