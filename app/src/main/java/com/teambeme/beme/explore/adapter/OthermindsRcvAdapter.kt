@@ -19,7 +19,6 @@ class OthermindsRcvAdapter(private val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(othermindsData: OthermindsData) {
             binding.otherminds = othermindsData
-
             binding.btnOthermindslistShowdetail.setOnClickListener {
                 context.startActivity<ExploreDetailActivity>(othermindsData.title)
             }

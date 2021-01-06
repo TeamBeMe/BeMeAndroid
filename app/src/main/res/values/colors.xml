@@ -40,8 +40,8 @@
     <color name="exploredetail_btn_showmore_txt_white">#ffffff</color>
     <color name="list_otherminds_txt_title_white">#ffffff</color>
     <color name="list_otherminds_txt_content_black">#000000</color>
-    <color name="shape_otherminds_title_gray">#1C1C1E""</color>
-    <color name="shape_otherminds_content_white">#ffffff""</color>
+    <color name="shape_otherminds_title_gray">#1C1C1E</color>
+    <color name="shape_otherminds_content_white">#ffffff</color>
     <color name="list_otherquestions_txt_title_black">#000000</color>
     <color name="list_otherquestions_txt_category_gray">#636366</color>
     <color name="list_otherquestions_txt_dot_black">#000000</color>

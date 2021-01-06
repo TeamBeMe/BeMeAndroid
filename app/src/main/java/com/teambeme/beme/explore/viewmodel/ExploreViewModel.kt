@@ -1,6 +1,5 @@
 package com.teambeme.beme.explore.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,70 +25,80 @@ class ExploreViewModel : ViewModel() {
             category = "가치관",
             title = null,
             content = "답변1입니다.답변1입니다.답변1입니다.답변1입니다.답변1입니다.답변1입니다.답변1입니다.",
-            time = "5"
+            time = "5",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "2",
             category = "사랑",
             title = null,
             content = "답변2입니다.답변2입니다.답변2입니다.답변2입니다.답변2입니다.답변2입니다.답변2입니다.",
-            time = "26"
+            time = "26",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "3",
             category = "일상",
             title = null,
             content = "답변3입니다.답변3입니다.답변3입니다.답변3입니다.답변3입니다.답변3입니다.답변3입니다.",
-            time = "15"
+            time = "15",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "4",
             category = "이야기",
             title = null,
             content = "답변4입니다.답변4입니다.답변4입니다.답변4입니다.답변4입니다.답변4입니다.답변4입니다.",
-            time = "3"
+            time = "3",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "5",
             category = "미래",
             title = null,
             content = "답변5입니다.답변5입니다.답변5입니다.답변5입니다.답변5입니다.답변5입니다.답변5입니다.",
-            time = "4"
+            time = "4",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "6",
             category = "의미",
             title = null,
             content = "답변6입니다.답변6입니다.답변6입니다.답변6입니다.답변6입니다.답변6입니다.답변6입니다.",
-            time = "5"
+            time = "5",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "7",
             category = "일상",
             title = null,
             content = "답변7입니다.답변7입니다.답변7입니다.답변7입니다.답변7입니다.답변7입니다.답변7입니다.",
-            time = "15"
+            time = "15",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "8",
             category = "이야기",
             title = null,
             content = "답변8입니다.답변8입니다.답변8입니다.답변8입니다.답변8입니다.답변8입니다.답변8입니다.",
-            time = "3"
+            time = "3",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "9",
             category = "미래",
             title = null,
             content = "답변9입니다.답변9입니다.답변9입니다.답변9입니다.답변9입니다.답변9입니다.답변9입니다.",
-            time = "4"
+            time = "4",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "10",
             category = "의미",
             title = null,
             content = "답변10입니다.답변10입니다.답변10입니다.답변10입니다.답변10입니다.답변10입니다.답변10입니다.",
-            time = "5"
+            time = "5",
+            isbookmarked = false
         )
     )
 
@@ -104,70 +113,80 @@ class ExploreViewModel : ViewModel() {
                 category = "가치관",
                 title = null,
                 content = "답변11입니다.",
-                time = "5"
+                time = "5",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "12",
                 category = "사랑",
                 title = null,
                 content = "답변12입니다.",
-                time = "26"
+                time = "26",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "13",
                 category = "일상",
                 title = null,
                 content = "답변13입니다.",
-                time = "15"
+                time = "15",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "14",
                 category = "이야기",
                 title = null,
                 content = "답변14입니다.",
-                time = "3"
+                time = "3",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "15",
                 category = "미래",
                 title = null,
                 content = "답변15입니다.",
-                time = "4"
+                time = "4",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "16",
                 category = "의미",
                 title = null,
                 content = "답변16입니다.",
-                time = "5"
+                time = "5",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "17",
                 category = "일상",
                 title = null,
                 content = "답변17입니다.",
-                time = "15"
+                time = "15",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "18",
                 category = "이야기",
                 title = null,
                 content = "답변18입니다.",
-                time = "3"
+                time = "3",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "19",
                 category = "미래",
                 title = null,
                 content = "답변19입니다.",
-                time = "4"
+                time = "4",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "20",
                 category = "의미",
                 title = null,
                 content = "답변20입니다.",
-                time = "5"
+                time = "5",
+                isbookmarked = false
             )
         )
         dummyOtheranswersList.addAll(plusOtheranswersList.toMutableList())
@@ -180,70 +199,80 @@ class ExploreViewModel : ViewModel() {
             category = "가치관",
             title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
             content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "5"
+            time = "5",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "2",
             category = "사랑",
             title = "올해 1월과 가장 달라진 점은 무엇인가요?",
             content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "26"
+            time = "26",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "3",
             category = "일상",
             title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
             content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "15"
+            time = "15",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "4",
             category = "이야기",
             title = "올해 1월과 가장 달라진 점은 무엇인가요?",
             content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "3"
+            time = "3",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "5",
             category = "미래",
             title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
             content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "4"
+            time = "4",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "6",
             category = "의미",
             title = "올해 1월과 가장 달라진 점은 무엇인가요?",
             content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "5"
+            time = "5",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "7",
             category = "일상",
             title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
             content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "15"
+            time = "15",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "8",
             category = "이야기",
             title = "올해 1월과 가장 달라진 점은 무엇인가요?",
             content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "3"
+            time = "3",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "9",
             category = "미래",
             title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
             content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "4"
+            time = "4",
+            isbookmarked = false
         ),
         OtherquestionsData(
             userId = "10",
             category = "의미",
             title = "올해 1월과 가장 달라진 점은 무엇인가요?",
             content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "5"
+            time = "5",
+            isbookmarked = false
         )
     )
 
@@ -258,70 +287,80 @@ class ExploreViewModel : ViewModel() {
                 category = "가치관",
                 title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
                 content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "5"
+                time = "5",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "12",
                 category = "사랑",
                 title = "올해 1월과 가장 달라진 점은 무엇인가요?",
                 content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "26"
+                time = "26",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "13",
                 category = "일상",
                 title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
                 content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "15"
+                time = "15",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "14",
                 category = "이야기",
                 title = "올해 1월과 가장 달라진 점은 무엇인가요?",
                 content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "3"
+                time = "3",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "15",
                 category = "미래",
                 title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
                 content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "4"
+                time = "4",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "16",
                 category = "의미",
                 title = "올해 1월과 가장 달라진 점은 무엇인가요?",
                 content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "5"
+                time = "5",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "17",
                 category = "일상",
                 title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
                 content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "15"
+                time = "15",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "18",
                 category = "이야기",
                 title = "올해 1월과 가장 달라진 점은 무엇인가요?",
                 content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "3"
+                time = "3",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "19",
                 category = "미래",
                 title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
                 content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "4"
+                time = "4",
+                isbookmarked = false
             ),
             OtherquestionsData(
                 userId = "20",
                 category = "의미",
                 title = "올해 1월과 가장 달라진 점은 무엇인가요?",
                 content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "5"
+                time = "5",
+                isbookmarked = false
             )
         )
         dummyOtherquestionsList.addAll(plusOtherquestionsList.toMutableList())

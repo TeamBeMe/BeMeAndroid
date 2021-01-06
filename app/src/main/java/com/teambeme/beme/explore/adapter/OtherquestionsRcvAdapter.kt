@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.BR
 import com.teambeme.beme.R
+import com.teambeme.beme.databinding.ListExploreOtherquestionsBinding
+import com.teambeme.beme.databinding.ListExploredetailOtheranswersBinding
 import com.teambeme.beme.explore.model.OtherquestionsData
 
 class OtherquestionsRcvAdapter<B : ViewDataBinding>(private val layout: Int) :
@@ -18,15 +20,19 @@ class OtherquestionsRcvAdapter<B : ViewDataBinding>(private val layout: Int) :
     inner class OtherquestionsRcvViewHolder<B : ViewDataBinding>(private val binding: B) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(otherquestionsData: OtherquestionsData) {
-            when (layout) {
-                R.layout.list_explore_otherquestions -> binding.setVariable(
-                    BR.otherquestions,
-                    otherquestionsData
-                )
-                R.layout.list_exploredetail_otheranswers -> binding.setVariable(
-                    BR.otheranswers,
-                    otherquestionsData
-                )
+            when (binding) {
+                is ListExploreOtherquestionsBinding -> {
+                    with(binding as ListExploreOtherquestionsBinding) {
+                        setVariable(BR.otherquestions, otherquestionsData)
+                        setClickListenerForQuestionsBookmark(binding, otherquestionsData)
+                    }
+                }
+                else -> {
+                    with(binding as ListExploredetailOtheranswersBinding) {
+                        setVariable(BR.otheranswers, otherquestionsData)
+                        setClickListenerForAnswersBookmark(binding, otherquestionsData)
+                    }
+                }
             }
         }
     }
@@ -56,5 +62,41 @@ class OtherquestionsRcvAdapter<B : ViewDataBinding>(private val layout: Int) :
 
         override fun areContentsTheSame(oldItem: OtherquestionsData, newItem: OtherquestionsData) =
             (oldItem == newItem)
+    }
+
+    private fun setClickListenerForQuestionsBookmark(
+        binding: ListExploreOtherquestionsBinding,
+        otherquestionsData: OtherquestionsData
+    ) {
+        binding.btnOtherquestionslistBookmark.setOnClickListener {
+            when (binding.otherquestions?.isbookmarked) {
+                false -> {
+                    otherquestionsData.isbookmarked = true
+                    binding.btnOtherquestionslistBookmark.setImageResource(R.drawable.ic_bookmark_checked)
+                }
+                else -> {
+                    otherquestionsData.isbookmarked = false
+                    binding.btnOtherquestionslistBookmark.setImageResource(R.drawable.ic_bookmark)
+                }
+            }
+        }
+    }
+
+    private fun setClickListenerForAnswersBookmark(
+        binding: ListExploredetailOtheranswersBinding,
+        otheranswersData: OtherquestionsData
+    ) {
+        binding.btnOtheranswerslistBookmark.setOnClickListener {
+            when (binding.otheranswers?.isbookmarked) {
+                false -> {
+                    otheranswersData.isbookmarked = true
+                    binding.btnOtheranswerslistBookmark.setImageResource(R.drawable.ic_bookmark_checked)
+                }
+                else -> {
+                    otheranswersData.isbookmarked = false
+                    binding.btnOtheranswerslistBookmark.setImageResource(R.drawable.ic_bookmark)
+                }
+            }
+        }
     }
 }
