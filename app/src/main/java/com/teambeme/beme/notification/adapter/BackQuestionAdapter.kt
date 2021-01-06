@@ -38,5 +38,6 @@ class BackQuestionAdapter :
                 executePendingBindings()
             }
         }
+
     }
 }
