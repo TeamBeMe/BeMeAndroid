@@ -1,66 +1,64 @@
 package com.teambeme.beme.notification
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teambeme.beme.R
+import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.databinding.ActivityNotificationBinding
 import com.teambeme.beme.notification.adapter.BackQuestionAdapter
 import com.teambeme.beme.notification.adapter.RecentActivitiesAdapter
-import com.teambeme.beme.notification.model.BackQuestionData
 import com.teambeme.beme.notification.viewmodel.NotificationViewModel
 
-class NotificationActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityNotificationBinding
-    private lateinit var backQuestionAdapter: BackQuestionAdapter
+class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layout.activity_notification) {
     private val notificationViewModel: NotificationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_notification)
-        binding.notificationVM = notificationViewModel
-        binding.lifecycleOwner = this
 
-        backQuestionAdapter = BackQuestionAdapter(this)
-        binding.rcvThisWeekBackQuestion.adapter = backQuestionAdapter
-        binding.rcvThisWeekBackQuestion.layoutManager = LinearLayoutManager(this)
+        setViewModel(binding)
 
-        backQuestionAdapter.datas = mutableListOf(
-            BackQuestionData("가장 좋아하는 음식은 무엇인가요?1가장 좋아하는 음식은 무엇인가요?1가장 좋아하는 음식은 무엇인가요?1"),
-            BackQuestionData("가장 좋아하는 음식은 무엇인가요?2가장 좋아하는 음식은 무엇인가요?2"),
-            BackQuestionData("가장 좋아하는 음식은 무엇인가요?3"),
-            BackQuestionData("가장 좋아하는 음식은 무엇인가요?4"),
-            BackQuestionData("가장 좋아하는 음식은 무엇인가요?5"),
-            BackQuestionData("가장 좋아하는 음식은 무엇인가요?6"),
-            BackQuestionData("가장 좋아하는 음식은 무엇인가요?7"),
-            BackQuestionData("가장 좋아하는 음식은 무엇인가요?8")
-        )
+        setBackQuestionAdapter(binding)
+        notificationViewModel.setDummyBackQuestionNotification()
 
+        setRecentActivitiesAdapter(binding)
         notificationViewModel.setDummyRecentNotification()
+        setClickListenerForPlusRecentActivitiesData(binding)
+        setObserveRecentActivities(binding)
 
-        setAdapter(binding)
-        setClickListenerForPlusData(binding)
-        setObserve(binding)
 
-        backQuestionAdapter.notifyDataSetChanged()
     }
 
-    private fun setAdapter(binding: ActivityNotificationBinding) {
+    private fun setViewModel(binding: ActivityNotificationBinding) {
+        binding.apply {
+            notificationViewModel = notificationViewModel
+            lifecycleOwner = this@NotificationActivity
+        }
+    }
+
+    private fun setBackQuestionAdapter(binding: ActivityNotificationBinding) {
+        val backQuestionAdapter = BackQuestionAdapter()
+        binding.rcvThisWeekBackQuestion.apply {
+            adapter = backQuestionAdapter
+            layoutManager = LinearLayoutManager(this@NotificationActivity)
+        }
+        notificationViewModel.backQuestionList.observe(this) { list ->
+            backQuestionAdapter.replaceQuestionList(list)
+        }
+    }
+
+    private fun setRecentActivitiesAdapter(binding: ActivityNotificationBinding) {
         val recentActivitiesAdapter = RecentActivitiesAdapter()
         binding.rcvRecentActivities.adapter = recentActivitiesAdapter
     }
 
-
-    private fun setClickListenerForPlusData(binding: ActivityNotificationBinding) {
+    private fun setClickListenerForPlusRecentActivitiesData(binding: ActivityNotificationBinding) {
         binding.btnRecentActivitiesShowMore.setOnClickListener {
             notificationViewModel.addDummyRecentNotification()
         }
     }
 
-    private fun setObserve(binding: ActivityNotificationBinding) {
+    private fun setObserveRecentActivities(binding: ActivityNotificationBinding) {
         notificationViewModel.recentActivitiesList.observe(this) { recentActivitiesList ->
             recentActivitiesList?.let {
                 if (binding.rcvRecentActivities.adapter != null) with(binding.rcvRecentActivities.adapter as RecentActivitiesAdapter) {
@@ -68,9 +66,5 @@ class NotificationActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
-
-
 }
-

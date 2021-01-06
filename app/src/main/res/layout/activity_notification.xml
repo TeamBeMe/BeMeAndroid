@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="notificationVM"
+            name="notificationViewModel"
             type="com.teambeme.beme.notification.viewmodel.NotificationViewModel" />
     </data>
 
