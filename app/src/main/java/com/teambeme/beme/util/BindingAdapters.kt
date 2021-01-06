@@ -39,7 +39,7 @@ object BindingAdapters {
         textView.text = time + "분 전"
     }
 
-    @BindingAdapter("app:setSrcFromUrl")
+    @BindingAdapter("setSrcFromUrl")
     @JvmStatic
     fun setSrcFromUrl(imageView: ImageView, url: String) {
         Glide.with(imageView.context)
