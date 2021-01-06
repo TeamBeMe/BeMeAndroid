@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -74,4 +75,8 @@ dependencies {
 
     // Ted Permission
     implementation 'gun0912.ted:tedpermission:2.2.3'
+
+    // FireBase
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }
