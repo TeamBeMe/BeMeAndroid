@@ -1,66 +1,68 @@
 package com.teambeme.beme.explore.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.google.android.material.tabs.TabLayout
 import com.teambeme.beme.R
+import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.databinding.FragmentExploreBinding
 import com.teambeme.beme.databinding.ListExploreOtherquestionsBinding
-import com.teambeme.beme.explore.adapter.OthermindsRcvAdapter
-import com.teambeme.beme.explore.adapter.OtherquestionsRcvAdapter
+import com.teambeme.beme.explore.adapter.OtherMindsRcvAdapter
+import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
 
-class ExploreFragment : Fragment() {
+class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragment_explore) {
     private val exploreViewModel: ExploreViewModel by activityViewModels()
-    private lateinit var binding: FragmentExploreBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
+    ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+        LifeCycleEventLogger(javaClass.name).registerLogger(viewLifecycleOwner.lifecycle)
         binding.exploreViewModel = exploreViewModel
         binding.lifecycleOwner = this
-        exploreViewModel.setDummyOtherminds()
-        exploreViewModel.setDummyOtherquestions()
-        setObserve(binding)
-        setClickListenerForPlusData(binding)
+        exploreViewModel.setDummyOtherMinds()
+        exploreViewModel.setDummyOtherQuestions()
+        setOtherMindsAdapter(binding)
+        setOtherQuestionsAdapter(binding)
+        setOtherMindsObserve(binding)
+        setOtherQuestionsObserve(binding)
         setTabSelectedListener(binding)
         setSnapHelper(binding)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setAdapter(binding)
+    private fun setOtherMindsAdapter(binding: FragmentExploreBinding) {
+        val otherMindsAdapter = OtherMindsRcvAdapter(requireContext())
+        binding.rcvExploreOtherminds.adapter = otherMindsAdapter
     }
 
-    private fun setAdapter(binding: FragmentExploreBinding) {
-        val othermindsAdapter = OthermindsRcvAdapter(requireView().context)
-        val otherquestionsAdapter =
-            OtherquestionsRcvAdapter<ListExploreOtherquestionsBinding>(R.layout.list_explore_otherquestions)
-        binding.rcvExploreOtherminds.adapter = othermindsAdapter
-        binding.rcvExploreOtherquestions.adapter = otherquestionsAdapter
+    private fun setOtherQuestionsAdapter(binding: FragmentExploreBinding) {
+        val otherQuestionsAdapter =
+            OtherQuestionsRcvAdapter<ListExploreOtherquestionsBinding>(requireContext(), R.layout.list_explore_otherquestions)
+        binding.rcvExploreOtherquestions.adapter = otherQuestionsAdapter
     }
 
-    private fun setObserve(binding: FragmentExploreBinding) {
-        exploreViewModel.othermindsList.observe(viewLifecycleOwner) { othermindsList ->
+    private fun setOtherMindsObserve(binding: FragmentExploreBinding) {
+        exploreViewModel.otherMindsList.observe(viewLifecycleOwner) { othermindsList ->
             othermindsList?.let {
-                if (binding.rcvExploreOtherminds.adapter != null) with(binding.rcvExploreOtherminds.adapter as OthermindsRcvAdapter) {
+                if (binding.rcvExploreOtherminds.adapter != null) with(binding.rcvExploreOtherminds.adapter as OtherMindsRcvAdapter) {
                     submitList(othermindsList)
                 }
             }
         }
-        exploreViewModel.otherquestionsList.observe(viewLifecycleOwner) { otherquestionsList ->
+    }
+
+    private fun setOtherQuestionsObserve(binding: FragmentExploreBinding) {
+        exploreViewModel.otherQuestionsList.observe(viewLifecycleOwner) { otherquestionsList ->
             otherquestionsList?.let {
-                if (binding.rcvExploreOtherquestions.adapter != null) with(binding.rcvExploreOtherquestions.adapter as OtherquestionsRcvAdapter<*>) {
+                if (binding.rcvExploreOtherquestions.adapter != null) with(binding.rcvExploreOtherquestions.adapter as OtherQuestionsRcvAdapter<*>) {
                     submitList(otherquestionsList)
                 }
             }
@@ -94,11 +96,5 @@ class ExploreFragment : Fragment() {
     private fun setSnapHelper(binding: FragmentExploreBinding) {
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.rcvExploreOtherminds)
-    }
-
-    private fun setClickListenerForPlusData(binding: FragmentExploreBinding) {
-        binding.btnExploreShowmore.setOnClickListener {
-            exploreViewModel.plusDummyOtherquestions()
-        }
     }
 }

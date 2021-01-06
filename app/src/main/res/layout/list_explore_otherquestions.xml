@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="otherquestions"
-            type="com.teambeme.beme.explore.model.OtherquestionsData" />
+            name="otherQuestions"
+            type="com.teambeme.beme.explore.model.OtherQuestionsData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +23,7 @@
             android:id="@+id/txt_otherquestionslist_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{otherquestions.title}"
+            android:text="@{otherQuestions.title}"
             android:textColor="@color/list_otherquestions_txt_title_black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/txt_otherquestionslist_category"
-            setCategory="@{otherquestions.category}"
+            setCategory="@{otherQuestions.category}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -56,7 +56,7 @@
 
         <TextView
             android:id="@+id/txt_otherquestionslist_time"
-            setTime="@{otherquestions.time}"
+            setTime="@{otherQuestions.time}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@{otherquestions.content}"
+            android:text="@{otherQuestions.content}"
             android:textColor="@color/list_otherquestions_txt_content_black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/txt_otherquestionslist_title"
@@ -92,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="@{otherquestions.userId}"
+            android:text="@{otherQuestions.userId}"
             android:textColor="@color/list_otherquestions_txt_userid_black"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/img_otherquestionslist_profile"
@@ -100,11 +100,13 @@
             app:layout_constraintTop_toTopOf="@+id/img_otherquestionslist_profile" />
 
         <ImageButton
-            android:id="@+id/btn_otherquestionslist_showdetail"
+            android:id="@+id/btn_otherquestionslist_show_other_answers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="6dp"
             android:background="@android:color/transparent"
+            android:paddingStart="18dp"
+            android:paddingTop="18dp"
             android:src="@drawable/ic_showdetail_black"
             app:layout_constraintBottom_toBottomOf="@id/txt_otherquestionslist_title"
             app:layout_constraintEnd_toEndOf="parent" />

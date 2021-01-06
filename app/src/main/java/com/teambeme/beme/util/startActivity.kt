@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 
-inline fun <reified T : Activity> Context.startActivity(othermindsTitle: String) {
+inline fun <reified T : Activity> Context.startActivity(otherMindsTitle: String) {
     val intent = Intent(this, T::class.java)
-    intent.putExtra("othermindsTitle", othermindsTitle)
+    intent.putExtra("otherMindsTitle", otherMindsTitle)
     startActivity(intent)
 }
