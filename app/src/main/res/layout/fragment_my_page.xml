@@ -11,6 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#ffffff"
         tools:context=".mypage.view.MyPageFragment">
 
         <ImageView
@@ -63,8 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:paddingStart="8dp"
             android:paddingVertical="4dp"
+            android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="답한 질문 202"
             app:layout_constraintStart_toEndOf="@+id/txt_mypage_attend"
@@ -78,6 +79,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="30dp"
+            android:backgroundTint="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,12 +98,13 @@
                 android:text="스크랩" />
 
         </com.google.android.material.tabs.TabLayout>
+
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#DFDFDF"
             android:layout_marginBottom="14dp"
+            android:background="#DFDFDF"
             app:layout_constraintTop_toBottomOf="@+id/tab_mypage" />
 
 
@@ -115,7 +118,7 @@
                 android:id="@+id/vp_mypage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent" />
         </com.teambeme.beme.util.NestedScrollableHost>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
