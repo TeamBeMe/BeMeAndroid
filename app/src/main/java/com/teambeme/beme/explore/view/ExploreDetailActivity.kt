@@ -17,7 +17,7 @@ class ExploreDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        StatusBarUtil.setStatusBar(this, Color.BLACK)
+        StatusBarUtil.setStatusBar(this, Color.WHITE)
         val binding: ActivityExploreDetailBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_explore_detail)
         binding.exploreDetailViewModel = exploreDetailViewModel

@@ -57,7 +57,7 @@
                     android:layout_marginStart="28dp"
                     android:layout_marginTop="72dp"
                     android:text="나와 다른 생각들"
-                    android:textColor="#000000"
+                    android:textColor="@color/explore_txt_title_of_otherminds_black"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="내가 최근에 답한 질문들의 다른 답변이에요"
-                    android:textColor="#636366"
+                    android:textColor="@color/explore_txt_desc_of_otherminds_gray"
                     android:textSize="13sp"
                     app:layout_constraintStart_toStartOf="@id/txt_explore_titleOfOtherminds"
                     app:layout_constraintTop_toBottomOf="@id/txt_explore_titleOfOtherminds" />
@@ -103,7 +103,7 @@
                 android:id="@+id/constraintlayout_explore_otherquestions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#ffffff"
+                android:background="@color/explore_constraintlayout_otherquestions_white"
                 android:paddingBottom="40dp"
                 app:layout_constraintTop_toBottomOf="@+id/constraintlayout_explore_otherminds">
 
@@ -114,7 +114,7 @@
                     android:layout_marginStart="28dp"
                     android:layout_marginTop="48dp"
                     android:text="다른 글 둘러보기"
-                    android:textColor="#000000"
+                    android:textColor="@color/explore_txt_title_of_otherquestions_black"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="내가 답한 질문에 대한 다른 사람들의 최신 답변이에요"
-                    android:textColor="#636366"
+                    android:textColor="@color/explore_txt_desc_of_otherquestions_gray"
                     android:textSize="13sp"
                     app:layout_constraintStart_toStartOf="@id/txt_explore_titleOfOtherquestions"
                     app:layout_constraintTop_toBottomOf="@id/txt_explore_titleOfOtherquestions" />
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="내가 관심있어 할 다른 사람들의 답변이에요"
-                    android:textColor="#636366"
+                    android:textColor="@color/explore_txt_desc_of_otherquestions_gray"
                     android:textSize="13sp"
                     android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="@id/txt_explore_titleOfOtherquestions"
@@ -150,9 +150,9 @@
                     android:backgroundTint="@android:color/transparent"
                     app:layout_constraintStart_toStartOf="@id/txt_explore_titleOfOtherquestions"
                     app:layout_constraintTop_toBottomOf="@id/txt_explore_descOfRecent"
-                    app:tabIndicatorColor="#000000"
-                    app:tabSelectedTextColor="#000000"
-                    app:tabTextColor="#8E8E93">
+                    app:tabIndicatorColor="@color/explore_tab_indicator_black"
+                    app:tabSelectedTextColor="@color/explore_tab_selected_txt_black"
+                    app:tabTextColor="@color/explore_tab_txt_gray">
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
@@ -169,9 +169,10 @@
                 </com.google.android.material.tabs.TabLayout>
 
                 <View
+                    android:id="@+id/view_explore_divide_line"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#C9C9C9"
+                    android:background="@color/explore_divide_line_gray"
                     app:layout_constraintTop_toBottomOf="@+id/tablayout_explore_sort" />
 
                 <HorizontalScrollView
@@ -290,11 +291,11 @@
                     android:layout_marginStart="28dp"
                     android:layout_marginEnd="28dp"
                     android:layout_marginBottom="152dp"
-                    android:backgroundTint="#000000"
+                    android:backgroundTint="@color/explore_btn_showmore_background_black"
                     android:paddingTop="12dp"
                     android:paddingBottom="16dp"
                     android:text="더보기"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/explore_btn_showmore_txt_white"
                     android:textSize="16sp"
                     app:cornerRadius="6dp"
                     app:layout_constraintBottom_toBottomOf="parent"

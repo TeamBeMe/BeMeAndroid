@@ -16,7 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
+        android:background="@color/exploredetail_background_white"
         tools:context=".explore.view.ExploreDetailActivity">
 
         <ImageButton
@@ -37,7 +37,7 @@
             android:layout_marginStart="2dp"
             android:layout_marginTop="28dp"
             android:text="@{othermindsTitle}"
-            android:textColor="#000000"
+            android:textColor="@color/exploredetail_txt_question_black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/btn_exploredetail_goback"
             app:layout_constraintTop_toBottomOf="@id/btn_exploredetail_goback" />
@@ -50,9 +50,9 @@
             android:backgroundTint="@android:color/transparent"
             app:layout_constraintStart_toStartOf="@id/txt_exploredetail_question"
             app:layout_constraintTop_toBottomOf="@id/txt_exploredetail_question"
-            app:tabIndicatorColor="#000000"
-            app:tabSelectedTextColor="#000000"
-            app:tabTextColor="#8E8E93">
+            app:tabIndicatorColor="@color/exploredetail_tab_indicator_black"
+            app:tabSelectedTextColor="@color/exploredetail_tab_selected_txt_black"
+            app:tabTextColor="@color/exploredetail_tab_txt_gray">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -69,9 +69,10 @@
         </com.google.android.material.tabs.TabLayout>
 
         <View
+            android:id="@+id/view_exploredetail_divide_line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#C9C9C9"
+            android:background="@color/exploredetail_divide_line_gray"
             app:layout_constraintTop_toBottomOf="@+id/tablayout_exploredetail_sort" />
 
         <androidx.core.widget.NestedScrollView
@@ -106,11 +107,11 @@
                     android:layout_marginEnd="28dp"
                     android:layout_marginBottom="152dp"
                     android:layout_marginTop="28dp"
-                    android:backgroundTint="#000000"
+                    android:backgroundTint="@color/exploredetail_btn_showmore_background_black"
                     android:paddingTop="12dp"
                     android:paddingBottom="16dp"
                     android:text="더보기"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/exploredetail_btn_showmore_txt_white"
                     android:textSize="16sp"
                     app:cornerRadius="6dp"
                     app:layout_constraintBottom_toBottomOf="parent"
