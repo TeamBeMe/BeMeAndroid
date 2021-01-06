@@ -27,14 +27,14 @@ class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layo
         setObserveRecentActivities(binding)
     }
 
-    private fun setViewModel(binding: ActivityNotificationBinding){
+    private fun setViewModel(binding: ActivityNotificationBinding) {
         binding.apply {
             notificationViewModel = notificationViewModel
             lifecycleOwner = this@NotificationActivity
         }
     }
 
-    private fun setBackQuestionAdapter(binding: ActivityNotificationBinding){
+    private fun setBackQuestionAdapter(binding: ActivityNotificationBinding) {
         val backQuestionAdapter = BackQuestionAdapter()
         binding.rcvThisWeekBackQuestion.apply {
             adapter = backQuestionAdapter
@@ -64,7 +64,5 @@ class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layo
                 }
             }
         }
-
     }
 }
-
