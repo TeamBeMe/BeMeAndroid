@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.databinding.ActivityDetailBinding
-import com.teambeme.beme.detail.adapter.ReplyParentAdapter
+import com.teambeme.beme.detail.adapter.ReplyAdapter
 import com.teambeme.beme.detail.viewmodel.DetailViewModel
 
 class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_detail) {
@@ -16,16 +16,17 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.detailViewModel = detailViewModel
-        val replyAdapter = ReplyParentAdapter(this, detailViewModel)
+        val replyAdapter = ReplyAdapter(this, detailViewModel)
         binding.lifecycleOwner = this
         binding.rcvDetailParent.apply {
             adapter = replyAdapter
             layoutManager = LinearLayoutManager(this@DetailActivity)
         }
         detailViewModel.setDummyParentReply()
-
-        detailViewModel.replyParentData.observe(this) { it ->
-            it.let { replyAdapter.replaceReplyList(it) }
+        detailViewModel.replyParentData.observe(this) { replyParentData ->
+            replyParentData.let {
+                replyAdapter.replaceReplyList(replyParentData.toMutableList())
+            }
         }
 
         detailViewModel.isOpenClicked.observe(this) {
@@ -39,6 +40,20 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
         detailViewModel.isSecretClicked.observe(this) {
             secretClickListener(it)
         }
+        detailViewModel.position.observe(this) {
+            positionListener(it)
+        }
+    }
+
+    private fun positionListener(position: Int) {
+        //if(myId==replyId) -> MyReplyFragment else if(myId==writeId)
+        // -> MyOtherFragment else OtherFragment   나중을위한주석
+
+        val bottomSheetFragment = BottomMyReplyFragment(false)
+        bottomSheetFragment.show(
+            supportFragmentManager,
+            bottomSheetFragment.tag
+        )
     }
 
     private fun openClickListener(isOpenClicked: Boolean) {

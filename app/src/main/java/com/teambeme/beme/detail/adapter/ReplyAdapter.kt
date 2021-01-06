@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ReplyParentBinding
@@ -16,13 +15,25 @@ import com.teambeme.beme.detail.model.ReplyParentData
 import com.teambeme.beme.detail.model.initReplyList
 import com.teambeme.beme.detail.viewmodel.DetailViewModel
 
-class ReplyParentAdapter(private val context: Context, private val viewModel: DetailViewModel) :
-    ListAdapter<ReplyParentData, ReplyParentAdapter.ReplyParentViewHolder>(
-        ReplyDiffUtillCallback
-    ) {
-    private var replyList = mutableListOf<ReplyParentData>()
+class ReplyAdapter(private val context: Context, private val viewModel: DetailViewModel) :
+    RecyclerView.Adapter<ReplyAdapter.ReplyViewHolder>() {
+    var data = mutableListOf<ReplyParentData>()
 
-    inner class ReplyParentViewHolder(private val binding: ReplyParentBinding) :
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ReplyAdapter.ReplyViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding: ReplyParentBinding = DataBindingUtil.inflate(
+            layoutInflater,
+            R.layout.reply_parent,
+            parent,
+            false
+        )
+        return ReplyViewHolder(binding)
+    }
+
+    inner class ReplyViewHolder(private val binding: ReplyParentBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(data: ReplyParentData) {
@@ -40,20 +51,12 @@ class ReplyParentAdapter(private val context: Context, private val viewModel: De
         val dot: ImageView = binding.imgReplyparentDot3
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReplyParentViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: ReplyParentBinding = DataBindingUtil.inflate(
-            layoutInflater,
-            R.layout.reply_parent,
-            parent,
-            false
-        )
-        return ReplyParentViewHolder(binding)
-    }
+    override fun getItemCount(): Int = data.size
 
-    override fun onBindViewHolder(holder: ReplyParentViewHolder, position: Int) {
-        holder.onBind(getItem(position))
-        holder.onBind(getItem(position)).let {
+    override fun onBindViewHolder(holder: ReplyViewHolder, position: Int) {
+        holder.onBind(data[position])
+
+        holder.onBind(data[position]).let {
             with(holder) {
                 open_btn.setOnClickListener {
                     if (open_btn.text == "답글 보기") {
@@ -64,24 +67,28 @@ class ReplyParentAdapter(private val context: Context, private val viewModel: De
                         open_btn.text = "답글 보기"
                     }
                 }
-                if (getItem(position).data_child[0].txt_id == "") {
+                if (data[position].data_child[0].txt_id == "") {
                     open_btn.visibility = View.GONE
+                } else {
+                    open_btn.visibility = View.VISIBLE
                 }
                 dot.setOnClickListener {
+                    viewModel.setPosition(position)
+                }
+                child_rcv.setOnClickListener {
                     viewModel.setPosition(position)
                 }
             }
         }
     }
 
-    override fun submitList(list: MutableList<ReplyParentData>?) {
-        if (list == this.currentList) return
-        super.submitList(list)
+    fun remove(position: Int) {
+        data.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     fun replaceReplyList(list: List<ReplyParentData>) {
-        replyList = list.toMutableList()
-        submitList(replyList)
+        data = list.toMutableList()
         notifyDataSetChanged()
     }
 }

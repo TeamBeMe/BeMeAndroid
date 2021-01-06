@@ -35,7 +35,6 @@ class MyScrapAdapter :
         holder.itemView.setOnClickListener { view ->
             val intent = Intent(view.context, DetailActivity::class.java)
             view.context.startActivity(intent)
-
         }
     }
 

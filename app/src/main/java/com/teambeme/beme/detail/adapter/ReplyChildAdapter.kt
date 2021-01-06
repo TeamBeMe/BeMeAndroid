@@ -34,6 +34,14 @@ class ReplyChildAdapter() :
 
     override fun onBindViewHolder(holder: ReplyChildViewHolder, position: Int) {
         holder.onBind(getItem(position))
+        /*holder.onBind(getItem(position)).let{
+            with(holder){
+                dot.setOnClickListener {
+                    viewModel.setPosition(position)
+
+                }
+            }
+        }*/
     }
 
     fun addItem(Data: MutableList<ReplyData>) {

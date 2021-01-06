@@ -73,6 +73,17 @@ class DetailViewModel : ViewModel() {
     val isOpenClicked: LiveData<Boolean>
         get() = _isOpenClicked
 
+    private val _position = MutableLiveData<Int>()
+    val position: LiveData<Int>
+        get() = _position
+
+    fun setPosition(position: Int){
+        _position.value=position
+    }
+
+    fun initPosition(){
+        _position.value=-1
+    }
 
     fun addReplyClicked() {
         _isAddClicked.value = true
@@ -100,32 +111,38 @@ class DetailViewModel : ViewModel() {
     fun replyOpenClickedFalse() {
         _isOpenClicked.value = false
     }
+    private val dummyParentReply = mutableListOf(
+        ReplyParentData(
+            txt_id = "asdf",
+            txt_comment = "a척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..f",
+            txt_time = "12월24일",
+            data_child = initReplyList()
+        ),
+        ReplyParentData(
+            txt_id = "asdf",
+            txt_comment = "척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..f",
+            txt_time = "12월22일",
+
+            ),
+        ReplyParentData(
+            txt_id = "asdf",
+            txt_comment = "척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..",
+            txt_time = "12월24일",
+            data_child = initReplyList()
+        )
+    )
 
     private val _replyParentData = MutableLiveData<MutableList<ReplyParentData>>()
     val replyParentData: LiveData<MutableList<ReplyParentData>>
         get() = _replyParentData
 
-    fun setDummyParentReply() {
-        val dummyParentReply = listOf(
-            ReplyParentData(
-                txt_id = "asdf",
-                txt_comment = "a척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..f",
-                txt_time = "12월24일",
-                data_child = initReplyList()
-            ),
-            ReplyParentData(
-                txt_id = "asdf",
-                txt_comment = "척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..f",
-                txt_time = "12월22일",
+    fun deleteDummyParentReply(position: Int) {
+        dummyParentReply.removeAt(position)
+        _replyParentData.value=dummyParentReply.toMutableList()
+    }
 
-                ),
-            ReplyParentData(
-                txt_id = "asdf",
-                txt_comment = "척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..",
-                txt_time = "12월24일",
-                data_child = initReplyList()
-            )
-        )
+    fun setDummyParentReply() {
+
         _replyParentData.value = dummyParentReply.toMutableList()
     }
 
