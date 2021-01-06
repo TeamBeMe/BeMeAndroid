@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="otherminds"
-            type="com.teambeme.beme.explore.model.OthermindsData" />
+            name="otherMinds"
+            type="com.teambeme.beme.explore.model.OtherMindsData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,18 +32,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="@{otherminds.title}"
-                android:textColor="#ffffff"
+                android:text="@{otherMinds.title}"
+                android:textColor="@color/list_otherminds_txt_title_white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_othermindslist_showdetail"
+                app:layout_constraintEnd_toStartOf="@id/btn_othermindslist_show_other_answers"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/btn_othermindslist_showdetail"
+                android:id="@+id/btn_othermindslist_show_other_answers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingStart="18dp"
+                android:paddingTop="18dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_showdetail"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -67,8 +69,8 @@
                 android:id="@+id/txt_othermindslist_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{otherminds.content}"
-                android:textColor="#000000"
+                android:text="@{otherMinds.content}"
+                android:textColor="@color/list_otherminds_txt_content_black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

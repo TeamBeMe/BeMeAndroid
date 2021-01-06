@@ -3,8 +3,8 @@
     <corners
         android:radius="6dp"/>
     <solid
-        android:color="#FFFFFF"/>
+        android:color="@color/shape_otherquestions_solid_white"/>
     <stroke
-        android:color="#EDEDED"
+        android:color="@color/shape_otherquestions_stroke_gray"
         android:width="1dp"/>
 </shape>

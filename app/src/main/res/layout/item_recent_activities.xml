@@ -5,31 +5,37 @@
 
     <data>
 
+        <variable
+            name="recentActivities"
+            type="com.teambeme.beme.notification.model.RecentActivitiesData" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp">
+        android:layout_marginBottom="22dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/notification_profile_pic"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/test_item_recent_activities"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:setSrcFromUrl="@{recentActivities.userPicUrl}" />
 
         <TextView
             android:id="@+id/notification_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="52dp"
+            android:bufferType="spannable"
             android:lineHeight="18dp"
-            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            android:text="@{recentActivities.notifiMessage}"
             android:textColor="#000"
-            android:textSize="13sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/notification_profile_pic"
             app:layout_constraintTop_toTopOf="parent" />

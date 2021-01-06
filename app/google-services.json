@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "896519206756",
+    "project_id": "beme-21e06",
+    "storage_bucket": "beme-21e06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:896519206756:android:0a03865a3a143c2d192c71",
+        "android_client_info": {
+          "package_name": "com.teambeme.beme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "896519206756-o1j5jk6kk4de82e6sg4fidh56obe7qd7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teambeme.beme",
+            "certificate_hash": "6a22f793337959e6f02f20e8ee985aaf10a0aecc"
+          }
+        },
+        {
+          "client_id": "896519206756-9b676di14f0ftc47mk79h35j0r3th3db.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAms5W9eL3pUqJPkaBfyxnfYEgBf_DWYF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "896519206756-9b676di14f0ftc47mk79h35j0r3th3db.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
