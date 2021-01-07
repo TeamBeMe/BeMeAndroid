@@ -13,6 +13,7 @@ import com.teambeme.beme.databinding.ItemHomeMoreQuestionBinding
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
 import com.teambeme.beme.home.model.ResponseQuestionData
 import com.teambeme.beme.home.view.AnswerSuggestFragment
+import com.teambeme.beme.home.view.TransitionPublicFragment
 
 class QuestionPagerAdapter(private val supportFragmentManager: FragmentManager) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -20,7 +21,8 @@ class QuestionPagerAdapter(private val supportFragmentManager: FragmentManager) 
 
     class QuestionViewHolder(
         private val context: Context,
-        private val binding: ItemHomeQuestionBinding
+        private val binding: ItemHomeQuestionBinding,
+        private val fragmentManager: FragmentManager
     ) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(answer: ResponseQuestionData.Answer) {
@@ -33,6 +35,9 @@ class QuestionPagerAdapter(private val supportFragmentManager: FragmentManager) 
                     putExtra("isPublic", answer.publicFlag)
                 }
                 context.startActivity(intent)
+            }
+            binding.imgQuestionLock.setOnClickListener {
+                TransitionPublicFragment().show(fragmentManager, "TransitionPublic")
             }
         }
     }
@@ -76,7 +81,7 @@ class QuestionPagerAdapter(private val supportFragmentManager: FragmentManager) 
                         parent,
                         false
                     )
-                QuestionViewHolder(parent.context, binding)
+                QuestionViewHolder(parent.context, binding, supportFragmentManager)
             }
         }
     }
