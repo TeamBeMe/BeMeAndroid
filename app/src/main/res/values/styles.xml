@@ -47,4 +47,12 @@
         <item name="android:radius">6dp</item>
         <item name="android:background">@color/white</item>
     </style>
+
+    <style name="home_text_bottom">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:textColor">@color/home_text_gray</item>
+        <item name="android:textSize">12sp</item>
+    </style>
 </resources>

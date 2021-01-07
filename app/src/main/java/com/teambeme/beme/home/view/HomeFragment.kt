@@ -1,7 +1,5 @@
 package com.teambeme.beme.home.view
 
-import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,9 +24,14 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        LifeCycleEventLogger(javaClass.name).registerLogger(viewLifecycleOwner.lifecycle)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.lifecycleOwner?.lifecycle?.let { lifecycle ->
+            LifeCycleEventLogger(javaClass.name).registerLogger(
+                lifecycle
+            )
+        }
         val compositePageTransformer = getPageTransformer()
-        val questionPagerAdapter = QuestionPagerAdapter()
+        val questionPagerAdapter = QuestionPagerAdapter(childFragmentManager)
 
         binding.vpHomeQuestionSlider.apply {
             adapter = questionPagerAdapter
@@ -36,15 +39,28 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             clipChildren = false
             offscreenPageLimit = 4
             setPageTransformer(compositePageTransformer)
-            setPadding(80, 0, 80, 0)
+            setPadding(120, 0, 120, 0)
             getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         }
 
         homeViewModel.setDummyQuestions()
         homeViewModel.questionList.observe(viewLifecycleOwner) { questionList ->
             questionPagerAdapter.replaceQuestionList(questionList.toList())
+            binding.vpHomeQuestionSlider.setCurrentItem(questionList.size - 1, false)
         }
 
+        binding.vpHomeQuestionSlider.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                if (position != 0) {
+                    when (homeViewModel.questionList.value?.get(position - 1)?.isToday) {
+                        true -> binding.txtHomeTitle.text = "오늘의 질문"
+                        else -> binding.txtHomeTitle.text = "과거의 질문"
+                    }
+                }
+            }
+        })
         return binding.root
     }
 
@@ -58,11 +74,13 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         return compositePageTransformer
     }
 
-    @SuppressLint("InlinedApi")
-    @Suppress("DEPRECATION")
-    private fun setStatusBarColor() {
-        activity?.window?.decorView?.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        activity?.window?.statusBarColor = Color.BLACK
+    fun returnToDefaultPosition() {
+        binding.vpHomeQuestionSlider.post {
+            homeViewModel.questionList
+                .value
+                ?.size
+                ?.minus(1)
+                ?.let { binding.vpHomeQuestionSlider.setCurrentItem(it, true) }
+        }
     }
 }
