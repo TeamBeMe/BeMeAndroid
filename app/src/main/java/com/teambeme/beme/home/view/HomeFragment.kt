@@ -27,7 +27,11 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.lifecycleOwner?.lifecycle?.let { lifecycle -> LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle) }
+        binding.lifecycleOwner?.lifecycle?.let { lifecycle ->
+            LifeCycleEventLogger(javaClass.name).registerLogger(
+                lifecycle
+            )
+        }
         val compositePageTransformer = getPageTransformer()
         val questionPagerAdapter = QuestionPagerAdapter()
 
@@ -44,8 +48,10 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         homeViewModel.setDummyQuestions()
         homeViewModel.questionList.observe(viewLifecycleOwner) { questionList ->
             questionPagerAdapter.replaceQuestionList(questionList.toList())
+            binding.vpHomeQuestionSlider.post {
+                binding.vpHomeQuestionSlider.setCurrentItem(questionList.size - 1, false)
+            }
         }
-
         return binding.root
     }
 
@@ -65,5 +71,15 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         activity?.window?.decorView?.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         activity?.window?.statusBarColor = Color.BLACK
+    }
+
+    fun returnToDefaultPosition() {
+        binding.vpHomeQuestionSlider.post {
+            homeViewModel.questionList
+                .value
+                ?.size
+                ?.minus(1)
+                ?.let { binding.vpHomeQuestionSlider.setCurrentItem(it, true) }
+        }
     }
 }
