@@ -79,6 +79,16 @@ class DetailViewModel : ViewModel() {
 
     fun setPosition(position: Int){
         _position.value=position
+        _childposition.value=-1
+    }
+
+    private val _childposition = MutableLiveData<Int>()
+    val childposition: LiveData<Int>
+        get() = _childposition
+
+    fun setChildPosition(position: Int,childposition:Int){
+        _childposition.value=childposition
+        _position.value=position
     }
 
     fun initPosition(){
@@ -138,6 +148,11 @@ class DetailViewModel : ViewModel() {
 
     fun deleteDummyParentReply(position: Int) {
         dummyParentReply.removeAt(position)
+        _replyParentData.value=dummyParentReply.toMutableList()
+    }
+
+    fun deleteDummyReply(position: Int,childposition: Int) {
+        dummyParentReply[position].data_child.removeAt(childposition)
         _replyParentData.value=dummyParentReply.toMutableList()
     }
 

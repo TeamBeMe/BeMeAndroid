@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ReplyParentBinding
 import com.teambeme.beme.detail.model.ReplyParentData
-import com.teambeme.beme.detail.model.initReplyList
 import com.teambeme.beme.detail.viewmodel.DetailViewModel
 
 class ReplyAdapter(private val context: Context, private val viewModel: DetailViewModel) :
@@ -38,12 +37,14 @@ class ReplyAdapter(private val context: Context, private val viewModel: DetailVi
 
         fun onBind(data: ReplyParentData) {
             binding.replyParentData = data
-            val dataList = initReplyList()
-            val replyAdapter = ReplyChildAdapter()
-            binding.rcvReplyparentChild.adapter = replyAdapter
-            binding.rcvReplyparentChild.layoutManager = LinearLayoutManager(context)
-            replyAdapter.addItem(dataList)
-            viewModel.setChildData(data.data_child)
+            if (data.data_child[0].txt_id != "") {
+                val replyAdapter = ReplyChildAdapter(context, adapterPosition, viewModel)
+                binding.rcvReplyparentChild.adapter = replyAdapter
+                binding.rcvReplyparentChild.layoutManager = LinearLayoutManager(context)
+                replyAdapter.setListItems(data.data_child)
+            } else {
+                binding.rcvReplyparentChild.visibility = View.GONE
+            }
         }
 
         val open_btn: TextView = binding.txtReplyparentOpen
