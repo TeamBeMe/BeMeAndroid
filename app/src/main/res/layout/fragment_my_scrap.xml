@@ -24,6 +24,7 @@
             android:layout_marginStart="32dp"
             android:background="@drawable/border_mypage"
             android:drawableLeft="@drawable/ic_mypage_search"
+            android:textColorHint="@color/answer_text_info_gray"
             android:drawablePadding="4dp"
             android:ems="10"
             android:hint="검색"

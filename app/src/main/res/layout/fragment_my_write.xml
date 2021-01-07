@@ -17,6 +17,7 @@
         <EditText
             android:id="@+id/editxt_write_search"
             android:layout_width="0dp"
+            android:textColorHint="@color/answer_text_info_gray"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"

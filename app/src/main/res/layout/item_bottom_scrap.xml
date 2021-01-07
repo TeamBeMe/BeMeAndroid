@@ -12,6 +12,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -19,6 +20,7 @@
             android:id="@+id/txt_scrapsheet_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:text="필터"
@@ -33,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:textColor="@color/answer_text_info_gray"
             android:text="카테고리"
             app:layout_constraintStart_toStartOf="@+id/txt_scrapsheet_filter"
             app:layout_constraintTop_toBottomOf="@+id/txt_scrapsheet_filter" />
@@ -160,6 +163,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textColor="@color/black"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:text="적용하기"
