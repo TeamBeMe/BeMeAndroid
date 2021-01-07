@@ -21,7 +21,7 @@
     <color name="explore_chip_text_unchecked_gray">#636366</color>
     <color name="explore_txt_title_of_other_minds_black">#000000</color>
     <color name="explore_txt_desc_of_other_minds_gray">#636366</color>
-    <color name="explore_constraintlayout_other_questions_white">#ffffff</color>
+    <color name="explore_constraint_layout_other_questions_white">#ffffff</color>
     <color name="explore_txt_title_of_other_questions_black">#000000</color>
     <color name="explore_txt_desc_of_other_questions_gray">#636366</color>
     <color name="explore_tab_indicator_black">#000000</color>

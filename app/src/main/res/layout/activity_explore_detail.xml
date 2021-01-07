@@ -44,7 +44,7 @@
             app:layout_constraintTop_toBottomOf="@id/btn_explore_detail_go_back" />
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tablayout_explore_detail_sort"
+            android:id="@+id/tab_layout_explore_detail_sort"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:layout_marginTop="18dp"
@@ -74,13 +74,13 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/explore_detail_divide_line_gray"
-            app:layout_constraintTop_toBottomOf="@+id/tablayout_explore_detail_sort" />
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout_explore_detail_sort" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tablayout_explore_detail_sort">
+            app:layout_constraintTop_toBottomOf="@id/tab_layout_explore_detail_sort">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

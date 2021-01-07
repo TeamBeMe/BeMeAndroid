@@ -21,7 +21,7 @@
             android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintlayout_explore_other_minds"
+                android:id="@+id/constraint_layout_explore_other_minds"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/explore_background_gray"
@@ -100,12 +100,12 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintlayout_explore_other_questions"
+                android:id="@+id/constraint_layout_explore_other_questions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/explore_constraintlayout_other_questions_white"
+                android:background="@color/explore_constraint_layout_other_questions_white"
                 android:paddingBottom="40dp"
-                app:layout_constraintTop_toBottomOf="@+id/constraintlayout_explore_other_minds">
+                app:layout_constraintTop_toBottomOf="@+id/constraint_layout_explore_other_minds">
 
                 <TextView
                     android:id="@+id/txt_explore_title_of_other_questions"
@@ -143,7 +143,7 @@
                     app:layout_constraintTop_toBottomOf="@id/txt_explore_title_of_other_questions" />
 
                 <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tablayout_explore_sort"
+                    android:id="@+id/tab_layout_explore_sort"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginTop="12dp"
@@ -173,14 +173,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/explore_divide_line_gray"
-                    app:layout_constraintTop_toBottomOf="@+id/tablayout_explore_sort" />
+                    app:layout_constraintTop_toBottomOf="@+id/tab_layout_explore_sort" />
 
                 <HorizontalScrollView
                     android:id="@+id/scrollview_explore_chip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
-                    app:layout_constraintTop_toBottomOf="@id/tablayout_explore_sort">
+                    app:layout_constraintTop_toBottomOf="@id/tab_layout_explore_sort">
 
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/chip_explore_other_questions"

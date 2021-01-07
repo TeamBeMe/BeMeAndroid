@@ -43,7 +43,7 @@
                 app:layout_constraintTop_toTopOf="@id/btn_following_plusFollower" />
 
             <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tablayout_following_sort"
+                android:id="@+id/tab_layout_following_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="28dp"
                 android:layout_marginStart="28dp"
@@ -77,9 +77,9 @@
                 android:text="모두보기"
                 android:textColor="#949494"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@id/tablayout_following_sort"
+                app:layout_constraintBottom_toBottomOf="@id/tab_layout_following_sort"
                 app:layout_constraintEnd_toStartOf="@id/btn_following_show_all"
-                app:layout_constraintTop_toTopOf="@id/tablayout_following_sort" />
+                app:layout_constraintTop_toTopOf="@id/tab_layout_following_sort" />
 
             <ImageButton
                 android:id="@+id/btn_following_show_all"
@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/explore_divide_line_gray"
-                app:layout_constraintTop_toBottomOf="@+id/tablayout_following_sort" />
+                app:layout_constraintTop_toBottomOf="@+id/tab_layout_following_sort" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_following_other_profiles"
@@ -108,8 +108,8 @@
                 android:clipToPadding="false"
                 android:paddingStart="20dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/tablayout_following_sort"
-                tools:listitem="@layout/item_following_other_questions" />
+                app:layout_constraintTop_toBottomOf="@id/tab_layout_following_sort"
+                tools:listitem="@layout/item_following_other_profiles" />
 
             <TextView
                 android:id="@+id/txt_following_title_of_other_questions"
@@ -119,7 +119,7 @@
                 android:text="팔로잉"
                 android:textColor="@color/explore_txt_title_of_other_minds_black"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@id/tablayout_following_sort"
+                app:layout_constraintStart_toStartOf="@id/tab_layout_following_sort"
                 app:layout_constraintTop_toBottomOf="@id/rcv_following_other_profiles" />
 
             <TextView
@@ -132,6 +132,7 @@
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="@id/txt_following_title_of_other_questions"
                 app:layout_constraintTop_toBottomOf="@id/txt_following_title_of_other_questions" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_following_other_questions"

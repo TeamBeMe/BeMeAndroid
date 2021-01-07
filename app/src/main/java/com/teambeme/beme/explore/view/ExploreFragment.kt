@@ -70,7 +70,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
     }
 
     private fun setTabSelectedListener(binding: FragmentExploreBinding) {
-        binding.tablayoutExploreSort.addOnTabSelectedListener(object :
+        binding.tabLayoutExploreSort.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tab?.position?.let {
