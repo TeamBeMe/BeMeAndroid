@@ -1,9 +1,7 @@
 package com.teambeme.beme.util
 
-import android.text.Editable
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.TextWatcher
+import android.text.*
+import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.widget.EditText
 import android.widget.ImageView
@@ -79,7 +77,7 @@ object BindingAdapters {
         })
     }
 
-    @BindingAdapter("underlineText")
+    @BindingAdapter("home:underlineText")
     @JvmStatic
     fun setUnderLineText(view: TextView, text: String) {
         val spannableString = SpannableString(text)
@@ -90,5 +88,37 @@ object BindingAdapters {
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         view.text = spannableString
+    }
+
+    @BindingAdapter("home:setDate")
+    @JvmStatic
+    fun setHomeCreatedDate(textView: TextView, date: String) {
+        textView.text = date.substring(0..9)
+    }
+
+    @BindingAdapter("home:category", "home:answerIdx", "home:categoryColor")
+    @JvmStatic
+    fun setCategoryText(textView: TextView, category: String, answerIdx: Int?, color: Int) {
+        if (answerIdx != null) {
+            val text = "[ " + category + "에 관한 " + answerIdx + "번째 질문 ]"
+            val digit = answerIdx.toString().length
+            val spannableString = SpannableStringBuilder(text)
+            spannableString.setSpan(
+                ForegroundColorSpan(color),
+                7 + category.length,
+                9 + category.length + digit,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannableString.setSpan(
+                UnderlineSpan(),
+                7 + category.length,
+                9 + category.length + digit,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            textView.append(spannableString)
+        } else {
+            val text = "[ " + category + "에 관한 질문 ]"
+            textView.text = text
+        }
     }
 }

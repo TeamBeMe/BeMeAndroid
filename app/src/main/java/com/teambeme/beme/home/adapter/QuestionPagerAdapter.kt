@@ -10,24 +10,26 @@ import com.teambeme.beme.R
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.databinding.ItemHomeMoreQuestionBinding
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
-import com.teambeme.beme.home.model.Question
+import com.teambeme.beme.home.model.ResponseQuestionData
 
 class QuestionPagerAdapter :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var questionList = mutableListOf<Question>()
+    private var questionList = mutableListOf<ResponseQuestionData.Answer>()
 
     class QuestionViewHolder(
         private val context: Context,
         private val binding: ItemHomeQuestionBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(question: Question) {
-            binding.question = question
-            binding.textChangeQuestion = "질문 변경하기"
-            binding.textEdit = "질문 변경하기"
+        fun onBind(answer: ResponseQuestionData.Answer) {
+            binding.answer = answer
             binding.btnHomeAnswer.setOnClickListener {
                 val intent = Intent(context, AnswerActivity::class.java)
-                intent.putExtra("id", question.id)
+                intent.apply {
+                    putExtra("id", answer.id)
+                    putExtra("content", answer.content)
+                    putExtra("isPublic", answer.publicFlag)
+                }
                 context.startActivity(intent)
             }
         }
@@ -77,7 +79,7 @@ class QuestionPagerAdapter :
 
     override fun getItemCount() = questionList.size + 1
 
-    fun replaceQuestionList(list: List<Question>) {
+    fun replaceQuestionList(list: List<ResponseQuestionData.Answer>) {
         questionList = list.toMutableList()
         notifyDataSetChanged()
     }

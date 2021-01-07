@@ -52,6 +52,19 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
                 binding.vpHomeQuestionSlider.setCurrentItem(questionList.size - 1, false)
             }
         }
+
+        binding.vpHomeQuestionSlider.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                if (position != 0) {
+                    when (homeViewModel.questionList.value?.get(position - 1)?.isToday) {
+                        true -> binding.txtHomeTitle.text = "오늘의 질문"
+                        else -> binding.txtHomeTitle.text = "과거의 질문"
+                    }
+                }
+            }
+        })
         return binding.root
     }
 
