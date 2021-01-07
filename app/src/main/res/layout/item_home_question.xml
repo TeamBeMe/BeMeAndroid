@@ -10,6 +10,13 @@
         <variable
             name="question"
             type="com.teambeme.beme.home.model.Question" />
+
+        <variable
+            name="textChangeQuestion"
+            type="String" />
+        <variable
+            name="textEdit"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -79,13 +86,26 @@
             android:layout_marginHorizontal="32dp"
             android:layout_marginBottom="60dp"
             android:background="@drawable/home_answer_button"
-            android:paddingVertical="16dp"
+            android:paddingVertical="12dp"
             android:text="답변하기"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:visibility="@{question.isPast == true ? View.GONE : View.VISIBLE}"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_home_change_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/home_text_gray"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/btn_home_answer"
+            app:layout_constraintStart_toStartOf="@+id/btn_home_answer"
+            app:layout_constraintTop_toBottomOf="@id/btn_home_answer"
+            app:underlineText="@{question.past == true ? textChangeQuestion : textEdit}"
+            tools:text="질문 변경하기" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,7 +1,10 @@
 package com.teambeme.beme.util
 
 import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextWatcher
+import android.text.style.UnderlineSpan
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -74,5 +77,18 @@ object BindingAdapters {
 
             override fun afterTextChanged(p0: Editable?) {}
         })
+    }
+
+    @BindingAdapter("underlineText")
+    @JvmStatic
+    fun setUnderLineText(view: TextView, text: String) {
+        val spannableString = SpannableString(text)
+        spannableString.setSpan(
+            UnderlineSpan(),
+            0,
+            spannableString.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        view.text = spannableString
     }
 }

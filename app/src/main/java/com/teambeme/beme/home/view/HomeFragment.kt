@@ -26,7 +26,8 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        LifeCycleEventLogger(javaClass.name).registerLogger(viewLifecycleOwner.lifecycle)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.lifecycleOwner?.lifecycle?.let { lifecycle -> LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle) }
         val compositePageTransformer = getPageTransformer()
         val questionPagerAdapter = QuestionPagerAdapter()
 
