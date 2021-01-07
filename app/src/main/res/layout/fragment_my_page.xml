@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="myPageViewModel"
+            type="com.teambeme.beme.mypage.viewmodel.MyPageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,37 +16,60 @@
         android:background="#ffffff"
         tools:context=".mypage.view.MyPageFragment">
 
-        <ImageView
-            android:id="@+id/img_mypage_setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="30dp"
-            android:src="@drawable/ic_baseline_settings_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_mypage_profile"
-            android:layout_width="66dp"
-            android:layout_height="66dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="64dp"
-            android:src="@drawable/ic_mp_profile"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/frame_mypage"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/img_mypage_profile"
+                android:layout_width="match_parent"
+                android:layout_height="158dp"
+                tools:srcCompat="@tools:sample/backgrounds/scenic"
+                android:scaleType="fitXY"
+                android:layout_gravity="fill" />
+
+            <ImageButton
+                android:id="@+id/img_mypage_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_marginTop="24dp"
+                android:layout_gravity="right"
+                android:layout_marginEnd="30dp"
+                android:src="@drawable/ic_setting_profile" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/txt_mypage_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="30dp"
             android:text="sushi_isthebest"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/img_mypage_profile"
-            app:layout_constraintTop_toTopOf="@+id/img_mypage_profile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frame_mypage"
             tools:text="sushi_isthebest" />
+
+        <TextView
+            android:id="@+id/btn_mypage_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_layout"
+            android:textSize="12sp"
+            android:textColor="#000000"
+            android:paddingHorizontal="20dp"
+            android:layout_marginLeft="40dp"
+            android:paddingVertical="8dp"
+            android:text="프로필 편집"
+            app:layout_constraintStart_toEndOf="@+id/txt_mypage_name"
+            app:layout_constraintTop_toTopOf="@+id/txt_mypage_name" />
 
         <TextView
             android:id="@+id/txt_mypage_attend"
@@ -83,7 +108,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_mypage_profile"
+            app:layout_constraintTop_toBottomOf="@+id/txt_mypage_ans"
             app:tabIndicatorColor="@color/black"
             app:tabSelectedTextColor="@color/black">
 
