@@ -46,7 +46,7 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
     }
 
     private fun positionListener(position: Int) {
-        //if(myId==replyId) -> MyReplyFragment else if(myId==writeId)
+        // if(myId==replyId) -> MyReplyFragment else if(myId==writeId)
         // -> MyOtherFragment else OtherFragment   나중을위한주석
 
         val bottomSheetFragment = BottomMyReplyFragment(false)
