@@ -5,14 +5,16 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.databinding.ItemHomeMoreQuestionBinding
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
 import com.teambeme.beme.home.model.ResponseQuestionData
+import com.teambeme.beme.home.view.AnswerSuggestFragment
 
-class QuestionPagerAdapter :
+class QuestionPagerAdapter(private val supportFragmentManager: FragmentManager) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var questionList = mutableListOf<ResponseQuestionData.Answer>()
 
@@ -35,8 +37,16 @@ class QuestionPagerAdapter :
         }
     }
 
-    class MoreQuestionViewHolder(private val binding: ItemHomeMoreQuestionBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    class MoreQuestionViewHolder(
+        private val binding: ItemHomeMoreQuestionBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun onBind(supportFragmentManager: FragmentManager) {
+            binding.btnHomeMoreQuestion.setOnClickListener {
+                val answerSuggestFragment = AnswerSuggestFragment()
+                answerSuggestFragment.show(supportFragmentManager, "CustomDialog")
+            }
+        }
+    }
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
@@ -74,6 +84,10 @@ class QuestionPagerAdapter :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (position != questionList.size) {
             with(holder as QuestionViewHolder) { holder.onBind(questionList[position]) }
+        } else {
+            with(holder as MoreQuestionViewHolder) {
+                holder.onBind(supportFragmentManager)
+            }
         }
     }
 
