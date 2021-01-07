@@ -22,9 +22,7 @@ class BottomMyReplyFragment(private val child: Boolean) : BottomSheetDialogFragm
         binding = DataBindingUtil.inflate(inflater, R.layout.item_bottom_my, container, false)
         binding.lifecycleOwner = this
         binding.detailViewModel = detailViewModel
-        binding.tbMybottomFix.setOnClickListener {
-            dismiss()
-        }
+        binding.tbMybottomFix.setOnClickListener { dismiss() }
         binding.tbMybottomDelete.setOnClickListener {
             if (detailViewModel.childposition.value != -1) {
                 detailViewModel.deleteDummyReply(

@@ -37,11 +37,11 @@ class ReplyAdapter(private val context: Context, private val viewModel: DetailVi
 
         fun onBind(data: ReplyParentData) {
             binding.replyParentData = data
-            if (data.data_child[0].txt_id != "") {
+            if (data.dataChild[0].txt_id != "") {
                 val replyAdapter = ReplyChildAdapter(context, adapterPosition, viewModel)
                 binding.rcvReplyparentChild.adapter = replyAdapter
                 binding.rcvReplyparentChild.layoutManager = LinearLayoutManager(context)
-                replyAdapter.setListItems(data.data_child)
+                replyAdapter.setListItems(data.dataChild)
             } else {
                 binding.rcvReplyparentChild.visibility = View.GONE
             }
@@ -68,7 +68,7 @@ class ReplyAdapter(private val context: Context, private val viewModel: DetailVi
                         open_btn.text = "답글 보기"
                     }
                 }
-                if (data[position].data_child[0].txt_id == "") {
+                if (data[position].dataChild[0].txt_id == "") {
                     open_btn.visibility = View.GONE
                 } else {
                     open_btn.visibility = View.VISIBLE
