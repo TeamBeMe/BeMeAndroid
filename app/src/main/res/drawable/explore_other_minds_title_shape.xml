@@ -4,5 +4,5 @@
         android:topLeftRadius="6dp"
         android:topRightRadius="6dp"/>
     <solid
-        android:color="@color/shape_otherminds_title_gray"/>
+        android:color="@color/shape_other_minds_title_gray"/>
 </shape>

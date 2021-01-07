@@ -4,5 +4,5 @@
         android:bottomLeftRadius="6dp"
         android:bottomRightRadius="6dp"/>
     <solid
-        android:color="@color/shape_otherminds_content_white"/>
+        android:color="@color/shape_other_minds_content_white"/>
 </shape>
