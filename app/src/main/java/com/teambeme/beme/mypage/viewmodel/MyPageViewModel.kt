@@ -166,7 +166,6 @@ class MyPageViewModel : ViewModel() {
     val isScrapFilterClicked: LiveData<Boolean>
         get() = _isScrapFilterClicked
 
-
     fun scrapFilterOnClick() {
         _isScrapFilterClicked.value = true
     }
@@ -179,7 +178,6 @@ class MyPageViewModel : ViewModel() {
     val isWriteFilterClicked: LiveData<Boolean>
         get() = _isWriteFilterClicked
 
-
     fun writeFilterOnClick() {
         _isWriteFilterClicked.value = true
     }
@@ -187,5 +185,4 @@ class MyPageViewModel : ViewModel() {
     fun writeFilterOnClickFalse() {
         _isWriteFilterClicked.value = false
     }
-
 }

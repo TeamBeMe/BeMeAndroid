@@ -63,7 +63,7 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
         }
     }
 
-    companion object{
+    companion object {
         private val PICK_IMAGE_REQUEST: Int = 2
     }
 }
