@@ -23,6 +23,21 @@ class BackQuestionAdapter :
 
     override fun onBindViewHolder(holder: BackQuestionViewHolder, position: Int) {
         holder.bind(datas[position])
+//        var view = holder.itemView
+//        when(recentActivitiesDataList[position].kind){
+//            1-> {
+//                val str_0 = recentActivitiesDataList[position].userID + "님이 나의 글에 댓글을 남겼습니다."
+//                view.notification_message.text=str_0
+//            }
+//            2-> {
+//                val str_0 = recentActivitiesDataList[position].userID + "님이 답글을 남겼습니다."
+//                view.notification_message.text=str_0
+//            }
+//            3-> {
+//                val str_0 = recentActivitiesDataList[position].userID + "님이 나를 팔로우합니다."
+//                view.notification_message.text=str_0
+//            }
+//        }
     }
 
     fun replaceQuestionList(list: MutableList<BackQuestionData>) {
