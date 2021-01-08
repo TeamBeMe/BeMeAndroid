@@ -22,13 +22,15 @@
             tools:context=".notification.NotificationActivity">
 
             <ImageView
+                android:id="@+id/btn_back_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
+                android:layout_marginStart="18dp"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/ic_back_noticeview"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:padding="10dp" />
 
             <TextView
                 android:id="@+id/title_recent_activities"
