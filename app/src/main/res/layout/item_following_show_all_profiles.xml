@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="userID"
-            android:textColor="#000000"
+            android:textColor="@color/item_show_all_profiles_txt_user_id_black"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/img_following_show_all_profiles"
             app:layout_constraintStart_toEndOf="@id/img_following_show_all_profiles"
@@ -35,7 +35,7 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#ffffff"
+            android:backgroundTint="@color/item_show_all_profiles_btn_following_background_white"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:paddingStart="12dp"
@@ -43,13 +43,13 @@
             android:paddingEnd="12dp"
             android:paddingBottom="8dp"
             android:text="팔로잉"
-            android:textColor="#000000"
+            android:textColor="@color/item_show_all_profiles_btn_following_name_black"
             android:textSize="12dp"
             app:cornerRadius="3dp"
             app:layout_constraintBottom_toBottomOf="@+id/img_following_show_all_profiles"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/img_following_show_all_profiles"
-            app:strokeColor="#ebebeb"
+            app:strokeColor="@color/item_show_all_profiles_btn_following_stroke_gray"
             app:strokeWidth="1dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

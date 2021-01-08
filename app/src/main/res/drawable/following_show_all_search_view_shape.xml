@@ -3,5 +3,5 @@
     <corners
         android:radius="6dp"/>
     <solid
-        android:color="#ebebeb"/>
+        android:color="@color/following_show_all_search_view_gray"/>
 </shape>

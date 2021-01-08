@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="userID"
-            android:textColor="#000000"
+            android:textColor="@color/item_other_profiles_txt_user_id_black"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/img_following_other_profile"
             app:layout_constraintStart_toStartOf="@id/img_following_other_profile"

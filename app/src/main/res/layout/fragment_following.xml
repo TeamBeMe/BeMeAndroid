@@ -14,11 +14,11 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".explore.view.FollowingFragment">
+        tools:context=".following.view.FollowingFragment">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffff">
+            android:background="@color/following_constraint_layout_background_white">
 
             <ImageButton
                 android:id="@+id/btn_following_plusFollower"
@@ -51,9 +51,9 @@
                 android:backgroundTint="@android:color/transparent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tabIndicatorColor="@color/explore_tab_indicator_black"
-                app:tabSelectedTextColor="@color/explore_tab_selected_txt_black"
-                app:tabTextColor="@color/explore_tab_txt_gray">
+                app:tabIndicatorColor="@color/following_tab_indicator_black"
+                app:tabSelectedTextColor="@color/following_tab_selected_txt_black"
+                app:tabTextColor="@color/following_tab_txt_gray">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:text="모두보기"
-                android:textColor="#949494"
+                android:textColor="@color/following_txt_show_all_gray"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/tab_layout_following_sort"
                 app:layout_constraintEnd_toStartOf="@id/btn_following_show_all"
@@ -96,7 +96,7 @@
                 android:id="@+id/view_following_divide_line"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/explore_divide_line_gray"
+                android:background="@color/following_divide_line_gray"
                 app:layout_constraintTop_toBottomOf="@+id/tab_layout_following_sort" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="46dp"
                 android:text="팔로잉"
-                android:textColor="@color/explore_txt_title_of_other_minds_black"
+                android:textColor="@color/following_txt_following_title_of_other_questions_black"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@id/tab_layout_following_sort"
                 app:layout_constraintTop_toBottomOf="@id/rcv_following_other_profiles" />
@@ -128,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="내가 팔로잉하는 사람들의 최근 글이에요"
-                android:textColor="@color/explore_txt_desc_of_other_minds_gray"
+                android:textColor="@color/following_txt_following_desc_of_other_questions_gray"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="@id/txt_following_title_of_other_questions"
                 app:layout_constraintTop_toBottomOf="@id/txt_following_title_of_other_questions" />
@@ -158,18 +158,17 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginEnd="28dp"
                 android:layout_marginBottom="152dp"
-                android:backgroundTint="@color/explore_btn_show_more_background_black"
+                android:backgroundTint="@color/following_btn_show_more_background_black"
                 android:paddingTop="12dp"
                 android:paddingBottom="16dp"
                 android:text="더보기"
-                android:textColor="@color/explore_btn_show_more_txt_white"
+                android:textColor="@color/following_btn_show_more_txt_white"
                 android:textSize="16sp"
                 app:cornerRadius="6dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rcv_following_other_questions" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
