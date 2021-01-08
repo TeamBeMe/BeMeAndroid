@@ -9,7 +9,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.databinding.ActivityNotificationBinding
-import com.teambeme.beme.notification.adapter.BackQuestionAdapter
 import com.teambeme.beme.notification.adapter.RecentActivitiesAdapter
 import com.teambeme.beme.notification.viewmodel.NotificationViewModel
 
@@ -20,9 +19,6 @@ class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layo
         super.onCreate(savedInstanceState)
 
         initBinding(binding)
-
-        setBackQuestionAdapter(binding)
-        notificationViewModel.setDummyBackQuestionNotification()
 
         setRecentActivitiesAdapter(binding)
         notificationViewModel.setDummyRecentNotification()
@@ -48,17 +44,6 @@ class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layo
         binding.apply {
             notificationViewModel = notificationViewModel
             lifecycleOwner = this@NotificationActivity
-        }
-    }
-
-    private fun setBackQuestionAdapter(binding: ActivityNotificationBinding) {
-        val backQuestionAdapter = BackQuestionAdapter()
-        binding.rcvThisWeekBackQuestion.apply {
-            adapter = backQuestionAdapter
-            layoutManager = LinearLayoutManager(this@NotificationActivity)
-        }
-        notificationViewModel.backQuestionList.observe(this) { list ->
-            backQuestionAdapter.replaceQuestionList(list)
         }
     }
 
