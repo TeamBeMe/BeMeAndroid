@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="158dp"
                 tools:srcCompat="@tools:sample/backgrounds/scenic"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:layout_gravity="fill" />
 
             <ImageButton

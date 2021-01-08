@@ -20,7 +20,6 @@ import com.theartofdev.edmodo.cropper.CropImage
 class BottomProfileFragment : BottomSheetDialogFragment() {
     private lateinit var binding: ItemBottomProfileBinding
     private val mypageViewModel: MyPageViewModel by activityViewModels()
-    private val PICK_IMAGE_REQUEST: Int = 2
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,5 +61,9 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
                 Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    companion object{
+        private val PICK_IMAGE_REQUEST: Int = 2
     }
 }
