@@ -1,5 +1,6 @@
 package com.teambeme.beme.following.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,7 +17,7 @@ class FollowingViewModel : ViewModel() {
     val followingProfilesList: LiveData<List<FollowingProfilesData>>
         get() = _followingProfilesList
 
-    private val dummyfollowingProfilesList = listOf(
+    private val _dummyFollowingProfilesList = listOf(
         FollowingProfilesData(
             profile_img = R.drawable.img_profile_sample_following,
             profile_id = "1_ox",
@@ -54,9 +55,31 @@ class FollowingViewModel : ViewModel() {
             isFollower = true
         )
     )
+    val dummyFollowingProfilesList: List<FollowingProfilesData>
+        get() = _dummyFollowingProfilesList
 
     fun setDummyFollowingProfiles() {
-        _followingProfilesList.value = dummyfollowingProfilesList.toList()
+        _followingProfilesList.value = _dummyFollowingProfilesList.toList()
+    }
+
+    fun selectFollowing(followingProfilesList: List<FollowingProfilesData>) {
+        val isFollowingList: MutableList<FollowingProfilesData> = mutableListOf()
+        for (data in followingProfilesList) {
+            when (data.isFollowing) {
+                true -> isFollowingList.add(data)
+            }
+        }
+        _followingProfilesList.value = isFollowingList.toList()
+    }
+
+    fun selectFollower(followingProfilesList: List<FollowingProfilesData>) {
+        val isFollowerList: MutableList<FollowingProfilesData> = mutableListOf()
+        for (data in followingProfilesList) {
+            when (data.isFollower) {
+                true -> isFollowerList.add(data)
+            }
+        }
+        _followingProfilesList.value = isFollowerList.toList()
     }
 
     private val dummyOtherFollowingQuestionsList = mutableListOf(

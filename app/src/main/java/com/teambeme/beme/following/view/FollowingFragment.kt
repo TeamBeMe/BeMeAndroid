@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.tabs.TabLayout
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.databinding.FragmentFollowingBinding
@@ -29,6 +30,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         setOtherFollowingQuestionsObserve(binding)
         setFollowingProfilesAdapter(binding)
         setFollowingProfilesObserve(binding)
+        setTabSelectedFromFollowingListener()
         return binding.root
     }
 
@@ -65,27 +67,25 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         }
     }
 
-//    private fun setTabSelectedFromFollowingListener(binding: FragmentFollowingBinding) {
-//        binding.tabLayoutFollowingSort.addOnTabSelectedListener(object :
-//            TabLayout.OnTabSelectedListener {
-//            override fun onTabSelected(tab: TabLayout.Tab?) {
-//                tab?.position?.let {
-//                    when (tab.position) {
-//                        0 -> {
-//                            binding.txtExploreDescOfRecent.visibility = View.VISIBLE
-//                            binding.txtExploreDescOfExciting.visibility = View.INVISIBLE
-//                        }
-//                        1 -> {
-//                            binding.txtExploreDescOfRecent.visibility = View.INVISIBLE
-//                            binding.txtExploreDescOfExciting.visibility = View.VISIBLE
-//                        }
-//                    }
-//                }
-//            }
-//
-//            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-//            override fun onTabReselected(tab: TabLayout.Tab?) {}
-//        }
-//        )
-//    }
+    private fun setTabSelectedFromFollowingListener() {
+        binding.tabLayoutFollowingSort.addOnTabSelectedListener(object :
+            TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.position?.let {
+                    when (tab.position) {
+                        0 -> {
+                            followingViewModel.selectFollowing(followingViewModel.dummyFollowingProfilesList)
+                        }
+                        1 -> {
+                            followingViewModel.selectFollower(followingViewModel.dummyFollowingProfilesList)
+                        }
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        }
+        )
+    }
 }
