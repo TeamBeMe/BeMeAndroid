@@ -16,6 +16,7 @@
     <color name="home_more_question_black">#1c1c1e</color>
     <color name="home_category_white">#c9c9c9</color>
     <color name="home_blue">#673ab7</color>
+    <color name="home_red">#ff5151</color>
     <color name="question_stroke">#c9c9c9</color>
     <color name="explore_background_gray">#e9e9e9</color>
     <color name="explore_chip_checked_black">#000000</color>

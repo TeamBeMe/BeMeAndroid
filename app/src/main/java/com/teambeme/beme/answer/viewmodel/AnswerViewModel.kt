@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AnswerViewModel(
-    private val dataBase: AnswerDao,
+    private val dataBase: AnswerDao
 ) : ViewModel() {
     var answer: String = ""
     private var questionId = -1
