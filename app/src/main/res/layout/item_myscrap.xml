@@ -17,6 +17,7 @@
 
         <TextView
             android:id="@+id/txt_myscrap_question"
+            android:textColor="@color/black"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -35,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:textColor="@color/answer_text_info_gray"
             android:text="@{`[  `+myScrap.categori+`에 관한 질문  ]  · `}"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/txt_myscrap_question"
@@ -46,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:textColor="@color/answer_text_info_gray"
             android:text="@{myScrap.time}"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/txt_myscrap_categori"
@@ -68,6 +71,7 @@
             android:id="@+id/txt_myscrap_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:layout_marginStart="8dp"
             android:text="@{myScrap.userId}"
             android:textStyle="bold"
