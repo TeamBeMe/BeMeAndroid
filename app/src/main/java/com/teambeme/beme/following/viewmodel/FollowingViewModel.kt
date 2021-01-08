@@ -1,6 +1,5 @@
 package com.teambeme.beme.following.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +15,65 @@ class FollowingViewModel : ViewModel() {
     private val _followingProfilesList = MutableLiveData<List<FollowingProfilesData>>()
     val followingProfilesList: LiveData<List<FollowingProfilesData>>
         get() = _followingProfilesList
+
+    private val _followingShowAllProfilesList = MutableLiveData<List<FollowingProfilesData>>()
+    val followingShowAllProfilesList: LiveData<List<FollowingProfilesData>>
+        get() = _followingShowAllProfilesList
+
+    private val _dummyFollowingShowAllProfilesList = listOf(
+        FollowingProfilesData(
+            profile_img = R.drawable.img_profile_sample_following,
+            profile_id = "1_ox",
+            isFollowing = true,
+            isFollower = false
+        ),
+        FollowingProfilesData(
+            profile_img = R.drawable.img_profile_sample_following,
+            profile_id = "2_xo",
+            isFollowing = false,
+            isFollower = true
+        ),
+        FollowingProfilesData(
+            profile_img = R.drawable.img_profile_sample_following,
+            profile_id = "3_oo",
+            isFollowing = true,
+            isFollower = true
+        ),
+        FollowingProfilesData(
+            profile_img = R.drawable.img_profile_sample_following,
+            profile_id = "4_ox",
+            isFollowing = true,
+            isFollower = false
+        ),
+        FollowingProfilesData(
+            profile_img = R.drawable.img_profile_sample_following,
+            profile_id = "5_xo",
+            isFollowing = false,
+            isFollower = true
+        ),
+        FollowingProfilesData(
+            profile_img = R.drawable.img_profile_sample_following,
+            profile_id = "6_oo",
+            isFollowing = true,
+            isFollower = true
+        )
+    )
+    val dummyFollowingShowAllProfilesList: List<FollowingProfilesData>
+        get() = _dummyFollowingShowAllProfilesList
+
+    fun setDummyFollowingShowAllProfiles() {
+        _followingShowAllProfilesList.value = dummyFollowingShowAllProfilesList.toList()
+    }
+
+    fun selectFollowingShowAll(followingProfilesList: List<FollowingProfilesData>) {
+        val isFollowingList = followingProfilesList.filter { data -> data.isFollowing }
+        _followingShowAllProfilesList.value = isFollowingList.toList()
+    }
+
+    fun selectFollowerShowAll(followingProfilesList: List<FollowingProfilesData>) {
+        val isFollowerList = followingProfilesList.filter { data -> data.isFollower }
+        _followingShowAllProfilesList.value = isFollowerList.toList()
+    }
 
     private val _dummyFollowingProfilesList = listOf(
         FollowingProfilesData(
@@ -59,26 +117,16 @@ class FollowingViewModel : ViewModel() {
         get() = _dummyFollowingProfilesList
 
     fun setDummyFollowingProfiles() {
-        _followingProfilesList.value = _dummyFollowingProfilesList.toList()
+        _followingProfilesList.value = dummyFollowingProfilesList.toList()
     }
 
     fun selectFollowing(followingProfilesList: List<FollowingProfilesData>) {
-        val isFollowingList: MutableList<FollowingProfilesData> = mutableListOf()
-        for (data in followingProfilesList) {
-            when (data.isFollowing) {
-                true -> isFollowingList.add(data)
-            }
-        }
+        val isFollowingList = followingProfilesList.filter { data -> data.isFollowing }
         _followingProfilesList.value = isFollowingList.toList()
     }
 
     fun selectFollower(followingProfilesList: List<FollowingProfilesData>) {
-        val isFollowerList: MutableList<FollowingProfilesData> = mutableListOf()
-        for (data in followingProfilesList) {
-            when (data.isFollower) {
-                true -> isFollowerList.add(data)
-            }
-        }
+        val isFollowerList = followingProfilesList.filter { data -> data.isFollower }
         _followingProfilesList.value = isFollowerList.toList()
     }
 

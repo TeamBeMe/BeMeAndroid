@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-            name="follongViewModel"
+            name="followingShowAllViewModel"
             type="com.teambeme.beme.following.viewmodel.FollowingViewModel" />
     </data>
 
@@ -33,6 +34,7 @@
             android:layout_marginStart="28dp"
             android:layout_marginTop="74dp"
             android:layout_marginEnd="28dp"
+            android:background="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -50,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/transparent"
-                android:text="팔로우" />
+                android:text="팔로워" />
         </com.google.android.material.tabs.TabLayout>
 
         <View
@@ -62,25 +64,25 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_view_following_show_all"
+            style="@style/following_show_all_search_view"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_marginStart="28dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="28dp"
             android:background="@drawable/following_show_all_search_view_shape"
-            app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_layout_following_show_all_sort"
-            app:queryBackground="@android:color/transparent"
-            app:queryHint="검색" />
+            app:layout_constraintTop_toBottomOf="@id/tab_layout_following_show_all_sort" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_following_show_all_profiles"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
+            android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

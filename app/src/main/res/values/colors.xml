@@ -71,10 +71,14 @@
     <color name="following_show_all_tab_txt_gray">#8E8E93</color>
     <color name="following_show_all_divide_line_gray">#c9c9c9</color>
     <color name="following_show_all_search_view_gray">#ebebeb</color>
+    <color name="following_show_all_search_view_hint_gray">#8E8E93</color>
     <color name="item_show_all_profiles_txt_user_id_black">#000000</color>
     <color name="item_show_all_profiles_btn_following_background_white">#ffffff</color>
     <color name="item_show_all_profiles_btn_following_name_black">#000000</color>
     <color name="item_show_all_profiles_btn_following_stroke_gray">#ebebeb</color>
+    <color name="item_show_all_profiles_btn_follower_background_black">#000000</color>
+    <color name="item_show_all_profiles_btn_follower_name_white">#ffffff</color>
+    <color name="item_show_all_profiles_btn_follower_stroke_black">#000000</color>
     <color name="answer_text_gray">#c9c9c9</color>
     <color name="answer_text_black">#000000</color>
     <color name="answer_text_info_gray">#636366</color>

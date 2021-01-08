@@ -47,4 +47,13 @@
         <item name="android:radius">6dp</item>
         <item name="android:background">@color/white</item>
     </style>
+
+    <style name="following_show_all_search_view" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/ic_mypage_search</item>
+        <item name="iconifiedByDefault">false</item>
+        <item name="queryHint">"검색"</item>
+        <item name="queryBackground">@android:color/transparent</item>
+        <item name="android:textColorHint">@color/following_show_all_search_view_hint_gray</item>
+        <item name="android:textColor">@color/following_show_all_search_view_hint_gray</item>
+    </style>
 </resources>
