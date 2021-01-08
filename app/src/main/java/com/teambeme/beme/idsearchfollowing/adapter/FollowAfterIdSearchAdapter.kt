@@ -25,7 +25,7 @@ class FollowAfterIdSearchAdapter :
         holder.bind(iDSearchDatas[position])
     }
 
-    fun replaceidSearchList(list: MutableList<IdSearchData>) {
+    fun replaceIdSearchList(list: MutableList<IdSearchData>) {
         iDSearchDatas = list
         notifyDataSetChanged()
     }

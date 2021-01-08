@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="followingAfterIdSearchViewModel"
+            type="com.teambeme.beme.idsearchfollowing.viewmodel.FollowingAfterIdSearchViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".idsearchfollowing.FollowingAfterIdSearch">
+        tools:context=".idsearchfollowing.FollowingAfterIdSearchActivity">
 
         <ImageView
             android:id="@+id/btn_back_following_idsearch"
@@ -57,7 +60,7 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="18dp"
             android:overScrollMode="never"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +103,7 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="18dp"
             android:overScrollMode="never"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
