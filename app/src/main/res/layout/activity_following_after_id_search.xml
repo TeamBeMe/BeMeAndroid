@@ -48,41 +48,62 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_idsearch"
             app:queryBackground="@android:color/transparent"
-            app:queryHint="검색" />
+            app:queryHint="검색"
+            />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/view_recent_search"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/search_view_following_idsearch"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginHorizontal="30dp"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_view_following_idsearch">
 
             <TextView
+                android:id="@+id/title_recent_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:text="최근 검색"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="42dp"
                 android:textColor="#000"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:id="@+id/title_recent_search"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_recent_search"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@+id/title_recent_search"
                 android:layout_marginTop="12dp"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
-
-
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title_recent_search"
+                tools:listitem="@layout/item_recent_search" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_following_after_idsearch"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="18dp"
+            android:overScrollMode="never"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_view_following_idsearch"
+            tools:listitem=""
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
