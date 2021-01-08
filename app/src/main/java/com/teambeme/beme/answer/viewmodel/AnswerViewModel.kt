@@ -1,5 +1,7 @@
 package com.teambeme.beme.answer.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teambeme.beme.data.local.dao.AnswerDao
@@ -12,14 +14,29 @@ import kotlinx.coroutines.withContext
 class AnswerViewModel(
     private val dataBase: AnswerDao
 ) : ViewModel() {
-    var answer: String = ""
+    private var answerId = -1
+    val answer: MutableLiveData<String> = MutableLiveData("")
+    private val _isCommentBlocked = MutableLiveData<Boolean>()
+    val isCommentBlocked: LiveData<Boolean>
+        get() = _isCommentBlocked
+    private val _isPublic = MutableLiveData<Boolean>()
+    val isPublic: LiveData<Boolean>
+        get() = _isPublic
     private var questionId = -1
+
+    fun setPublicTrue() {
+        _isPublic.value = true
+    }
+
+    fun setPublicFalse() {
+        _isPublic.value = false
+    }
 
     suspend fun initEditText(id: Int): String {
         return viewModelScope.async {
-            answer = getStoredAnswer(id.toLong())?.answer ?: ""
+            answer.value = getStoredAnswer(id.toLong())?.answer ?: ""
             questionId = id
-            answer
+            answer.value!!
         }.await()
     }
 
@@ -32,7 +49,7 @@ class AnswerViewModel(
             dataBase.insert(
                 AnswerData(
                     questionId = questionId.toLong(),
-                    answer = answer
+                    answer = answer.value!!
                 )
             )
         }
