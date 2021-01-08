@@ -2,7 +2,7 @@ package com.teambeme.beme.detail.model
 
 data class ReplyParentData(
     val txt_id: String,
-    val txt_comment: String,
+    var txt_comment: String,
     val txt_time: String,
     val dataChild: MutableList<ReplyData> = mutableListOf<ReplyData>(
         ReplyData(
