@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="detailViewModel"
-            type="com.teambeme.beme.detail.viewmodel.DetailViewModel" />
+            name="mypageViewModel"
+            type="com.teambeme.beme.mypage.viewmodel.MyPageViewModel" />
 
     </data>
 
@@ -16,75 +16,87 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <TextView
+            android:id="@+id/txt_profilebottom_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textColor="@color/answer_text_info_gray"
+            android:text="나를 대신하여 표현할 수 있는 이미지를 선택해 주세요"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tb_otherbottom_report"
+            android:id="@+id/tb_profilebottom_edit"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/txt_profilebottom_profile">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <ImageButton
-                    android:id="@+id/img_otherbottom_report"
+                    android:id="@+id/img_profilebottom_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_report_bottom"
+                    android:src="@drawable/ic_add_image"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/txt_otherbottom_complete"
+                    android:id="@+id/txt_profilebottom_fix"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="18dp"
-                    android:text="신고하기"
-                    android:textColor="#FF5151"
+                    android:text="프로필 사진 선택"
+                    android:textColor="#000000"
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/img_otherbottom_report"
+                    app:layout_constraintStart_toEndOf="@+id/img_profilebottom_edit"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tb_otherbottom_block"
+            android:id="@+id/tb_profilebottom_base"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_constraintTop_toBottomOf="@+id/tb_otherbottom_report">
+            app:layout_constraintTop_toBottomOf="@+id/tb_profilebottom_edit">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <ImageButton
-                    android:id="@+id/btn_otherbottom_block"
+                    android:id="@+id/btn_profilebottom_base"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_block_bottom"
+                    android:src="@drawable/ic_base_edit"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/txt_otherbottom_block"
+                    android:id="@+id/txt_profilebottom_base"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="18dp"
-                    android:text="차단하기"
-                    android:textColor="#FF5151"
+                    android:text="기본 이미지 변경"
+                    android:textColor="#000000"
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/btn_otherbottom_block"
+                    app:layout_constraintStart_toEndOf="@+id/btn_profilebottom_base"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
