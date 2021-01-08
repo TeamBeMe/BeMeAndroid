@@ -46,6 +46,8 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         }
 
         return binding.root
+
+
     }
 
     private fun getPageTransformer(): ViewPager2.PageTransformer {

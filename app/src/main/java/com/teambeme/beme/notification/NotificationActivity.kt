@@ -1,8 +1,14 @@
 package com.teambeme.beme.notification
 
+import android.nfc.Tag
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.databinding.ActivityNotificationBinding
@@ -12,9 +18,12 @@ import com.teambeme.beme.notification.viewmodel.NotificationViewModel
 
 class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layout.activity_notification) {
     private val notificationViewModel: NotificationViewModel by viewModels()
+    private val TAG = "NotificationActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
 
         setViewModel(binding)
 
@@ -25,6 +34,21 @@ class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layo
         notificationViewModel.setDummyRecentNotification()
         setClickListenerForPlusRecentActivitiesData(binding)
         setObserveRecentActivities(binding)
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            val msg = getString(R.string.msg_token_fmt, token)
+            Log.d(TAG, msg)
+
+        })
     }
 
     private fun setViewModel(binding: ActivityNotificationBinding) {

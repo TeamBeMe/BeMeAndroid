@@ -18,6 +18,7 @@ class ReplyActivity : BindingActivity<ActivityReplyBinding>(R.layout.activity_re
         binding.replyViewModel = replyViewModel
         val replyAdapter = ReplyParentAdapter(this, replyViewModel)
         binding.lifecycleOwner = this
+
         binding.rcvReplyParent.apply {
             adapter = replyAdapter
             layoutManager = LinearLayoutManager(this@ReplyActivity)
@@ -64,4 +65,6 @@ class ReplyActivity : BindingActivity<ActivityReplyBinding>(R.layout.activity_re
             replyViewModel.secretButtonClickedFalse()
         }
     }
+
+
 }
