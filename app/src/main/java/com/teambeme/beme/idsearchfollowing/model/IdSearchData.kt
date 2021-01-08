@@ -1,6 +1,6 @@
 package com.teambeme.beme.idsearchfollowing.model
 
-data class FollowAfterIdSearchData(
+data class IdSearchData(
     val userID: String,
     val userPicUrl: String,
 )
