@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".idsearch.FollowingAfterIdSearch">
+        tools:context=".idsearchfollowing.FollowingAfterIdSearch">
 
         <ImageView
             android:id="@+id/btn_back_following_idsearch"

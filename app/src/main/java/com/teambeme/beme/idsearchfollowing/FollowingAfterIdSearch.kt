@@ -1,4 +1,4 @@
-package com.teambeme.beme.idsearch
+package com.teambeme.beme.idsearchfollowing
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
