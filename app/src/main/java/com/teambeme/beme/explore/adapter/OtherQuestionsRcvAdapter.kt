@@ -21,7 +21,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private val layout: Int
 ) :
     ListAdapter<OtherQuestionsData, OtherQuestionsRcvAdapter<B>.OtherQuestionsRcvViewHolder<B>>(
-        OtherquestionsDiffUtil()
+        OtherQuestionsDiffUtil()
     ) {
     inner class OtherQuestionsRcvViewHolder<B : ViewDataBinding>(private val binding: B) :
         RecyclerView.ViewHolder(binding.root) {
@@ -63,7 +63,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         holder.bind(getItem(position))
     }
 
-    private class OtherquestionsDiffUtil : DiffUtil.ItemCallback<OtherQuestionsData>() {
+    private class OtherQuestionsDiffUtil : DiffUtil.ItemCallback<OtherQuestionsData>() {
         override fun areItemsTheSame(oldItem: OtherQuestionsData, newItem: OtherQuestionsData) =
             (oldItem.title == newItem.title)
 

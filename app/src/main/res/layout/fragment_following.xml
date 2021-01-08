@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="follongViewModel"
+            name="followingViewModel"
             type="com.teambeme.beme.following.viewmodel.FollowingViewModel" />
 
     </data>
@@ -99,17 +99,24 @@
                 android:background="@color/following_divide_line_gray"
                 app:layout_constraintTop_toBottomOf="@+id/tab_layout_following_sort" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcv_following_other_profiles"
-                android:layout_width="match_parent"
+            <com.teambeme.beme.util.NestedScrollableHost
+                android:id="@+id/nested_scrollable_host_following"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:orientation="horizontal"
-                android:clipToPadding="false"
-                android:paddingStart="20dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/tab_layout_following_sort"
-                tools:listitem="@layout/item_following_other_profiles" />
+                app:layout_constraintTop_toBottomOf="@id/tab_layout_following_sort">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcv_following_other_profiles"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:clipToPadding="false"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_following_other_profiles" />
+            </com.teambeme.beme.util.NestedScrollableHost>
+
 
             <TextView
                 android:id="@+id/txt_following_title_of_other_questions"
@@ -120,7 +127,7 @@
                 android:textColor="@color/following_txt_following_title_of_other_questions_black"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@id/tab_layout_following_sort"
-                app:layout_constraintTop_toBottomOf="@id/rcv_following_other_profiles" />
+                app:layout_constraintTop_toBottomOf="@id/nested_scrollable_host_following" />
 
             <TextView
                 android:id="@+id/txt_following_desc_of_other_questions"
@@ -162,6 +169,7 @@
                 android:paddingTop="12dp"
                 android:paddingBottom="16dp"
                 android:text="더보기"
+                android:onClick="@{()->followingViewModel.plusDummyOtherFollowingQuestions()}"
                 android:textColor="@color/following_btn_show_more_txt_white"
                 android:textSize="16sp"
                 app:cornerRadius="6dp"

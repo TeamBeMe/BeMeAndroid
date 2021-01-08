@@ -29,10 +29,10 @@ class ExploreDetailActivity :
     }
 
     private fun setOtherAnswersObserve(binding: ActivityExploreDetailBinding) {
-        exploreDetailViewModel.otherAnswersList.observe(this) { otheranswersList ->
-            otheranswersList?.let {
+        exploreDetailViewModel.otherAnswersList.observe(this) { otherAnswersList ->
+            otherAnswersList?.let {
                 if (binding.rcvExploreDetailOtherAnswers.adapter != null) with(binding.rcvExploreDetailOtherAnswers.adapter as OtherQuestionsRcvAdapter<*>) {
-                    submitList(otheranswersList)
+                    submitList(otherAnswersList)
                 }
             }
         }

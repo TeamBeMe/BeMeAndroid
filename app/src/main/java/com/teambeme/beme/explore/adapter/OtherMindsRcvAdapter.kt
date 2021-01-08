@@ -14,7 +14,7 @@ import com.teambeme.beme.explore.view.ExploreDetailActivity
 import com.teambeme.beme.util.startActivity
 
 class OtherMindsRcvAdapter(private val context: Context) :
-    ListAdapter<OtherMindsData, OtherMindsRcvAdapter.OtherMindsRcvViewHolder>(OthermindsDiffUtil()) {
+    ListAdapter<OtherMindsData, OtherMindsRcvAdapter.OtherMindsRcvViewHolder>(OtherMindsDiffUtil()) {
     inner class OtherMindsRcvViewHolder(private val binding: ItemExploreOtherMindsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(otherMindsData: OtherMindsData) {
@@ -34,7 +34,7 @@ class OtherMindsRcvAdapter(private val context: Context) :
         holder.bind(getItem(position))
     }
 
-    private class OthermindsDiffUtil : DiffUtil.ItemCallback<OtherMindsData>() {
+    private class OtherMindsDiffUtil : DiffUtil.ItemCallback<OtherMindsData>() {
         override fun areItemsTheSame(oldItem: OtherMindsData, newItem: OtherMindsData) =
             (oldItem.title == newItem.title)
 

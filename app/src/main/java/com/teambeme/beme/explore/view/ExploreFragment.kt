@@ -33,7 +33,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         setOtherQuestionsAdapter(binding)
         setOtherMindsObserve(binding)
         setOtherQuestionsObserve(binding)
-        setTabSelectedListener(binding)
+        setTabSelectedFromExploreListener(binding)
         setSnapHelper(binding)
         return binding.root
     }
@@ -50,26 +50,26 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
     }
 
     private fun setOtherMindsObserve(binding: FragmentExploreBinding) {
-        exploreViewModel.otherMindsList.observe(viewLifecycleOwner) { othermindsList ->
-            othermindsList?.let {
+        exploreViewModel.otherMindsList.observe(viewLifecycleOwner) { otherMindsList ->
+            otherMindsList?.let {
                 if (binding.rcvExploreOtherMinds.adapter != null) with(binding.rcvExploreOtherMinds.adapter as OtherMindsRcvAdapter) {
-                    submitList(othermindsList)
+                    submitList(otherMindsList)
                 }
             }
         }
     }
 
     private fun setOtherQuestionsObserve(binding: FragmentExploreBinding) {
-        exploreViewModel.otherQuestionsList.observe(viewLifecycleOwner) { otherquestionsList ->
-            otherquestionsList?.let {
+        exploreViewModel.otherQuestionsList.observe(viewLifecycleOwner) { otherQuestionsList ->
+            otherQuestionsList?.let {
                 if (binding.rcvExploreOtherQuestions.adapter != null) with(binding.rcvExploreOtherQuestions.adapter as OtherQuestionsRcvAdapter<*>) {
-                    submitList(otherquestionsList)
+                    submitList(otherQuestionsList)
                 }
             }
         }
     }
 
-    private fun setTabSelectedListener(binding: FragmentExploreBinding) {
+    private fun setTabSelectedFromExploreListener(binding: FragmentExploreBinding) {
         binding.tabLayoutExploreSort.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {

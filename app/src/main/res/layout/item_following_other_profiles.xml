@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="profiles"
-            type="com.teambeme.beme.following.model.ProfilesData" />
+            name="followingProfiles"
+            type="com.teambeme.beme.following.model.FollowingProfilesData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="userID"
+            android:text="@{followingProfiles.profile_id}"
             android:textColor="@color/item_other_profiles_txt_user_id_black"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/img_following_other_profile"
