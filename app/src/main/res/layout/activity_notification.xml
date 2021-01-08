@@ -60,6 +60,7 @@
                 android:layout_marginTop="28dp"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/notice_when_no_item_in_rcv_recent_activities"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
