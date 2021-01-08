@@ -79,7 +79,7 @@ class HomeViewModel : ViewModel() {
                 ),
                 isToday = true,
                 publicFlag = 1
-            ),
+            )
         )
         _questionList.value = dummyQuestionList.toMutableList()
     }

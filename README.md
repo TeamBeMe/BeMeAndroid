@@ -106,7 +106,7 @@
       <ul>
         <li> 홈 </li>
         <li> 글쓰기 </li>
-        <li> 팔로잉팔로워 검색 기능 작업 </li>
+        <li> 로그인 & 회원가입 뷰 구현 </li>
         <li> 프로젝트 Setting </li>
         <li> Util 기능 </li>
       </ul>
@@ -116,20 +116,21 @@
         <li> 탐색탭 Fragment </li>
         <li> 팔로잉탭 Fragment </li>
         <li> 같은 질문에 대한 다른 답변들 Fragment </li>
-        <li> 팔로잉탭 모두보기 Fragment UI작업 </li>
+        <li> 팔로잉탭 모두보기 Fragment </li>
       </ul>
     </td>
     <td>
       <ul>
         <li> 마이페이지 </li>
         <li> 상세페이지 </li>
+        <li> 타인 프로필  </li>
       </ul>
     </td>
     <td>
       <ul>
         <li> 알림 뷰 </li>
         <li> 푸시 알림 구현 </li>
-        <li> 로그인 & 회원가입 뷰 구현 </li>
+        <li> 아이디 검색 후 팔로잉 구현 </li>
       </ul>
     </td>
   </tr>
@@ -141,7 +142,7 @@
   <img src = "https://user-images.githubusercontent.com/54518925/103659994-6c046d80-4fb0-11eb-9ce6-7d9b708e0696.png" width = "70%" />
 </p>
 
-<h3 align="center"> 나를 알아가는 질문 다이어리 BeMe </h3></br>
+<h3 align="center"> 나를 알아가는 질문, 나를 돌아보는 시간 BeMe </h3></br>
 
 
 > 나는 어떻게 살고 싶은 지, 무엇을 중요하게 생각하는 지
@@ -172,6 +173,7 @@ BeMe는 [Google의 Kotlin Coding Style Guide](https://developer.android.com/kotl
 #### Class/Object
 - Pascal Case
 ```
+class BeMe
 open class SampleName { /* ... */ }
 object MoreSampleName : SampleName() { /* ... */ }
 ```
@@ -179,8 +181,8 @@ object MoreSampleName : SampleName() { /* ... */ }
 #### Function/Parameter/Variable
 - Camel Case
 ```
-val initList = mutableList<SampleData>()
-fun getList: List<SampleData>() { /* ... */ }
+val initList = mutableList<BeMeData>()
+fun getList: List<BeMeData>() { /* ... */ }
 ```
 #### Constant
 - Upper Snake Case
@@ -248,7 +250,7 @@ footer(optional)
 - DOCS: 문서 수정/추가
 - STYLE: 스타일(xml file) 코드 변경
 - REFACTOR: 리팩토링
-- TEST: 테스트 코드 추가/테스트 리팩토링(Room, Retrofit 동작 보장을 위한)
+- TEST: 테스트 코드 추가/테스트 리팩토링(Room, Retrofit 동작 확인을 위한)
 - CHORE: Gradle이나 설정 세팅할 때
 
 ### Subject
@@ -304,16 +306,22 @@ footer(optional)
   - Retrofit
   - Gson
 
-- 쉬운 이미지 처리를 위한 CircleImageView
+- 쉬운 이미지 처리를 위한
+    - CircleImageView
+    - ImageCrop
+
+- 애니메이션 재생을 위한 Lottie
+
+- 쉬운 권한 획득을 위한 TedPermission
+
+- 푸시 알람 구현을 위한 Firebase/Firebase Cloud Messaging
 
 ## 구현 기술
-- Room을 이용한 글 임시저장 구현
-- BaseViewContoller로 쉬운 DataBinding과 생명주기 관찰
-- NestedScrollableHost로 중첩 ViewPager2 이슈 해결
-- Status Bar의 색상 바꾸기
+- [Room을 이용한 글 임시저장 구현](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/RoomDataConnection.md)
+- [BaseViewContoller로 쉬운 DataBinding과 생명주기 관찰](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/BaseViewController.md)
+- [NestedScrollableHost로 중첩 ViewPager2 이슈 해결](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/NestedScrollableHost.md)
+- [Status Bar의 색상 바꾸기](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/StatusBarUtil.md)
 - [BindingAdapter로 View의 속성 정의, 설정](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/BindingAdapter.md)
-- InverseBindingAdapter로 View의 값들 가져오기
-- PageTransformer로 ViewPager2에 전환 애니메이션 주기
 - [DiffUtil을 적용한 ListAdapter](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/ListAdapterWithDiffUtil.md)
 - [검색 필터 바텀시트 구성하고 뷰모델을 통해 값을 받아와 봅시다](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/BottomSheetDialogFragment.md)
 - [맨 밑까지 스크롤을 할 때 더보기 버튼 띄우기](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/ScrollAddMoreButton.md)
