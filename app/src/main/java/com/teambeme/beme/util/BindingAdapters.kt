@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
+import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 
 object BindingAdapters {
@@ -39,11 +40,11 @@ object BindingAdapters {
 
     @BindingAdapter("android:text")
     @JvmStatic
-    fun setEditTextString(view: EditText, text: String?) {
+    fun setEditTextString(view: EditText, text: MutableLiveData<String>) {
         if (text == null) {
             view.setText("")
         } else {
-            if (view.text.toString() != text) view.setText(text)
+            if (view.text.toString() != text.value) view.setText(text.value)
         }
     }
 
