@@ -13,6 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeMe"
         android:usesCleartextTraffic="true">
+        <activity android:name=".idsearch.FollowingAfterIdSearch"></activity>
+
         <service
             android:name=".MyFirebaseMessagingService"
             android:enabled="true"
