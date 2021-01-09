@@ -23,6 +23,12 @@ class RecentSearchAdapter :
 
     override fun onBindViewHolder(holder: RecentSearchViewHolder, position: Int) {
         holder.bind(recentSearchDatas[position])
+        holder.bind(recentSearchDatas[position]).let {
+        }
+        holder.btnDeleteRecentRecearch.setOnClickListener {
+            recentSearchDatas.removeAt(position)
+            notifyDataSetChanged()
+        }
     }
 
     fun replaceRecentSearchList(list: MutableList<RecentSearchData>) {
@@ -38,5 +44,9 @@ class RecentSearchAdapter :
                 executePendingBindings()
             }
         }
+
+        val btnDeleteRecentRecearch = binding.btnDeleteRecentSearch
     }
+
+
 }
