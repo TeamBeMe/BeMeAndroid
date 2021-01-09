@@ -303,6 +303,4 @@ class FollowingViewModel : ViewModel() {
         dummyOtherFollowingQuestionsList.addAll(plusOtherFollowingQuestionsList.toMutableList())
         _otherFollowingQuestionsList.value = dummyOtherFollowingQuestionsList.toMutableList()
     }
-
-
 }

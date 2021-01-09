@@ -14,7 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeMe"
         android:usesCleartextTraffic="true">
-        <activity android:name=".otherpage.view.OtherPageActivity"></activity>
+        <activity
+            android:name=".login.view.LoginActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".otherpage.view.OtherPageActivity" />
 
         <service
             android:name=".MyFirebaseMessagingService"
@@ -24,7 +28,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <activity android:name=".following.view.FollowingShowAllActivity"></activity>
+
+        <activity android:name=".following.view.FollowingShowAllActivity" />
         <activity android:name=".explore.view.ExploreDetailActivity" />
         <activity
             android:name=".answer.view.AnswerActivity"
