@@ -16,10 +16,10 @@
         android:layout_marginEnd="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintlayout_othermindslist_title"
+            android:id="@+id/constraintlayout_other_minds_title"
             android:layout_width="304dp"
             android:layout_height="96dp"
-            android:background="@drawable/explore_otherminds_title_shape"
+            android:background="@drawable/explore_other_minds_title_shape"
             android:paddingStart="18dp"
             android:paddingTop="16dp"
             android:paddingEnd="18dp"
@@ -28,20 +28,20 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/txt_otherminds_title"
+                android:id="@+id/txt_other_minds_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="@{otherMinds.title}"
-                android:textColor="@color/list_otherminds_txt_title_white"
+                android:textColor="@color/item_other_minds_txt_title_white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_othermindslist_show_other_answers"
+                app:layout_constraintEnd_toStartOf="@id/btn_other_minds_show_other_answers"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/btn_othermindslist_show_other_answers"
+                android:id="@+id/btn_other_minds_show_other_answers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="18dp"
@@ -54,23 +54,23 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintlayout_othermindslist_content"
+            android:id="@+id/constraintlayout_other_minds_content"
             android:layout_width="304dp"
             android:layout_height="132dp"
-            android:background="@drawable/explore_otherminds_content_shape"
+            android:background="@drawable/explore_other_minds_content_shape"
             android:paddingStart="18dp"
             android:paddingTop="15dp"
             android:paddingEnd="18dp"
             android:paddingBottom="20dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/constraintlayout_othermindslist_title">
+            app:layout_constraintTop_toBottomOf="@id/constraintlayout_other_minds_title">
 
             <TextView
-                android:id="@+id/txt_othermindslist_content"
+                android:id="@+id/txt_other_minds_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{otherMinds.content}"
-                android:textColor="@color/list_otherminds_txt_content_black"
+                android:textColor="@color/item_other_minds_txt_content_black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

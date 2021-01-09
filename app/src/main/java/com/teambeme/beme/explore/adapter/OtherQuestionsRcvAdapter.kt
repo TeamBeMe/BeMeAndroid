@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.BR
 import com.teambeme.beme.R
-import com.teambeme.beme.databinding.ListExploreOtherquestionsBinding
-import com.teambeme.beme.databinding.ListExploredetailOtheranswersBinding
+import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
+import com.teambeme.beme.databinding.ItemExploreDetailOtherAnswersBinding
 import com.teambeme.beme.explore.model.OtherQuestionsData
 import com.teambeme.beme.explore.view.ExploreDetailActivity
 import com.teambeme.beme.util.startActivity
@@ -20,22 +20,22 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private val context: Context,
     private val layout: Int
 ) :
-    ListAdapter<OtherQuestionsData, OtherQuestionsRcvAdapter<B>.OtherquestionsRcvViewHolder<B>>(
-        OtherquestionsDiffUtil()
+    ListAdapter<OtherQuestionsData, OtherQuestionsRcvAdapter<B>.OtherQuestionsRcvViewHolder<B>>(
+        OtherQuestionsDiffUtil()
     ) {
-    inner class OtherquestionsRcvViewHolder<B : ViewDataBinding>(private val binding: B) :
+    inner class OtherQuestionsRcvViewHolder<B : ViewDataBinding>(private val binding: B) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(otherQuestionsData: OtherQuestionsData) {
             when (binding) {
-                is ListExploreOtherquestionsBinding -> {
-                    with(binding as ListExploreOtherquestionsBinding) {
+                is ItemExploreOtherQuestionsBinding -> {
+                    with(binding as ItemExploreOtherQuestionsBinding) {
                         setVariable(BR.otherQuestions, otherQuestionsData)
                         setClickListenerForQuestionsBookmark(binding, otherQuestionsData)
                         setClickListenerForShowOtherAnswers(binding, otherQuestionsData, context)
                     }
                 }
                 else -> {
-                    with(binding as ListExploredetailOtheranswersBinding) {
+                    with(binding as ItemExploreDetailOtherAnswersBinding) {
                         setVariable(BR.otherAnswers, otherQuestionsData)
                         setClickListenerForAnswersBookmark(binding, otherQuestionsData)
                     }
@@ -47,7 +47,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): OtherquestionsRcvViewHolder<B> {
+    ): OtherQuestionsRcvViewHolder<B> {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: B =
             DataBindingUtil.inflate(
@@ -56,14 +56,14 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                 parent,
                 false
             )
-        return OtherquestionsRcvViewHolder(binding)
+        return OtherQuestionsRcvViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: OtherquestionsRcvViewHolder<B>, position: Int) {
+    override fun onBindViewHolder(holder: OtherQuestionsRcvViewHolder<B>, position: Int) {
         holder.bind(getItem(position))
     }
 
-    private class OtherquestionsDiffUtil : DiffUtil.ItemCallback<OtherQuestionsData>() {
+    private class OtherQuestionsDiffUtil : DiffUtil.ItemCallback<OtherQuestionsData>() {
         override fun areItemsTheSame(oldItem: OtherQuestionsData, newItem: OtherQuestionsData) =
             (oldItem.title == newItem.title)
 
@@ -72,11 +72,11 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     }
 
     private fun setClickListenerForShowOtherAnswers(
-        binding: ListExploreOtherquestionsBinding,
+        binding: ItemExploreOtherQuestionsBinding,
         otherQuestionsData: OtherQuestionsData,
         context: Context
     ) {
-        binding.btnOtherquestionslistShowOtherAnswers.setOnClickListener {
+        binding.btnOtherQuestionsShowOtherAnswers.setOnClickListener {
             otherQuestionsData.title?.let { title ->
                 context.startActivity<ExploreDetailActivity>(title)
             }
@@ -84,36 +84,36 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     }
 
     private fun setClickListenerForQuestionsBookmark(
-        binding: ListExploreOtherquestionsBinding,
+        binding: ItemExploreOtherQuestionsBinding,
         otherQuestionsData: OtherQuestionsData
     ) {
-        binding.btnOtherquestionslistBookmark.setOnClickListener {
+        binding.btnOtherQuestionsBookmark.setOnClickListener {
             when (binding.otherQuestions?.isbookmarked) {
                 false -> {
                     otherQuestionsData.isbookmarked = true
-                    binding.btnOtherquestionslistBookmark.setImageResource(R.drawable.ic_bookmark_checked)
+                    binding.btnOtherQuestionsBookmark.setImageResource(R.drawable.ic_bookmark_checked)
                 }
                 else -> {
                     otherQuestionsData.isbookmarked = false
-                    binding.btnOtherquestionslistBookmark.setImageResource(R.drawable.ic_bookmark)
+                    binding.btnOtherQuestionsBookmark.setImageResource(R.drawable.ic_bookmark)
                 }
             }
         }
     }
 
     private fun setClickListenerForAnswersBookmark(
-        binding: ListExploredetailOtheranswersBinding,
+        binding: ItemExploreDetailOtherAnswersBinding,
         otheranswersData: OtherQuestionsData
     ) {
-        binding.btnOtheranswerslistBookmark.setOnClickListener {
+        binding.btnOtherAnswersBookmark.setOnClickListener {
             when (binding.otherAnswers?.isbookmarked) {
                 false -> {
                     otheranswersData.isbookmarked = true
-                    binding.btnOtheranswerslistBookmark.setImageResource(R.drawable.ic_bookmark_checked)
+                    binding.btnOtherAnswersBookmark.setImageResource(R.drawable.ic_bookmark_checked)
                 }
                 else -> {
                     otheranswersData.isbookmarked = false
-                    binding.btnOtheranswerslistBookmark.setImageResource(R.drawable.ic_bookmark)
+                    binding.btnOtherAnswersBookmark.setImageResource(R.drawable.ic_bookmark)
                 }
             }
         }

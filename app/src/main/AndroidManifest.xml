@@ -22,7 +22,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
+        <activity android:name=".following.view.FollowingShowAllActivity"></activity>
         <activity android:name=".explore.view.ExploreDetailActivity" />
         <activity
             android:name=".answer.view.AnswerActivity"

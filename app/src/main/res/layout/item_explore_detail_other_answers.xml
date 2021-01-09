@@ -12,86 +12,86 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:background="@drawable/explore_otherquestions_shape"
+        android:background="@drawable/explore_other_questions_shape"
         android:padding="18dp">
 
         <TextView
-            android:id="@+id/txt_otheranswerslist_category"
+            android:id="@+id/txt_other_answers_category"
             setCategory="@{otherAnswers.category}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/list_otheranswers_txt_category_gray"
+            android:textColor="@color/item_other_answers_txt_category_gray"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txt_otheranswerslist_dot"
+            android:id="@+id/txt_other_answers_dot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:text="·"
-            android:textColor="@color/list_otheranswers_txt_dot_black"
+            android:textColor="@color/item_other_answers_txt_dot_black"
             android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@id/txt_otheranswerslist_category"
-            app:layout_constraintEnd_toStartOf="@id/txt_otheranswerslist_time"
-            app:layout_constraintStart_toEndOf="@id/txt_otheranswerslist_category"
-            app:layout_constraintTop_toTopOf="@id/txt_otheranswerslist_category" />
+            app:layout_constraintBottom_toBottomOf="@id/txt_other_answers_category"
+            app:layout_constraintEnd_toStartOf="@id/txt_other_answers_time"
+            app:layout_constraintStart_toEndOf="@id/txt_other_answers_category"
+            app:layout_constraintTop_toTopOf="@id/txt_other_answers_category" />
 
         <TextView
-            android:id="@+id/txt_otheranswerslist_time"
+            android:id="@+id/txt_other_answers_time"
             setTime="@{otherAnswers.time}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:textColor="@color/list_otheranswers_txt_time_gray"
+            android:textColor="@color/item_other_answers_txt_time_gray"
             android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@id/txt_otheranswerslist_category"
-            app:layout_constraintStart_toEndOf="@id/txt_otheranswerslist_dot"
-            app:layout_constraintTop_toTopOf="@id/txt_otheranswerslist_category" />
+            app:layout_constraintBottom_toBottomOf="@id/txt_other_answers_category"
+            app:layout_constraintStart_toEndOf="@id/txt_other_answers_dot"
+            app:layout_constraintTop_toTopOf="@id/txt_other_answers_category" />
 
         <TextView
-            android:id="@+id/txt_otheranswerslist_content"
+            android:id="@+id/txt_other_answers_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@{otherAnswers.content}"
-            android:textColor="@color/list_otherminds_txt_content_black"
+            android:textColor="@color/item_other_minds_txt_content_black"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/txt_otheranswerslist_category"
-            app:layout_constraintTop_toBottomOf="@+id/txt_otheranswerslist_category" />
+            app:layout_constraintStart_toStartOf="@+id/txt_other_answers_category"
+            app:layout_constraintTop_toBottomOf="@+id/txt_other_answers_category" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_otheranswerslist_profile"
+            android:id="@+id/img_other_answers_profile"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginTop="9dp"
             android:src="@drawable/img_profile_sample"
-            app:layout_constraintStart_toStartOf="@+id/txt_otheranswerslist_category"
-            app:layout_constraintTop_toBottomOf="@+id/txt_otheranswerslist_content" />
+            app:layout_constraintStart_toStartOf="@+id/txt_other_answers_category"
+            app:layout_constraintTop_toBottomOf="@+id/txt_other_answers_content" />
 
         <TextView
-            android:id="@+id/txt_otheranswerslist_userid"
+            android:id="@+id/txt_otheranswerslist_user_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:text="@{otherAnswers.userId}"
-            android:textColor="@color/list_otheranswers_txt_userid_black"
+            android:textColor="@color/item_other_answers_txt_user_id_black"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@id/img_otheranswerslist_profile"
-            app:layout_constraintStart_toEndOf="@+id/img_otheranswerslist_profile"
-            app:layout_constraintTop_toTopOf="@+id/img_otheranswerslist_profile" />
+            app:layout_constraintBottom_toBottomOf="@id/img_other_answers_profile"
+            app:layout_constraintStart_toEndOf="@+id/img_other_answers_profile"
+            app:layout_constraintTop_toTopOf="@+id/img_other_answers_profile" />
 
         <ImageButton
-            android:id="@+id/btn_otheranswerslist_bookmark"
+            android:id="@+id/btn_other_answers_bookmark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_bookmark"
-            app:layout_constraintBottom_toBottomOf="@+id/img_otheranswerslist_profile"
+            app:layout_constraintBottom_toBottomOf="@+id/img_other_answers_profile"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/img_otheranswerslist_profile" />
+            app:layout_constraintTop_toTopOf="@+id/img_other_answers_profile" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
