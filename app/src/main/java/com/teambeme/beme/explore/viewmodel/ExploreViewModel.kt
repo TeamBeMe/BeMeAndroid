@@ -26,7 +26,8 @@ class ExploreViewModel : ViewModel() {
             title = null,
             content = "답변1입니다.답변1입니다.답변1입니다.답변1입니다.답변1입니다.답변1입니다.답변1입니다.",
             time = "5",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "2",
@@ -34,7 +35,8 @@ class ExploreViewModel : ViewModel() {
             title = null,
             content = "답변2입니다.답변2입니다.답변2입니다.답변2입니다.답변2입니다.답변2입니다.답변2입니다.",
             time = "26",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "3",
@@ -42,7 +44,8 @@ class ExploreViewModel : ViewModel() {
             title = null,
             content = "답변3입니다.답변3입니다.답변3입니다.답변3입니다.답변3입니다.답변3입니다.답변3입니다.",
             time = "15",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "4",
@@ -50,7 +53,8 @@ class ExploreViewModel : ViewModel() {
             title = null,
             content = "답변4입니다.답변4입니다.답변4입니다.답변4입니다.답변4입니다.답변4입니다.답변4입니다.",
             time = "3",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "5",
@@ -58,7 +62,8 @@ class ExploreViewModel : ViewModel() {
             title = null,
             content = "답변5입니다.답변5입니다.답변5입니다.답변5입니다.답변5입니다.답변5입니다.답변5입니다.",
             time = "4",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "6",
@@ -66,7 +71,8 @@ class ExploreViewModel : ViewModel() {
             title = null,
             content = "답변6입니다.답변6입니다.답변6입니다.답변6입니다.답변6입니다.답변6입니다.답변6입니다.",
             time = "5",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "7",
@@ -74,7 +80,8 @@ class ExploreViewModel : ViewModel() {
             title = null,
             content = "답변7입니다.답변7입니다.답변7입니다.답변7입니다.답변7입니다.답변7입니다.답변7입니다.",
             time = "15",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "8",
@@ -82,7 +89,8 @@ class ExploreViewModel : ViewModel() {
             title = null,
             content = "답변8입니다.답변8입니다.답변8입니다.답변8입니다.답변8입니다.답변8입니다.답변8입니다.",
             time = "3",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "9",
@@ -90,7 +98,8 @@ class ExploreViewModel : ViewModel() {
             title = null,
             content = "답변9입니다.답변9입니다.답변9입니다.답변9입니다.답변9입니다.답변9입니다.답변9입니다.",
             time = "4",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "10",
@@ -98,7 +107,8 @@ class ExploreViewModel : ViewModel() {
             title = null,
             content = "답변10입니다.답변10입니다.답변10입니다.답변10입니다.답변10입니다.답변10입니다.답변10입니다.",
             time = "5",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         )
     )
 
@@ -114,7 +124,8 @@ class ExploreViewModel : ViewModel() {
                 title = null,
                 content = "답변11입니다.",
                 time = "5",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "12",
@@ -122,7 +133,8 @@ class ExploreViewModel : ViewModel() {
                 title = null,
                 content = "답변12입니다.",
                 time = "26",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "13",
@@ -130,7 +142,8 @@ class ExploreViewModel : ViewModel() {
                 title = null,
                 content = "답변13입니다.",
                 time = "15",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "14",
@@ -138,7 +151,8 @@ class ExploreViewModel : ViewModel() {
                 title = null,
                 content = "답변14입니다.",
                 time = "3",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "15",
@@ -146,7 +160,8 @@ class ExploreViewModel : ViewModel() {
                 title = null,
                 content = "답변15입니다.",
                 time = "4",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "16",
@@ -154,7 +169,8 @@ class ExploreViewModel : ViewModel() {
                 title = null,
                 content = "답변16입니다.",
                 time = "5",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "17",
@@ -162,7 +178,8 @@ class ExploreViewModel : ViewModel() {
                 title = null,
                 content = "답변17입니다.",
                 time = "15",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "18",
@@ -170,7 +187,8 @@ class ExploreViewModel : ViewModel() {
                 title = null,
                 content = "답변18입니다.",
                 time = "3",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "19",
@@ -178,7 +196,8 @@ class ExploreViewModel : ViewModel() {
                 title = null,
                 content = "답변19입니다.",
                 time = "4",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "20",
@@ -186,7 +205,8 @@ class ExploreViewModel : ViewModel() {
                 title = null,
                 content = "답변20입니다.",
                 time = "5",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             )
         )
         dummyOtherAnswersList.addAll(plusOtherAnswersList.toMutableList())
@@ -200,7 +220,8 @@ class ExploreViewModel : ViewModel() {
             title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
             content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
             time = "5",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "2",
@@ -208,7 +229,8 @@ class ExploreViewModel : ViewModel() {
             title = "올해 1월과 가장 달라진 점은 무엇인가요?",
             content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
             time = "26",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "3",
@@ -216,7 +238,8 @@ class ExploreViewModel : ViewModel() {
             title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
             content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
             time = "15",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "4",
@@ -224,7 +247,8 @@ class ExploreViewModel : ViewModel() {
             title = "올해 1월과 가장 달라진 점은 무엇인가요?",
             content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
             time = "3",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "5",
@@ -232,7 +256,8 @@ class ExploreViewModel : ViewModel() {
             title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
             content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
             time = "4",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "6",
@@ -240,7 +265,8 @@ class ExploreViewModel : ViewModel() {
             title = "올해 1월과 가장 달라진 점은 무엇인가요?",
             content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
             time = "5",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "7",
@@ -248,7 +274,8 @@ class ExploreViewModel : ViewModel() {
             title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
             content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
             time = "15",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "8",
@@ -256,7 +283,8 @@ class ExploreViewModel : ViewModel() {
             title = "올해 1월과 가장 달라진 점은 무엇인가요?",
             content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
             time = "3",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "9",
@@ -264,7 +292,8 @@ class ExploreViewModel : ViewModel() {
             title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
             content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
             time = "4",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         ),
         OtherQuestionsData(
             userId = "10",
@@ -272,7 +301,8 @@ class ExploreViewModel : ViewModel() {
             title = "올해 1월과 가장 달라진 점은 무엇인가요?",
             content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
             time = "5",
-            isbookmarked = false
+            isBookmarked = false,
+            isAnswered = true
         )
     )
 
@@ -288,7 +318,8 @@ class ExploreViewModel : ViewModel() {
                 title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
                 content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
                 time = "5",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "12",
@@ -296,7 +327,8 @@ class ExploreViewModel : ViewModel() {
                 title = "올해 1월과 가장 달라진 점은 무엇인가요?",
                 content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
                 time = "26",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "13",
@@ -304,7 +336,8 @@ class ExploreViewModel : ViewModel() {
                 title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
                 content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
                 time = "15",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "14",
@@ -312,7 +345,8 @@ class ExploreViewModel : ViewModel() {
                 title = "올해 1월과 가장 달라진 점은 무엇인가요?",
                 content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
                 time = "3",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "15",
@@ -320,7 +354,8 @@ class ExploreViewModel : ViewModel() {
                 title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
                 content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
                 time = "4",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "16",
@@ -328,7 +363,8 @@ class ExploreViewModel : ViewModel() {
                 title = "올해 1월과 가장 달라진 점은 무엇인가요?",
                 content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
                 time = "5",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "17",
@@ -336,7 +372,8 @@ class ExploreViewModel : ViewModel() {
                 title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
                 content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
                 time = "15",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "18",
@@ -344,7 +381,8 @@ class ExploreViewModel : ViewModel() {
                 title = "올해 1월과 가장 달라진 점은 무엇인가요?",
                 content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
                 time = "3",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "19",
@@ -352,7 +390,8 @@ class ExploreViewModel : ViewModel() {
                 title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
                 content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
                 time = "4",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             ),
             OtherQuestionsData(
                 userId = "20",
@@ -360,7 +399,8 @@ class ExploreViewModel : ViewModel() {
                 title = "올해 1월과 가장 달라진 점은 무엇인가요?",
                 content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
                 time = "5",
-                isbookmarked = false
+                isBookmarked = false,
+                isAnswered = true
             )
         )
         dummyOtherQuestionsList.addAll(plusOtherQuestionsList.toMutableList())
