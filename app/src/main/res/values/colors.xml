@@ -36,6 +36,10 @@
     <color name="explore_divide_line_gray">#c9c9c9</color>
     <color name="explore_btn_show_more_background_black">#000000</color>
     <color name="explore_btn_show_more_txt_white">#ffffff</color>
+    <color name="explore_btn_do_answer_background_black">#000000</color>
+    <color name="explore_btn_do_answer_txt_white">#ffffff</color>
+    <color name="explore_txt_other_minds_un_answer_gray">#48484A</color>
+    <color name="explore_txt_other_questions_un_answer_gray">#48484A</color>
     <color name="explore_detail_background_white">#ffffff</color>
     <color name="explore_detail_txt_question_black">#000000</color>
     <color name="explore_detail_tab_indicator_black">#000000</color>

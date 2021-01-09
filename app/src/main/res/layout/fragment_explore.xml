@@ -11,9 +11,10 @@
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <me.didik.component.StickyNestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:overScrollMode="never"
         tools:context=".explore.view.ExploreFragment">
 
@@ -92,21 +93,22 @@
                         android:orientation="horizontal"
                         android:paddingStart="22dp"
                         android:paddingEnd="22dp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_explore_other_minds" />
 
                 </com.teambeme.beme.util.NestedScrollableHost>
 
                 <TextView
-                    android:id="@+id/txt_explore_otherminds_unanswer"
+                    android:id="@+id/txt_explore_other_minds_un_answer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="78dp"
                     android:gravity="center_horizontal"
                     android:text="가장 긴 여행이란 자신에 대한 탐구로부터 출발하여\n자신의 운명을 실현시켜 나가는 내면의 여행이다.\n- 닥 함마슐드"
-                    android:textColor="#48484A"
+                    android:textColor="@color/explore_txt_other_minds_un_answer_gray"
                     android:textSize="14sp"
+                    android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txt_explore_desc_of_other_minds" />
@@ -119,18 +121,19 @@
                     android:layout_marginTop="40dp"
                     android:layout_marginEnd="28dp"
                     android:layout_marginBottom="60dp"
-                    android:backgroundTint="@color/explore_btn_show_more_background_black"
+                    android:backgroundTint="@color/explore_btn_do_answer_background_black"
                     android:onClick="@{()->exploreViewModel.plusDummyOtherQuestions()}"
                     android:paddingTop="12dp"
                     android:paddingBottom="16dp"
                     android:text="오늘의 질문 답변하기"
-                    android:textColor="@color/explore_btn_show_more_txt_white"
+                    android:textColor="@color/explore_btn_do_answer_txt_white"
                     android:textSize="16sp"
+                    android:visibility="invisible"
                     app:cornerRadius="6dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_explore_otherminds_unanswer" />
+                    app:layout_constraintTop_toBottomOf="@id/txt_explore_other_minds_un_answer" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -157,7 +160,7 @@
                     android:id="@+id/txt_explore_desc_of_recent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="12dp"
                     android:text="내가 답한 질문에 대한 다른 사람들의 최신 답변이에요"
                     android:textColor="@color/explore_txt_desc_of_other_questions_gray"
                     android:textSize="13sp"
@@ -176,45 +179,57 @@
                     app:layout_constraintStart_toStartOf="@id/txt_explore_title_of_other_questions"
                     app:layout_constraintTop_toBottomOf="@id/txt_explore_title_of_other_questions" />
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tab_layout_explore_sort"
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
-                    android:layout_marginTop="12dp"
-                    android:backgroundTint="@android:color/transparent"
-                    app:layout_constraintStart_toStartOf="@id/txt_explore_title_of_other_questions"
-                    app:layout_constraintTop_toBottomOf="@id/txt_explore_desc_of_recent"
-                    app:tabIndicatorColor="@color/explore_tab_indicator_black"
-                    app:tabSelectedTextColor="@color/explore_tab_selected_txt_black"
-                    app:tabTextColor="@color/explore_tab_txt_gray">
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@android:color/transparent"
-                        android:text="최신" />
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@android:color/transparent"
-                        android:text="흥미" />
-
-                </com.google.android.material.tabs.TabLayout>
-
-                <View
-                    android:id="@+id/view_explore_divide_line"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_layout_explore_for_tab"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/explore_divide_line_gray"
-                    app:layout_constraintTop_toBottomOf="@+id/tab_layout_explore_sort" />
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff"
+                    android:tag="sticky"
+                    app:layout_constraintTop_toBottomOf="@id/txt_explore_desc_of_recent">
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tab_layout_explore_sort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="12dp"
+                        android:backgroundTint="@android:color/transparent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tabIndicatorColor="@color/explore_tab_indicator_black"
+                        app:tabSelectedTextColor="@color/explore_tab_selected_txt_black"
+                        app:tabTextAppearance="@style/tab_text_size"
+                        app:tabTextColor="@color/explore_tab_txt_gray">
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@android:color/transparent"
+                            android:text="최신" />
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@android:color/transparent"
+                            android:text="흥미" />
+
+                    </com.google.android.material.tabs.TabLayout>
+
+                    <View
+                        android:id="@+id/view_explore_divide_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/explore_divide_line_gray"
+                        app:layout_constraintTop_toBottomOf="@+id/tab_layout_explore_sort" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <HorizontalScrollView
                     android:id="@+id/scrollview_explore_chip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
-                    app:layout_constraintTop_toBottomOf="@id/tab_layout_explore_sort">
+                    app:layout_constraintTop_toBottomOf="@id/constraint_layout_explore_for_tab">
 
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/chip_explore_other_questions"
@@ -310,7 +325,7 @@
                     android:layout_marginBottom="40dp"
                     android:nestedScrollingEnabled="false"
                     android:orientation="vertical"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toTopOf="@id/btn_explore_show_more"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -332,7 +347,7 @@
                     android:text="더보기"
                     android:textColor="@color/explore_btn_show_more_txt_white"
                     android:textSize="16sp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cornerRadius="6dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -345,18 +360,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="46dp"
                     android:src="@drawable/ic_information"
+                    android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/scrollview_explore_chip" />
 
                 <TextView
+                    android:id="@+id/txt_explore_other_questions_un_answer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
                     android:gravity="center_horizontal"
                     android:text="아이쿠..! 아직 답변을 안 하셨군요\n질문에 답을 하고\n답한 질문에 대한 다른 사람들의 글을 둘러보세요"
-                    android:textColor="#48484A"
+                    android:textColor="@color/explore_txt_other_questions_un_answer_gray"
                     android:textSize="14sp"
+                    android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/img_explore_un_answered_information" />
@@ -364,5 +382,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.core.widget.NestedScrollView>
+    </me.didik.component.StickyNestedScrollView>
 </layout>
