@@ -19,6 +19,7 @@ class OtherMindsRcvAdapter(private val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(otherMindsData: OtherMindsData) {
             binding.otherMinds = otherMindsData
+            binding.executePendingBindings()
             setClickListenerForShowOtherAnswers(binding, otherMindsData, context)
         }
     }
