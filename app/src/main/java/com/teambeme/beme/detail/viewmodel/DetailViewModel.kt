@@ -1,7 +1,6 @@
 package com.teambeme.beme.detail.viewmodel
 
 import android.util.Log
-import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,56 +9,7 @@ import com.teambeme.beme.detail.model.ReplyParentData
 import com.teambeme.beme.detail.model.initReplyList
 
 class DetailViewModel : ViewModel() {
-
-    private val _replyParentId = MutableLiveData<String>()
-    val replyParentId: LiveData<String>
-        get() = _replyParentId
-
-    fun setReplyParentId(replyParentId: String) {
-        _replyParentId.value = replyParentId
-    }
-
-    private val _replyParentTime = MutableLiveData<String>()
-    val replyParentTime: LiveData<String>
-        get() = _replyParentTime
-
-    fun setReplyParentTime(replyParentTime: String) {
-        _replyParentTime.value = replyParentTime
-    }
-
-    private val _replyParentComment = MutableLiveData<String>()
-    val replyParentComment: LiveData<String>
-        get() = _replyParentComment
-
-    fun setReplyParentComment(replyParentComment: String) {
-        _replyParentComment.value = replyParentComment
-    }
-
-    private val _replyChildId = MutableLiveData<String>()
-    val replyChildId: LiveData<String>
-        get() = _replyChildId
-
-    fun setReplyChildId(replyChildId: String) {
-        _replyChildId.value = replyChildId
-    }
-
-    private val _replyChildTime = MutableLiveData<String>()
-    val replyChildTime: LiveData<String>
-        get() = _replyChildTime
-
-    fun setReplyChildTime(replyChildTime: String) {
-        _replyChildTime.value = replyChildTime
-    }
-
-    private val _replyChildComment = MutableLiveData<String>()
-    val replyChildComment: LiveData<String>
-        get() = _replyChildComment
-
-    fun setReplyChildComment(replyChildComment: String) {
-        _replyChildComment.value = replyChildComment
-    }
-
-    val editContent = ObservableField<String>()
+    val answerText = MutableLiveData<String>()
 
     private val _isAddClicked = MutableLiveData<Boolean>()
     val isAddClicked: LiveData<Boolean>
@@ -72,6 +22,10 @@ class DetailViewModel : ViewModel() {
     private val _isOpenClicked = MutableLiveData<Boolean>()
     val isOpenClicked: LiveData<Boolean>
         get() = _isOpenClicked
+
+    private val _isAddChildReplyClicked = MutableLiveData<Boolean>()
+    val isAddChildReplyClicked: LiveData<Boolean>
+        get() = _isAddChildReplyClicked
 
     private val _position = MutableLiveData<Int>()
     val position: LiveData<Int>
@@ -91,8 +45,12 @@ class DetailViewModel : ViewModel() {
         _position.value = position
     }
 
-    fun initPosition() {
-        _position.value = -1
+    private val _replyPosition = MutableLiveData<Int>()
+    val replyPosition: LiveData<Int>
+        get() = _replyPosition
+
+    fun setReplyPosition(position: Int) {
+        _replyPosition.value = position
     }
 
     fun addReplyClicked() {
@@ -102,6 +60,14 @@ class DetailViewModel : ViewModel() {
 
     fun addReplyClickedFalse() {
         _isAddClicked.value = false
+    }
+
+    fun addReplyChildClicked() {
+        _isAddChildReplyClicked.value = true
+    }
+
+    fun addReplyChildclickedFalse() {
+        _isAddChildReplyClicked.value = false
     }
 
     fun secretButtonClicked() {
@@ -120,7 +86,7 @@ class DetailViewModel : ViewModel() {
         _isOpenClicked.value = false
     }
 
-    private val dummyParentReply = mutableListOf(
+    private var dummyParentReply = mutableListOf(
         ReplyParentData(
             txt_id = "asdf",
             txt_comment = "a척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..f",
@@ -139,6 +105,56 @@ class DetailViewModel : ViewModel() {
             dataChild = initReplyList()
         )
     )
+
+    fun getId(): String {
+        return dummyParentReply[position.value!!].txt_id
+    }
+
+    private val _isChangeClicked = MutableLiveData<Boolean>()
+    val isChangeClicked: LiveData<Boolean>
+        get() = _isChangeClicked
+
+    fun setChangeClicked() {
+        _isChangeClicked.value = true
+    }
+
+    fun changeClickedFalse() {
+        _isChangeClicked.value = false
+    }
+
+    fun getParentReplyComment() {
+        answerText.value = dummyParentReply[position.value!!].txt_comment
+    }
+
+    fun changeParentReplyComment() {
+        dummyParentReply[position.value!!].txt_comment = answerText.value!!
+        _replyParentData.value = dummyParentReply.toMutableList()
+        answerText.value = ""
+    }
+
+    private val _isChildChangeClicked = MutableLiveData<Boolean>()
+    val isChildChangeClicked: LiveData<Boolean>
+        get() = _isChildChangeClicked
+
+    fun setChildChangeClicked() {
+        _isChildChangeClicked.value = true
+    }
+
+    fun changeChildClickedFalse() {
+        _isChildChangeClicked.value = false
+    }
+
+    fun getChildReplyComment() {
+        answerText.value =
+            dummyParentReply[position.value!!].dataChild[childposition.value!!].txt_comment
+    }
+
+    fun changeChildReplyComment() {
+        dummyParentReply[position.value!!].dataChild[childposition.value!!].txt_comment =
+            answerText.value!!
+        _replyParentData.value = dummyParentReply.toMutableList()
+        answerText.value = ""
+    }
 
     private val _replyParentData = MutableLiveData<MutableList<ReplyParentData>>()
     val replyParentData: LiveData<MutableList<ReplyParentData>>
@@ -186,5 +202,30 @@ class DetailViewModel : ViewModel() {
             )
         )
         _replyData.value = dummyReply.toMutableList()
+    }
+
+    fun addParentReply() {
+        val dummyReply = ReplyParentData("asdf", answerText.value!!, "12.243")
+        dummyParentReply.add(dummyReply)
+        _replyParentData.value = dummyParentReply.toMutableList()
+        answerText.value = ""
+    }
+
+    fun addChildReply() {
+        val dummyReply = ReplyData("대댓글 추가", answerText.value!!, "12월24일")
+        when {
+            dummyParentReply[replyPosition.value!!].dataChild.size == 0 -> {
+                dummyParentReply[replyPosition.value!!].dataChild.add(dummyReply)
+            }
+            dummyParentReply[replyPosition.value!!].dataChild[0].txt_id == "" -> {
+                dummyParentReply[replyPosition.value!!].dataChild.add(dummyReply)
+                dummyParentReply[replyPosition.value!!].dataChild.removeAt(0)
+            }
+            else -> {
+                dummyParentReply[replyPosition.value!!].dataChild.add(dummyReply)
+            }
+        }
+        _replyParentData.value = dummyParentReply.toMutableList()
+        answerText.value = ""
     }
 }

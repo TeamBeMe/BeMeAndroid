@@ -37,7 +37,7 @@ class ReplyAdapter(private val context: Context, private val viewModel: DetailVi
 
         fun onBind(data: ReplyParentData) {
             binding.replyParentData = data
-            if (data.dataChild[0].txt_id != "") {
+            if (data.dataChild.size == 0 || data.dataChild[0].txt_id != "") {
                 val replyAdapter = ReplyChildAdapter(context, adapterPosition, viewModel)
                 binding.rcvReplyparentChild.adapter = replyAdapter
                 binding.rcvReplyparentChild.layoutManager = LinearLayoutManager(context)
@@ -50,6 +50,7 @@ class ReplyAdapter(private val context: Context, private val viewModel: DetailVi
         val open_btn: TextView = binding.txtReplyparentOpen
         val child_rcv: RecyclerView = binding.rcvReplyparentChild
         val dot: ImageView = binding.imgReplyparentDot3
+        val addReply: TextView = binding.txtReplyparentAdd
     }
 
     override fun getItemCount(): Int = data.size
@@ -68,7 +69,7 @@ class ReplyAdapter(private val context: Context, private val viewModel: DetailVi
                         open_btn.text = "답글 보기"
                     }
                 }
-                if (data[position].dataChild[0].txt_id == "") {
+                if (data[position].dataChild.size == 0 || data[position].dataChild[0].txt_id == "") {
                     open_btn.visibility = View.GONE
                 } else {
                     open_btn.visibility = View.VISIBLE
@@ -78,6 +79,10 @@ class ReplyAdapter(private val context: Context, private val viewModel: DetailVi
                 }
                 child_rcv.setOnClickListener {
                     viewModel.setPosition(position)
+                }
+                addReply.setOnClickListener {
+                    viewModel.setReplyPosition(position)
+                    viewModel.addReplyChildClicked()
                 }
             }
         }
