@@ -1,5 +1,6 @@
 package com.teambeme.beme.mypage.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemMywriteBinding
 import com.teambeme.beme.mypage.model.MyWrite
+import com.teambeme.beme.otherpage.view.OtherPageActivity
 
 class MyWriteAdapter :
     ListAdapter<MyWrite, MyWriteAdapter.MyWriteViewHolder>(MyWriteDiffUtil()) {
@@ -30,6 +32,10 @@ class MyWriteAdapter :
 
     override fun onBindViewHolder(holder: MyWriteViewHolder, position: Int) {
         holder.bind(getItem(position))
+        holder.itemView.setOnClickListener { view ->
+            val intent = Intent(view.context, OtherPageActivity::class.java)
+            view.context.startActivity(intent)
+        }
     }
 
     private class MyWriteDiffUtil : DiffUtil.ItemCallback<MyWrite>() {
