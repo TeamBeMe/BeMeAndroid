@@ -1,6 +1,8 @@
 package com.teambeme.beme.idsearchfollowing
 
 import android.os.Bundle
+import android.view.View
+import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teambeme.beme.R
@@ -24,7 +26,22 @@ class FollowingAfterIdSearchActivity :
 
         followingAfterIdSearchViewModel.setDummyRecentSearch()
         followingAfterIdSearchViewModel.setDummyIdSearchList()
+
+        binding.searchViewFollowingIdsearch.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                TODO("Not yet implemented")
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                binding.viewRecentSearch.visibility = View.INVISIBLE
+                binding.rcvFollowingAfterIdsearch.visibility = View.VISIBLE
+                return true
+            }
+        })
     }
+
 
     private fun initBinding(binding: ActivityFollowingAfterIdSearchBinding) {
         binding.apply {
