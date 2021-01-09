@@ -92,12 +92,45 @@
                         android:orientation="horizontal"
                         android:paddingStart="22dp"
                         android:paddingEnd="22dp"
+                        android:visibility="gone"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_explore_other_minds" />
 
                 </com.teambeme.beme.util.NestedScrollableHost>
 
+                <TextView
+                    android:id="@+id/txt_explore_otherminds_unanswer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="78dp"
+                    android:gravity="center_horizontal"
+                    android:text="가장 긴 여행이란 자신에 대한 탐구로부터 출발하여\n자신의 운명을 실현시켜 나가는 내면의 여행이다.\n- 닥 함마슐드"
+                    android:textColor="#48484A"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txt_explore_desc_of_other_minds" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_explore_do_answer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="28dp"
+                    android:layout_marginBottom="60dp"
+                    android:backgroundTint="@color/explore_btn_show_more_background_black"
+                    android:onClick="@{()->exploreViewModel.plusDummyOtherQuestions()}"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="16dp"
+                    android:text="오늘의 질문 답변하기"
+                    android:textColor="@color/explore_btn_show_more_txt_white"
+                    android:textSize="16sp"
+                    app:cornerRadius="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txt_explore_otherminds_unanswer" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -277,15 +310,16 @@
                     android:layout_marginBottom="40dp"
                     android:nestedScrollingEnabled="false"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toTopOf="@id/btn_following_show_more"
+                    app:layout_constraintBottom_toTopOf="@id/btn_explore_show_more"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/scrollview_explore_chip"
                     tools:listitem="@layout/item_explore_other_questions" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_following_show_more"
+                    android:id="@+id/btn_explore_show_more"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="28dp"
@@ -298,11 +332,34 @@
                     android:text="더보기"
                     android:textColor="@color/explore_btn_show_more_txt_white"
                     android:textSize="16sp"
+                    android:visibility="gone"
                     app:cornerRadius="6dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rcv_explore_other_questions" />
+
+                <ImageView
+                    android:id="@+id/img_explore_un_answered_information"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="46dp"
+                    android:src="@drawable/ic_information"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/scrollview_explore_chip" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:gravity="center_horizontal"
+                    android:text="아이쿠..! 아직 답변을 안 하셨군요\n질문에 답을 하고\n답한 질문에 대한 다른 사람들의 글을 둘러보세요"
+                    android:textColor="#48484A"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_explore_un_answered_information" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

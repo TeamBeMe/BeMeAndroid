@@ -18,8 +18,8 @@ class OtherMindsRcvAdapter(private val context: Context) :
     inner class OtherMindsRcvViewHolder(private val binding: ItemExploreOtherMindsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(otherMindsData: OtherMindsData) {
-            binding.executePendingBindings()
             binding.otherMinds = otherMindsData
+            binding.executePendingBindings()
             setClickListenerForShowOtherAnswers(binding, otherMindsData, context)
         }
     }

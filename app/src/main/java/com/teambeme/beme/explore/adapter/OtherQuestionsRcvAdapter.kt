@@ -30,8 +30,8 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
             when (binding) {
                 is ItemExploreOtherQuestionsBinding -> {
                     with(binding as ItemExploreOtherQuestionsBinding) {
-                        executePendingBindings()
                         setVariable(BR.otherQuestions, otherQuestionsData)
+                        executePendingBindings()
                         setClickListenerForQuestionsBookmark(binding, otherQuestionsData)
                         setClickListenerForShowOtherAnswers(binding, otherQuestionsData, context)
                         setUnAnsweredItem(binding, otherQuestionsData)
@@ -39,8 +39,8 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                 }
                 else -> {
                     with(binding as ItemExploreDetailOtherAnswersBinding) {
-                        executePendingBindings()
                         setVariable(BR.otherAnswers, otherQuestionsData)
+                        executePendingBindings()
                         setClickListenerForAnswersBookmark(binding, otherQuestionsData)
                     }
                 }
