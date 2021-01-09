@@ -15,6 +15,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".detail.view.DetailActivity">
@@ -94,7 +95,8 @@
                 <TextView
                     android:id="@+id/txt_detail_info"
                     style="@style/answer_info_style"
-                    android:layout_marginTop="24dp"
+                    android:textColor="@color/answer_text_info_gray"
+                    android:layout_marginTop="20dp"
                     android:text="[ 미래에 관한 2번째 질문 ]"
                     app:layout_constraintStart_toStartOf="@+id/txt_detail_question"
                     app:layout_constraintTop_toBottomOf="@+id/txt_detail_question" />
@@ -102,6 +104,7 @@
                 <TextView
                     android:id="@+id/txt_detail_data"
                     style="@style/answer_info_style"
+                    android:textColor="@color/answer_text_info_gray"
                     android:layout_marginTop="8dp"
                     android:text="2020.12.24"
                     app:layout_constraintStart_toStartOf="@+id/txt_detail_info"
@@ -176,6 +179,7 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="32dp"
                     android:layout_marginBottom="60dp"
+                    android:overScrollMode="never"
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -204,15 +208,54 @@
                 android:layout_marginEnd="6dp"
                 android:layout_marginBottom="14dp"
                 android:background="@drawable/border_layout"
+                android:text="@={detailViewModel.answerText}"
                 android:ems="10"
                 android:hint="댓글 작성"
+                android:textColorHint="@color/answer_text_info_gray"
+                android:textColor="@color/black"
                 android:inputType="textPersonName"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/txt_detail_add"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_detail_snakbar"
+                android:layout_width="match_parent"
+                android:background="#F2F2F2"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/view"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/txt_detail_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="32dp"
+                    android:textColor="#5A5A5A"
+                    android:text="댓글을 수정중입니다"
+                    android:paddingVertical="4dp"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_detail_cancel"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btn_detail_cancel"
+                    android:layout_width="32dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="32dp"
+                    android:backgroundTint="#F2F2F2"
+                    android:padding="4dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_detail_message"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txt_detail_message"
+                    app:srcCompat="@drawable/ic_x_message_cancel" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
                 android:id="@+id/view"
@@ -226,9 +269,9 @@
                 android:id="@+id/txt_detail_add"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
                 android:onClick="@{() -> detailViewModel.addReplyClicked()}"
                 android:padding="8dp"
+                android:textColor="@color/answer_text_info_gray"
                 android:text="완료"
                 android:textSize="15sp"
                 app:layout_constraintBaseline_toBaselineOf="@id/edttext_detail_content"
@@ -241,7 +284,7 @@
                 android:id="@+id/img_detail_secret"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="28dp"
+                android:layout_marginEnd="8dp"
                 android:onClick="@{() -> detailViewModel.secretButtonClicked()}"
                 android:backgroundTint="@android:color/transparent"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_detail_add"

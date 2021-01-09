@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ReplyParentBinding
 import com.teambeme.beme.detail.model.ReplyParentData
-import com.teambeme.beme.detail.model.initReplyList
 import com.teambeme.beme.detail.viewmodel.DetailViewModel
 
 class ReplyAdapter(private val context: Context, private val viewModel: DetailViewModel) :
@@ -38,17 +37,20 @@ class ReplyAdapter(private val context: Context, private val viewModel: DetailVi
 
         fun onBind(data: ReplyParentData) {
             binding.replyParentData = data
-            val dataList = initReplyList()
-            val replyAdapter = ReplyChildAdapter()
-            binding.rcvReplyparentChild.adapter = replyAdapter
-            binding.rcvReplyparentChild.layoutManager = LinearLayoutManager(context)
-            replyAdapter.addItem(dataList)
-            viewModel.setChildData(data.data_child)
+            if (data.dataChild.size == 0 || data.dataChild[0].txt_id != "") {
+                val replyAdapter = ReplyChildAdapter(context, adapterPosition, viewModel)
+                binding.rcvReplyparentChild.adapter = replyAdapter
+                binding.rcvReplyparentChild.layoutManager = LinearLayoutManager(context)
+                replyAdapter.setListItems(data.dataChild)
+            } else {
+                binding.rcvReplyparentChild.visibility = View.GONE
+            }
         }
 
         val open_btn: TextView = binding.txtReplyparentOpen
         val child_rcv: RecyclerView = binding.rcvReplyparentChild
         val dot: ImageView = binding.imgReplyparentDot3
+        val addReply: TextView = binding.txtReplyparentAdd
     }
 
     override fun getItemCount(): Int = data.size
@@ -67,7 +69,7 @@ class ReplyAdapter(private val context: Context, private val viewModel: DetailVi
                         open_btn.text = "답글 보기"
                     }
                 }
-                if (data[position].data_child[0].txt_id == "") {
+                if (data[position].dataChild.size == 0 || data[position].dataChild[0].txt_id == "") {
                     open_btn.visibility = View.GONE
                 } else {
                     open_btn.visibility = View.VISIBLE
@@ -77,6 +79,10 @@ class ReplyAdapter(private val context: Context, private val viewModel: DetailVi
                 }
                 child_rcv.setOnClickListener {
                     viewModel.setPosition(position)
+                }
+                addReply.setOnClickListener {
+                    viewModel.setReplyPosition(position)
+                    viewModel.addReplyChildClicked()
                 }
             }
         }

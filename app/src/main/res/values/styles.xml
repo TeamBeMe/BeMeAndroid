@@ -48,6 +48,13 @@
         <item name="android:background">@color/white</item>
     </style>
 
+    <style name="home_text_bottom">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:textColor">@color/home_text_gray</item>
+        <item name="android:textSize">12sp</item>
+
     <style name="following_show_all_search_view" parent="Widget.AppCompat.SearchView">
         <item name="searchIcon">@drawable/ic_mypage_search</item>
         <item name="iconifiedByDefault">false</item>
@@ -55,5 +62,6 @@
         <item name="queryBackground">@android:color/transparent</item>
         <item name="android:textColorHint">@color/following_show_all_search_view_hint_gray</item>
         <item name="android:textColor">@color/following_show_all_search_view_hint_gray</item>
+
     </style>
 </resources>
