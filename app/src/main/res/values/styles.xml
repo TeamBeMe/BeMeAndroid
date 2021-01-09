@@ -54,6 +54,7 @@
         <item name="android:layout_marginBottom">16dp</item>
         <item name="android:textColor">@color/home_text_gray</item>
         <item name="android:textSize">12sp</item>
+    </style>
 
     <style name="following_show_all_search_view" parent="Widget.AppCompat.SearchView">
         <item name="searchIcon">@drawable/ic_mypage_search</item>
