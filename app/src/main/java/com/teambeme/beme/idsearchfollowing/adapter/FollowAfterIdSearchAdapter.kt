@@ -1,6 +1,5 @@
 package com.teambeme.beme.idsearchfollowing.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,31 +41,25 @@ class FollowAfterIdSearchAdapter :
                 idSearch = idSearchData
                 executePendingBindings()
             }
-            setBtnUnfollowClickListener(binding, idSearchData)
-            setBtnFollowClickListener(binding, idSearchData)
+            setBtnUnfollowClickListener(binding)
+            setBtnFollowClickListener(binding)
         }
 
         private fun setBtnUnfollowClickListener(
-            binding: ItemFollowingAfterIdsearchBinding,
-            idSearchData: IdSearchData
+            binding: ItemFollowingAfterIdsearchBinding
         ) {
             binding.btnFollowingUnfollow.setOnClickListener {
-                idSearchData.isFollowing = true
                 binding.btnFollowingFollow.visibility = View.VISIBLE
                 binding.btnFollowingUnfollow.visibility = View.INVISIBLE
-                Log.d("tag", idSearchData.isFollowing.toString())
             }
         }
 
         private fun setBtnFollowClickListener(
-            binding: ItemFollowingAfterIdsearchBinding,
-            idSearchData: IdSearchData
+            binding: ItemFollowingAfterIdsearchBinding
         ) {
             binding.btnFollowingFollow.setOnClickListener {
-                idSearchData.isFollowing = false
                 binding.btnFollowingFollow.visibility = View.INVISIBLE
                 binding.btnFollowingUnfollow.visibility = View.VISIBLE
-                Log.d("tag", idSearchData.isFollowing.toString())
             }
         }
     }

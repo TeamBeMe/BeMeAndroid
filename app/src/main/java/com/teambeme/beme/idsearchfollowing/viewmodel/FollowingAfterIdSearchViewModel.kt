@@ -44,12 +44,12 @@ class FollowingAfterIdSearchViewModel : ViewModel() {
         get() = _idSearchList
 
     private val dummyIdSearchList = mutableListOf(
-        IdSearchData("1_ox", "", true),
-        IdSearchData("2_xo", "", false),
-        IdSearchData("aaa", "", false),
-        IdSearchData("aaa", "", false),
-        IdSearchData("aaa", "", false),
-        IdSearchData("aaa", "", false)
+        IdSearchData("1_ox", ""),
+        IdSearchData("2_xo", ""),
+        IdSearchData("aaa", ""),
+        IdSearchData("aaa", ""),
+        IdSearchData("aaa", ""),
+        IdSearchData("aaa", "")
     )
 
     fun setDummyIdSearchList() {
