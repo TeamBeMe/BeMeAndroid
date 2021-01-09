@@ -23,6 +23,7 @@ class FollowAfterIdSearchAdapter :
 
     override fun onBindViewHolder(holder: FollowAfterIdSearchViewHolder, position: Int) {
         holder.bind(iDSearchDatas[position])
+
     }
 
     fun replaceIdSearchList(list: MutableList<IdSearchData>) {
@@ -38,5 +39,9 @@ class FollowAfterIdSearchAdapter :
                 executePendingBindings()
             }
         }
+        val btnFollow = binding.btnFollowingFollow
+        val btnUnFollow = binding.btnFollowingUnfollow
     }
+
+
 }
