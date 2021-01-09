@@ -24,7 +24,6 @@ class FollowingAfterIdSearchActivity :
 
         followingAfterIdSearchViewModel.setDummyRecentSearch()
         followingAfterIdSearchViewModel.setDummyIdSearchList()
-
     }
 
     private fun initBinding(binding: ActivityFollowingAfterIdSearchBinding) {

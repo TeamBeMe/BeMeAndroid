@@ -44,9 +44,6 @@ class RecentSearchAdapter :
                 executePendingBindings()
             }
         }
-
         val btnDeleteRecentRecearch = binding.btnDeleteRecentSearch
     }
-
-
 }
