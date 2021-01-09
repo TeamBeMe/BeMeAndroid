@@ -3,7 +3,7 @@ package com.teambeme.beme.otherpage.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.otherpage.model.Answer
+import com.teambeme.beme.otherpage.model.ResponseOtherData.Data.Answer
 
 class OtherPageViewModel : ViewModel() {
     private val _otherAnswerList = MutableLiveData<MutableList<Answer>>()

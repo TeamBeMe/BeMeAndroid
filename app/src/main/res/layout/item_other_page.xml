@@ -6,7 +6,7 @@
     <data>
         <variable
             name="answer"
-            type="com.teambeme.beme.otherpage.model.Answer" />
+            type="com.teambeme.beme.otherpage.model.ResponseOtherData.Data.Answer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

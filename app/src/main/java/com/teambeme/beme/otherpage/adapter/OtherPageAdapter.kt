@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemOtherPageBinding
-import com.teambeme.beme.otherpage.model.Answer
+import com.teambeme.beme.otherpage.model.ResponseOtherData.Data.Answer
 
 class OtherPageAdapter :
     ListAdapter<Answer, OtherPageAdapter.OtherPageViewHolder>(OtherPageDiffUtil()) {
