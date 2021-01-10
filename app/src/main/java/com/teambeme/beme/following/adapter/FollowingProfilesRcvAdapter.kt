@@ -29,11 +29,13 @@ class FollowingProfilesRcvAdapter<B : ViewDataBinding>(
                 is ItemFollowingOtherProfilesBinding -> {
                     with(binding as ItemFollowingOtherProfilesBinding) {
                         setVariable(BR.followingProfiles, followingProfilesData)
+                        executePendingBindings()
                     }
                 }
                 else -> {
                     with(binding as ItemFollowingShowAllProfilesBinding) {
                         setVariable(BR.followingShowAllProfiles, followingProfilesData)
+                        executePendingBindings()
                         setClickListenerForFollowBtn(binding, followingProfilesData)
                         setclickListenerForFollowingBtn(binding, followingProfilesData)
                     }

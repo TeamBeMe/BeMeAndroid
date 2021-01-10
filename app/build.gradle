@@ -86,4 +86,7 @@ dependencies {
 
     // Image Crop
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+
+    // StickyNestedScrollView
+    implementation 'com.github.didikk:sticky-nestedscrollview:1.0.1'
 }

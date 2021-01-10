@@ -21,11 +21,14 @@
             android:layout_height="match_parent"
             tools:context=".notification.NotificationActivity">
 
-            <ImageView
+            <ImageButton
+                android:id="@+id/btn_back_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
+                android:layout_marginStart="18dp"
                 android:layout_marginTop="20dp"
+                android:background="@android:color/transparent"
+                android:padding="10dp"
                 android:src="@drawable/ic_back_noticeview"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -37,9 +40,9 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="66dp"
                 android:text="최근 활동"
-                android:textStyle="bold"
                 android:textColor="#000"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="28dp"
+                android:layout_marginTop="28dp"
                 android:overScrollMode="never"
                 android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -57,14 +61,15 @@
                 tools:listitem="@layout/item_recent_activities" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/notice_when_no_item_in_rcv_recent_activities"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.35"
-                android:visibility="invisible">
+                app:layout_constraintVertical_bias="0.35">
 
                 <ImageView
                     android:id="@+id/ic_notice"
@@ -100,6 +105,7 @@
                 android:text="더보기"
                 android:textColor="#fff"
                 android:textSize="16sp"
+                app:backgroundTint="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
