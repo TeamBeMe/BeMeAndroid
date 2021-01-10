@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="loginViewModel"
+            type="com.teambeme.beme.login.viewmodel.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,6 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="닉네임"
+                android:text="@={loginViewModel.nickNameText}"
                 android:textColor="@color/black"
                 android:textColorHint="@color/login_text_gray" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -74,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:hint="비밀번호"
                 android:inputType="textPassword"
+                android:text="@={loginViewModel.passwordText}"
                 android:textColor="@color/black"
                 android:textColorHint="@color/login_text_gray" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -83,23 +88,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="28dp"
+            android:layout_marginBottom="140dp"
             android:backgroundTint="@color/black"
             android:fontFamily="@font/notosankr_bold"
-            android:layout_marginBottom="140dp"
             android:includeFontPadding="false"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:text="로그인"
             android:textColor="@color/white"
+            android:onClick="@{() -> loginViewModel.requestLogin()}"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <LinearLayout
             android:id="@+id/linear_login_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_marginBottom="80dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
