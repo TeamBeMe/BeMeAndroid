@@ -1,6 +1,7 @@
 package com.teambeme.beme.data.remote.singleton
 
 import com.teambeme.beme.data.remote.api.LoginService
+import com.teambeme.beme.data.remote.api.OtherService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,6 +30,13 @@ object RetrofitObjects {
     fun getLoginService(): LoginService = loginInstance ?: synchronized(this) {
         loginInstance ?: baseRetrofit.create(LoginService::class.java).apply {
             loginInstance = this
+        }
+    }
+
+    private var otherPageInstance: OtherService? = null
+    fun getOtherPageService(): OtherService = otherPageInstance ?: synchronized(this) {
+        otherPageInstance ?: baseRetrofit.create(OtherService::class.java).apply {
+            otherPageInstance = this
         }
     }
 }

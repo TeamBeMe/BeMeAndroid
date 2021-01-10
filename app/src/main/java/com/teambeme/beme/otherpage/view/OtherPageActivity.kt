@@ -8,21 +8,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
+import com.teambeme.beme.data.remote.datasource.OtherPageDataSourceImpl
+import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityOtherPageBinding
 import com.teambeme.beme.detail.view.BottomOtherReplyFragment
 import com.teambeme.beme.otherpage.adapter.OtherPageAdapter
+import com.teambeme.beme.otherpage.repository.OtherPageRepositoryImpl
 import com.teambeme.beme.otherpage.viewmodel.OtherPageViewModel
+import com.teambeme.beme.otherpage.viewmodel.OtherPageViewModelFactory
 
 class OtherPageActivity : BindingActivity<ActivityOtherPageBinding>(R.layout.activity_other_page) {
-    private val otherViewModel: OtherPageViewModel by viewModels()
+    private val otherViewModelFactory =
+        OtherPageViewModelFactory(OtherPageRepositoryImpl(OtherPageDataSourceImpl(RetrofitObjects.getOtherPageService())))
+    private val otherViewModel: OtherPageViewModel by viewModels { otherViewModelFactory }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.otherPageViewModel = OtherPageViewModel()
+        binding.otherPageViewModel = otherViewModel
         binding.lifecycleOwner = this
         val otherAdapter = OtherPageAdapter()
         setAdapter(otherAdapter)
-        otherViewModel.setDummyOtherAnswer()
+        otherViewModel.requestItem()
         otherViewModel.otherAnswerList.observe(this) { it ->
             it.let { otherAdapter.submitList(it) }
         }
@@ -64,9 +70,7 @@ class OtherPageActivity : BindingActivity<ActivityOtherPageBinding>(R.layout.act
         otherAdapter: OtherPageAdapter
     ) {
         binding.btnOtherShowmore.setOnClickListener {
-            binding.btnOtherShowmore.visibility = View.GONE
             otherViewModel.addDummyAnswer()
-            otherAdapter.submitList(otherViewModel.otherAnswerList.value?.toMutableList())
         }
     }
 }
