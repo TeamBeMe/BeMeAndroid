@@ -2,7 +2,6 @@ package com.teambeme.beme.idsearchfollowing
 
 import android.os.Bundle
 import android.view.View
-import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teambeme.beme.R
@@ -37,11 +36,11 @@ class FollowingAfterIdSearchActivity :
             override fun onQueryTextChange(newText: String?): Boolean {
                 val userInputText = newText.let {
                     it
-                }?: ""
-                if(userInputText.count() >0){
+                } ?: ""
+                if (userInputText.count() > 0) {
                     binding.viewRecentSearch.visibility = View.INVISIBLE
                     binding.rcvFollowingAfterIdsearch.visibility = View.VISIBLE
-                }else{
+                } else {
                     binding.viewRecentSearch.visibility = View.VISIBLE
                     binding.rcvFollowingAfterIdsearch.visibility = View.INVISIBLE
                 }
