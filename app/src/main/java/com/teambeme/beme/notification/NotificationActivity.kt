@@ -3,7 +3,6 @@ package com.teambeme.beme.notification
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.teambeme.beme.R
@@ -38,6 +37,10 @@ class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layo
             val msg = getString(R.string.msg_token_fmt, token)
             Log.d(TAG, msg)
         })
+
+        binding.btnBackNotice.setOnClickListener{
+            finish()
+        }
     }
 
     private fun initBinding(binding: ActivityNotificationBinding) {
