@@ -5,15 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.explore.model.OtherQuestionsData
-import com.teambeme.beme.explore.model.ResponseExploraionAnswers
+import com.teambeme.beme.explore.model.ResponseExplorationAnswers
 import com.teambeme.beme.explore.repository.ExploreRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewModel() {
-    private val _otherMindsList = MutableLiveData<List<ResponseExploraionAnswers.Data>>()
-    val otherMindsList: LiveData<List<ResponseExploraionAnswers.Data>>
+    private val _otherMindsList = MutableLiveData<List<ResponseExplorationAnswers.Data>>()
+    val otherMindsList: LiveData<List<ResponseExplorationAnswers.Data>>
         get() = _otherMindsList
 
     private val _otherQuestionsList = MutableLiveData<MutableList<OtherQuestionsData>>()
@@ -25,18 +25,18 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         get() = _otherAnswersList
 
     fun requestOtherMinds() {
-        exploreRepository.getExplorationAnother("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMjcyMzc3LCJleHAiOjE2MTAyOTc1NzcsImlzcyI6ImJlbWUifQ.ebGvkOGMnGKli0spRneO3uAOZ31khRrPIc_Urwpu0Q0")
+        exploreRepository.getExplorationAnother("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNjEwMjkwNzgyLCJleHAiOjE2NDE4MjY3ODIsImlzcyI6ImJlbWUifQ.PflJxm_WRMtgjFYtw68aFNNkkEZWNSuT_2kpgfWCNbY")
             .enqueue(
-                object : Callback<ResponseExploraionAnswers> {
+                object : Callback<ResponseExplorationAnswers> {
                     override fun onResponse(
-                        call: Call<ResponseExploraionAnswers>,
-                        response: Response<ResponseExploraionAnswers>
+                        call: Call<ResponseExplorationAnswers>,
+                        response: Response<ResponseExplorationAnswers>
                     ) {
                         if (response.isSuccessful)
                             _otherMindsList.value = response.body()!!.data?.toList()
                     }
 
-                    override fun onFailure(call: Call<ResponseExploraionAnswers>, t: Throwable) {
+                    override fun onFailure(call: Call<ResponseExplorationAnswers>, t: Throwable) {
                         Log.d("network", "통신실패")
                     }
                 }
