@@ -37,6 +37,10 @@ class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layo
             val msg = getString(R.string.msg_token_fmt, token)
             Log.d(TAG, msg)
         })
+
+        binding.btnBackNotice.setOnClickListener{
+            finish()
+        }
     }
 
     private fun initBinding(binding: ActivityNotificationBinding) {
