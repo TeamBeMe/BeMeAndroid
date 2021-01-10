@@ -48,7 +48,6 @@ class FollowingAfterIdSearchActivity :
             }
         })
 
-        binding.
     }
 
     private fun initBinding(binding: ActivityFollowingAfterIdSearchBinding) {
