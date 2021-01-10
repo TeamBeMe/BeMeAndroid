@@ -4,8 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.teambeme.beme.otherpage.model.ResponseFollow
 import com.teambeme.beme.otherpage.model.ResponseOtherData
 import com.teambeme.beme.otherpage.model.ResponseOtherData.Data.Answer
+import com.teambeme.beme.otherpage.model.ResponseOtherInfo
+import com.teambeme.beme.otherpage.model.ResponseScrap
 import com.teambeme.beme.otherpage.repository.OtherPageRepository
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,208 +19,151 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
     val otherAnswerList: LiveData<MutableList<Answer>>
         get() = _otherAnswerList
 
-    fun requestItem() {
+    private val _otherUserInfo = MutableLiveData<ResponseOtherInfo.Data>()
+    val otherUserInfo: LiveData<ResponseOtherInfo.Data>
+        get() = _otherUserInfo
+
+    var page: Int = 1
+    private val _isMax = MutableLiveData<Boolean>()
+    val isMax: LiveData<Boolean>
+        get() = _isMax
+
+    private val _scrapPosition = MutableLiveData<Int>()
+    val scrapPosition: LiveData<Int>
+        get() = _scrapPosition
+
+    fun setPosition(position: Int) {
+        _scrapPosition.value = position
+    }
+
+    fun putScrap() {
+        otherRepository.putScrap(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
+            copyOtherAnswerList[scrapPosition.value!!].id
+        ).enqueue(object : Callback<ResponseScrap> {
+            override fun onResponse(
+                call: Call<ResponseScrap>,
+                response: Response<ResponseScrap>
+            ) {
+                if (response.isSuccessful) {
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseScrap>, t: Throwable) {
+                Log.d("Network Fail", t.message.toString())
+            }
+        })
+    }
+
+    private val _isFollow = MutableLiveData<Boolean>()
+    val isFollow: LiveData<Boolean>
+        get() = _isFollow
+
+    fun putFollow() {
+        _isFollow.value = !_isFollow.value!!
+        otherRepository.putFollow(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
+            otherUserInfo.value!!.id
+        ).enqueue(object : Callback<ResponseFollow> {
+            override fun onResponse(
+                call: Call<ResponseFollow>,
+                response: Response<ResponseFollow>
+            ) {
+                if (response.isSuccessful) {
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseFollow>, t: Throwable) {
+                Log.d("Network Fail", t.message.toString())
+            }
+        })
+    }
+
+    fun requestUser(userId: Int) {
+        page = 1
+        otherRepository.getOtherInfo(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
+            userId
+        )
+            .enqueue(object :
+                Callback<ResponseOtherInfo> {
+                override fun onResponse(
+                    call: Call<ResponseOtherInfo>,
+                    response: Response<ResponseOtherInfo>
+                ) {
+                    if (response.isSuccessful) {
+                        _otherUserInfo.value = response.body()!!.data
+                        _isFollow.value = response.body()!!.data.isFollowed
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseOtherInfo>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
+    }
+
+    fun requestAddItem(userId: Int) {
         otherRepository.getProfileAnswer(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
-            5,
-            1
+            userId,
+            page
         ).enqueue(object :
             Callback<ResponseOtherData> {
             override fun onResponse(
                 call: Call<ResponseOtherData>,
                 response: Response<ResponseOtherData>
             ) {
-                if (response.isSuccessful)
-                    _otherAnswerList.value = response.body()!!.data?.answers?.toMutableList()
+                if (response.isSuccessful) {
+                    copyOtherAnswerList.addAll(response.body()!!.data?.answers?.toMutableList())
+                    _otherAnswerList.value = copyOtherAnswerList.toMutableList()
+                    when (page == response.body()!!.data.pageLen) {
+                        true -> {
+                            _isMax.value = true
+                        }
+                        else -> {
+                            page++
+                        }
+                    }
+                }
             }
 
             override fun onFailure(call: Call<ResponseOtherData>, t: Throwable) {
                 Log.d("Network Fail", t.message.toString())
-                for (element in t.stackTrace) {
-                    Log.d("Network element", element.toString())
-                    Log.d("Network className", element.className)
-                    Log.d("Network methodName", element.methodName)
-                    Log.d("Network fileName", element.fileName)
-                    Log.d("Network lineNumber", element.lineNumber.toString())
-                }
             }
         })
     }
 
-    private val dummyOtherAnswerList = mutableListOf(
-        Answer(
-            id = 4,
-            commentBlockedFlag = false,
-            content = "aa",
-            answerDate = "1. 4",
-            answerIdx = 1,
-            questionId = 3,
-            userId = 1,
-            isAuthor = false,
-            isScrapped = true,
-            userProfile = null,
-            userNickname = "wlgus3",
-            question = "두려움을 극복해본 경험이 있나요? 어떤 상황이었나요?",
-            category = "이야기",
-            categoryId = 3,
-            isAnswered = false,
-            publicFlag = true
-        ),
-        Answer(
-            id = 4,
-            commentBlockedFlag = false,
-            content = "aa",
-            answerDate = "1. 4",
-            answerIdx = 1,
-            questionId = 3,
-            userId = 1,
-            isAuthor = false,
-            isScrapped = true,
-            userProfile = null,
-            userNickname = "wlgus3",
-            question = "두려움을 극복해본 경험이 있나요? 어떤 상황이었나요?",
-            category = "이야기",
-            categoryId = 3,
-            isAnswered = false,
-            publicFlag = true
-        ),
-        Answer(
-            id = 4,
-            commentBlockedFlag = false,
-            content = "aa",
-            answerDate = "1. 4",
-            answerIdx = 1,
-            questionId = 3,
-            userId = 1,
-            isAuthor = false,
-            isScrapped = true,
-            userProfile = null,
-            userNickname = "wlgus3",
-            question = "두려움을 극복해본 경험이 있나요? 어떤 상황이었나요?",
-            category = "이야기",
-            categoryId = 3,
-            isAnswered = false,
-            publicFlag = true
-        ),
-        Answer(
-            id = 4,
-            commentBlockedFlag = false,
-            content = "aa",
-            answerDate = "1. 4",
-            answerIdx = 1,
-            questionId = 3,
-            userId = 1,
-            isAuthor = false,
-            isScrapped = true,
-            userProfile = null,
-            userNickname = "wlgus3",
-            question = "두려움을 극복해본 경험이 있나요? 어떤 상황이었나요?",
-            category = "이야기",
-            categoryId = 3,
-            isAnswered = false,
-            publicFlag = true
-        ),
-        Answer(
-            id = 4,
-            commentBlockedFlag = false,
-            content = "aa",
-            answerDate = "1. 4",
-            answerIdx = 1,
-            questionId = 3,
-            userId = 1,
-            isAuthor = false,
-            isScrapped = true,
-            userProfile = null,
-            userNickname = "wlgus3",
-            question = "두려움을 극복해본 경험이 있나요? 어떤 상황이었나요?",
-            category = "이야기",
-            categoryId = 3,
-            isAnswered = false,
-            publicFlag = true
-        )
+    fun requestItem(userId: Int) {
+        otherRepository.getProfileAnswer(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
+            userId,
+            page
+        ).enqueue(object :
+            Callback<ResponseOtherData> {
+            override fun onResponse(
+                call: Call<ResponseOtherData>,
+                response: Response<ResponseOtherData>
+            ) {
+                if (response.isSuccessful) {
+                    copyOtherAnswerList = response.body()!!.data?.answers?.toMutableList()
+                    _otherAnswerList.value = copyOtherAnswerList.toMutableList()
+                    when (page == response.body()!!.data.pageLen) {
+                        true -> {
+                            _isMax.value = true
+                        }
+                        else -> {
+                            page++
+                        }
+                    }
+                }
+            }
 
-    )
-
-    fun setDummyOtherAnswer() {
-        _otherAnswerList.value = dummyOtherAnswerList.toMutableList()
+            override fun onFailure(call: Call<ResponseOtherData>, t: Throwable) {
+                Log.d("Network Fail", t.message.toString())
+            }
+        })
     }
 
-    fun addDummyAnswer() {
-        val dummyAnswer = listOf(
-            Answer(
-                id = 4,
-                commentBlockedFlag = false,
-                content = "aa",
-                answerDate = "1. 4",
-                answerIdx = 1,
-                questionId = 3,
-                userId = 1,
-                isAuthor = false,
-                isScrapped = true,
-                userProfile = null,
-                userNickname = "wlgus3",
-                question = "두려움을 극복해본 경험이 있나요? 어떤 상황이었나요?",
-                category = "이야기",
-                categoryId = 3,
-                isAnswered = false,
-                publicFlag = true
-            ),
-            Answer(
-                id = 4,
-                commentBlockedFlag = false,
-                content = "aa",
-                answerDate = "1. 4",
-                answerIdx = 1,
-                questionId = 3,
-                userId = 1,
-                isAuthor = false,
-                isScrapped = true,
-                userProfile = null,
-                userNickname = "wlgus3",
-                question = "두려움을 극복해본 경험이 있나요? 어떤 상황이었나요?",
-                category = "이야기",
-                categoryId = 3,
-                isAnswered = false,
-                publicFlag = true
-            ),
-            Answer(
-                id = 4,
-                commentBlockedFlag = false,
-                content = "aa",
-                answerDate = "1. 4",
-                answerIdx = 1,
-                questionId = 3,
-                userId = 1,
-                isAuthor = false,
-                isScrapped = true,
-                userProfile = null,
-                userNickname = "wlgus3",
-                question = "두려움을 극복해본 경험이 있나요? 어떤 상황이었나요?",
-                category = "이야기",
-                categoryId = 3,
-                isAnswered = false,
-                publicFlag = true
-            ),
-            Answer(
-                id = 4,
-                commentBlockedFlag = false,
-                content = "aa",
-                answerDate = "1. 4",
-                answerIdx = 1,
-                questionId = 3,
-                userId = 1,
-                isAuthor = false,
-                isScrapped = true,
-                userProfile = null,
-                userNickname = "wlgus3",
-                question = "두려움을 극복해본 경험이 있나요? 어떤 상황이었나요?",
-                category = "이야기",
-                categoryId = 3,
-                isAnswered = false,
-                publicFlag = true
-            )
-        )
-        dummyOtherAnswerList.addAll(dummyAnswer.toMutableList())
-        _otherAnswerList.value = dummyOtherAnswerList.toMutableList()
-    }
+    private var copyOtherAnswerList: MutableList<Answer> = mutableListOf()
 }
