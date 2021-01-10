@@ -5,15 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.explore.model.OtherQuestionsData
-import com.teambeme.beme.explore.model.ResponseExploraionAnsweres
+import com.teambeme.beme.explore.model.ResponseExploraionAnswers
 import com.teambeme.beme.explore.repository.ExploreRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewModel() {
-    private val _otherMindsList = MutableLiveData<List<ResponseExploraionAnsweres.Data>>()
-    val otherMindsList: LiveData<List<ResponseExploraionAnsweres.Data>>
+    private val _otherMindsList = MutableLiveData<List<ResponseExploraionAnswers.Data>>()
+    val otherMindsList: LiveData<List<ResponseExploraionAnswers.Data>>
         get() = _otherMindsList
 
     private val _otherQuestionsList = MutableLiveData<MutableList<OtherQuestionsData>>()
@@ -27,22 +27,20 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     fun requestOtherMinds() {
         exploreRepository.getExplorationAnother("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMjcyMzc3LCJleHAiOjE2MTAyOTc1NzcsImlzcyI6ImJlbWUifQ.ebGvkOGMnGKli0spRneO3uAOZ31khRrPIc_Urwpu0Q0")
             .enqueue(
-                object : Callback<ResponseExploraionAnsweres> {
+                object : Callback<ResponseExploraionAnswers> {
                     override fun onResponse(
-                        call: Call<ResponseExploraionAnsweres>,
-                        response: Response<ResponseExploraionAnsweres>
+                        call: Call<ResponseExploraionAnswers>,
+                        response: Response<ResponseExploraionAnswers>
                     ) {
                         if (response.isSuccessful)
                             _otherMindsList.value = response.body()!!.data?.toList()
-
                     }
 
-                    override fun onFailure(call: Call<ResponseExploraionAnsweres>, t: Throwable) {
+                    override fun onFailure(call: Call<ResponseExploraionAnswers>, t: Throwable) {
                         Log.d("network", "통신실패")
                     }
                 }
             )
-
     }
 
     private val dummyOtherAnswersList = mutableListOf(
@@ -432,5 +430,4 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         dummyOtherQuestionsList.addAll(plusOtherQuestionsList.toMutableList())
         _otherQuestionsList.value = dummyOtherQuestionsList.toMutableList()
     }
-
 }

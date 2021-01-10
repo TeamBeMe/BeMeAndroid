@@ -9,15 +9,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemExploreOtherMindsBinding
-import com.teambeme.beme.explore.model.ResponseExploraionAnsweres
+import com.teambeme.beme.explore.model.ResponseExploraionAnswers
 import com.teambeme.beme.explore.view.ExploreDetailActivity
 import com.teambeme.beme.util.startActivity
 
 class OtherMindsRcvAdapter(private val context: Context) :
-    ListAdapter<ResponseExploraionAnsweres.Data, OtherMindsRcvAdapter.OtherMindsRcvViewHolder>(OtherMindsDiffUtil()) {
+    ListAdapter<ResponseExploraionAnswers.Data, OtherMindsRcvAdapter.OtherMindsRcvViewHolder>(OtherMindsDiffUtil()) {
     inner class OtherMindsRcvViewHolder(private val binding: ItemExploreOtherMindsBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(otherMindsData: ResponseExploraionAnsweres.Data) {
+        fun bind(otherMindsData: ResponseExploraionAnswers.Data) {
             binding.otherMinds = otherMindsData
             binding.executePendingBindings()
             setClickListenerForShowOtherAnswers(binding, otherMindsData, context)
@@ -35,17 +35,17 @@ class OtherMindsRcvAdapter(private val context: Context) :
         holder.bind(getItem(position))
     }
 
-    private class OtherMindsDiffUtil : DiffUtil.ItemCallback<ResponseExploraionAnsweres.Data>() {
-        override fun areItemsTheSame(oldItem: ResponseExploraionAnsweres.Data, newItem: ResponseExploraionAnsweres.Data) =
+    private class OtherMindsDiffUtil : DiffUtil.ItemCallback<ResponseExploraionAnswers.Data>() {
+        override fun areItemsTheSame(oldItem: ResponseExploraionAnswers.Data, newItem: ResponseExploraionAnswers.Data) =
             (oldItem.questionId == newItem.questionId)
 
-        override fun areContentsTheSame(oldItem: ResponseExploraionAnsweres.Data, newItem: ResponseExploraionAnsweres.Data) =
+        override fun areContentsTheSame(oldItem: ResponseExploraionAnswers.Data, newItem: ResponseExploraionAnswers.Data) =
             (oldItem == newItem)
     }
 
     private fun setClickListenerForShowOtherAnswers(
         binding: ItemExploreOtherMindsBinding,
-        otherMindsData: ResponseExploraionAnsweres.Data,
+        otherMindsData: ResponseExploraionAnswers.Data,
         context: Context
     ) {
         binding.btnOtherMindsShowOtherAnswers.setOnClickListener {

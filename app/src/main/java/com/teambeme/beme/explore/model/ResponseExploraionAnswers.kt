@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ResponseExploraionAnsweres(
+data class ResponseExploraionAnswers(
     @SerializedName("data")
     val `data`: List<Data>,
     @SerializedName("message")

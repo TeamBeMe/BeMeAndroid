@@ -1,6 +1,6 @@
 package com.teambeme.beme.data.remote.api
 
-import com.teambeme.beme.explore.model.ResponseExploraionAnsweres
+import com.teambeme.beme.explore.model.ResponseExploraionAnswers
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -11,5 +11,5 @@ interface ExploreService {
     @GET("exploration/another")
     fun getExplorationAnother(
         @Header("token") token: String
-    ): Call<ResponseExploraionAnsweres>
+    ): Call<ResponseExploraionAnswers>
 }
