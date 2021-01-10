@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="answer"
+            type="com.teambeme.beme.otherpage.model.ResponseOtherData.Data.Answer" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="8dp"
+        android:background="@drawable/tag_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt_otheritem_question"
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp"
+            android:text="@{answer.question}"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="요즘 내 삶에서 \n가장 만족스러운 것은 무엇인가요?" />
+
+        <TextView
+            android:id="@+id/txt_otheritem_categori"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/answer_text_info_gray"
+            android:text="@{`[  `+answer.category+`에 관한 질문  ]  · `}"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/txt_otheritem_question"
+            app:layout_constraintTop_toBottomOf="@+id/txt_otheritem_question"
+            tools:text="[  미래에 관한 질문  ]  · " />
+
+        <TextView
+            android:id="@+id/txt_otheritem_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/answer_text_info_gray"
+            android:text="@{answer.answerDate}"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/txt_otheritem_categori"
+            app:layout_constraintTop_toTopOf="@+id/txt_otheritem_categori"
+            tools:text="5분 전" />
+
+
+        <ImageView
+            android:id="@+id/img_otheritem_profile"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/txt_otheritem_categori"
+            app:layout_constraintTop_toBottomOf="@+id/txt_otheritem_categori"
+            app:srcCompat="@drawable/ic_mp_profile" />
+
+        <TextView
+            android:id="@+id/txt_otheritem_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginStart="8dp"
+            android:text="@{answer.userNickname}"
+            tools:text="gerif_self"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/img_otheritem_profile"
+            app:layout_constraintStart_toEndOf="@+id/img_otheritem_profile"
+            app:layout_constraintTop_toTopOf="@+id/img_otheritem_profile" />
+
+        <ImageView
+            android:id="@+id/img_otheritem_scrap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@{answer.scrapped ? @drawable/ic_scrap_on_mypage : @drawable/ic_scrap_off_mypage}"
+            app:layout_constraintBottom_toBottomOf="@+id/img_otheritem_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginRight="20dp"
+            app:layout_constraintTop_toTopOf="@+id/img_otheritem_profile"
+            app:srcCompat="@drawable/ic_scrap_on_mypage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
