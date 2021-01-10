@@ -7,6 +7,7 @@ import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.databinding.ActivityLoginBinding
 import com.teambeme.beme.util.KeyboardVisibilityUtils
+import com.teambeme.beme.util.StatusBarUtil
 import kotlin.properties.Delegates
 
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
@@ -17,6 +18,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setKeyboardVisibilityListener()
+        StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
     }
 
     private fun setKeyboardVisibilityListener() {
