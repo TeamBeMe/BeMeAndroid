@@ -35,13 +35,20 @@ class FollowingAfterIdSearchActivity :
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                binding.viewRecentSearch.visibility = View.INVISIBLE
-                binding.rcvFollowingAfterIdsearch.visibility = View.VISIBLE
+                val userInputText = newText.let {
+                    it
+                }?: ""
+                if(userInputText.count() >0){
+                    binding.viewRecentSearch.visibility = View.INVISIBLE
+                    binding.rcvFollowingAfterIdsearch.visibility = View.VISIBLE
+                }else{
+                    binding.viewRecentSearch.visibility = View.VISIBLE
+                    binding.rcvFollowingAfterIdsearch.visibility = View.INVISIBLE
+                }
                 return true
             }
         })
     }
-
 
     private fun initBinding(binding: ActivityFollowingAfterIdSearchBinding) {
         binding.apply {
