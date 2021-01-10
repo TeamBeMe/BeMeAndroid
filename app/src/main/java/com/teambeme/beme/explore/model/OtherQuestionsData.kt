@@ -6,5 +6,6 @@ data class OtherQuestionsData(
     val title: String?,
     val content: String,
     val time: String,
-    var isbookmarked: Boolean
+    var isBookmarked: Boolean,
+    var isAnswered: Boolean
 )

@@ -30,6 +30,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                 is ItemExploreOtherQuestionsBinding -> {
                     with(binding as ItemExploreOtherQuestionsBinding) {
                         setVariable(BR.otherQuestions, otherQuestionsData)
+                        executePendingBindings()
                         setClickListenerForQuestionsBookmark(binding, otherQuestionsData)
                         setClickListenerForShowOtherAnswers(binding, otherQuestionsData, context)
                     }
@@ -37,6 +38,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                 else -> {
                     with(binding as ItemExploreDetailOtherAnswersBinding) {
                         setVariable(BR.otherAnswers, otherQuestionsData)
+                        executePendingBindings()
                         setClickListenerForAnswersBookmark(binding, otherQuestionsData)
                     }
                 }
@@ -88,13 +90,13 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         otherQuestionsData: OtherQuestionsData
     ) {
         binding.btnOtherQuestionsBookmark.setOnClickListener {
-            when (binding.otherQuestions?.isbookmarked) {
+            when (binding.otherQuestions?.isBookmarked) {
                 false -> {
-                    otherQuestionsData.isbookmarked = true
+                    otherQuestionsData.isBookmarked = true
                     binding.btnOtherQuestionsBookmark.setImageResource(R.drawable.ic_bookmark_checked)
                 }
                 else -> {
-                    otherQuestionsData.isbookmarked = false
+                    otherQuestionsData.isBookmarked = false
                     binding.btnOtherQuestionsBookmark.setImageResource(R.drawable.ic_bookmark)
                 }
             }
@@ -103,16 +105,16 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
 
     private fun setClickListenerForAnswersBookmark(
         binding: ItemExploreDetailOtherAnswersBinding,
-        otheranswersData: OtherQuestionsData
+        otherAnswersData: OtherQuestionsData
     ) {
         binding.btnOtherAnswersBookmark.setOnClickListener {
-            when (binding.otherAnswers?.isbookmarked) {
+            when (binding.otherAnswers?.isBookmarked) {
                 false -> {
-                    otheranswersData.isbookmarked = true
+                    otherAnswersData.isBookmarked = true
                     binding.btnOtherAnswersBookmark.setImageResource(R.drawable.ic_bookmark_checked)
                 }
                 else -> {
-                    otheranswersData.isbookmarked = false
+                    otherAnswersData.isBookmarked = false
                     binding.btnOtherAnswersBookmark.setImageResource(R.drawable.ic_bookmark)
                 }
             }
