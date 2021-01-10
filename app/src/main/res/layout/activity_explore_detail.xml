@@ -17,11 +17,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/exploredetail_background_white"
+        android:background="@color/explore_detail_background_white"
         tools:context=".explore.view.ExploreDetailActivity">
 
         <ImageButton
-            android:id="@+id/btn_exploredetail_goback"
+            android:id="@+id/btn_explore_detail_go_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
@@ -32,28 +32,29 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txt_exploredetail_question"
+            android:id="@+id/txt_explore_detail_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_marginTop="28dp"
             android:text="@{otherMindsTitle}"
-            android:textColor="@color/exploredetail_txt_question_black"
+            android:textColor="@color/explore_detail_txt_question_black"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@id/btn_exploredetail_goback"
-            app:layout_constraintTop_toBottomOf="@id/btn_exploredetail_goback" />
+            app:layout_constraintStart_toStartOf="@id/btn_explore_detail_go_back"
+            app:layout_constraintTop_toBottomOf="@id/btn_explore_detail_go_back" />
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tablayout_exploredetail_sort"
+            android:id="@+id/tab_layout_explore_detail_sort"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:layout_marginTop="18dp"
             android:backgroundTint="@android:color/transparent"
-            app:layout_constraintStart_toStartOf="@id/txt_exploredetail_question"
-            app:layout_constraintTop_toBottomOf="@id/txt_exploredetail_question"
-            app:tabIndicatorColor="@color/exploredetail_tab_indicator_black"
-            app:tabSelectedTextColor="@color/exploredetail_tab_selected_txt_black"
-            app:tabTextColor="@color/exploredetail_tab_txt_gray">
+            app:layout_constraintStart_toStartOf="@id/txt_explore_detail_question"
+            app:layout_constraintTop_toBottomOf="@id/txt_explore_detail_question"
+            app:tabIndicatorColor="@color/explore_detail_tab_indicator_black"
+            app:tabSelectedTextColor="@color/explore_detail_tab_selected_txt_black"
+            app:tabTextAppearance="@style/tab_text_size"
+            app:tabTextColor="@color/explore_detail_tab_txt_gray">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -70,24 +71,25 @@
         </com.google.android.material.tabs.TabLayout>
 
         <View
-            android:id="@+id/view_exploredetail_divide_line"
+            android:id="@+id/view_explore_detail_divide_line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/exploredetail_divide_line_gray"
-            app:layout_constraintTop_toBottomOf="@+id/tablayout_exploredetail_sort" />
+            android:background="@color/explore_detail_divide_line_gray"
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout_explore_detail_sort" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:overScrollMode="never"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tablayout_exploredetail_sort">
+            app:layout_constraintTop_toBottomOf="@id/tab_layout_explore_detail_sort">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcv_exploredetail_otheranswers"
+                    android:id="@+id/rcv_explore_detail_other_answers"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="28dp"
@@ -98,28 +100,28 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:listitem="@layout/list_exploredetail_otheranswers" />
+                    tools:listitem="@layout/item_explore_detail_other_answers" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_exploredetail_showmore"
+                    android:id="@+id/btn_explore_detail_show_more"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="28dp"
                     android:layout_marginTop="28dp"
                     android:layout_marginEnd="28dp"
                     android:layout_marginBottom="152dp"
-                    android:backgroundTint="@color/exploredetail_btn_showmore_background_black"
+                    android:backgroundTint="@color/explore_detail_btn_show_more_background_black"
                     android:onClick="@{()->exploreDetailViewModel.plusDummyOtherAnswers()}"
                     android:paddingTop="12dp"
                     android:paddingBottom="16dp"
                     android:text="더보기"
-                    android:textColor="@color/exploredetail_btn_showmore_txt_white"
+                    android:textColor="@color/explore_detail_btn_show_more_txt_white"
                     android:textSize="16sp"
                     app:cornerRadius="6dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rcv_exploredetail_otheranswers" />
+                    app:layout_constraintTop_toBottomOf="@id/rcv_explore_detail_other_answers" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>

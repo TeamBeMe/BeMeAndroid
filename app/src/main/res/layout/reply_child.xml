@@ -62,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:textColor="@color/answer_text_info_gray"
             android:text="@{replyData.txt_time}"
             tools:text="12월 23일"
             app:layout_constraintStart_toStartOf="@+id/txt_replychild_comment"

@@ -1,6 +1,9 @@
 package com.teambeme.beme.detail.view
 
+import android.content.Context
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.observe
@@ -43,6 +46,16 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
         detailViewModel.position.observe(this) {
             positionListener(it)
         }
+        detailViewModel.isChangeClicked.observe(this) {
+            changeClickListener(it)
+        }
+        detailViewModel.isChildChangeClicked.observe(this) {
+            changeChildclickListener(it)
+        }
+        detailViewModel.isAddChildReplyClicked.observe(this) {
+            addChildReplyListener(it)
+        }
+        binding.btnScrapBack.setOnClickListener { finish() }
     }
 
     private fun positionListener(position: Int) {
@@ -64,11 +77,86 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
     }
 
     private fun addClickListener(isAddClicked: Boolean) {
-        if (isAddClicked) {
-            Toast.makeText(this, "bb", Toast.LENGTH_SHORT).show()
-            detailViewModel.addReplyClickedFalse()
+        if (detailViewModel.answerText.value == "") {
+            Toast.makeText(this, "빈 댓글은 달 수 없습니다", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "bb", Toast.LENGTH_SHORT).show()
+            when {
+                detailViewModel.isChangeClicked.value == true -> {
+                    detailViewModel.changeParentReplyComment()
+                    detailViewModel.changeClickedFalse()
+                    binding.constraintDetailSnakbar.visibility = View.GONE
+                    hideKeyboard()
+                }
+                detailViewModel.isChildChangeClicked.value == true -> {
+                    detailViewModel.changeChildReplyComment()
+                    detailViewModel.changeChildClickedFalse()
+                    binding.constraintDetailSnakbar.visibility = View.GONE
+                    hideKeyboard()
+                }
+                detailViewModel.isAddChildReplyClicked.value == true -> {
+                    detailViewModel.addChildReply()
+                    detailViewModel.addReplyChildclickedFalse()
+                    binding.constraintDetailSnakbar.visibility = View.GONE
+                    hideKeyboard()
+                }
+                else -> {
+                    detailViewModel.addParentReply()
+                    detailViewModel.addReplyClickedFalse()
+                    hideKeyboard()
+                }
+            }
+        }
+    }
+
+    private fun addChildReplyListener(isClicked: Boolean) {
+        if (isClicked) {
+            binding.constraintDetailSnakbar.visibility = View.VISIBLE
+            binding.txtDetailMessage.text = "${detailViewModel.getId()} 님에게 답글을 남기는 중"
+            binding.btnDetailCancel.setOnClickListener {
+                binding.constraintDetailSnakbar.visibility = View.GONE
+                detailViewModel.addReplyChildclickedFalse()
+                detailViewModel.answerText.value = ""
+            }
+            focusKeyboard()
+        }
+    }
+
+    private fun hideKeyboard() {
+        val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(binding.edttextDetailContent.windowToken, 0)
+    }
+
+    private fun focusKeyboard() {
+        val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.toggleSoftInput(
+            InputMethodManager.SHOW_FORCED,
+            InputMethodManager.HIDE_IMPLICIT_ONLY
+        )
+    }
+
+    private fun changeChildclickListener(isChildChangeClicked: Boolean) {
+        if (isChildChangeClicked) {
+            binding.constraintDetailSnakbar.visibility = View.VISIBLE
+            binding.txtDetailMessage.text = "댓글을 수정중입니다"
+            binding.btnDetailCancel.setOnClickListener {
+                binding.constraintDetailSnakbar.visibility = View.GONE
+                detailViewModel.changeChildClickedFalse()
+                detailViewModel.answerText.value = ""
+            }
+            focusKeyboard()
+        }
+    }
+
+    private fun changeClickListener(isChangeClicked: Boolean) {
+        if (isChangeClicked) {
+            binding.constraintDetailSnakbar.visibility = View.VISIBLE
+            binding.txtDetailMessage.text = "댓글을 수정중입니다"
+            binding.btnDetailCancel.setOnClickListener {
+                binding.constraintDetailSnakbar.visibility = View.GONE
+                detailViewModel.changeClickedFalse()
+                detailViewModel.answerText.value = ""
+            }
+            focusKeyboard()
         }
     }
 

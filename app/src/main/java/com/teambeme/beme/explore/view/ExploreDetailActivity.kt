@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.databinding.ActivityExploreDetailBinding
-import com.teambeme.beme.databinding.ListExploredetailOtheranswersBinding
+import com.teambeme.beme.databinding.ItemExploreDetailOtherAnswersBinding
 import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
 import com.teambeme.beme.util.StatusBarUtil
@@ -29,10 +29,10 @@ class ExploreDetailActivity :
     }
 
     private fun setOtherAnswersObserve(binding: ActivityExploreDetailBinding) {
-        exploreDetailViewModel.otherAnswersList.observe(this) { otheranswersList ->
-            otheranswersList?.let {
-                if (binding.rcvExploredetailOtheranswers.adapter != null) with(binding.rcvExploredetailOtheranswers.adapter as OtherQuestionsRcvAdapter<*>) {
-                    submitList(otheranswersList)
+        exploreDetailViewModel.otherAnswersList.observe(this) { otherAnswersList ->
+            otherAnswersList?.let {
+                if (binding.rcvExploreDetailOtherAnswers.adapter != null) with(binding.rcvExploreDetailOtherAnswers.adapter as OtherQuestionsRcvAdapter<*>) {
+                    submitList(otherAnswersList)
                 }
             }
         }
@@ -40,12 +40,12 @@ class ExploreDetailActivity :
 
     private fun setOtherAnswersAdapter(binding: ActivityExploreDetailBinding) {
         val otherAnswersAdapter =
-            OtherQuestionsRcvAdapter<ListExploredetailOtheranswersBinding>(this, R.layout.list_exploredetail_otheranswers)
-        binding.rcvExploredetailOtheranswers.adapter = otherAnswersAdapter
+            OtherQuestionsRcvAdapter<ItemExploreDetailOtherAnswersBinding>(this, R.layout.item_explore_detail_other_answers)
+        binding.rcvExploreDetailOtherAnswers.adapter = otherAnswersAdapter
     }
 
     private fun setClickListenerForGoback(binding: ActivityExploreDetailBinding) {
-        binding.btnExploredetailGoback.setOnClickListener {
+        binding.btnExploreDetailGoBack.setOnClickListener {
             onBackPressed()
         }
     }

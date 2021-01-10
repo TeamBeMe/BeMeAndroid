@@ -13,16 +13,16 @@ import com.teambeme.beme.databinding.ItemHomeMoreQuestionBinding
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
 import com.teambeme.beme.home.model.ResponseQuestionData
 import com.teambeme.beme.home.view.AnswerSuggestFragment
+import com.teambeme.beme.home.view.InfoChangeFragment
 import com.teambeme.beme.home.view.TransitionPublicFragment
 
-class QuestionPagerAdapter(private val supportFragmentManager: FragmentManager) :
+class QuestionPagerAdapter(private val fragmentManager: FragmentManager) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var questionList = mutableListOf<ResponseQuestionData.Answer>()
 
-    class QuestionViewHolder(
+    inner class QuestionViewHolder(
         private val context: Context,
-        private val binding: ItemHomeQuestionBinding,
-        private val fragmentManager: FragmentManager
+        private val binding: ItemHomeQuestionBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(answer: ResponseQuestionData.Answer) {
@@ -38,6 +38,9 @@ class QuestionPagerAdapter(private val supportFragmentManager: FragmentManager) 
             }
             binding.imgQuestionLock.setOnClickListener {
                 TransitionPublicFragment().show(fragmentManager, "TransitionPublic")
+            }
+            binding.txtHomeEdit.setOnClickListener {
+                InfoChangeFragment().show(fragmentManager, "InfoChangeBottomSheet")
             }
         }
     }
@@ -81,7 +84,7 @@ class QuestionPagerAdapter(private val supportFragmentManager: FragmentManager) 
                         parent,
                         false
                     )
-                QuestionViewHolder(parent.context, binding, supportFragmentManager)
+                QuestionViewHolder(parent.context, binding)
             }
         }
     }
@@ -91,7 +94,7 @@ class QuestionPagerAdapter(private val supportFragmentManager: FragmentManager) 
             with(holder as QuestionViewHolder) { holder.onBind(questionList[position]) }
         } else {
             with(holder as MoreQuestionViewHolder) {
-                holder.onBind(supportFragmentManager)
+                holder.onBind(fragmentManager)
             }
         }
     }

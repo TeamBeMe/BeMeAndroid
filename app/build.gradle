@@ -47,15 +47,14 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.firebase:firebase-messaging:21.0.1'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    //CircleImageView
+    // CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    //Material 관련 컴포넌트 사용
+    // Material 관련 컴포넌트 사용
     implementation 'com.google.android.material:material:1.2.0-alpha06'
 
     // Glide
@@ -81,4 +80,11 @@ dependencies {
     // FireBase
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+
+    // Image Crop
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+
+    // StickyNestedScrollView
+    implementation 'com.github.didikk:sticky-nestedscrollview:1.0.1'
 }

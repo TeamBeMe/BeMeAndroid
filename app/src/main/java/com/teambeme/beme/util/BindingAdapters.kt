@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
+import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.teambeme.beme.R
 
@@ -23,6 +24,13 @@ object BindingAdapters {
     @JvmStatic
     fun setTime(textView: TextView, time: String) {
         textView.text = time + "분 전"
+    }
+
+    @BindingAdapter("following:setTextForUnAnswered")
+    @JvmStatic
+    fun setTextForUnAnswered(textView: TextView, userNickname: String) {
+        textView.text = "아직 " + userNickname + "님이 답하지 않은 질문입니다.\n" +
+                "답변을 하시고 글을 보시겠습니까?"
     }
 
     @BindingAdapter("setSrcFromUrl")
@@ -40,11 +48,11 @@ object BindingAdapters {
 
     @BindingAdapter("android:text")
     @JvmStatic
-    fun setEditTextString(view: EditText, text: String?) {
+    fun setEditTextString(view: EditText, text: MutableLiveData<String>) {
         if (text == null) {
             view.setText("")
         } else {
-            if (view.text.toString() != text) view.setText(text)
+            if (view.text.toString() != text.value) view.setText(text.value)
         }
     }
 
