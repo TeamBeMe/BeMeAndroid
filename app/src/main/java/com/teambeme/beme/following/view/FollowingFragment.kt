@@ -28,7 +28,6 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         LifeCycleEventLogger(javaClass.name).registerLogger(viewLifecycleOwner.lifecycle)
         binding.followingViewModel = followingViewModel
         binding.lifecycleOwner = this
-        followingViewModel.setDummyOtherFollowingQuestions()
         followingViewModel.setDummyFollowingProfiles()
         setOtherFollowingQuestionsAdapter()
         setOtherFollowingQuestionsObserve()

@@ -111,7 +111,6 @@
                     android:layout_marginEnd="28dp"
                     android:layout_marginBottom="152dp"
                     android:backgroundTint="@color/explore_detail_btn_show_more_background_black"
-                    android:onClick="@{()->exploreDetailViewModel.plusDummyOtherAnswers()}"
                     android:paddingTop="12dp"
                     android:paddingBottom="16dp"
                     android:text="더보기"

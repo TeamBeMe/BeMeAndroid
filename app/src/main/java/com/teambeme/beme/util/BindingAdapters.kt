@@ -11,19 +11,12 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
-import com.teambeme.beme.R
 
 object BindingAdapters {
     @BindingAdapter("setCategory")
     @JvmStatic
     fun setCategory(textView: TextView, category: String) {
         textView.text = "[ " + category + "에 관한 질문 ]"
-    }
-
-    @BindingAdapter("setTime")
-    @JvmStatic
-    fun setTime(textView: TextView, time: String) {
-        textView.text = time + "분 전"
     }
 
     @BindingAdapter("following:setTextForUnAnswered")

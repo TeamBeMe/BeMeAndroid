@@ -14,7 +14,7 @@ import com.teambeme.beme.R
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
 import com.teambeme.beme.databinding.ItemExploreDetailOtherAnswersBinding
-import com.teambeme.beme.explore.model.OtherQuestionsData
+import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.view.ExploreDetailActivity
 import com.teambeme.beme.util.startActivity
 
@@ -22,12 +22,12 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private val context: Context,
     private val layout: Int
 ) :
-    ListAdapter<OtherQuestionsData, OtherQuestionsRcvAdapter<B>.OtherQuestionsRcvViewHolder<B>>(
+    ListAdapter<ResponseExplorationQuestions.Data.Answer, OtherQuestionsRcvAdapter<B>.OtherQuestionsRcvViewHolder<B>>(
         OtherQuestionsDiffUtil()
     ) {
     inner class OtherQuestionsRcvViewHolder<B : ViewDataBinding>(private val binding: B) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(otherQuestionsData: OtherQuestionsData) {
+        fun bind(otherQuestionsData: ResponseExplorationQuestions.Data.Answer) {
             when (binding) {
                 is ItemExploreOtherQuestionsBinding -> {
                     with(binding as ItemExploreOtherQuestionsBinding) {
@@ -68,21 +68,21 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         holder.bind(getItem(position))
     }
 
-    private class OtherQuestionsDiffUtil : DiffUtil.ItemCallback<OtherQuestionsData>() {
-        override fun areItemsTheSame(oldItem: OtherQuestionsData, newItem: OtherQuestionsData) =
-            (oldItem.title == newItem.title)
+    private class OtherQuestionsDiffUtil : DiffUtil.ItemCallback<ResponseExplorationQuestions.Data.Answer>() {
+        override fun areItemsTheSame(oldItem: ResponseExplorationQuestions.Data.Answer, newItem: ResponseExplorationQuestions.Data.Answer) =
+            (oldItem.id == newItem.id)
 
-        override fun areContentsTheSame(oldItem: OtherQuestionsData, newItem: OtherQuestionsData) =
+        override fun areContentsTheSame(oldItem: ResponseExplorationQuestions.Data.Answer, newItem: ResponseExplorationQuestions.Data.Answer) =
             (oldItem == newItem)
     }
 
     private fun setClickListenerForShowOtherAnswers(
         binding: ItemExploreOtherQuestionsBinding,
-        otherQuestionsData: OtherQuestionsData,
+        otherQuestionsData: ResponseExplorationQuestions.Data.Answer,
         context: Context
     ) {
         binding.btnOtherQuestionsShowOtherAnswers.setOnClickListener {
-            otherQuestionsData.title?.let { title ->
+            otherQuestionsData.question?.let { title ->
                 context.startActivity<ExploreDetailActivity>(title)
             }
         }
@@ -90,16 +90,16 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
 
     private fun setClickListenerForQuestionsBookmark(
         binding: ItemExploreOtherQuestionsBinding,
-        otherQuestionsData: OtherQuestionsData
+        otherQuestionsData: ResponseExplorationQuestions.Data.Answer
     ) {
         binding.btnOtherQuestionsBookmark.setOnClickListener {
-            when (binding.otherQuestions?.isBookmarked) {
+            when (binding.otherQuestions?.isScrapped) {
                 false -> {
-                    otherQuestionsData.isBookmarked = true
+                    otherQuestionsData.isScrapped = true
                     binding.btnOtherQuestionsBookmark.setImageResource(R.drawable.ic_bookmark_checked)
                 }
                 else -> {
-                    otherQuestionsData.isBookmarked = false
+                    otherQuestionsData.isScrapped = false
                     binding.btnOtherQuestionsBookmark.setImageResource(R.drawable.ic_bookmark)
                 }
             }
@@ -108,16 +108,16 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
 
     private fun setClickListenerForAnswersBookmark(
         binding: ItemExploreDetailOtherAnswersBinding,
-        otherAnswersData: OtherQuestionsData
+        otherAnswersData: ResponseExplorationQuestions.Data.Answer
     ) {
         binding.btnOtherAnswersBookmark.setOnClickListener {
-            when (binding.otherAnswers?.isBookmarked) {
+            when (binding.otherAnswers?.isScrapped) {
                 false -> {
-                    otherAnswersData.isBookmarked = true
+                    otherAnswersData.isScrapped = true
                     binding.btnOtherAnswersBookmark.setImageResource(R.drawable.ic_bookmark_checked)
                 }
                 else -> {
-                    otherAnswersData.isBookmarked = false
+                    otherAnswersData.isScrapped = false
                     binding.btnOtherAnswersBookmark.setImageResource(R.drawable.ic_bookmark)
                 }
             }
@@ -126,7 +126,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
 
     private fun setClickListenerForBtnDoAnswer(
         binding: ItemExploreOtherQuestionsBinding,
-        otherQuestionsData: OtherQuestionsData
+        otherQuestionsData: ResponseExplorationQuestions.Data.Answer
     ) {
         binding.btnOtherQuestionsDoAnswer.setOnClickListener {
             val intent = Intent(context, AnswerActivity::class.java)

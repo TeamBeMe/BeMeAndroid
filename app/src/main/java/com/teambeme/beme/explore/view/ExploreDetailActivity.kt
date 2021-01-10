@@ -24,7 +24,6 @@ class ExploreDetailActivity :
         binding.otherMindsTitle = intent.getStringExtra("otherMindsTitle")
         setOtherAnswersAdapter(binding)
         setOtherAnswersObserve(binding)
-        exploreDetailViewModel.setDummyOtherAnswers()
         setClickListenerForGoback(binding)
     }
 

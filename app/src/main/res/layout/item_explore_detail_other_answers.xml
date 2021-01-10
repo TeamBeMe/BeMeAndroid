@@ -5,7 +5,7 @@
     <data>
         <variable
             name="otherAnswers"
-            type="com.teambeme.beme.explore.model.OtherQuestionsData" />
+            type="com.teambeme.beme.explore.model.ResponseExplorationQuestions.Data.Answer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/txt_other_answers_time"
-            setTime="@{otherAnswers.time}"
+            android:text="@{otherAnswers.answerDate}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="@{otherAnswers.userId}"
+            android:text="@{otherAnswers.userNickname}"
             android:textColor="@color/item_other_answers_txt_user_id_black"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/img_other_answers_profile"
