@@ -1,14 +1,19 @@
 package com.teambeme.beme.explore.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.explore.model.OtherMindsData
 import com.teambeme.beme.explore.model.OtherQuestionsData
+import com.teambeme.beme.explore.model.ResponseExploraionAnsweres
+import com.teambeme.beme.explore.repository.ExploreRepository
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class ExploreViewModel : ViewModel() {
-    private val _otherMindsList = MutableLiveData<List<OtherMindsData>>()
-    val otherMindsList: LiveData<List<OtherMindsData>>
+class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewModel() {
+    private val _otherMindsList = MutableLiveData<List<ResponseExploraionAnsweres.Data>>()
+    val otherMindsList: LiveData<List<ResponseExploraionAnsweres.Data>>
         get() = _otherMindsList
 
     private val _otherQuestionsList = MutableLiveData<MutableList<OtherQuestionsData>>()
@@ -18,6 +23,27 @@ class ExploreViewModel : ViewModel() {
     private val _otherAnswersList = MutableLiveData<MutableList<OtherQuestionsData>>()
     val otherAnswersList: LiveData<MutableList<OtherQuestionsData>>
         get() = _otherAnswersList
+
+    fun requestOtherMinds() {
+        exploreRepository.getExplorationAnother("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMjcyMzc3LCJleHAiOjE2MTAyOTc1NzcsImlzcyI6ImJlbWUifQ.ebGvkOGMnGKli0spRneO3uAOZ31khRrPIc_Urwpu0Q0")
+            .enqueue(
+                object : Callback<ResponseExploraionAnsweres> {
+                    override fun onResponse(
+                        call: Call<ResponseExploraionAnsweres>,
+                        response: Response<ResponseExploraionAnsweres>
+                    ) {
+                        if (response.isSuccessful)
+                            _otherMindsList.value = response.body()!!.data?.toList()
+
+                    }
+
+                    override fun onFailure(call: Call<ResponseExploraionAnsweres>, t: Throwable) {
+                        Log.d("network", "통신실패")
+                    }
+                }
+            )
+
+    }
 
     private val dummyOtherAnswersList = mutableListOf(
         OtherQuestionsData(
@@ -407,37 +433,4 @@ class ExploreViewModel : ViewModel() {
         _otherQuestionsList.value = dummyOtherQuestionsList.toMutableList()
     }
 
-    fun setDummyOtherMinds() {
-        val dummyOtherMindsList = listOf(
-            OtherMindsData(
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재"
-            ),
-            OtherMindsData(
-                title = "나는 요즘 무엇을 사랑하고 잇나요?",
-                content = "비미비미비미업, 비미비미비미업, 비미비미비미업"
-            ),
-            OtherMindsData(
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이"
-            ),
-            OtherMindsData(
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재"
-            ),
-            OtherMindsData(
-                title = "나는 요즘 무엇을 사랑하고 잇나요?",
-                content = "비미비미비미업, 비미비미비미업, 비미비미비미업"
-            ),
-            OtherMindsData(
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이"
-            ),
-            OtherMindsData(
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재"
-            )
-        )
-        _otherMindsList.value = dummyOtherMindsList.toList()
-    }
 }

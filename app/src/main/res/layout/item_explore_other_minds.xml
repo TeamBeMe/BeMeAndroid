@@ -6,7 +6,7 @@
 
         <variable
             name="otherMinds"
-            type="com.teambeme.beme.explore.model.OtherMindsData" />
+            type="com.teambeme.beme.explore.model.ResponseExploraionAnsweres.Data" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="@{otherMinds.title}"
+                android:text="@{otherMinds.questionTitle}"
                 android:textColor="@color/item_other_minds_txt_title_white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"

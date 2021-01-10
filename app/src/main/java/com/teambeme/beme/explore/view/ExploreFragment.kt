@@ -11,14 +11,23 @@ import com.google.android.material.tabs.TabLayout
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.base.BindingFragment
+import com.teambeme.beme.data.remote.datasource.ExploreDataSourceImpl
+import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentExploreBinding
 import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
 import com.teambeme.beme.explore.adapter.OtherMindsRcvAdapter
 import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
+import com.teambeme.beme.explore.repository.ExploreRepositoryImpl
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
+import com.teambeme.beme.explore.viewmodel.ExploreViewModelFactory
 
 class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragment_explore) {
-    private val exploreViewModel: ExploreViewModel by activityViewModels()
+    private val exploreViewModelFactory = ExploreViewModelFactory(
+        ExploreRepositoryImpl(
+            ExploreDataSourceImpl(RetrofitObjects.getExploreService())
+        )
+    )
+    private val exploreViewModel: ExploreViewModel by activityViewModels { exploreViewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +38,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         LifeCycleEventLogger(javaClass.name).registerLogger(viewLifecycleOwner.lifecycle)
         binding.exploreViewModel = exploreViewModel
         binding.lifecycleOwner = this
-        exploreViewModel.setDummyOtherMinds()
+        exploreViewModel.requestOtherMinds()
         exploreViewModel.setDummyOtherQuestions()
         setOtherMindsAdapter()
         setOtherQuestionsAdapter()

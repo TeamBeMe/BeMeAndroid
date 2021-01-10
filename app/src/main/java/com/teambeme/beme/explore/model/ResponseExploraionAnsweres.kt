@@ -1,7 +1,10 @@
 package com.teambeme.beme.explore.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class ResponseExploraionAnsweres(
     @SerializedName("data")
     val `data`: List<Data>,
@@ -11,7 +14,8 @@ data class ResponseExploraionAnsweres(
     val status: Int,
     @SerializedName("success")
     val success: Boolean
-) {
+) : Parcelable {
+    @Parcelize
     data class Data(
         @SerializedName("comment_count")
         val commentCount: Int,
@@ -23,5 +27,5 @@ data class ResponseExploraionAnsweres(
         val questionId: Int,
         @SerializedName("Question.title")
         val questionTitle: String
-    )
+    ) : Parcelable
 }
