@@ -11,6 +11,7 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
+import com.teambeme.beme.R
 
 object BindingAdapters {
     @BindingAdapter("setCategory")
