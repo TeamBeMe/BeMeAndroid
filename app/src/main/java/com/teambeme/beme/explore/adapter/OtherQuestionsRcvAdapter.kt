@@ -1,6 +1,7 @@
 package com.teambeme.beme.explore.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.BR
 import com.teambeme.beme.R
+import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
 import com.teambeme.beme.databinding.ItemExploreDetailOtherAnswersBinding
 import com.teambeme.beme.explore.model.OtherQuestionsData
@@ -33,6 +35,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                         executePendingBindings()
                         setClickListenerForQuestionsBookmark(binding, otherQuestionsData)
                         setClickListenerForShowOtherAnswers(binding, otherQuestionsData, context)
+                        setClickListenerForBtnDoAnswer(binding, otherQuestionsData)
                     }
                 }
                 else -> {
@@ -118,6 +121,16 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                     binding.btnOtherAnswersBookmark.setImageResource(R.drawable.ic_bookmark)
                 }
             }
+        }
+    }
+
+    private fun setClickListenerForBtnDoAnswer(
+        binding: ItemExploreOtherQuestionsBinding,
+        otherQuestionsData: OtherQuestionsData
+    ) {
+        binding.btnOtherQuestionsDoAnswer.setOnClickListener {
+            val intent = Intent(context, AnswerActivity::class.java)
+            context.startActivity(intent)
         }
     }
 }

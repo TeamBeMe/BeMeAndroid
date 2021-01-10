@@ -87,4 +87,17 @@ class FollowingShowAllActivity :
         }
         )
     }
+
+    private fun setQueryTextListener() {
+        binding.searchViewFollowingShowAll.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+        })
+    }
 }

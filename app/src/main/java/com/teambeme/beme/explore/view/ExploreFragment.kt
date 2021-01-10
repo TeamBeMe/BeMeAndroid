@@ -1,5 +1,6 @@
 package com.teambeme.beme.explore.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.google.android.material.tabs.TabLayout
 import com.teambeme.beme.R
+import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.databinding.FragmentExploreBinding
 import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
@@ -29,27 +31,31 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         binding.lifecycleOwner = this
         exploreViewModel.setDummyOtherMinds()
         exploreViewModel.setDummyOtherQuestions()
-        setOtherMindsAdapter(binding)
-        setOtherQuestionsAdapter(binding)
-        setOtherMindsObserve(binding)
-        setOtherQuestionsObserve(binding)
-        setTabSelectedFromExploreListener(binding)
-        setSnapHelper(binding)
+        setOtherMindsAdapter()
+        setOtherQuestionsAdapter()
+        setOtherMindsObserve()
+        setOtherQuestionsObserve()
+        setTabSelectedFromExploreListener()
+        setSnapHelper()
+        setClickListenerForExploreBtnDoAnswer()
         return binding.root
     }
 
-    private fun setOtherMindsAdapter(binding: FragmentExploreBinding) {
+    private fun setOtherMindsAdapter() {
         val otherMindsAdapter = OtherMindsRcvAdapter(requireContext())
         binding.rcvExploreOtherMinds.adapter = otherMindsAdapter
     }
 
-    private fun setOtherQuestionsAdapter(binding: FragmentExploreBinding) {
+    private fun setOtherQuestionsAdapter() {
         val otherQuestionsAdapter =
-            OtherQuestionsRcvAdapter<ItemExploreOtherQuestionsBinding>(requireContext(), R.layout.item_explore_other_questions)
+            OtherQuestionsRcvAdapter<ItemExploreOtherQuestionsBinding>(
+                requireContext(),
+                R.layout.item_explore_other_questions
+            )
         binding.rcvExploreOtherQuestions.adapter = otherQuestionsAdapter
     }
 
-    private fun setOtherMindsObserve(binding: FragmentExploreBinding) {
+    private fun setOtherMindsObserve() {
         exploreViewModel.otherMindsList.observe(viewLifecycleOwner) { otherMindsList ->
             otherMindsList?.let {
                 if (binding.rcvExploreOtherMinds.adapter != null) with(binding.rcvExploreOtherMinds.adapter as OtherMindsRcvAdapter) {
@@ -59,7 +65,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         }
     }
 
-    private fun setOtherQuestionsObserve(binding: FragmentExploreBinding) {
+    private fun setOtherQuestionsObserve() {
         exploreViewModel.otherQuestionsList.observe(viewLifecycleOwner) { otherQuestionsList ->
             otherQuestionsList?.let {
                 if (binding.rcvExploreOtherQuestions.adapter != null) with(binding.rcvExploreOtherQuestions.adapter as OtherQuestionsRcvAdapter<*>) {
@@ -69,7 +75,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         }
     }
 
-    private fun setTabSelectedFromExploreListener(binding: FragmentExploreBinding) {
+    private fun setTabSelectedFromExploreListener() {
         binding.tabLayoutExploreSort.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -93,8 +99,15 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         )
     }
 
-    private fun setSnapHelper(binding: FragmentExploreBinding) {
+    private fun setSnapHelper() {
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.rcvExploreOtherMinds)
+    }
+
+    private fun setClickListenerForExploreBtnDoAnswer() {
+        binding.btnExploreDoAnswer.setOnClickListener {
+            val intent = Intent(context, AnswerActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
