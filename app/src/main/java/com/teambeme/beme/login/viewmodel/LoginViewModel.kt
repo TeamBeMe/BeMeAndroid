@@ -6,6 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.login.model.ResponseLogin
 import com.teambeme.beme.login.repository.LoginRepository
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
     var nickNameText = MutableLiveData<String>()
@@ -16,8 +19,23 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         get() = _responseValue
 
     fun requestLogin() {
-        val responseValue = loginRepository.login(nickNameText.value ?: "", passwordText.value ?: "")
-        Log.d("Network ViewModel", responseValue.toString())
-        _responseValue.value = responseValue
+        loginRepository.login(nickNameText.value ?: "", passwordText.value ?: "").enqueue(object :
+            Callback<ResponseLogin> {
+            override fun onResponse(call: Call<ResponseLogin>, response: Response<ResponseLogin>) {
+                if (response.isSuccessful)
+                    _responseValue.value = response.body()!!
+            }
+
+            override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
+                Log.d("Network Fail", t.message.toString())
+                for (element in t.stackTrace) {
+                    Log.d("Network element", element.toString())
+                    Log.d("Network className", element.className)
+                    Log.d("Network methodName", element.methodName)
+                    Log.d("Network fileName", element.fileName)
+                    Log.d("Network lineNumber", element.lineNumber.toString())
+                }
+            }
+        })
     }
 }
