@@ -13,7 +13,7 @@ import androidx.lifecycle.observe
 import com.google.android.material.tabs.TabLayoutMediator
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentMyPageBinding
-import com.teambeme.beme.mypage.adapter.PagerFragmentStateAdapter
+import com.teambeme.beme.mypage.adapter.MyPageViewPagerAdapter
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 
 class MyPageFragment : Fragment() {
@@ -27,11 +27,16 @@ class MyPageFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
         binding.lifecycleOwner = this
         setViewPagerAdapter(childFragmentManager)
+        binding.myPageViewModel = mypageViewModel
+        mypageViewModel.profileUri.observe(viewLifecycleOwner) {
+            editProfileListener(it)
+        }
+        binding.btnMypageProfile.setOnClickListener { editProfileClickListener() }
         return binding.root
     }
 
     private fun setViewPagerAdapter(fragmentManager: FragmentManager) {
-        val pagerAdapter = PagerFragmentStateAdapter(requireActivity())
+        val pagerAdapter = MyPageViewPagerAdapter(requireActivity())
         pagerAdapter.addFragment(MyWriteFragment())
         pagerAdapter.addFragment(MyScrapFragment())
         val viewPager = binding.vpMypage
@@ -40,12 +45,6 @@ class MyPageFragment : Fragment() {
         TabLayoutMediator(binding.tabMypage, viewPager) { tab, position ->
             tab.text = tabText[position]
         }.attach()
-        binding.lifecycleOwner = this
-        binding.myPageViewModel = mypageViewModel
-        mypageViewModel.profileUri.observe(viewLifecycleOwner) {
-            editProfileListener(it)
-        }
-        binding.btnMypageProfile.setOnClickListener { editProfileClickListener() }
     }
 
     private fun editProfileListener(uri: Uri) {

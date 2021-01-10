@@ -12,7 +12,7 @@ interface OtherService {
     @GET("profiles/answers/{user_id}")
     fun getProfileAnswer(
         @Header("token") token: String,
-        @Path("user_id") user_id: Int,
+        @Path("user_id") userId: Int,
         @Query("page") page: Int
     ): Call<ResponseOtherData>
 }

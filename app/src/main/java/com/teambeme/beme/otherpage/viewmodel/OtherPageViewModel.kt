@@ -18,7 +18,7 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
 
     fun requestItem() {
         otherRepository.getProfileAnswer(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjU0NDA2LCJleHAiOjE2MTAyNzk2MDYsImlzcyI6ImJlbWUifQ.PRJdPf_GoDaQuIE6WNb0UbsiZJUoVG9gS16Q2Mb1aeI",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             5,
             1
         ).enqueue(object :

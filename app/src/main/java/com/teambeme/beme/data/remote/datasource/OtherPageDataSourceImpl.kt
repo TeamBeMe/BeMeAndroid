@@ -6,6 +6,6 @@ import retrofit2.Call
 
 class OtherPageDataSourceImpl(private val service: OtherService) :
     OtherPageDataSource {
-    override fun getProfileAnswer(token: String, user_id: Int, page: Int): Call<ResponseOtherData> =
-        service.getProfileAnswer(token, user_id, page)
+    override fun getProfileAnswer(token: String, userId: Int, page: Int): Call<ResponseOtherData> =
+        service.getProfileAnswer(token, userId, page)
 }
