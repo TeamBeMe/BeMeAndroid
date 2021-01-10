@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="otherQuestions"
             type="com.teambeme.beme.explore.model.OtherQuestionsData" />
@@ -76,6 +78,7 @@
             android:text="@{otherQuestions.content}"
             android:textColor="@color/item_other_questions_txt_content_black"
             android:textSize="14sp"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"
             app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_category" />
 
@@ -85,6 +88,7 @@
             android:layout_height="32dp"
             android:layout_marginTop="9dp"
             android:src="@drawable/img_profile_sample"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"
             app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_content" />
 
@@ -96,6 +100,7 @@
             android:text="@{otherQuestions.userId}"
             android:textColor="@color/item_other_questions_txt_userid_black"
             android:textSize="14sp"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/img_other_questions_profile"
             app:layout_constraintStart_toEndOf="@+id/img_other_questions_profile"
             app:layout_constraintTop_toTopOf="@+id/img_other_questions_profile" />
@@ -109,6 +114,7 @@
             android:paddingStart="18dp"
             android:paddingTop="18dp"
             android:src="@drawable/ic_showdetail_black"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/txt_other_questions_title"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -118,6 +124,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_bookmark"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/img_other_questions_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/img_other_questions_profile" />
@@ -129,7 +136,7 @@
             android:layout_marginTop="20dp"
             android:textColor="@color/item_other_questions_txt_content_black"
             android:textSize="14sp"
-            android:visibility="invisible"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"
             app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_category"
             following:setTextForUnAnswered="@{otherQuestions.userId}" />
@@ -143,14 +150,14 @@
             android:backgroundTint="@color/item_following_unanswered_questions_btn_background_black"
             android:minWidth="0dp"
             android:minHeight="0dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
             android:paddingStart="28dp"
+            android:paddingTop="8dp"
             android:paddingEnd="28dp"
+            android:paddingBottom="8dp"
             android:text="답변하고 확인하기"
             android:textColor="@color/item_following_unanswered_questions_btn_txt_white"
             android:textSize="16sp"
-            android:visibility="invisible"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.INVISIBLE : View.VISIBLE}"
             app:cornerRadius="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

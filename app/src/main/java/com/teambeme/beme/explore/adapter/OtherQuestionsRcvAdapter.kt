@@ -2,7 +2,6 @@ package com.teambeme.beme.explore.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -34,7 +33,6 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                         executePendingBindings()
                         setClickListenerForQuestionsBookmark(binding, otherQuestionsData)
                         setClickListenerForShowOtherAnswers(binding, otherQuestionsData, context)
-                        setUnAnsweredItem(binding, otherQuestionsData)
                     }
                 }
                 else -> {
@@ -120,21 +118,6 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                     binding.btnOtherAnswersBookmark.setImageResource(R.drawable.ic_bookmark)
                 }
             }
-        }
-    }
-
-    private fun setUnAnsweredItem(
-        binding: ItemExploreOtherQuestionsBinding,
-        otherQuestionsData: OtherQuestionsData
-    ) {
-        if (!otherQuestionsData.isAnswered) {
-            binding.btnOtherQuestionsBookmark.visibility = View.INVISIBLE
-            binding.txtOtherQuestionsContent.visibility = View.INVISIBLE
-            binding.imgOtherQuestionsProfile.visibility = View.INVISIBLE
-            binding.txtOtherQuestionsUserId.visibility = View.INVISIBLE
-            binding.btnOtherQuestionsShowOtherAnswers.visibility = View.INVISIBLE
-            binding.btnOtherQuestionsDoAnswer.visibility = View.VISIBLE
-            binding.txtOtherQuestionsUnAnswered.visibility = View.VISIBLE
         }
     }
 }
