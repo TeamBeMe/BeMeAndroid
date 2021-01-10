@@ -2,13 +2,12 @@ package com.teambeme.beme.answer.view
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.ViewModelProvider
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.viewmodel.AnswerViewModel
 import com.teambeme.beme.answer.viewmodel.AnswerViewModelFactory
 import com.teambeme.beme.base.BindingActivity
-import com.teambeme.beme.data.local.dao.AnswerDao
 import com.teambeme.beme.data.local.database.AppDatabase
 import com.teambeme.beme.databinding.ActivityAnswerBinding
 import com.teambeme.beme.util.dp
@@ -19,15 +18,14 @@ import kotlinx.coroutines.launch
 
 class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_answer) {
     private var viewJob = Job()
+    private val answerViewModelFactory = AnswerViewModelFactory(AppDatabase.getInstance(applicationContext).answerDao)
     private val uiScope = CoroutineScope(Dispatchers.Main + viewJob)
-    private lateinit var answerViewModel: AnswerViewModel
+    private val answerViewModel: AnswerViewModel by viewModels { answerViewModelFactory }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.lifecycleOwner = this
         binding.answerActivity = this
         val id = intent.getIntExtra("id", 0)
-        val answerDao = AppDatabase.getInstance(applicationContext).answerDao
-        initViewModel(answerDao)
         initEditText(id)
         setSwitchListener()
         observePublicSwitch()
@@ -62,14 +60,6 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
                 answerViewModel.setPublicFalse()
             }
         }
-    }
-
-    private fun initViewModel(answerDao: AnswerDao) {
-        answerViewModel = ViewModelProvider(
-            this,
-            AnswerViewModelFactory(answerDao)
-        ).get(AnswerViewModel::class.java)
-        binding.answerViewModel = answerViewModel
     }
 
     private fun initEditText(id: Int) {
