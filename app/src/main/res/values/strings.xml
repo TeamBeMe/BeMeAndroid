@@ -1,6 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="app_name">BeMe</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="msg_token_fmt" translatable="false">토큰 : %s</string>
+    <string name="txt_permission_explain">
+        해당 기능을 이용할 때 동의를 받고 있으며, 동의하지 않아도 서비스의 이용이 가능합니다.<br/>마이페이지>설정>접근 권한 설정에서 해당 권한의 설정 변경이 가능합니다.
+    </string>
 </resources>

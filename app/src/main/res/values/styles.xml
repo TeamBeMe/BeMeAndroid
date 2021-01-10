@@ -73,9 +73,28 @@
         <item name="android:fontFamily">@font/notosanskr_medium</item>
         <item name="android:includeFontPadding">false</item>
     </style>
-  
+
     <style name="tab_text_size" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">16sp</item>
     </style>
-    
+
+    <style name="signup_progressbar_style" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:indeterminateDrawable">@drawable/progress_bar_drawble</item>
+    </style>
+
+    <style name="permission_text_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:fontFamily">@font/notosanskr_medium</item>
+    </style>
+
+    <style name="permission_text_content">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>
