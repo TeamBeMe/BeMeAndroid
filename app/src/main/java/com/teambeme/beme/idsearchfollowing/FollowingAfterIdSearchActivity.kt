@@ -47,6 +47,8 @@ class FollowingAfterIdSearchActivity :
                 return true
             }
         })
+
+        binding.
     }
 
     private fun initBinding(binding: ActivityFollowingAfterIdSearchBinding) {

@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         tools:context=".idsearchfollowing.FollowingAfterIdSearchActivity">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btn_back_following_idsearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +24,8 @@
             android:padding="10dp"
             android:src="@drawable/ic_back_noticeview"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@android:color/transparent"/>
 
         <TextView
             android:id="@+id/title_idsearch"
