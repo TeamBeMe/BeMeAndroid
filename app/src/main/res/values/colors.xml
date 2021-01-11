@@ -101,4 +101,5 @@
     <color name="signup_background_gray">#ededed</color>
     <color name="signup_content_title">#2c2c2e</color>
     <color name="signup_content_content">#636366</color>
+    <color name="signup_term_blue">#0a84ff</color>
 </resources>

@@ -158,7 +158,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/btn_permission_background"
+        android:background="@drawable/btn_signup_background"
         android:fontFamily="@font/notosankr_bold"
         android:insetTop="0dp"
         android:insetBottom="0dp"
