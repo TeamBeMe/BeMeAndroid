@@ -53,6 +53,8 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     }
 
     fun setSortingText(sorting: String) {
+        page = 1
+        _isMaxPage = false
         sortingText = sorting
         requestOtherQuestionsWithCategorySorting(categoryNum, sortingText)
     }

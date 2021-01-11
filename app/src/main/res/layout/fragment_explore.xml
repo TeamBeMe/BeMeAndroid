@@ -124,7 +124,6 @@
                     android:layout_marginEnd="28dp"
                     android:layout_marginBottom="60dp"
                     android:backgroundTint="@color/explore_btn_do_answer_background_black"
-                    android:onClick="@{()->exploreViewModel.plusDummyOtherQuestions()}"
                     android:paddingTop="12dp"
                     android:paddingBottom="16dp"
                     android:text="오늘의 질문 답변하기"
