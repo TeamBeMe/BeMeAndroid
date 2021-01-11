@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="notificationViewModel"
-            type="com.teambeme.beme.notification.viewmodel.NotificationViewModel" />
+            name="noticeViewModel"
+            type="com.teambeme.beme.notification.viewmodel.NoticeViewModel" />
     </data>
 
     <ScrollView
@@ -19,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".notification.NotificationActivity">
+            tools:context=".notification.view.NotificationActivity">
 
             <ImageButton
                 android:id="@+id/btn_back_notice"

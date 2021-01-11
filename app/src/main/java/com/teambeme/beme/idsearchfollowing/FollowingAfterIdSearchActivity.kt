@@ -1,21 +1,25 @@
 package com.teambeme.beme.idsearchfollowing
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
+import com.teambeme.beme.data.remote.datasource.IdSearchDataSourceImpl
+import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityFollowingAfterIdSearchBinding
-import com.teambeme.beme.explore.view.ExploreFragment
 import com.teambeme.beme.idsearchfollowing.adapter.FollowAfterIdSearchAdapter
 import com.teambeme.beme.idsearchfollowing.adapter.RecentSearchAdapter
+import com.teambeme.beme.idsearchfollowing.repository.IdSearchRepositoryImpl
 import com.teambeme.beme.idsearchfollowing.viewmodel.FollowingAfterIdSearchViewModel
+import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModelFactory
 
 class FollowingAfterIdSearchActivity :
     BindingActivity<ActivityFollowingAfterIdSearchBinding>(R.layout.activity_following_after_id_search) {
-    private val followingAfterIdSearchViewModel: FollowingAfterIdSearchViewModel by viewModels()
+    private val idSearchViewModelFactory = IdSearchViewModelFactory(IdSearchRepositoryImpl(IdSearchDataSourceImpl(RetrofitObjects.getIdSearchService())))
+
+    private val followingAfterIdSearchViewModel: FollowingAfterIdSearchViewModel by viewModels { idSearchViewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,10 +53,9 @@ class FollowingAfterIdSearchActivity :
                 return true
             }
         })
-        binding.btnBackFollowingIdsearch.setOnClickListener{
+        binding.btnBackFollowingIdsearch.setOnClickListener {
             finish()
         }
-
     }
 
     private fun initBinding(binding: ActivityFollowingAfterIdSearchBinding) {
