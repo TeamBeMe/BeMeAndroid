@@ -8,6 +8,7 @@
         <variable
             name="otherPageViewModel"
             type="com.teambeme.beme.otherpage.viewmodel.OtherPageViewModel" />
+
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -35,6 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="158dp"
                     android:layout_gravity="fill"
+                    setSrcFromUrl="@{otherPageViewModel.otherUserInfo.profileImg}"
                     android:scaleType="centerCrop"
                     tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -64,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="24dp"
-                android:text="sushi_isthebest"
+                android:text="@{otherPageViewModel.otherUserInfo.nickname}"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -72,19 +74,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/frame_otherpage"
                 tools:text="sushi_isthebest" />
 
-            <TextView
-                android:id="@+id/btn_otherpage_profile"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_scrap_2"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
-                android:background="@drawable/border_layout"
-                android:paddingHorizontal="40dp"
-                android:paddingVertical="8dp"
                 android:text="팔로잉"
-                android:textColor="#000000"
-                android:textSize="12sp"
+                setFollow="@{otherPageViewModel.isFollow}"
+                android:onClick="@{() -> otherPageViewModel.putFollow()}"
+                android:textColor="@color/explore_chiptext_selector"
+                app:chipBackgroundColor="@color/explore_chip_selector"
+                app:chipCornerRadius="4dp"
+                app:chipStrokeColor="@color/explore_chipstroke_selector"
+                app:chipStrokeWidth="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txt_otherpage_name" />
+
 
             <TextView
                 android:id="@+id/txt_otherpage_attend"
@@ -92,8 +98,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="#8E8E93"
+                attendCount="@{otherPageViewModel.otherUserInfo.continuedVisit}"
                 android:paddingVertical="4dp"
-                android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:text="연속 출석 11"
                 android:textColor="@color/answer_text_info_gray"
@@ -109,6 +115,7 @@
                 android:paddingVertical="4dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
+                allAnswerCount="@{otherPageViewModel.otherUserInfo.answerCount}"
                 android:text="답한 질문 202"
                 android:textColor="@color/answer_text_info_gray"
                 app:layout_constraintStart_toEndOf="@+id/txt_otherpage_attend"

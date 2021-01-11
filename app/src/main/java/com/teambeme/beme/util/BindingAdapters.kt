@@ -11,6 +11,7 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
+import com.google.android.material.chip.Chip
 import com.teambeme.beme.R
 
 object BindingAdapters {
@@ -35,11 +36,15 @@ object BindingAdapters {
 
     @BindingAdapter("setSrcFromUrl")
     @JvmStatic
-    fun setSrcFromUrl(imageView: ImageView, url: String) {
-        Glide.with(imageView.context)
-            .load(url)
-            .centerCrop()
-            .into(imageView)
+    fun setSrcFromUrl(imageView: ImageView, url: String?) {
+        if (url == null) {
+            imageView.setImageResource(R.drawable.img_profile_sample)
+        } else {
+            Glide.with(imageView.context)
+                .load(url)
+                .centerCrop()
+                .into(imageView)
+        }
     }
 
     @InverseBindingAdapter(attribute = "android:text", event = "textAttrChanged")
@@ -112,6 +117,45 @@ object BindingAdapters {
         } else {
             val text = "[ " + category + "에 관한 질문 ]"
             textView.text = text
+        }
+    }
+
+    @BindingAdapter("mypage:category", "mypage:answerIdx")
+    @JvmStatic
+    fun setPageCategoryText(textView: TextView, category: String, answerIdx: Int?) {
+        if (answerIdx != null) {
+            val text = "[ " + category + "에 관한 " + answerIdx + "번째 질문 ]"
+        } else {
+            val text = "[ " + category + "에 관한 질문 ]"
+            textView.text = text
+        }
+    }
+
+    @BindingAdapter("attendCount")
+    @JvmStatic
+    fun setAttendCount(textView: TextView, attend: Int) {
+        val text = "연속 출석 $attend"
+        textView.text = text
+    }
+
+    @BindingAdapter("allAnswerCount")
+    @JvmStatic
+    fun setAllAnswerCount(textView: TextView, count: Int) {
+        val text = "답한 질문 $count"
+        textView.text = text
+    }
+
+    @BindingAdapter("setFollow")
+    @JvmStatic
+    fun setFollow(chip: Chip, isFollow: Boolean) {
+        if (isFollow) {
+            chip.isChecked = true
+            val text = "팔로잉"
+            chip.text = text
+        } else {
+            chip.isChecked = false
+            val text = "팔로우"
+            chip.text = text
         }
     }
 }

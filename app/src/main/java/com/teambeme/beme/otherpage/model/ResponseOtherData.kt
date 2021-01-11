@@ -43,7 +43,7 @@ data class ResponseOtherData(
             @SerializedName("is_author")
             val isAuthor: Boolean,
             @SerializedName("is_scrapped")
-            val isScrapped: Boolean,
+            var isScrapped: Boolean,
             @SerializedName("public_flag")
             val publicFlag: Boolean,
             @SerializedName("question")
