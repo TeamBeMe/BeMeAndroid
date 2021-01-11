@@ -18,4 +18,13 @@ class ExploreDataSourceImpl(private val service: ExploreService) : ExploreDataSo
     ): Call<ResponseExplorationQuestions> {
         return service.getExplorationOtherQuestions(token, page, category, sorting)
     }
+
+    override fun getExplorationSameQuestionOtherAnswers(
+        token: String,
+        questionId: Int,
+        page: Int,
+        sorting: String
+    ): Call<ResponseExplorationQuestions> {
+        return service.getExplorationSameQuestionOtherAnswers(token, questionId, page, sorting)
+    }
 }

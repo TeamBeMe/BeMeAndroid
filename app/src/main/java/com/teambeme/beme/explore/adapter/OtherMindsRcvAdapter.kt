@@ -49,7 +49,7 @@ class OtherMindsRcvAdapter(private val context: Context) :
         context: Context
     ) {
         binding.btnOtherMindsShowOtherAnswers.setOnClickListener {
-            context.startActivity<ExploreDetailActivity>(otherMindsData.questionTitle)
+            context.startActivity<ExploreDetailActivity>(otherMindsData.questionTitle, otherMindsData.questionId)
         }
     }
 }

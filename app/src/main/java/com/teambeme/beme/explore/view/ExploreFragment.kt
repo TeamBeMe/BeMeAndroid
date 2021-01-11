@@ -91,12 +91,12 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
                 tab?.position?.let {
                     when (tab.position) {
                         0 -> {
-                            exploreViewModel.setSortingText("최신")
+                            exploreViewModel.setSortingTextFromExplore("최신")
                             binding.txtExploreDescOfRecent.visibility = View.VISIBLE
                             binding.txtExploreDescOfExciting.visibility = View.INVISIBLE
                         }
                         1 -> {
-                            exploreViewModel.setSortingText("흥미")
+                            exploreViewModel.setSortingTextFromExplore("흥미")
                             binding.txtExploreDescOfRecent.visibility = View.INVISIBLE
                             binding.txtExploreDescOfExciting.visibility = View.VISIBLE
                         }

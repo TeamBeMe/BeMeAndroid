@@ -10,6 +10,10 @@
         <variable
             name="otherQuestions"
             type="com.teambeme.beme.explore.model.ResponseExplorationQuestions.Data.Answer" />
+
+        <variable
+            name="OtherQuestionsExploreViewModel"
+            type="com.teambeme.beme.explore.viewmodel.ExploreViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +23,6 @@
         android:background="@drawable/explore_other_questions_shape"
         android:paddingStart="18dp"
         android:paddingTop="20dp"
-        android:paddingEnd="18dp"
         android:paddingBottom="18dp">
 
         <TextView
@@ -116,6 +119,7 @@
             android:background="@android:color/transparent"
             android:paddingStart="18dp"
             android:paddingTop="18dp"
+            android:paddingEnd="18dp"
             android:src="@drawable/ic_showdetail_black"
             android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/txt_other_questions_title"
@@ -126,6 +130,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
+            android:paddingEnd="18dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="18dp"
             android:src="@drawable/ic_bookmark"
             android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/img_other_questions_profile"

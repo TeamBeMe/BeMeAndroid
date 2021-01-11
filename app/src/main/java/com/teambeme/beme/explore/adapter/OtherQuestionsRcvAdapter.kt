@@ -2,6 +2,7 @@ package com.teambeme.beme.explore.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -31,6 +32,10 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
             when (binding) {
                 is ItemExploreOtherQuestionsBinding -> {
                     with(binding as ItemExploreOtherQuestionsBinding) {
+                        Log.d(
+                            "network_1",
+                            otherQuestionsData.toString()
+                        )
                         setVariable(BR.otherQuestions, otherQuestionsData)
                         executePendingBindings()
                         setClickListenerForQuestionsBookmark(binding, otherQuestionsData)
@@ -40,9 +45,13 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                 }
                 else -> {
                     with(binding as ItemExploreDetailOtherAnswersBinding) {
+                        setClickListenerForAnswersBookmark(binding, otherQuestionsData)
+                        Log.d(
+                            "network_2",
+                            otherQuestionsData.toString()
+                        )
                         setVariable(BR.otherAnswers, otherQuestionsData)
                         executePendingBindings()
-                        setClickListenerForAnswersBookmark(binding, otherQuestionsData)
                     }
                 }
             }
@@ -68,11 +77,18 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         holder.bind(getItem(position))
     }
 
-    private class OtherQuestionsDiffUtil : DiffUtil.ItemCallback<ResponseExplorationQuestions.Data.Answer>() {
-        override fun areItemsTheSame(oldItem: ResponseExplorationQuestions.Data.Answer, newItem: ResponseExplorationQuestions.Data.Answer) =
+    private class OtherQuestionsDiffUtil :
+        DiffUtil.ItemCallback<ResponseExplorationQuestions.Data.Answer>() {
+        override fun areItemsTheSame(
+            oldItem: ResponseExplorationQuestions.Data.Answer,
+            newItem: ResponseExplorationQuestions.Data.Answer
+        ) =
             (oldItem.id == newItem.id)
 
-        override fun areContentsTheSame(oldItem: ResponseExplorationQuestions.Data.Answer, newItem: ResponseExplorationQuestions.Data.Answer) =
+        override fun areContentsTheSame(
+            oldItem: ResponseExplorationQuestions.Data.Answer,
+            newItem: ResponseExplorationQuestions.Data.Answer
+        ) =
             (oldItem == newItem)
     }
 
@@ -83,7 +99,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     ) {
         binding.btnOtherQuestionsShowOtherAnswers.setOnClickListener {
             otherQuestionsData.question?.let { title ->
-                context.startActivity<ExploreDetailActivity>(title)
+                context.startActivity<ExploreDetailActivity>(title, otherQuestionsData.questionId)
             }
         }
     }

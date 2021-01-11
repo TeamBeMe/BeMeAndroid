@@ -3,10 +3,7 @@ package com.teambeme.beme.data.remote.api
 import com.teambeme.beme.explore.model.ResponseExplorationAnswers
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Headers
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ExploreService {
     @Headers("Content-Type:application/json")
@@ -19,6 +16,13 @@ interface ExploreService {
         @Header("token") token: String,
         @Query("page") page: Int,
         @Query("category") category: Int?,
+        @Query("sorting") sorting: String
+    ): Call<ResponseExplorationQuestions>
+    @GET("exploration/{questionId}")
+    fun getExplorationSameQuestionOtherAnswers(
+        @Header("token") token: String,
+        @Path("questionId") questionId: Int,
+        @Query("page") page: Int,
         @Query("sorting") sorting: String
     ): Call<ResponseExplorationQuestions>
 }

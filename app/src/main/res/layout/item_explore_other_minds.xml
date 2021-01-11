@@ -22,8 +22,6 @@
             android:background="@drawable/explore_other_minds_title_shape"
             android:paddingStart="18dp"
             android:paddingTop="16dp"
-            android:paddingEnd="18dp"
-            android:paddingBottom="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -35,6 +33,7 @@
                 android:text="@{otherMinds.questionTitle}"
                 android:textColor="@color/item_other_minds_txt_title_white"
                 android:textSize="18sp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_other_minds_show_other_answers"
                 app:layout_constraintStart_toStartOf="parent"
@@ -47,6 +46,8 @@
                 android:background="@android:color/transparent"
                 android:paddingStart="8dp"
                 android:paddingTop="18dp"
+                android:paddingEnd="18dp"
+                android:paddingBottom="16dp"
                 android:src="@drawable/ic_showdetail"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

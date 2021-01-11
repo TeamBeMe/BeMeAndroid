@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.teambeme.beme.explore.model.ResponseExplorationAnswers
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.repository.ExploreRepository
+import com.teambeme.beme.explore.view.ExploreDetailActivity
+import com.teambeme.beme.util.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,13 +18,19 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val otherMindsList: LiveData<List<ResponseExplorationAnswers.Data>>
         get() = _otherMindsList
 
-    private var tempOtherQuestionsList: MutableList<ResponseExplorationQuestions.Data.Answer> =
+    private var tempOtherQuestionsList: MutableList<ResponseExplorationQuestions.Data.Answer>? =
         mutableListOf()
-
     private val _otherQuestionsList =
         MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>()
     val otherQuestionsList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>
         get() = _otherQuestionsList
+
+    private var tempSameQuestionOtherAnswersList: MutableList<ResponseExplorationQuestions.Data.Answer>? =
+        mutableListOf()
+    private val _sameQuestionOtherAnswersList =
+        MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>()
+    val sameQuestionOtherAnswersList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>
+        get() = _sameQuestionOtherAnswersList
 
     private var _chipChecked = mutableListOf(false, false, false, false, false, false)
     val chipChecked: MutableList<Boolean>
@@ -38,6 +46,8 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val isMaxPage: Boolean
         get() = _isMaxPage
 
+    private var otherAnswersQuestionsID: Int = 0
+
     fun setCategoryNum(category: Int) {
         page = 1
         _isMaxPage = false
@@ -52,17 +62,19 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         requestOtherQuestionsWithCategorySorting(categoryNum, sortingText)
     }
 
-    fun setSortingText(sorting: String) {
+    fun setSortingTextFromExplore(sorting: String) {
         page = 1
         _isMaxPage = false
         sortingText = sorting
         requestOtherQuestionsWithCategorySorting(categoryNum, sortingText)
     }
 
-    private val _otherAnswersList =
-        MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>()
-    val otherAnswersList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>
-        get() = _otherAnswersList
+    fun setSortingTextFromExploreDetail(questionId: Int, sorting: String){
+        page = 1
+        _isMaxPage = false
+        sortingText = sorting
+        requestSameQuestionsOtherAnswers(questionId, sorting)
+    }
 
     fun requestOtherMinds() {
         exploreRepository.getExplorationAnother("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI")
@@ -99,7 +111,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         if (response.isSuccessful) {
                             tempOtherQuestionsList =
                                 response.body()!!.data?.answers?.toMutableList()
-                            _otherQuestionsList.value = tempOtherQuestionsList.toMutableList()
+                            _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
                             if (response.body()!!.data?.pageLen == page) {
                                 _isMaxPage = true
                             } else {
@@ -129,8 +141,9 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         response: Response<ResponseExplorationQuestions>
                     ) {
                         if (response.isSuccessful) {
-                            _otherQuestionsList.value =
+                            tempOtherQuestionsList =
                                 response.body()!!.data?.answers?.toMutableList()
+                            _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
                             if (response.body()!!.data?.pageLen == page) {
                                 _isMaxPage = true
                             } else {
@@ -140,7 +153,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                     }
 
                     override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
-                        Log.d("network_requestOtherQuestions", "통신실패")
+                        Log.d("network_requestOtherQuestionsWithCategorySorting", "통신실패")
                     }
                 }
             )
@@ -160,8 +173,8 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         response: Response<ResponseExplorationQuestions>
                     ) {
                         if (response.isSuccessful) {
-                            tempOtherQuestionsList.addAll(response.body()!!.data?.answers?.toMutableList())
-                            _otherQuestionsList.value = tempOtherQuestionsList.toMutableList()
+                            tempOtherQuestionsList?.addAll(response.body()!!.data?.answers?.toMutableList())
+                            _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
 
                             if (response.body()!!.data?.pageLen == page) {
                                 _isMaxPage = true
@@ -172,9 +185,80 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                     }
 
                     override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
-                        Log.d("network_requestOtherQuestions", "통신실패")
+                        Log.d("network_requestPlusOtherQuestions", "통신실패")
                     }
                 }
             )
+    }
+
+    fun requestSameQuestionsOtherAnswers(questionId: Int, sorting: String = "최신") {
+        page = 1
+        _isMaxPage = false
+        otherAnswersQuestionsID = questionId
+        exploreRepository.getExplorationSameQuestionOtherAnswers(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            otherAnswersQuestionsID,
+            page,
+            sorting
+        ).enqueue(
+            object : Callback<ResponseExplorationQuestions> {
+                override fun onResponse(
+                    call: Call<ResponseExplorationQuestions>,
+                    response: Response<ResponseExplorationQuestions>
+                ) {
+                    if (response.isSuccessful) {
+                        tempSameQuestionOtherAnswersList =
+                            response.body()!!.data?.answers?.toMutableList()
+                        _sameQuestionOtherAnswersList.value =
+                            tempSameQuestionOtherAnswersList?.toMutableList()
+                        Log.d(
+                            "network_sameQuestionsOtherAnswers",
+                            otherAnswersQuestionsID.toString()
+                        )
+                        if (response.body()!!.data?.pageLen == page) {
+                            _isMaxPage = true
+                        } else {
+                            page++
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
+                    Log.d("network_requestSameQuestionsOtherAnswers", "통신실패")
+                }
+            }
+        )
+    }
+
+    fun requestPlusSameQuestionOtherAnswers() {
+        exploreRepository.getExplorationSameQuestionOtherAnswers(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            otherAnswersQuestionsID,
+            page,
+            sortingText
+        ).enqueue(
+            object : Callback<ResponseExplorationQuestions> {
+                override fun onResponse(
+                    call: Call<ResponseExplorationQuestions>,
+                    response: Response<ResponseExplorationQuestions>
+                ) {
+                    if (response.isSuccessful) {
+                        tempSameQuestionOtherAnswersList?.addAll(response.body()!!.data?.answers?.toMutableList())
+                        _sameQuestionOtherAnswersList.value =
+                            tempSameQuestionOtherAnswersList?.toMutableList()
+
+                        if (response.body()!!.data?.pageLen == page) {
+                            _isMaxPage = true
+                        } else {
+                            page++
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
+                    Log.d("network_requestPlusSameQuestionsOtherAnswers", "통신실패")
+                }
+            }
+        )
     }
 }

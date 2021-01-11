@@ -12,4 +12,11 @@ interface ExploreDataSource {
         category: Int?,
         sorting: String
     ): Call<ResponseExplorationQuestions>
+
+    fun getExplorationSameQuestionOtherAnswers(
+        token: String,
+        questionId: Int,
+        page: Int,
+        sorting: String
+    ): Call<ResponseExplorationQuestions>
 }

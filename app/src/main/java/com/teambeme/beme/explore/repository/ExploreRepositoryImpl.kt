@@ -8,6 +8,7 @@ import retrofit2.Call
 class ExploreRepositoryImpl(private val exploreDataSource: ExploreDataSource) : ExploreRepository {
     override fun getExplorationAnother(token: String): Call<ResponseExplorationAnswers> =
         exploreDataSource.getExplorationAnother(token)
+
     override fun getExplorationOtherQuestions(
         token: String,
         page: Int,
@@ -15,5 +16,19 @@ class ExploreRepositoryImpl(private val exploreDataSource: ExploreDataSource) : 
         sorting: String
     ): Call<ResponseExplorationQuestions> {
         return exploreDataSource.getExplorationOtherQuestions(token, page, category, sorting)
+    }
+
+    override fun getExplorationSameQuestionOtherAnswers(
+        token: String,
+        questionId: Int,
+        page: Int,
+        sorting: String
+    ): Call<ResponseExplorationQuestions> {
+        return exploreDataSource.getExplorationSameQuestionOtherAnswers(
+            token,
+            questionId,
+            page,
+            sorting
+        )
     }
 }
