@@ -34,7 +34,7 @@
         </androidx.appcompat.widget.Toolbar>
 
         <ProgressBar
-            android:id="@+id/progress_permission_bar"
+            android:id="@+id/progress_term_bar"
             style="@style/signup_progressbar_style"
             android:layout_width="match_parent"
             android:layout_height="3dp"

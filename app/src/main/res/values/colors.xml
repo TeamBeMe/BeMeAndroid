@@ -102,4 +102,6 @@
     <color name="signup_content_title">#2c2c2e</color>
     <color name="signup_content_content">#636366</color>
     <color name="signup_term_blue">#0a84ff</color>
+    <color name="signup_personal_hint">#c9c9c9</color>
+    <color name="signup_personal_check">#888686</color>
 </resources>
