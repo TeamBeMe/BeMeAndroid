@@ -47,7 +47,6 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         setTabSelectedFromExploreListener()
         setSnapHelper()
         setClickListenerForExploreBtnDoAnswer()
-        setClickListenerForExploreChip()
         return binding.root
     }
 
@@ -89,25 +88,15 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         binding.tabLayoutExploreSort.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                var category: Int? = null
-                binding.apply {
-                    if (chipExploreThink.isChecked) category = 1
-                    if (chipExploreRelationship.isChecked) category = 2
-                    if (chipExploreLove.isChecked) category = 3
-                    if (chipExploreDaily.isChecked) category = 4
-                    if (chipExploreMe.isChecked) category = 5
-                    if (chipExploreStory.isChecked) category = 6
-                }
-
                 tab?.position?.let {
                     when (tab.position) {
                         0 -> {
-                            exploreViewModel.requestOtherQuestionsWithCategorySorting(category, "최신")
+                            exploreViewModel.setSortingText("최신")
                             binding.txtExploreDescOfRecent.visibility = View.VISIBLE
                             binding.txtExploreDescOfExciting.visibility = View.INVISIBLE
                         }
                         1 -> {
-                            exploreViewModel.requestOtherQuestionsWithCategorySorting(category, "흥미")
+                            exploreViewModel.setSortingText("흥미")
                             binding.txtExploreDescOfRecent.visibility = View.INVISIBLE
                             binding.txtExploreDescOfExciting.visibility = View.VISIBLE
                         }
@@ -130,78 +119,6 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         binding.btnExploreDoAnswer.setOnClickListener {
             val intent = Intent(context, AnswerActivity::class.java)
             startActivity(intent)
-        }
-    }
-
-    private fun setClickListenerForExploreChip() {
-
-        binding.apply {
-            chipExploreThink.setOnClickListener {
-                val sorting: String = when (binding.tabLayoutExploreSort.selectedTabPosition) {
-                    0 -> "최신"
-                    else -> "흥미"
-                }
-                if (chipExploreThink.isChecked) exploreViewModel?.requestOtherQuestionsWithCategorySorting(
-                    1,
-                    sorting
-                )
-                else exploreViewModel?.requestOtherQuestions()
-            }
-            chipExploreRelationship.setOnClickListener {
-                val sorting: String = when (binding.tabLayoutExploreSort.selectedTabPosition) {
-                    0 -> "최신"
-                    else -> "흥미"
-                }
-                if (chipExploreRelationship.isChecked) exploreViewModel?.requestOtherQuestionsWithCategorySorting(
-                    2,
-                    sorting
-                )
-                else exploreViewModel?.requestOtherQuestions()
-            }
-            chipExploreLove.setOnClickListener {
-                val sorting: String = when (binding.tabLayoutExploreSort.selectedTabPosition) {
-                    0 -> "최신"
-                    else -> "흥미"
-                }
-                if (chipExploreLove.isChecked) exploreViewModel?.requestOtherQuestionsWithCategorySorting(
-                    3,
-                    sorting
-                )
-                else exploreViewModel?.requestOtherQuestions()
-            }
-            chipExploreDaily.setOnClickListener {
-                val sorting: String = when (binding.tabLayoutExploreSort.selectedTabPosition) {
-                    0 -> "최신"
-                    else -> "흥미"
-                }
-                if (chipExploreDaily.isChecked) exploreViewModel?.requestOtherQuestionsWithCategorySorting(
-                    4,
-                    sorting
-                )
-                else exploreViewModel?.requestOtherQuestions()
-            }
-            chipExploreMe.setOnClickListener {
-                val sorting: String = when (binding.tabLayoutExploreSort.selectedTabPosition) {
-                    0 -> "최신"
-                    else -> "흥미"
-                }
-                if (chipExploreMe.isChecked) exploreViewModel?.requestOtherQuestionsWithCategorySorting(
-                    5,
-                    sorting
-                )
-                else exploreViewModel?.requestOtherQuestions()
-            }
-            chipExploreStory.setOnClickListener {
-                val sorting: String = when (binding.tabLayoutExploreSort.selectedTabPosition) {
-                    0 -> "최신"
-                    else -> "흥미"
-                }
-                if (chipExploreStory.isChecked) exploreViewModel?.requestOtherQuestionsWithCategorySorting(
-                    6,
-                    sorting
-                )
-                else exploreViewModel?.requestOtherQuestions()
-            }
         }
     }
 }

@@ -22,12 +22,38 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val otherQuestionsList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>
         get() = _otherQuestionsList
 
-    private val _otherAnswersList = MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>()
+    private var _chipChecked = mutableListOf(false, false, false, false, false, false)
+    val chipChecked: MutableList<Boolean>
+        get() = _chipChecked
+
+    private var categoryNum: Int? = null
+
+    private var sortingText: String = "최신"
+
+    fun setCategoryNum(category: Int) {
+        chipChecked[category - 1] = !chipChecked[category - 1]
+        if (!chipChecked[0] && !chipChecked[1] && !chipChecked[2] && !chipChecked[3] && !chipChecked[4] && !chipChecked[5]) {
+            categoryNum = null
+        } else {
+            categoryNum = category
+        }
+        Log.d("category_func_1", chipChecked.toString())
+        Log.d("category_func_2", categoryNum.toString())
+        requestOtherQuestionsWithCategorySorting(categoryNum, sortingText)
+    }
+
+    fun setSortingText(sorting: String) {
+        sortingText = sorting
+        requestOtherQuestionsWithCategorySorting(categoryNum, sortingText)
+    }
+
+    private val _otherAnswersList =
+        MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>()
     val otherAnswersList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>
         get() = _otherAnswersList
 
     fun requestOtherMinds() {
-        exploreRepository.getExplorationAnother("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNjEwMjkwNzgyLCJleHAiOjE2NDE4MjY3ODIsImlzcyI6ImJlbWUifQ.PflJxm_WRMtgjFYtw68aFNNkkEZWNSuT_2kpgfWCNbY")
+        exploreRepository.getExplorationAnother("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI")
             .enqueue(
                 object : Callback<ResponseExplorationAnswers> {
                     override fun onResponse(
@@ -46,16 +72,25 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     }
 
     fun requestOtherQuestions() {
-        exploreRepository.getExplorationOtherQuestions("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",1, null, "최신")
+        exploreRepository.getExplorationOtherQuestions(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            1,
+            null,
+            "최신"
+        )
             .enqueue(
                 object : Callback<ResponseExplorationQuestions> {
                     override fun onResponse(
                         call: Call<ResponseExplorationQuestions>,
                         response: Response<ResponseExplorationQuestions>
                     ) {
-                        if (response.isSuccessful){
-                            _otherQuestionsList.value = response.body()!!.data?.answers?.toMutableList()
-                            Log.d("network_requestOtherQuestionsCategory", _otherQuestionsList.value.toString())
+                        if (response.isSuccessful) {
+                            _otherQuestionsList.value =
+                                response.body()!!.data?.answers?.toMutableList()
+                            Log.d(
+                                "network_requestOtherQuestionsCategory",
+                                _otherQuestionsList.value.toString()
+                            )
                         }
                     }
 
@@ -66,16 +101,22 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
             )
     }
 
-    fun requestOtherQuestionsWithCategorySorting(category: Int?, sorting: String){
-        exploreRepository.getExplorationOtherQuestions("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",1, category, sorting)
+    fun requestOtherQuestionsWithCategorySorting(category: Int?, sorting: String) {
+        exploreRepository.getExplorationOtherQuestions(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            1,
+            category,
+            sorting
+        )
             .enqueue(
                 object : Callback<ResponseExplorationQuestions> {
                     override fun onResponse(
                         call: Call<ResponseExplorationQuestions>,
                         response: Response<ResponseExplorationQuestions>
                     ) {
-                        if (response.isSuccessful){
-                            _otherQuestionsList.value = response.body()!!.data?.answers?.toMutableList()
+                        if (response.isSuccessful) {
+                            _otherQuestionsList.value =
+                                response.body()!!.data?.answers?.toMutableList()
                         }
 
                     }
