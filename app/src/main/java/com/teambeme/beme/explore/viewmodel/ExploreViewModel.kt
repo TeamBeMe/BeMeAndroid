@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.explore.model.OtherQuestionsData
 import com.teambeme.beme.explore.model.ResponseExplorationAnswers
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.repository.ExploreRepository
@@ -16,6 +15,9 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     private val _otherMindsList = MutableLiveData<List<ResponseExplorationAnswers.Data>>()
     val otherMindsList: LiveData<List<ResponseExplorationAnswers.Data>>
         get() = _otherMindsList
+
+    private var tempOtherQuestionsList: MutableList<ResponseExplorationQuestions.Data.Answer> =
+        mutableListOf()
 
     private val _otherQuestionsList =
         MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>()
@@ -30,15 +32,23 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     private var sortingText: String = "최신"
 
+    private var page: Int = 1
+
+    private var _isMaxPage = false
+    val isMaxPage: Boolean
+        get() = _isMaxPage
+
     fun setCategoryNum(category: Int) {
+        page = 1
+        _isMaxPage = false
         chipChecked[category - 1] = !chipChecked[category - 1]
-        if (!chipChecked[0] && !chipChecked[1] && !chipChecked[2] && !chipChecked[3] && !chipChecked[4] && !chipChecked[5]) {
+        if (chipChecked == listOf(false, false, false, false, false, false)) {
             categoryNum = null
         } else {
+            _chipChecked = mutableListOf(false, false, false, false, false, false)
+            chipChecked[category - 1] = !chipChecked[category - 1]
             categoryNum = category
         }
-        Log.d("category_func_1", chipChecked.toString())
-        Log.d("category_func_2", categoryNum.toString())
         requestOtherQuestionsWithCategorySorting(categoryNum, sortingText)
     }
 
@@ -74,7 +84,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     fun requestOtherQuestions() {
         exploreRepository.getExplorationOtherQuestions(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
-            1,
+            page,
             null,
             "최신"
         )
@@ -85,12 +95,14 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         response: Response<ResponseExplorationQuestions>
                     ) {
                         if (response.isSuccessful) {
-                            _otherQuestionsList.value =
+                            tempOtherQuestionsList =
                                 response.body()!!.data?.answers?.toMutableList()
-                            Log.d(
-                                "network_requestOtherQuestionsCategory",
-                                _otherQuestionsList.value.toString()
-                            )
+                            _otherQuestionsList.value = tempOtherQuestionsList.toMutableList()
+                            if (response.body()!!.data?.pageLen == page) {
+                                _isMaxPage = true
+                            } else {
+                                page++
+                            }
                         }
                     }
 
@@ -104,7 +116,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     fun requestOtherQuestionsWithCategorySorting(category: Int?, sorting: String) {
         exploreRepository.getExplorationOtherQuestions(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
-            1,
+            page,
             category,
             sorting
         )
@@ -117,8 +129,12 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         if (response.isSuccessful) {
                             _otherQuestionsList.value =
                                 response.body()!!.data?.answers?.toMutableList()
+                            if (response.body()!!.data?.pageLen == page) {
+                                _isMaxPage = true
+                            } else {
+                                page++
+                            }
                         }
-
                     }
 
                     override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
@@ -128,192 +144,35 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
             )
     }
 
-    private val dummyOtherQuestionsList = mutableListOf(
-        OtherQuestionsData(
-            userId = "1",
-            category = "가치관",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "5",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "2",
-            category = "사랑",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "26",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "3",
-            category = "일상",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "15",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "4",
-            category = "이야기",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "3",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "5",
-            category = "미래",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "4",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "6",
-            category = "의미",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "5",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "7",
-            category = "일상",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "15",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "8",
-            category = "이야기",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "3",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "9",
-            category = "미래",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "4",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "10",
-            category = "의미",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "5",
-            isBookmarked = false,
-            isAnswered = true
+    fun requestPlusOtherQuestions() {
+        exploreRepository.getExplorationOtherQuestions(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            page,
+            categoryNum,
+            sortingText
         )
-    )
+            .enqueue(
+                object : Callback<ResponseExplorationQuestions> {
+                    override fun onResponse(
+                        call: Call<ResponseExplorationQuestions>,
+                        response: Response<ResponseExplorationQuestions>
+                    ) {
+                        if (response.isSuccessful) {
+                            tempOtherQuestionsList.addAll(response.body()!!.data?.answers?.toMutableList())
+                            _otherQuestionsList.value = tempOtherQuestionsList.toMutableList()
 
-    fun plusDummyOtherQuestions() {
-        val plusOtherQuestionsList = listOf(
-            OtherQuestionsData(
-                userId = "11",
-                category = "가치관",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "5",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "12",
-                category = "사랑",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "26",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "13",
-                category = "일상",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "15",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "14",
-                category = "이야기",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "3",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "15",
-                category = "미래",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "4",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "16",
-                category = "의미",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "5",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "17",
-                category = "일상",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "15",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "18",
-                category = "이야기",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "3",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "19",
-                category = "미래",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "4",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "20",
-                category = "의미",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "5",
-                isBookmarked = false,
-                isAnswered = true
+                            if (response.body()!!.data?.pageLen == page) {
+                                _isMaxPage = true
+                            } else {
+                                page++
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
+                        Log.d("network_requestOtherQuestions", "통신실패")
+                    }
+                }
             )
-        )
-        dummyOtherQuestionsList.addAll(plusOtherQuestionsList.toMutableList())
     }
 }
