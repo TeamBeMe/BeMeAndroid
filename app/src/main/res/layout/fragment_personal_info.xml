@@ -52,7 +52,7 @@
             android:includeFontPadding="false"
             android:text="매일 질문에 대한\n답을 하며\n나를 더 알아갈 수 있어요"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_personal_info" />
 
@@ -96,7 +96,7 @@
             android:id="@+id/linear_personal_nickname_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@id/txt_term_title"
             app:layout_constraintTop_toBottomOf="@id/layout_personal_nickname">
@@ -134,7 +134,7 @@
             android:id="@+id/linear_personal_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@id/txt_term_title"
             app:layout_constraintTop_toBottomOf="@id/edittxt_personal_password">
@@ -172,7 +172,7 @@
             android:id="@+id/linear_personal_password_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@id/txt_term_title"
             app:layout_constraintTop_toBottomOf="@id/edittxt_personal_password_check">
@@ -200,7 +200,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="28dp"
-            android:layout_marginBottom="48dp"
             android:background="@drawable/btn_signup_background"
             android:fontFamily="@font/notosankr_bold"
             android:insetTop="0dp"
@@ -208,6 +207,8 @@
             android:text="확인"
             android:textColor="@color/white"
             app:backgroundTint="@null"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linear_personal_password_check"
+            tools:layout_editor_absoluteX="28dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

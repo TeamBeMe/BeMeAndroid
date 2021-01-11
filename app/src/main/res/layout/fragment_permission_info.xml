@@ -157,15 +157,15 @@
         android:id="@+id/btn_permission_check"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="28dp"
         android:background="@drawable/btn_signup_background"
         android:fontFamily="@font/notosankr_bold"
         android:insetTop="0dp"
         android:insetBottom="0dp"
-        android:layout_marginHorizontal="28dp"
         android:text="확인"
         android:textColor="@color/white"
         app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_permission_explain" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
