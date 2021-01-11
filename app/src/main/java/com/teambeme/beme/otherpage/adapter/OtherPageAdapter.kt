@@ -17,11 +17,10 @@ class OtherPageAdapter(private val otherViewModel: OtherPageViewModel) :
 
     class OtherPageViewHolder(private val binding: ItemOtherPageBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        val scrap: ImageButton = binding.imgOtheritemScrap
         fun bind(answer: Answer) {
             binding.answer = answer
         }
-
-        val scrap: ImageButton = binding.imgOtheritemScrap
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OtherPageViewHolder {

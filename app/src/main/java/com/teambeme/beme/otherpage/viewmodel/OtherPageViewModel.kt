@@ -15,6 +15,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class OtherPageViewModel(private val otherRepository: OtherPageRepository) : ViewModel() {
+    private var copyOtherAnswerList: MutableList<Answer> = mutableListOf()
+    
     private val _otherAnswerList = MutableLiveData<MutableList<Answer>>()
     val otherAnswerList: LiveData<MutableList<Answer>>
         get() = _otherAnswerList
@@ -164,6 +166,4 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
             }
         })
     }
-
-    private var copyOtherAnswerList: MutableList<Answer> = mutableListOf()
 }
