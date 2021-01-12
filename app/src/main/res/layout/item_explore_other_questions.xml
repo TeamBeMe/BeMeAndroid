@@ -134,7 +134,7 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:paddingStart="18dp"
-            android:src="@drawable/ic_bookmark"
+            android:src="@{otherQuestions.isScrapped == true ? @drawable/ic_bookmark_checked : @drawable/ic_bookmark}"
             android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/img_other_questions_profile"
             app:layout_constraintEnd_toEndOf="parent"

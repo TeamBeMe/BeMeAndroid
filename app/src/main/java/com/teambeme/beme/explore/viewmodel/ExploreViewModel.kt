@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.explore.model.ResponseExplorationAnswers
+import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
+import com.teambeme.beme.explore.model.ResponseExplorationScrap
 import com.teambeme.beme.explore.repository.ExploreRepository
-import com.teambeme.beme.explore.view.ExploreDetailActivity
-import com.teambeme.beme.util.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,13 +32,26 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val sameQuestionOtherAnswersList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>
         get() = _sameQuestionOtherAnswersList
 
+    private var _questionForFirstAnswer =
+        ResponseExplorationQuestionForFirstAnswer.Answer("", 0, 0, "")
+    val questionForFirstAnswer: ResponseExplorationQuestionForFirstAnswer.Answer
+        get() = _questionForFirstAnswer
+
+    private var _scrapData = ResponseExplorationScrap("",0,true)
+    val scrapData: ResponseExplorationScrap
+        get() = _scrapData
+
     private var _chipChecked = mutableListOf(false, false, false, false, false, false)
     val chipChecked: MutableList<Boolean>
         get() = _chipChecked
 
-    private var categoryNum: Int? = null
+    private var _categoryNum: Int? = null
+    val categoryNum: Int?
+        get() = _categoryNum
 
-    private var sortingText: String = "최신"
+    private var _sortingText: String = "최신"
+    val sortingText: String
+        get() = _sortingText
 
     private var page: Int = 1
 
@@ -53,26 +66,26 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         _isMaxPage = false
         chipChecked[category - 1] = !chipChecked[category - 1]
         if (chipChecked == listOf(false, false, false, false, false, false)) {
-            categoryNum = null
+            _categoryNum = null
         } else {
             _chipChecked = mutableListOf(false, false, false, false, false, false)
             chipChecked[category - 1] = !chipChecked[category - 1]
-            categoryNum = category
+            _categoryNum = category
         }
-        requestOtherQuestionsWithCategorySorting(categoryNum, sortingText)
+        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText)
     }
 
     fun setSortingTextFromExplore(sorting: String) {
         page = 1
         _isMaxPage = false
-        sortingText = sorting
-        requestOtherQuestionsWithCategorySorting(categoryNum, sortingText)
+        _sortingText = sorting
+        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText)
     }
 
-    fun setSortingTextFromExploreDetail(questionId: Int, sorting: String){
+    fun setSortingTextFromExploreDetail(questionId: Int, sorting: String) {
         page = 1
         _isMaxPage = false
-        sortingText = sorting
+        _sortingText = sorting
         requestSameQuestionsOtherAnswers(questionId, sorting)
     }
 
@@ -127,10 +140,10 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
             )
     }
 
-    fun requestOtherQuestionsWithCategorySorting(category: Int?, sorting: String) {
+    fun requestOtherQuestionsWithCategorySorting(category: Int?, sorting: String, pageNum: Int = page) {
         exploreRepository.getExplorationOtherQuestions(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
-            page,
+            pageNum,
             category,
             sorting
         )
@@ -141,6 +154,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         response: Response<ResponseExplorationQuestions>
                     ) {
                         if (response.isSuccessful) {
+                            page = pageNum
                             tempOtherQuestionsList =
                                 response.body()!!.data?.answers?.toMutableList()
                             _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
@@ -163,8 +177,8 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         exploreRepository.getExplorationOtherQuestions(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
             page,
-            categoryNum,
-            sortingText
+            _categoryNum,
+            _sortingText
         )
             .enqueue(
                 object : Callback<ResponseExplorationQuestions> {
@@ -235,7 +249,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
             otherAnswersQuestionsID,
             page,
-            sortingText
+            _sortingText
         ).enqueue(
             object : Callback<ResponseExplorationQuestions> {
                 override fun onResponse(
@@ -260,5 +274,57 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                 }
             }
         )
+    }
+
+    fun requestQuestionForFirstAnswer() {
+        exploreRepository.getQuestionForFirstAnswer(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI"
+        ).enqueue(
+            object : Callback<ResponseExplorationQuestionForFirstAnswer> {
+                override fun onResponse(
+                    call: Call<ResponseExplorationQuestionForFirstAnswer>,
+                    response: Response<ResponseExplorationQuestionForFirstAnswer>
+                ) {
+                    if (response.isSuccessful) {
+                        _questionForFirstAnswer = response.body()!!.data
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseExplorationQuestionForFirstAnswer>,
+                    t: Throwable
+                ) {
+                    Log.d("network_requestQuestionForFirstAnswer", "통신실패")
+                }
+            }
+        )
+    }
+
+    fun requestScrap(answerId: Int, answerData:ResponseExplorationQuestions.Data.Answer){
+        exploreRepository.putScrap(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            answerId
+        ).enqueue(
+            object : Callback<ResponseExplorationScrap> {
+                override fun onResponse(
+                    call: Call<ResponseExplorationScrap>,
+                    response: Response<ResponseExplorationScrap>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("scrap_viewmodel", answerId.toString())
+                        _scrapData = response.body()!!
+                        Log.d("scrap_1", scrapData.message)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseExplorationScrap>,
+                    t: Throwable
+                ) {
+                    Log.d("network_requestQuestionForFirstAnswer", "통신실패")
+                }
+            }
+        )
+
     }
 }

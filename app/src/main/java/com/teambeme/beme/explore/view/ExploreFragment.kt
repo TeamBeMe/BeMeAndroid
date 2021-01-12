@@ -29,6 +29,10 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
     )
     private val exploreViewModel: ExploreViewModel by activityViewModels { exploreViewModelFactory }
 
+    override fun onResume() {
+        super.onResume()
+        exploreViewModel.requestOtherQuestionsWithCategorySorting(exploreViewModel.categoryNum, exploreViewModel.sortingText, 1)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,7 +63,8 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         val otherQuestionsAdapter =
             OtherQuestionsRcvAdapter<ItemExploreOtherQuestionsBinding>(
                 requireContext(),
-                R.layout.item_explore_other_questions
+                R.layout.item_explore_other_questions,
+                exploreViewModel
             )
         binding.rcvExploreOtherQuestions.adapter = otherQuestionsAdapter
     }
@@ -117,7 +122,9 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
 
     private fun setClickListenerForExploreBtnDoAnswer() {
         binding.btnExploreDoAnswer.setOnClickListener {
+            exploreViewModel.requestQuestionForFirstAnswer()
             val intent = Intent(context, AnswerActivity::class.java)
+            intent.putExtra("questionId", exploreViewModel.questionForFirstAnswer.questionId)
             startActivity(intent)
         }
     }

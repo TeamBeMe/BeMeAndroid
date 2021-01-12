@@ -42,7 +42,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
     private fun setOtherFollowingQuestionsAdapter() {
         val otherFollowingQuestionsAdapter =
             OtherQuestionsRcvAdapter<ItemExploreOtherQuestionsBinding>(
-                requireContext(), R.layout.item_explore_other_questions)
+                requireContext(), R.layout.item_explore_other_questions, followingViewModel)
         binding.rcvFollowingOtherQuestions.adapter = otherFollowingQuestionsAdapter
     }
 

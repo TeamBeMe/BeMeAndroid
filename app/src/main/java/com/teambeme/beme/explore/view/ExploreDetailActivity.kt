@@ -55,7 +55,8 @@ class ExploreDetailActivity :
         val sameQuestionsOtherAnswersAdapter =
             OtherQuestionsRcvAdapter<ItemExploreDetailOtherAnswersBinding>(
                 this,
-                R.layout.item_explore_detail_other_answers
+                R.layout.item_explore_detail_other_answers,
+                exploreDetailViewModel
             )
         binding.rcvExploreDetailOtherAnswers.adapter = sameQuestionsOtherAnswersAdapter
     }

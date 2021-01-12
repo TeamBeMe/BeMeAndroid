@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -17,11 +18,13 @@ import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
 import com.teambeme.beme.databinding.ItemExploreDetailOtherAnswersBinding
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.view.ExploreDetailActivity
+import com.teambeme.beme.explore.viewmodel.ExploreViewModel
 import com.teambeme.beme.util.startActivity
 
 class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private val context: Context,
-    private val layout: Int
+    private val layout: Int,
+    private val viewModel: ViewModel
 ) :
     ListAdapter<ResponseExplorationQuestions.Data.Answer, OtherQuestionsRcvAdapter<B>.OtherQuestionsRcvViewHolder<B>>(
         OtherQuestionsDiffUtil()
@@ -45,13 +48,13 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                 }
                 else -> {
                     with(binding as ItemExploreDetailOtherAnswersBinding) {
+                        setVariable(BR.otherAnswers, otherQuestionsData)
+                        executePendingBindings()
                         setClickListenerForAnswersBookmark(binding, otherQuestionsData)
                         Log.d(
                             "network_2",
                             otherQuestionsData.toString()
                         )
-                        setVariable(BR.otherAnswers, otherQuestionsData)
-                        executePendingBindings()
                     }
                 }
             }
@@ -109,14 +112,16 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         otherQuestionsData: ResponseExplorationQuestions.Data.Answer
     ) {
         binding.btnOtherQuestionsBookmark.setOnClickListener {
-            when (binding.otherQuestions?.isScrapped) {
-                false -> {
-                    otherQuestionsData.isScrapped = true
-                    binding.btnOtherQuestionsBookmark.setImageResource(R.drawable.ic_bookmark_checked)
-                }
-                else -> {
-                    otherQuestionsData.isScrapped = false
-                    binding.btnOtherQuestionsBookmark.setImageResource(R.drawable.ic_bookmark)
+            when (viewModel) {
+                is ExploreViewModel -> {
+                    viewModel.requestScrap(otherQuestionsData.id, otherQuestionsData)
+                    otherQuestionsData.isScrapped = !otherQuestionsData.isScrapped
+                    if (otherQuestionsData.isScrapped) {
+                        binding.btnOtherQuestionsBookmark.setImageResource(R.drawable.ic_bookmark_checked)
+                    } else {
+                        binding.btnOtherQuestionsBookmark.setImageResource(R.drawable.ic_bookmark)
+                    }
+                    Log.d("scrap", otherQuestionsData.isScrapped.toString())
                 }
             }
         }
@@ -127,14 +132,15 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         otherAnswersData: ResponseExplorationQuestions.Data.Answer
     ) {
         binding.btnOtherAnswersBookmark.setOnClickListener {
-            when (binding.otherAnswers?.isScrapped) {
-                false -> {
-                    otherAnswersData.isScrapped = true
-                    binding.btnOtherAnswersBookmark.setImageResource(R.drawable.ic_bookmark_checked)
-                }
-                else -> {
-                    otherAnswersData.isScrapped = false
-                    binding.btnOtherAnswersBookmark.setImageResource(R.drawable.ic_bookmark)
+            when (viewModel) {
+                is ExploreViewModel -> {
+                    viewModel.requestScrap(otherAnswersData.id, otherAnswersData)
+                    otherAnswersData.isScrapped = !otherAnswersData.isScrapped
+                    if (otherAnswersData.isScrapped) {
+                        binding.btnOtherAnswersBookmark.setImageResource(R.drawable.ic_bookmark_checked)
+                    } else {
+                        binding.btnOtherAnswersBookmark.setImageResource(R.drawable.ic_bookmark)
+                    }
                 }
             }
         }
