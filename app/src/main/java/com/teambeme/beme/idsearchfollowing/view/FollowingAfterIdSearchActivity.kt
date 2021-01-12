@@ -32,16 +32,17 @@ class FollowingAfterIdSearchActivity :
         idSearchViewModel.requestSearchedData()
 
         setIdSearchAdapter(binding)
-        idSearchViewModel.requestSearchingData()
 
         binding.searchViewFollowingIdsearch.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(newText: String?): Boolean {
-                idSearchViewModel.searchingId = newText.toString()
+                Log.d("Search", newText ?: "hyunwoo")
+                idSearchViewModel.requestSearchingData()
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 val userInputText = newText ?: ""
+                idSearchViewModel.searchingId = newText.toString()
                 if (userInputText.count() > 0) {
                     binding.viewRecentSearch.visibility = View.INVISIBLE
                     binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE

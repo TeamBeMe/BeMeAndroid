@@ -19,6 +19,16 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
     val searchedData: MutableLiveData<MutableList<ResponseRecentSearchRecord.Data>>
         get() = _searchedData
 
+    var searchingId: String = ""
+
+    private val _searchingData = MutableLiveData<MutableList<ResponseIdSearchData.Data>>()
+    val searchingData: LiveData<MutableList<ResponseIdSearchData.Data>>
+        get() = _searchingData
+
+    private val _deletePosition = MutableLiveData<Int>()
+    val deletePosition: LiveData<Int>
+        get() = _deletePosition
+
     fun requestSearchedData() {
         idSearchRepository.getRecentSearchRecord("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ")
             .enqueue(
@@ -46,10 +56,6 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
             )
     }
 
-    private val _deletePosition = MutableLiveData<Int>()
-    val deletePosition: LiveData<Int>
-        get() = _deletePosition
-
     fun setPosition(position: Int) {
         _deletePosition.value = position
     }
@@ -74,16 +80,11 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
         })
     }
 
-    private val _searchingData = MutableLiveData<MutableList<ResponseIdSearchData.Data>>()
-    val searchingData: LiveData<MutableList<ResponseIdSearchData.Data>>
-        get() = _searchingData
-
-    var searchingId: String = ""
-
     fun requestSearchingData() {
         idSearchRepository.idSearch(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
-            searchingId, "")
+            searchingId, "all"
+        )
             .enqueue(
                 object : Callback<ResponseIdSearchData> {
                     override fun onResponse(
@@ -92,7 +93,8 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                     ) {
                         if (response.isSuccessful) {
                             Log.d("Network is success", response.body().toString())
-                            _searchingData.value = response.body()!!.data?.let { mutableListOf(it) }!!
+                            _searchingData.value =
+                                response.body()!!.data?.let { mutableListOf(it) }!!
                         } else {
                             Log.d("Network Error", response.body()?.data.toString())
                             Log.d("Network Error", response.body()?.status.toString())
