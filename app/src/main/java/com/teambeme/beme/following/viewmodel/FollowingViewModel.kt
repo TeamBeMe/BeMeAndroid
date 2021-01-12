@@ -5,11 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.R
 import com.teambeme.beme.explore.model.OtherQuestionsData
+import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.following.model.FollowingProfilesData
 
 class FollowingViewModel : ViewModel() {
-    private val _otherFollowingQuestionsList = MutableLiveData<MutableList<OtherQuestionsData>>()
-    val otherFollowingQuestionsList: LiveData<MutableList<OtherQuestionsData>>
+    private val _otherFollowingQuestionsList = MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>()
+    val otherFollowingQuestionsList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>
         get() = _otherFollowingQuestionsList
 
     private val _followingProfilesList = MutableLiveData<List<FollowingProfilesData>>()
@@ -223,10 +224,6 @@ class FollowingViewModel : ViewModel() {
         )
     )
 
-    fun setDummyOtherFollowingQuestions() {
-        _otherFollowingQuestionsList.value = dummyOtherFollowingQuestionsList.toMutableList()
-    }
-
     fun plusDummyOtherFollowingQuestions() {
         val plusOtherFollowingQuestionsList = listOf(
             OtherQuestionsData(
@@ -321,6 +318,5 @@ class FollowingViewModel : ViewModel() {
             )
         )
         dummyOtherFollowingQuestionsList.addAll(plusOtherFollowingQuestionsList.toMutableList())
-        _otherFollowingQuestionsList.value = dummyOtherFollowingQuestionsList.toMutableList()
     }
 }

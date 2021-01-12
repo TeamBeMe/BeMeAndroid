@@ -12,13 +12,19 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import com.google.android.material.tabs.TabLayoutMediator
 import com.teambeme.beme.R
+import com.teambeme.beme.data.remote.datasource.MyPageDataSourceImpl
+import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentMyPageBinding
 import com.teambeme.beme.mypage.adapter.MyPageViewPagerAdapter
+import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
+import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
 
 class MyPageFragment : Fragment() {
     private lateinit var binding: FragmentMyPageBinding
-    private val mypageViewModel: MyPageViewModel by activityViewModels()
+    private val myViewModelFactory =
+        MyPageViewModelFactory(MyPageRepositoryImpl(MyPageDataSourceImpl(RetrofitObjects.getMyPageService())))
+    private val mypageViewModel: MyPageViewModel by activityViewModels { myViewModelFactory }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

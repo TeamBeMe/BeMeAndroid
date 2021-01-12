@@ -1,14 +1,24 @@
 package com.teambeme.beme.mypage.viewmodel
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.mypage.model.MyScrap
 import com.teambeme.beme.mypage.model.MyWrite
 import com.teambeme.beme.mypage.model.MyWriteFilter
+import com.teambeme.beme.mypage.model.ResponseProfile
+import com.teambeme.beme.mypage.repository.MyPageRepository
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.File
 
-class MyPageViewModel : ViewModel() {
+class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewModel() {
     private val _mypageWriteData = MutableLiveData<MutableList<MyWrite>>()
     val mypageWriteData: LiveData<MutableList<MyWrite>>
         get() = _mypageWriteData
@@ -28,6 +38,28 @@ class MyPageViewModel : ViewModel() {
     fun setWriteFilter(range: String, category: String) {
         val myfilter = MyWriteFilter(range, category)
         _mywriteFilter.value = myfilter
+    }
+
+    fun putProfile(){
+        val file = File(profileString.value)
+        val fileReqBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        val part = MultipartBody.Part.createFormData("profile_img", file.name, fileReqBody)
+        myPageRepository.putProfile(
+            fileReqBody,part,
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ"
+        ).enqueue(object : Callback<ResponseProfile> {
+            override fun onResponse(
+                call: Call<ResponseProfile>,
+                response: Response<ResponseProfile>
+            ) {
+                if (response.isSuccessful) {
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseProfile>, t: Throwable) {
+                Log.d("Network Fail", t.message.toString())
+            }
+        })
     }
 
     fun setDummyWrite() {
@@ -70,6 +102,14 @@ class MyPageViewModel : ViewModel() {
 
     fun setProfileUri(uri: Uri) {
         _profileUri.value = uri
+    }
+
+    private val _profileString = MutableLiveData<String>()
+    val profileString: LiveData<String>
+        get() = _profileString
+
+    fun setProfileString(uri: String) {
+        _profileString.value = uri
     }
 
     fun setDummyScrap() {

@@ -1,11 +1,11 @@
-package com.teambeme.beme.otherpage.model
+package com.teambeme.beme.explore.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ResponseOtherData(
+data class ResponseExplorationQuestions(
     @SerializedName("data")
     val `data`: Data,
     @SerializedName("message")
@@ -55,7 +55,7 @@ data class ResponseOtherData(
             @SerializedName("user_nickname")
             val userNickname: String,
             @SerializedName("user_profile")
-            val userProfile: String?
+            val userProfile: String
         ) : Parcelable
     }
 }

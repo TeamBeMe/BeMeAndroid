@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="exploreViewModel"
             type="com.teambeme.beme.explore.viewmodel.ExploreViewModel" />
@@ -93,7 +95,7 @@
                         android:orientation="horizontal"
                         android:paddingStart="22dp"
                         android:paddingEnd="22dp"
-                        android:visibility="visible"
+                        android:visibility="@{exploreViewModel.otherMindsList == null ? View.INVISIBLE : View.VISIBLE}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_explore_other_minds" />
 
@@ -108,7 +110,7 @@
                     android:text="가장 긴 여행이란 자신에 대한 탐구로부터 출발하여\n자신의 운명을 실현시켜 나가는 내면의 여행이다.\n- 닥 함마슐드"
                     android:textColor="@color/explore_txt_other_minds_un_answer_gray"
                     android:textSize="14sp"
-                    android:visibility="invisible"
+                    android:visibility="@{exploreViewModel.otherMindsList == null ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txt_explore_desc_of_other_minds" />
@@ -122,13 +124,12 @@
                     android:layout_marginEnd="28dp"
                     android:layout_marginBottom="60dp"
                     android:backgroundTint="@color/explore_btn_do_answer_background_black"
-                    android:onClick="@{()->exploreViewModel.plusDummyOtherQuestions()}"
                     android:paddingTop="12dp"
                     android:paddingBottom="16dp"
                     android:text="오늘의 질문 답변하기"
                     android:textColor="@color/explore_btn_do_answer_txt_white"
                     android:textSize="16sp"
-                    android:visibility="invisible"
+                    android:visibility="@{exploreViewModel.otherMindsList == null ? View.VISIBLE : View.INVISIBLE}"
                     app:cornerRadius="6dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -239,10 +240,11 @@
                             app:singleSelection="true">
 
                             <com.google.android.material.chip.Chip
-                                android:id="@+id/chip_explore_1"
+                                android:id="@+id/chip_explore_think"
                                 style="@style/Widget.MaterialComponents.Chip.Choice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:onClick="@{()->exploreViewModel.setCategoryNum(1)}"
                                 android:text="가치관"
                                 android:textColor="@color/explore_chiptext_selector"
                                 app:chipBackgroundColor="@color/explore_chip_selector"
@@ -251,10 +253,24 @@
                                 app:chipStrokeWidth="1dp" />
 
                             <com.google.android.material.chip.Chip
-                                android:id="@+id/chip_explore_2"
+                                android:id="@+id/chip_explore_relationship"
                                 style="@style/Widget.MaterialComponents.Chip.Choice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:onClick="@{()->exploreViewModel.setCategoryNum(2)}"
+                                android:text="관계"
+                                android:textColor="@color/explore_chiptext_selector"
+                                app:chipBackgroundColor="@color/explore_chip_selector"
+                                app:chipCornerRadius="4dp"
+                                app:chipStrokeColor="@color/explore_chipstroke_selector"
+                                app:chipStrokeWidth="1dp" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chip_explore_love"
+                                style="@style/Widget.MaterialComponents.Chip.Choice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:onClick="@{()->exploreViewModel.setCategoryNum(3)}"
                                 android:text="사랑"
                                 android:textColor="@color/explore_chiptext_selector"
                                 app:chipBackgroundColor="@color/explore_chip_selector"
@@ -263,10 +279,11 @@
                                 app:chipStrokeWidth="1dp" />
 
                             <com.google.android.material.chip.Chip
-                                android:id="@+id/chip_explore_3"
+                                android:id="@+id/chip_explore_daily"
                                 style="@style/Widget.MaterialComponents.Chip.Choice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:onClick="@{()->exploreViewModel.setCategoryNum(4)}"
                                 android:text="일상"
                                 android:textColor="@color/explore_chiptext_selector"
                                 app:chipBackgroundColor="@color/explore_chip_selector"
@@ -275,35 +292,25 @@
                                 app:chipStrokeWidth="1dp" />
 
                             <com.google.android.material.chip.Chip
-                                android:id="@+id/chip_explore_4"
+                                android:id="@+id/chip_explore_me"
                                 style="@style/Widget.MaterialComponents.Chip.Choice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:onClick="@{()->exploreViewModel.setCategoryNum(5)}"
+                                android:text="나"
+                                android:textColor="@color/explore_chiptext_selector"
+                                app:chipBackgroundColor="@color/explore_chip_selector"
+                                app:chipCornerRadius="4dp"
+                                app:chipStrokeColor="@color/explore_chipstroke_selector"
+                                app:chipStrokeWidth="1dp" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chip_explore_story"
+                                style="@style/Widget.MaterialComponents.Chip.Choice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:onClick="@{()->exploreViewModel.setCategoryNum(6)}"
                                 android:text="이야기"
-                                android:textColor="@color/explore_chiptext_selector"
-                                app:chipBackgroundColor="@color/explore_chip_selector"
-                                app:chipCornerRadius="4dp"
-                                app:chipStrokeColor="@color/explore_chipstroke_selector"
-                                app:chipStrokeWidth="1dp" />
-
-                            <com.google.android.material.chip.Chip
-                                android:id="@+id/chip_explore_5"
-                                style="@style/Widget.MaterialComponents.Chip.Choice"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="미래"
-                                android:textColor="@color/explore_chiptext_selector"
-                                app:chipBackgroundColor="@color/explore_chip_selector"
-                                app:chipCornerRadius="4dp"
-                                app:chipStrokeColor="@color/explore_chipstroke_selector"
-                                app:chipStrokeWidth="1dp" />
-
-                            <com.google.android.material.chip.Chip
-                                android:id="@+id/chip_explore_6"
-                                style="@style/Widget.MaterialComponents.Chip.Choice"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="의미"
                                 android:textColor="@color/explore_chiptext_selector"
                                 app:chipBackgroundColor="@color/explore_chip_selector"
                                 app:chipCornerRadius="4dp"
@@ -325,7 +332,7 @@
                     android:layout_marginBottom="40dp"
                     android:nestedScrollingEnabled="false"
                     android:orientation="vertical"
-                    android:visibility="visible"
+                    android:visibility="@{exploreViewModel.otherQuestionsList == null ? View.GONE : View.VISIBLE}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toTopOf="@id/btn_explore_show_more"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -341,13 +348,13 @@
                     android:layout_marginEnd="28dp"
                     android:layout_marginBottom="152dp"
                     android:backgroundTint="@color/explore_btn_show_more_background_black"
-                    android:onClick="@{()->exploreViewModel.plusDummyOtherQuestions()}"
+                    android:onClick="@{()->exploreViewModel.requestPlusOtherQuestions()}"
                     android:paddingTop="12dp"
                     android:paddingBottom="16dp"
                     android:text="더보기"
                     android:textColor="@color/explore_btn_show_more_txt_white"
                     android:textSize="16sp"
-                    android:visibility="visible"
+                    android:visibility="@{exploreViewModel.otherQuestionsList == null || exploreViewModel.isMaxPage == true ? View.INVISIBLE : View.VISIBLE}"
                     app:cornerRadius="6dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -360,7 +367,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="46dp"
                     android:src="@drawable/ic_information"
-                    android:visibility="invisible"
+                    android:visibility="@{exploreViewModel.otherQuestionsList == null ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/constraint_layout_explore_for_tab" />
@@ -374,7 +381,7 @@
                     android:text="아이쿠..! 아직 답변을 안 하셨군요\n질문에 답을 하고\n답한 질문에 대한 다른 사람들의 글을 둘러보세요"
                     android:textColor="@color/explore_txt_other_questions_un_answer_gray"
                     android:textSize="14sp"
-                    android:visibility="invisible"
+                    android:visibility="@{exploreViewModel.otherQuestionsList == null ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/img_explore_un_answered_information" />
