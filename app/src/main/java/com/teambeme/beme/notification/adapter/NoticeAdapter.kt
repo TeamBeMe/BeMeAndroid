@@ -1,7 +1,9 @@
 package com.teambeme.beme.notification.adapter
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -20,6 +22,9 @@ class NoticeAdapter :
             binding.recentActivities = activities
             Log.d("Network is success_2", activities.toString())
         }
+//        override fun onClick(item : View?){
+//            val intent = Intent(item?.context,  )
+//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {

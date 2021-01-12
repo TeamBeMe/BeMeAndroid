@@ -50,7 +50,6 @@
             android:layout_marginHorizontal="28dp"
             android:layout_marginTop="34dp"
             android:background="@drawable/searchview_background"
-            android:imeOptions="actionSearch"
             app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -1,7 +1,9 @@
 package com.teambeme.beme.idsearchfollowing.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teambeme.beme.R
@@ -32,17 +34,14 @@ class FollowingAfterIdSearchActivity :
         setIdSearchAdapter(binding)
         idSearchViewModel.requestSearchingData()
 
-        binding.searchViewFollowingIdsearch.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+        binding.searchViewFollowingIdsearch.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(newText: String?): Boolean {
                 idSearchViewModel.searchingId = newText.toString()
-                return true
+                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                val userInputText = newText.let {
-                    it
-                } ?: ""
+                val userInputText = newText ?: ""
                 if (userInputText.count() > 0) {
                     binding.viewRecentSearch.visibility = View.INVISIBLE
                     binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
@@ -50,7 +49,7 @@ class FollowingAfterIdSearchActivity :
                     binding.viewRecentSearch.visibility = View.VISIBLE
                     binding.constraintViewFollowingAfterIdsearch.visibility = View.INVISIBLE
                 }
-                return true
+                return false
             }
         })
         binding.btnBackFollowingIdsearch.setOnClickListener {
