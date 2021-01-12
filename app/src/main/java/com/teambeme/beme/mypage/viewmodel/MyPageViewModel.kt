@@ -5,11 +5,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.mypage.model.MyScrap
-import com.teambeme.beme.mypage.model.MyWrite
-import com.teambeme.beme.mypage.model.MyWriteFilter
-import com.teambeme.beme.mypage.model.ResponseProfile
+import com.teambeme.beme.mypage.model.*
 import com.teambeme.beme.mypage.repository.MyPageRepository
+import com.teambeme.beme.otherpage.model.ResponseOtherData
+import com.teambeme.beme.otherpage.model.ResponseOtherInfo
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -19,9 +18,19 @@ import retrofit2.Response
 import java.io.File
 
 class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewModel() {
-    private val _mypageWriteData = MutableLiveData<MutableList<MyWrite>>()
-    val mypageWriteData: LiveData<MutableList<MyWrite>>
+    private var copyMyAnswerList: MutableList<ResponseMyAnswer.Data.Answer> = mutableListOf()
+    private var copyMyScrapList: MutableList<ResponseMyScrap.Data.Answer> = mutableListOf()
+
+    private val _mypageWriteData = MutableLiveData<MutableList<ResponseMyAnswer.Data.Answer>>()
+    val mypageWriteData: LiveData<MutableList<ResponseMyAnswer.Data.Answer>>
         get() = _mypageWriteData
+
+    private val _myProfileInfo = MutableLiveData<ResponseMyProfile.Data>()
+    val myProfileInfo: LiveData<ResponseMyProfile.Data>
+        get() = _myProfileInfo
+
+    private var page=1
+    private var scrapPage=1
 
     private val _scrapFilter = MutableLiveData<String>()
     val scrapFilter: LiveData<String>
@@ -40,19 +49,24 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
         _mywriteFilter.value = myfilter
     }
 
-    fun putProfile(){
+    //lateinit var multiBody:MultipartBody.Part
+
+    fun putProfiles(multipart:MultipartBody.Part){
         val file = File(profileString.value)
-        val fileReqBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-        val part = MultipartBody.Part.createFormData("profile_img", file.name, fileReqBody)
+        val fileReqBody = RequestBody.create(MediaType.parse("image/jpg"), file)
+        val part = MultipartBody.Part.createFormData("image", file.name, fileReqBody)
+        var map = HashMap<String,@JvmSuppressWildcards RequestBody>()
+        map.put("image",fileReqBody)
         myPageRepository.putProfile(
-            fileReqBody,part,
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ"
+            ,multipart
         ).enqueue(object : Callback<ResponseProfile> {
             override fun onResponse(
                 call: Call<ResponseProfile>,
                 response: Response<ResponseProfile>
             ) {
                 if (response.isSuccessful) {
+                    Log.d("aa","Asdfsdf")
                 }
             }
 
@@ -62,7 +76,93 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
         })
     }
 
-    fun setDummyWrite() {
+    fun getMyAnswer() {
+        myPageRepository.getMyAnswer(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
+            null,
+            null,
+            null,
+            page
+        ).enqueue(object :
+            Callback<ResponseMyAnswer> {
+            override fun onResponse(
+                call: Call<ResponseMyAnswer>,
+                response: Response<ResponseMyAnswer>
+            ) {
+                if (response.isSuccessful) {
+                    copyMyAnswerList = response.body()!!.data?.answers?.toMutableList()
+                    _mypageWriteData.value=copyMyAnswerList.toMutableList()
+                    /*when (page == response.body()!!.data.pageLen) {
+                        true -> {
+                            _isMax.value = true
+                        }
+                        else -> {
+                            page++
+                        }
+                    }*/
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMyAnswer>, t: Throwable) {
+                Log.d("Network Fail", t.message.toString())
+            }
+        })
+    }
+
+    fun getMyProfile(){
+        myPageRepository.getMyProfile(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ"
+        ).enqueue(object :
+            Callback<ResponseMyProfile> {
+            override fun onResponse(
+                call: Call<ResponseMyProfile>,
+                response: Response<ResponseMyProfile>
+            ) {
+                if (response.isSuccessful) {
+                    _myProfileInfo.value = response.body()!!.data
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMyProfile>, t: Throwable) {
+                Log.d("Network Fail", t.message.toString())
+            }
+        })
+    }
+
+    fun getMyScrap() {
+        myPageRepository.getMyScrap(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
+            null,
+            null,
+            null,
+            page
+        ).enqueue(object :
+            Callback<ResponseMyScrap> {
+            override fun onResponse(
+                call: Call<ResponseMyScrap>,
+                response: Response<ResponseMyScrap>
+            ) {
+                if (response.isSuccessful) {
+                    copyMyScrapList = response.body()!!.data?.answers?.toMutableList()
+                    _mypageScrapData.value=copyMyScrapList.toMutableList()
+                    /*when (page == response.body()!!.data.pageLen) {
+                        true -> {
+                            _isMax.value = true
+                        }
+                        else -> {
+                            page++
+                        }
+                    }*/
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMyScrap>, t: Throwable) {
+                Log.d("Network Fail", t.message.toString())
+            }
+        })
+    }
+
+    /*fun setDummyWrite() {
         val dummyWrite = listOf(
             MyWrite(
                 question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
@@ -90,10 +190,10 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
             )
         )
         _mypageWriteData.value = dummyWrite.toMutableList()
-    }
+    }*/
 
-    private val _mypageScrapData = MutableLiveData<MutableList<MyScrap>>()
-    val mypageScrapData: LiveData<MutableList<MyScrap>>
+    private val _mypageScrapData = MutableLiveData<MutableList<ResponseMyScrap.Data.Answer>>()
+    val mypageScrapData: LiveData<MutableList<ResponseMyScrap.Data.Answer>>
         get() = _mypageScrapData
 
     private val _profileUri = MutableLiveData<Uri>()
@@ -112,7 +212,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
         _profileString.value = uri
     }
 
-    fun setDummyScrap() {
+    /*fun setDummyScrap() {
         val dummyScrap = listOf(
             MyScrap(
                 question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
@@ -140,9 +240,9 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
             )
         )
         _mypageScrapData.value = dummyScrap.toMutableList()
-    }
+    }*/
 
-    fun addDummyScrap() {
+    /*fun addDummyScrap() {
         val dummyScrap = listOf(
             MyScrap(
                 question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
@@ -170,9 +270,9 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
             )
         )
         _mypageScrapData.value?.addAll(dummyScrap.toMutableList())
-    }
+    }*/
 
-    fun addDummyWrite() {
+    /*fun addDummyWrite() {
         val dummyWrite = listOf(
             MyWrite(
                 question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
@@ -200,7 +300,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
             )
         )
         _mypageWriteData.value?.addAll(dummyWrite.toMutableList())
-    }
+    }*/
 
     private val _isScrapFilterClicked = MutableLiveData<Boolean>()
     val isScrapFilterClicked: LiveData<Boolean>
