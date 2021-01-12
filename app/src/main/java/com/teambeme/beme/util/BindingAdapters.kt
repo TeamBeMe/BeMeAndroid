@@ -21,12 +21,6 @@ object BindingAdapters {
         textView.text = "[ " + category + "에 관한 질문 ]"
     }
 
-    @BindingAdapter("setTime")
-    @JvmStatic
-    fun setTime(textView: TextView, time: String) {
-        textView.text = time + "분 전"
-    }
-
     @BindingAdapter("following:setTextForUnAnswered")
     @JvmStatic
     fun setTextForUnAnswered(textView: TextView, userNickname: String) {
