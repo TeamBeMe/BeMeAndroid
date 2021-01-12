@@ -4,6 +4,7 @@ import com.teambeme.beme.data.remote.api.ExploreService
 import com.teambeme.beme.data.remote.api.LoginService
 import com.teambeme.beme.data.remote.api.MyPageService
 import com.teambeme.beme.data.remote.api.OtherService
+import com.teambeme.beme.data.remote.api.SignUpService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -49,6 +50,13 @@ object RetrofitObjects {
         }
     }
 
+    private var signUpInstance: SignUpService? = null
+    fun getSignUpService(): SignUpService = signUpInstance ?: synchronized(this) {
+        signUpInstance ?: baseRetrofit.create(SignUpService::class.java).apply {
+            signUpInstance = this
+        }
+    }
+  
     private var MyPageInstance: MyPageService? = null
     fun getMyPageService(): MyPageService = MyPageInstance ?: synchronized(this) {
         MyPageInstance ?: baseRetrofit.create(MyPageService::class.java).apply {

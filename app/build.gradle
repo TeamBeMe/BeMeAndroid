@@ -89,4 +89,8 @@ dependencies {
 
     // StickyNestedScrollView
     implementation 'com.github.didikk:sticky-nestedscrollview:1.0.1'
+
+    // AndroidX Navigation Component
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.2"
 }

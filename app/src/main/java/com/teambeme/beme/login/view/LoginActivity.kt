@@ -1,6 +1,7 @@
 package com.teambeme.beme.login.view
 
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -14,6 +15,7 @@ import com.teambeme.beme.databinding.ActivityLoginBinding
 import com.teambeme.beme.login.repository.LoginRepositoryImpl
 import com.teambeme.beme.login.viewmodel.LoginViewModel
 import com.teambeme.beme.login.viewmodel.LoginViewModelFactory
+import com.teambeme.beme.signup.view.SignUpActivity
 import com.teambeme.beme.util.KeyboardVisibilityUtils
 import com.teambeme.beme.util.StatusBarUtil
 import kotlin.properties.Delegates
@@ -39,6 +41,14 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             } else {
                 Toast.makeText(this, "실패", Toast.LENGTH_SHORT).show()
             }
+        }
+        signUpButtonClickListener()
+    }
+
+    private fun signUpButtonClickListener() {
+        binding.btnLoginSignup.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
         }
     }
 
