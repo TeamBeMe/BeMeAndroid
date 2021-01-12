@@ -32,13 +32,10 @@ class FollowingAfterIdSearchActivity :
         setIdSearchAdapter(binding)
         idSearchViewModel.requestSearchingData()
 
-//        followingAfterIdSearchViewModel.setDummyRecentSearch()
-//        followingAfterIdSearchViewModel.setDummyIdSearchList()
-
         binding.searchViewFollowingIdsearch.setOnQueryTextListener(object :
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-//                idSearchViewModel.serchingId.setText(query)
+            override fun onQueryTextSubmit(newText: String?): Boolean {
+                idSearchViewModel.searchingId = newText.toString()
                 return true
             }
 
@@ -77,23 +74,23 @@ class FollowingAfterIdSearchActivity :
         idSearchViewModel.searchedData.observe(this) { list ->
             recentSearchAdapter.replaceRecentSearchList(list)
         }
-        idSearchViewModel.deletePosition.observe(this){
+        idSearchViewModel.deletePosition.observe(this) {
             deleteListener()
         }
     }
 
-    private fun deleteListener(){
+    private fun deleteListener() {
         idSearchViewModel.deleteRecentSearch()
     }
 
     private fun setIdSearchAdapter(binding: ActivityFollowingAfterIdSearchBinding) {
-        val idSearchAdapter = IdSearchAdapter(idSearchViewModel)
+        val idSearchAdapter = IdSearchAdapter()
         binding.rcvFollowingAfterIdsearch.apply {
             adapter = idSearchAdapter
             layoutManager = LinearLayoutManager(this@FollowingAfterIdSearchActivity)
         }
-//        idSearchViewModel.searchingData.observe(this) { it ->
-//            IdSearchAdapter.replaceIdSearchList(it)
-//        }
+        idSearchViewModel.searchingData.observe(this) { list ->
+            idSearchAdapter.replaceIdSearchList(list)
+        }
     }
 }

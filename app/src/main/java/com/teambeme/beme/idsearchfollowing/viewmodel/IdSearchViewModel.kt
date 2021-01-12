@@ -31,7 +31,6 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                             Log.d("Network is success", response.body().toString())
                             copyRecentSearchList = response.body()!!.data!!.toMutableList()
                             _searchedData.value = copyRecentSearchList.toMutableList()
-
                         } else {
                             Log.d("Network Error", response.body()?.data.toString())
                             Log.d("Network Error", response.body()?.status.toString())
@@ -75,16 +74,16 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
         })
     }
 
-    private val _searchingData = MutableLiveData<ResponseIdSearchData.Data>()
-    val searchingData: MutableLiveData<ResponseIdSearchData.Data>
+    private val _searchingData = MutableLiveData<MutableList<ResponseIdSearchData.Data>>()
+    val searchingData: LiveData<MutableList<ResponseIdSearchData.Data>>
         get() = _searchingData
 
-    var serchingId : String = ""
+    var searchingId: String = ""
 
     fun requestSearchingData() {
         idSearchRepository.idSearch(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
-            serchingId,"")
+            searchingId, "")
             .enqueue(
                 object : Callback<ResponseIdSearchData> {
                     override fun onResponse(
@@ -93,7 +92,7 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                     ) {
                         if (response.isSuccessful) {
                             Log.d("Network is success", response.body().toString())
-                            _searchingData.value = response.body()!!.data
+                            _searchingData.value = response.body()!!.data?.let { mutableListOf(it) }!!
                         } else {
                             Log.d("Network Error", response.body()?.data.toString())
                             Log.d("Network Error", response.body()?.status.toString())
@@ -108,101 +107,4 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                 }
             )
     }
-
-
 }
-
-
-//    val query = MutableLiveData<String>()
-//    val range = MutableLiveData<String>()
-//
-//    private val _idSearchData = MutableLiveData<ResponseIdSearchData.Data>()
-//    val idSearchData: MutableLiveData<ResponseIdSearchData.Data>
-//        get() = _idSearchData
-//
-//    fun requestIdSearchResult() {
-//        idSearchRepository.idSearch(
-//            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNjEwMjkwNzgyLCJleHAiOjE2NDE4MjY3ODIsImlzcyI6ImJlbWUifQ.PflJxm_WRMtgjFYtw68aFNNkkEZWNSuT_2kpgfWCNbY",
-//            query.value?:"", range.value?:""
-//        ).enqueue(object : Callback<ResponseIdSearchData> {
-//            override fun onResponse(
-//                call: Call<ResponseIdSearchData>,
-//                responseData: Response<ResponseIdSearchData>
-//            ) {
-//                if (responseData.isSuccessful)
-//                    _idSearchData.value = responseData.body()!!.data
-//            }
-//
-//            override fun onFailure(call: Call<ResponseIdSearchData>, t: Throwable) {
-//                Log.d("Network Fail", t.message.toString())
-//                for (element in t.stackTrace) {
-//                    Log.d("Network element", element.toString())
-//                    Log.d("Network className", element.className)
-//                    Log.d("Network methodName", element.methodName)
-//                    Log.d("Network fileName", element.fileName)
-//                    Log.d("Network lineNumber", element.lineNumber.toString())
-//                }
-//            }
-//        })
-//    }
-//
-//    private val _getRecentSearchRecord =
-//        MutableLiveData<MutableList<ResponseRecentSearchRecord.Data>>()
-//    val getRecentSearchRecord: LiveData<MutableList<ResponseRecentSearchRecord.Data>>
-//        get() = _getRecentSearchRecord
-//
-//    fun requestGetRecentSearchRecord() {
-//        idSearchRepository.getRecentSearchRecord(
-//            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ"
-//        )
-//            .enqueue(object : Callback<ResponseRecentSearchRecord> {
-//                override fun onResponse(
-//                    call: Call<ResponseRecentSearchRecord>,
-//                    response: Response<ResponseRecentSearchRecord>
-//                ) {
-//                    if (response.isSuccessful)
-//                        _getRecentSearchRecord.value = response.body()!!.data?.toMutableList()
-//                }
-//
-//                override fun onFailure(call: Call<ResponseRecentSearchRecord>, t: Throwable) {
-//                    Log.d("Network Fail", t.message.toString())
-//                    for (element in t.stackTrace) {
-//                        Log.d("Network element", element.toString())
-//                        Log.d("Network className", element.className)
-//                        Log.d("Network methodName", element.methodName)
-//                        Log.d("Network fileName", element.fileName)
-//                        Log.d("Network lineNumber", element.lineNumber.toString())
-//                    }
-//                }
-//            })
-//    }
-
-//    private val _deleteRecentSearchRecord = MutableLiveData<MutableList<ResponseRecentSearchRecord.Data>>()
-//    val deleteRecentSearchRecord: LiveData<MutableList<ResponseRecentSearchRecord.Data>>
-//        get() = _deleteRecentSearchRecord
-
-//    fun requestDeleteRecentSearchRecord() {
-//        idSearchRepository.deleteRecentSearchRecord(
-//            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNjEwMjkwNzgyLCJleHAiOjE2NDE4MjY3ODIsImlzcyI6ImJlbWUifQ.PflJxm_WRMtgjFYtw68aFNNkkEZWNSuT_2kpgfWCNbY",
-//            searchedId = ).enqueue(object : Callback<ResponseDeleteRecentSearchRecord> {
-//            override fun onResponse(
-//                call: Call<ResponseDeleteRecentSearchRecord>,
-//                response: Response<ResponseDeleteRecentSearchRecord>
-//            ) {
-//                if (response.isSuccessful)
-//                    _deleteRecentSearchRecord.value = _deleteRecentSearchRecord.value
-//            }
-//
-//            override fun onFailure(call: Call<ResponseDeleteRecentSearchRecord>, t: Throwable) {
-//                Log.d("Network Fail", t.message.toString())
-//                for (element in t.stackTrace) {
-//                    Log.d("Network element", element.toString())
-//                    Log.d("Network className", element.className)
-//                    Log.d("Network methodName", element.methodName)
-//                    Log.d("Network fileName", element.fileName)
-//                    Log.d("Network lineNumber", element.lineNumber.toString())
-//                }
-//
-//            }
-//        })
-//    }

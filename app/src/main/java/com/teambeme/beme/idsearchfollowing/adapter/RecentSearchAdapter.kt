@@ -7,7 +7,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemRecentSearchBinding
-import com.teambeme.beme.idsearchfollowing.model.RecentSearchData
 import com.teambeme.beme.idsearchfollowing.model.ResponseRecentSearchRecord
 import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModel
 

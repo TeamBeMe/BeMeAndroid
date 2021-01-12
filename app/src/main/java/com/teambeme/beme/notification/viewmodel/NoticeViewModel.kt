@@ -43,16 +43,13 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
                         true -> _isMax.value = true
                         else -> page++
                     }
-                }
-                else {
+                } else {
                     Log.d("Network Error", responseData.body()?.data.toString())
                     Log.d("Network Error", responseData.body()?.status.toString())
                     Log.d("Network Error", responseData.body()?.success.toString())
                     Log.d("Network Error", responseData.message())
                 }
-
             }
-
             override fun onFailure(call: Call<ResponseNoticeData>, t: Throwable) {
                 Log.d("Network Fail", t.message.toString())
             }
