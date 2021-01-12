@@ -14,4 +14,6 @@ class SignUpRepositoryImpl(private val signUpDataSource: SignUpDataSource) : Sig
     ): ResponseSignUp = signUpDataSource.signUp(
         RequestSignUp(email, nickName, passWord, image)
     )
+
+    override suspend fun nickNameDoubleCheck(nickName: String) = signUpDataSource.nickDoubleCheck(nickName)
 }

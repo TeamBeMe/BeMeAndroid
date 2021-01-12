@@ -25,9 +25,44 @@ class PersonalInfoFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_personal_info, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.signUpViewModel = signUpViewModel
+        setDoubleCheckListener()
         setDoneButtonClickListener()
         setObserve()
         return binding.root
+    }
+
+    private fun setDoubleCheckListener() {
+        signUpViewModel.nickDoubleCheck.observe(viewLifecycleOwner) { checkInfo ->
+            if (signUpViewModel.isNickNameValidated.value!!) {
+                if (checkInfo.success) {
+                    if (!checkInfo.data.nicknameExist) {
+                        fixNickName()
+                    } else {
+                        Toast.makeText(requireContext(), "이미 존재하는 닉네임입니다.", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "서버통신이 원활하지 않습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun fixNickName() {
+        Toast.makeText(
+            requireContext(),
+            "닉네임이 ${signUpViewModel.userNickName.value!!}로 설정되었습니다.",
+            Toast.LENGTH_SHORT
+        ).show()
+        binding.apply {
+            edittxtPersonalNickname.isEnabled = false
+            edittxtPersonalNickname.setTextColor(resources.getColor(R.color.signup_disabled, null))
+            btnPersonalNicknameDoubleCheck.visibility = View.GONE
+            txtPersonalNicknameCheck.apply {
+                text = "사용 가능한 닉네임입니다, 중복확인을 해주세요"
+                setTextColor(resources.getColor(R.color.signup_term_blue, null))
+            }
+        }
     }
 
     private fun setObserve() {
@@ -59,7 +94,7 @@ class PersonalInfoFragment : Fragment() {
             } else {
                 binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_blue)
                 binding.txtPersonalNicknameCheck.apply {
-                    text = "사용 가능한 닉네임입니다"
+                    text = "사용 가능한 닉네임입니다, 중복확인을 해주세요"
                     setTextColor(resources.getColor(R.color.signup_term_blue, null))
                 }
                 signUpViewModel.nickNameValidated()

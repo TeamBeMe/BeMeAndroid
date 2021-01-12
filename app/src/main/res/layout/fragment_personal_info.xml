@@ -88,11 +88,13 @@
                 android:text="@={signUpViewModel.userNickName}" />
 
             <TextView
+                android:id="@+id/btn_personal_nickname_double_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="16dp"
                 android:text="중복확인"
+                android:onClick="@{() -> signUpViewModel.nickNameDoubleCheck()}"
                 android:textColor="@color/signup_term_blue"
                 android:textSize="16sp" />
         </FrameLayout>
