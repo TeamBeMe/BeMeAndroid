@@ -5,48 +5,59 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
+import com.teambeme.beme.data.remote.datasource.OtherPageDataSourceImpl
+import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityOtherPageBinding
 import com.teambeme.beme.detail.view.BottomOtherReplyFragment
 import com.teambeme.beme.otherpage.adapter.OtherPageAdapter
+import com.teambeme.beme.otherpage.repository.OtherPageRepositoryImpl
 import com.teambeme.beme.otherpage.viewmodel.OtherPageViewModel
+import com.teambeme.beme.otherpage.viewmodel.OtherPageViewModelFactory
 
 class OtherPageActivity : BindingActivity<ActivityOtherPageBinding>(R.layout.activity_other_page) {
-    private val otherViewModel: OtherPageViewModel by viewModels()
+    private val otherViewModelFactory =
+        OtherPageViewModelFactory(OtherPageRepositoryImpl(OtherPageDataSourceImpl(RetrofitObjects.getOtherPageService())))
+    private val otherViewModel: OtherPageViewModel by viewModels { otherViewModelFactory }
+    private var userId = 5
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding.otherPageViewModel = OtherPageViewModel()
+        binding.otherPageViewModel = otherViewModel
         binding.lifecycleOwner = this
-        val otherAdapter = OtherPageAdapter()
+        val otherAdapter = OtherPageAdapter(otherViewModel)
         setAdapter(otherAdapter)
-        otherViewModel.setDummyOtherAnswer()
+        otherViewModel.requestUser(userId)
+        otherViewModel.requestItem(userId)
         otherViewModel.otherAnswerList.observe(this) { it ->
             it.let { otherAdapter.submitList(it) }
+        }
+        otherViewModel.isMax.observe(this) { it ->
+            isMaxListener(it)
         }
         setClickListenerForPlusData(binding, otherAdapter)
         binding.btnOtherpageBack.setOnClickListener { finish() }
         binding.btnOtherpageDot3.setOnClickListener { dotClickListener() }
+        otherViewModel.scrapPosition.observe(this) {
+            scrapListener()
+        }
+    }
+
+    private fun scrapListener() {
+        otherViewModel.putScrap()
+    }
+
+    private fun isMaxListener(isMax: Boolean) {
+        if (isMax) {
+            binding.btnOtherShowmore.visibility = View.GONE
+        } else {
+            binding.btnOtherShowmore.visibility = View.VISIBLE
+        }
     }
 
     private fun setAdapter(otherAdapter: OtherPageAdapter) {
         binding.rcvOtherdata.apply {
             layoutManager = LinearLayoutManager(this@OtherPageActivity)
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    val lastVisiblePosition =
-                        (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-                    val itemTotalCount = adapter!!.itemCount - 1
-                    if (lastVisiblePosition == itemTotalCount) {
-                        binding.btnOtherShowmore.visibility = View.VISIBLE
-                    } else {
-                        binding.btnOtherShowmore.visibility = View.GONE
-                    }
-                    super.onScrolled(recyclerView, dx, dy)
-                }
-            })
             adapter = otherAdapter
         }
     }
@@ -64,9 +75,7 @@ class OtherPageActivity : BindingActivity<ActivityOtherPageBinding>(R.layout.act
         otherAdapter: OtherPageAdapter
     ) {
         binding.btnOtherShowmore.setOnClickListener {
-            binding.btnOtherShowmore.visibility = View.GONE
-            otherViewModel.addDummyAnswer()
-            otherAdapter.submitList(otherViewModel.otherAnswerList.value?.toMutableList())
+            otherViewModel.requestAddItem(userId)
         }
     }
 }
