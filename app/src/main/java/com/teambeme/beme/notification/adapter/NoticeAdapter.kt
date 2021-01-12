@@ -25,6 +25,7 @@ class NoticeAdapter :
 //        override fun onClick(item : View?){
 //            val intent = Intent(item?.context,  )
 //        }
+        val userProfilePic = binding.notificationProfilePic
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {
@@ -36,6 +37,9 @@ class NoticeAdapter :
 
     override fun onBindViewHolder(holder: NoticeViewHolder, position: Int) {
         holder.bind(getItem(position))
+        holder.userProfilePic.setOnClickListener {
+            //val intent = Intent(this, )
+        }
     }
 
     private class NoticeDiffUtil : DiffUtil.ItemCallback<ResponseNoticeData.Data.Activity>() {

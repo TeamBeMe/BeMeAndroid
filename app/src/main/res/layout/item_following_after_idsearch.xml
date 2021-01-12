@@ -67,7 +67,7 @@
             android:minHeight="0dp"
             android:stateListAnimator="@null"
             android:text="팔로우"
-            android:textColor="#fff"
+            android:textColor="#ffffff"
             android:textSize="12dp"
             app:backgroundTint="@null"
             android:visibility="invisible"

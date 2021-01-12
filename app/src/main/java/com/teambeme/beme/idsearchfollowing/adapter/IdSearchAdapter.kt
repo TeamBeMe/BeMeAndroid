@@ -1,5 +1,6 @@
 package com.teambeme.beme.idsearchfollowing.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,8 @@ class IdSearchAdapter :
     override fun getItemCount(): Int = idSearchDatas.size
 
     override fun onBindViewHolder(holder: IdSearchViewHolder, position: Int) {
+        Log.d("Search", "$position")
+        Log.d("Search", "${idSearchDatas[position]}")
         holder.bind(idSearchDatas[position])
     }
 

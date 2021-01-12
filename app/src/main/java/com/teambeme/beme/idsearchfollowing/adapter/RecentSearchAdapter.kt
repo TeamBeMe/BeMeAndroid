@@ -25,8 +25,8 @@ class RecentSearchAdapter(private val idSearchViewModel: IdSearchViewModel) :
 
     override fun onBindViewHolder(holder: RecentSearchViewHolder, position: Int) {
         holder.bind(recentSearchData[position])
-        holder.bind(recentSearchData[position]).let {
-        }
+//        holder.bind(recentSearchData[position]).let {
+//        }
         holder.btnDeleteRecentRecearch.setOnClickListener {
             idSearchViewModel.setPosition(position)
             recentSearchData.removeAt(position)

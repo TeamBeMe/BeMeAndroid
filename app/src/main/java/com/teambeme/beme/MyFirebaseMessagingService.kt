@@ -78,6 +78,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "sendRegistrationTokenToServer($token)")
     }
     companion object {
-        const val TAG = "NotificationActivity"
+        const val TAG = "BeMeApplication"
     }
 }
