@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_bookmark"
+            android:src="@{otherAnswers.isScrapped == true ? @drawable/ic_bookmark_checked : @drawable/ic_bookmark}"
             app:layout_constraintBottom_toBottomOf="@+id/img_other_answers_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/img_other_answers_profile" />
