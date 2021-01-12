@@ -13,9 +13,9 @@ import retrofit2.Response
 class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewModel() {
     private var copyNoticeDataList: MutableList<ResponseNoticeData.Data.Activity> = mutableListOf()
 
-    private val _noticeList = MutableLiveData<MutableList<ResponseNoticeData.Data.Activity>>()
+    private val _noticeDataList = MutableLiveData<MutableList<ResponseNoticeData.Data.Activity>>()
     val noticeDataList: MutableLiveData<MutableList<ResponseNoticeData.Data.Activity>>
-        get() = _noticeList
+        get() = _noticeDataList
 
     var page: Int = 1
 
@@ -37,7 +37,7 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
                 if (responseData.isSuccessful) {
                     Log.d("Network is success", responseData.body().toString())
                     copyNoticeDataList = responseData.body()!!.data?.activities?.toMutableList()
-                    _noticeList.value = copyNoticeDataList.toMutableList()
+                    _noticeDataList.value = copyNoticeDataList.toMutableList()
                     Log.d("Network is success", copyNoticeDataList.toString())
                     when (page == responseData.body()!!.data.pageLen) {
                         true -> _isMax.value = true
@@ -71,7 +71,7 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
             ) {
                 if (responseData.isSuccessful) {
                     copyNoticeDataList.addAll(responseData.body()!!.data?.activities.toMutableList())
-                    _noticeList.value = copyNoticeDataList.toMutableList()
+                    _noticeDataList.value = copyNoticeDataList.toMutableList()
                     when (page == responseData.body()!!.data?.pageLen) {
                         true -> _isMax.value = true
                         else -> page++

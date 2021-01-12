@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="noticeViewModel"
             type="com.teambeme.beme.notification.viewmodel.NoticeViewModel" />
@@ -53,7 +55,7 @@
                 android:layout_marginHorizontal="28dp"
                 android:layout_marginTop="28dp"
                 android:overScrollMode="never"
-                android:visibility="visible"
+                android:visibility="@{noticeViewModel.noticeDataList == null ? View.INVISIBLE : View.VISIBLE}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +66,7 @@
                 android:id="@+id/notice_when_no_item_in_rcv_recent_activities"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
+                android:visibility="@{noticeViewModel.noticeDataList == null ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

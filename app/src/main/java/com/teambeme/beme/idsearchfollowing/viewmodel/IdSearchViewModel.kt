@@ -31,7 +31,7 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                             Log.d("Network is success", response.body().toString())
                             copyRecentSearchList = response.body()!!.data!!.toMutableList()
                             _searchedData.value = copyRecentSearchList.toMutableList()
-//                            _searchedData.value = response.body()!!.data?.toMutableList()
+
                         } else {
                             Log.d("Network Error", response.body()?.data.toString())
                             Log.d("Network Error", response.body()?.status.toString())
@@ -65,7 +65,7 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                 response: Response<ResponseDeleteRecentSearchRecord>
             ) {
                 if (response.isSuccessful) {
-                    Log.d("Network Fail",  response.body().toString())
+                    Log.d("Network Fail", response.body().toString())
                 }
             }
 
@@ -73,6 +73,40 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                 Log.d("Network Fail", t.message.toString())
             }
         })
+    }
+
+    private val _searchingData = MutableLiveData<ResponseIdSearchData.Data>()
+    val searchingData: MutableLiveData<ResponseIdSearchData.Data>
+        get() = _searchingData
+
+    var serchingId : String = ""
+
+    fun requestSearchingData() {
+        idSearchRepository.idSearch(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
+            serchingId,"")
+            .enqueue(
+                object : Callback<ResponseIdSearchData> {
+                    override fun onResponse(
+                        call: Call<ResponseIdSearchData>,
+                        response: Response<ResponseIdSearchData>
+                    ) {
+                        if (response.isSuccessful) {
+                            Log.d("Network is success", response.body().toString())
+                            _searchingData.value = response.body()!!.data
+                        } else {
+                            Log.d("Network Error", response.body()?.data.toString())
+                            Log.d("Network Error", response.body()?.status.toString())
+                            Log.d("Network Error", response.body()?.success.toString())
+                            Log.d("Network Error", response.message())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseIdSearchData>, t: Throwable) {
+                        Log.d("network_requestOtherMinds", "통신실패")
+                    }
+                }
+            )
     }
 
 
