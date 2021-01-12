@@ -3,8 +3,19 @@ package com.teambeme.beme.signup.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.teambeme.beme.data.remote.datasource.SignUpDataSourceImpl
+import com.teambeme.beme.data.remote.singleton.RetrofitObjects
+import com.teambeme.beme.signup.model.ResponseSignUp
+import com.teambeme.beme.signup.repository.SignUpRepositoryImpl
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SignUpViewModel : ViewModel() {
+    private val signUpRepository =
+        SignUpRepositoryImpl(SignUpDataSourceImpl(RetrofitObjects.getSignUpService()))
     val isPersonalChecked = MutableLiveData<Boolean>(false)
     val isServiceChecked = MutableLiveData<Boolean>(false)
 
@@ -25,6 +36,9 @@ class SignUpViewModel : ViewModel() {
     private val _isPassWordCheckValidated = MutableLiveData(false)
     val isPassWordCheckValidated: LiveData<Boolean>
         get() = _isPassWordCheckValidated
+    private val _signUpUserInfo = MutableLiveData<ResponseSignUp?>()
+    val signUpUserInfo: LiveData<ResponseSignUp?>
+        get() = _signUpUserInfo
 
     fun emailValidated() {
         _isEmailValidated.value = true
@@ -60,4 +74,12 @@ class SignUpViewModel : ViewModel() {
 
     fun validateAllValues() =
         isEmailValidated.value!! && isNickNameValidated.value!! && isPassWordValidated.value!! && isPassWordCheckValidated.value!!
+
+    fun signUp() = viewModelScope.launch {
+        _signUpUserInfo.value = signUpRepository.signUp(userEmail.value!!, userNickName.value!!, userPassWord.value!!, null)
+    }
+
+    fun signUpWithoutImage() = viewModelScope.launch {
+        _signUpUserInfo.value = signUpRepository.signUp(userEmail.value!!, userNickName.value!!, userPassWord.value!!, null)
+    }
 }

@@ -2,7 +2,7 @@ package com.teambeme.beme.signup.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ReponseSignUp(
+data class ResponseSignUp(
     @SerializedName("data")
     val `data`: Data,
     @SerializedName("message")

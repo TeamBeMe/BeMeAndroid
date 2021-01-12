@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.teambeme.beme.signup.viewmodel.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -130,12 +133,14 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <Button
+            android:id="@+id/btn_image_choose_done_no_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@android:color/transparent"
             android:minWidth="0dp"
             android:minHeight="0dp"
+            android:onClick="@{() -> viewModel.signUpWithoutImage()}"
             android:text="건너뛰기"
             android:textColor="#000"
             android:textSize="16dp"
