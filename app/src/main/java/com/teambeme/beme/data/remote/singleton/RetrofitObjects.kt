@@ -1,7 +1,6 @@
 package com.teambeme.beme.data.remote.singleton
 
 import com.teambeme.beme.data.remote.api.ExploreService
-import com.teambeme.beme.data.remote.api.DetailService
 import com.teambeme.beme.data.remote.api.LoginService
 import com.teambeme.beme.data.remote.api.MyPageService
 import com.teambeme.beme.data.remote.api.OtherService
@@ -9,7 +8,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 object RetrofitObjects {
     private const val BASE_URL = "http://15.164.67.58:3000/"
@@ -41,18 +39,13 @@ object RetrofitObjects {
     fun getExploreService(): ExploreService = exploreInstance ?: synchronized(this) {
         exploreInstance ?: baseRetrofit.create(ExploreService::class.java).apply {
             exploreInstance = this
+        }
+    }
 
     private var otherPageInstance: OtherService? = null
     fun getOtherPageService(): OtherService = otherPageInstance ?: synchronized(this) {
         otherPageInstance ?: baseRetrofit.create(OtherService::class.java).apply {
             otherPageInstance = this
-        }
-    }
-
-    private var DetailInstance: DetailService? = null
-    fun getDetailService(): DetailService = DetailInstance ?: synchronized(this) {
-        DetailInstance ?: baseRetrofit.create(DetailService::class.java).apply {
-            DetailInstance = this
         }
     }
 
