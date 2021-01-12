@@ -3,6 +3,7 @@ package com.teambeme.beme.login.view
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -49,6 +50,11 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
                 }
             } else {
                 Toast.makeText(this, "로그인에 실패하였습니다. 다시 입력해주세요", Toast.LENGTH_SHORT).show()
+            }
+        }
+        loginViewModel.errorMessage.observe(this) { errorMessage ->
+            if (!errorMessage.isNullOrBlank()) {
+                binding.linearLoginError.visibility = View.VISIBLE
             }
         }
         signUpButtonClickListener()

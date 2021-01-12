@@ -4,8 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.teambeme.beme.login.model.ResponseLogin
 import com.teambeme.beme.login.repository.LoginRepository
+import com.teambeme.beme.util.ErrorBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,14 +21,23 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     val responseValue: LiveData<ResponseLogin?>
         get() = _responseValue
 
+    private val _errorMessage = MutableLiveData<String>("")
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
+
     fun requestLogin() {
         loginRepository.login(nickNameText.value ?: "", passwordText.value ?: "").enqueue(object :
             Callback<ResponseLogin> {
             override fun onResponse(call: Call<ResponseLogin>, response: Response<ResponseLogin>) {
-                Log.d("Login", response.body().toString())
-                Log.d("Login", response.message())
-                Log.d("Login", response.headers().toString())
-                _responseValue.value = response.body()
+                if (response.isSuccessful)
+                    _responseValue.value = response.body()
+                else {
+                    val gson = Gson()
+                    val type = object : TypeToken<ErrorBody>() {}.type
+                    val errorResponse: ErrorBody? =
+                        gson.fromJson(response.errorBody()!!.charStream(), type)
+                    _errorMessage.value = errorResponse?.message
+                }
             }
 
             override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {

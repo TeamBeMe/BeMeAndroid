@@ -1,11 +1,10 @@
 package com.teambeme.beme.mypage.adapter
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class MyPageViewPagerAdapter(fragmentActivity: FragmentActivity) :
-    FragmentStateAdapter(fragmentActivity) {
+class MyPageViewPagerAdapter(fragment: Fragment) :
+    FragmentStateAdapter(fragment) {
 
     var fragments: ArrayList<Fragment> = ArrayList()
 

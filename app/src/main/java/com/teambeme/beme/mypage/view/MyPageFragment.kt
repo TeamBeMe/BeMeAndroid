@@ -42,7 +42,7 @@ class MyPageFragment : Fragment() {
     }
 
     private fun setViewPagerAdapter(fragmentManager: FragmentManager) {
-        val pagerAdapter = MyPageViewPagerAdapter(requireActivity())
+        val pagerAdapter = MyPageViewPagerAdapter(this)
         pagerAdapter.addFragment(MyWriteFragment())
         pagerAdapter.addFragment(MyScrapFragment())
         val viewPager = binding.vpMypage
@@ -60,7 +60,7 @@ class MyPageFragment : Fragment() {
     private fun editProfileClickListener() {
         val bottomSheetFragment = BottomProfileFragment()
         bottomSheetFragment.show(
-            requireActivity().supportFragmentManager,
+            childFragmentManager,
             bottomSheetFragment.tag
         )
         mypageViewModel.scrapFilterOnClickFalse()
