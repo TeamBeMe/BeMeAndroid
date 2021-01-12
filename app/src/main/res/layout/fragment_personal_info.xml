@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="signUpViewModel"
+            type="com.teambeme.beme.signup.viewmodel.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,6 +67,7 @@
             android:layout_marginHorizontal="28dp"
             android:layout_marginTop="36dp"
             android:hint="이메일"
+            android:text="@={signUpViewModel.userEmail}"
             app:layout_constraintStart_toStartOf="@+id/txt_term_title"
             app:layout_constraintTop_toBottomOf="@+id/txt_term_title" />
 
@@ -80,7 +84,8 @@
                 style="@style/personal_info_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="닉네임 *" />
+                android:hint="닉네임 *"
+                android:text="@={signUpViewModel.userNickName}" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -128,6 +133,7 @@
             android:layout_marginTop="16dp"
             android:hint="비밀번호 *"
             android:inputType="textPassword"
+            android:text="@={signUpViewModel.userPassWord}"
             app:layout_constraintTop_toBottomOf="@id/linear_personal_nickname_check" />
 
         <LinearLayout
@@ -166,6 +172,7 @@
             android:layout_marginTop="16dp"
             android:hint="비밀번호 확인 *"
             android:inputType="textPassword"
+            android:text="@={signUpViewModel.userPassWordCheck}"
             app:layout_constraintTop_toBottomOf="@+id/linear_personal_password" />
 
         <LinearLayout

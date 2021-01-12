@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.teambeme.beme.signup.viewmodel.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -189,7 +191,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="28dp"
-            android:background="@drawable/btn_signup_background"
+            android:background="@drawable/signup_button_background"
             android:fontFamily="@font/notosankr_bold"
             android:insetTop="0dp"
             android:insetBottom="0dp"
