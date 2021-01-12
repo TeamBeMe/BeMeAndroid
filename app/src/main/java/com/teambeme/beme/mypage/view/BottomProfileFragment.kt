@@ -68,7 +68,7 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
                 var resultUri = result.getUri()
                 mypageViewModel.setProfileUri(resultUri)
                 var bitmap =
-                    MediaStore.Images.Media.getBitmap(requireContext().contentResolver, resultUri);
+                    MediaStore.Images.Media.getBitmap(requireContext().contentResolver, resultUri)
                 var bitmapToUri = getImageUri(requireContext(), bitmap)
                 val filePathColumn =
                     arrayOf(MediaStore.Images.Media.DATA)

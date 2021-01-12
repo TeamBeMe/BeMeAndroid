@@ -14,16 +14,18 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     var nickNameText = MutableLiveData<String>()
     var passwordText = MutableLiveData<String>()
 
-    private val _responseValue = MutableLiveData<ResponseLogin>()
-    val responseValue: LiveData<ResponseLogin>
+    private val _responseValue = MutableLiveData<ResponseLogin?>()
+    val responseValue: LiveData<ResponseLogin?>
         get() = _responseValue
 
     fun requestLogin() {
         loginRepository.login(nickNameText.value ?: "", passwordText.value ?: "").enqueue(object :
             Callback<ResponseLogin> {
             override fun onResponse(call: Call<ResponseLogin>, response: Response<ResponseLogin>) {
-                if (response.isSuccessful)
-                    _responseValue.value = response.body()!!
+                Log.d("Login", response.body().toString())
+                Log.d("Login", response.message())
+                Log.d("Login", response.headers().toString())
+                _responseValue.value = response.body()
             }
 
             override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {

@@ -6,5 +6,9 @@ import okhttp3.RequestBody
 import retrofit2.Call
 
 interface MyPageRepository {
-    fun putProfile(profileImg: RequestBody, part: MultipartBody.Part, token: String) : Call<ResponseProfile>
+    fun putProfile(
+        profileImg: RequestBody,
+        part: MultipartBody.Part,
+        token: String
+    ): Call<ResponseProfile>
 }

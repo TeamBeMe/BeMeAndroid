@@ -37,7 +37,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val questionForFirstAnswer: ResponseExplorationQuestionForFirstAnswer.Answer
         get() = _questionForFirstAnswer
 
-    private var _scrapData = ResponseExplorationScrap("",0,true)
+    private var _scrapData = ResponseExplorationScrap("", 0, true)
     val scrapData: ResponseExplorationScrap
         get() = _scrapData
 
@@ -140,7 +140,11 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
             )
     }
 
-    fun requestOtherQuestionsWithCategorySorting(category: Int?, sorting: String, pageNum: Int = page) {
+    fun requestOtherQuestionsWithCategorySorting(
+        category: Int?,
+        sorting: String,
+        pageNum: Int = page
+    ) {
         exploreRepository.getExplorationOtherQuestions(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
             pageNum,
@@ -300,7 +304,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         )
     }
 
-    fun requestScrap(answerId: Int, answerData:ResponseExplorationQuestions.Data.Answer){
+    fun requestScrap(answerId: Int, answerData: ResponseExplorationQuestions.Data.Answer) {
         exploreRepository.putScrap(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
             answerId
@@ -325,6 +329,5 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                 }
             }
         )
-
     }
 }
