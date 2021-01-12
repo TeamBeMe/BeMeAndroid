@@ -1,6 +1,5 @@
 package com.teambeme.beme.idsearchfollowing.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.idsearchfollowing.model.IdSearchData
@@ -8,7 +7,7 @@ import com.teambeme.beme.idsearchfollowing.model.RecentSearchData
 
 class FollowingAfterIdSearchViewModel : ViewModel() {
     private val _recentSearchList = MutableLiveData<MutableList<RecentSearchData>>()
-    val recentSearchList: LiveData<MutableList<RecentSearchData>>
+    val recentSearchList: MutableLiveData<MutableList<RecentSearchData>>
         get() = _recentSearchList
 
     private val dummyRecentSearchList = mutableListOf(
@@ -40,7 +39,7 @@ class FollowingAfterIdSearchViewModel : ViewModel() {
     }
 
     private val _idSearchList = MutableLiveData<MutableList<IdSearchData>>()
-    val idSearchList: LiveData<MutableList<IdSearchData>>
+    val idSearchList: MutableLiveData<MutableList<IdSearchData>>
         get() = _idSearchList
 
     private val dummyIdSearchList = mutableListOf(

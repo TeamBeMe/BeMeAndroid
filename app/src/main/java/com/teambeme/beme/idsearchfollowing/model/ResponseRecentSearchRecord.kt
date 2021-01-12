@@ -18,6 +18,6 @@ data class ResponseRecentSearchRecord(
         @SerializedName("nickname")
         val nickname: String,
         @SerializedName("profile_img")
-        val profileImg: Any
+        val profileImg: String
     )
 }

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="idSearch"
-            type="com.teambeme.beme.idsearchfollowing.model.IdSearchData" />
+            type="com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData.Data" />
 
     </data>
 
@@ -22,7 +22,7 @@
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setSrcFromUrl="@{idSearch.userPicUrl}" />
+            app:setSrcFromUrl="@{idSearch.profileImg}" />
 
         <TextView
             android:id="@+id/recent_search_uid"
@@ -31,7 +31,7 @@
             android:layout_marginStart="10dp"
             android:bufferType="spannable"
             android:lineHeight="18dp"
-            android:text="@{idSearch.userID}"
+            android:text="@{idSearch.nickname}"
             android:textColor="#000"
             android:textSize="14sp"
             android:textStyle="bold"

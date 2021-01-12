@@ -13,6 +13,7 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
+import com.teambeme.beme.R
 
 object BindingAdapters {
     @BindingAdapter("setCategory")
@@ -36,11 +37,15 @@ object BindingAdapters {
 
     @BindingAdapter("setSrcFromUrl")
     @JvmStatic
-    fun setSrcFromUrl(imageView: ImageView, url: String) {
-        Glide.with(imageView.context)
-            .load(url)
-            .centerCrop()
-            .into(imageView)
+    fun setSrcFromUrl(imageView: ImageView, url: String?) {
+        if (url == null) {
+            imageView.setImageResource(R.drawable.img_profile_sample)
+        } else {
+            Glide.with(imageView.context)
+                .load(url)
+                .centerCrop()
+                .into(imageView)
+        }
     }
 
     @InverseBindingAdapter(attribute = "android:text", event = "textAttrChanged")

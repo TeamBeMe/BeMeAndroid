@@ -31,9 +31,9 @@
         <activity android:name=".following.view.FollowingShowAllActivity" />
         <activity android:name=".explore.view.ExploreDetailActivity" />
         <activity android:name=".answer.view.AnswerActivity" />
-        <activity android:name=".notification.view.NotificationActivity"  android:exported="true" />
+        <activity android:name=".notification.view.NotificationActivity"   />
         <activity android:name=".detail.view.DetailActivity" />
-        <activity android:name=".idsearchfollowing.FollowingAfterIdSearchActivity"/>
+        <activity android:name=".idsearchfollowing.view.FollowingAfterIdSearchActivity" android:exported="true"/>
         <activity android:name=".main.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

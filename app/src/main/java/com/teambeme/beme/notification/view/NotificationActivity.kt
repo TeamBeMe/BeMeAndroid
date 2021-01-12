@@ -41,7 +41,7 @@ class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layo
             isMaxListener(it)
         }
 
-        setClickListenerForPlusData(binding, noticeAdapter)
+        setClickListenerForPlusData(binding)
         binding.btnBackNotice.setOnClickListener { finish() }
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -77,8 +77,7 @@ class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layo
     }
 
     private fun setClickListenerForPlusData(
-        binding: ActivityNotificationBinding,
-        noticeAdapter: NoticeAdapter
+        binding: ActivityNotificationBinding
     ) {
         binding.btnRecentActivitiesShowMore.setOnClickListener {
             noticeViewModel.requestAddNoticeItem()

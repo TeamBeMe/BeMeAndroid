@@ -5,15 +5,15 @@
 
     <data>
         <variable
-            name="followingAfterIdSearchViewModel"
-            type="com.teambeme.beme.idsearchfollowing.viewmodel.FollowingAfterIdSearchViewModel" />
+            name="idSearchViewModel"
+            type="com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".idsearchfollowing.FollowingAfterIdSearchActivity">
+        tools:context=".idsearchfollowing.view.FollowingAfterIdSearchActivity">
 
         <ImageButton
             android:id="@+id/btn_back_following_idsearch"

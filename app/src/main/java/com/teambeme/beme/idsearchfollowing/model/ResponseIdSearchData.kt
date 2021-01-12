@@ -2,7 +2,7 @@ package com.teambeme.beme.idsearchfollowing.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseIdSearch(
+data class ResponseIdSearchData(
     @SerializedName("data")
     val `data`: Data?,
     @SerializedName("message")

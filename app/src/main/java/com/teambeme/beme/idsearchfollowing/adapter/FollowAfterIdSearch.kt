@@ -8,10 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemFollowingAfterIdsearchBinding
 import com.teambeme.beme.idsearchfollowing.model.IdSearchData
+import com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData
 
 class FollowAfterIdSearchAdapter :
     RecyclerView.Adapter<FollowAfterIdSearchAdapter.FollowAfterIdSearchViewHolder>() {
-    private var iDSearchDatas = mutableListOf<IdSearchData>()
+    private var iDSearchDatas = mutableListOf<ResponseIdSearchData.Data>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -29,14 +30,14 @@ class FollowAfterIdSearchAdapter :
         holder.bind(iDSearchDatas[position])
     }
 
-    fun replaceIdSearchList(list: MutableList<IdSearchData>) {
+    fun replaceIdSearchList(list: MutableList<ResponseIdSearchData.Data>) {
         iDSearchDatas = list
         notifyDataSetChanged()
     }
 
     inner class FollowAfterIdSearchViewHolder(private val binding: ItemFollowingAfterIdsearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(idSearchData: IdSearchData) {
+        fun bind(idSearchData: ResponseIdSearchData.Data) {
             with(binding) {
                 idSearch = idSearchData
                 executePendingBindings()
