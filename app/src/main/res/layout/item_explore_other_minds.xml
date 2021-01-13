@@ -6,7 +6,7 @@
 
         <variable
             name="otherMinds"
-            type="com.teambeme.beme.explore.model.ResponseExplorationAnswers.Data" />
+            type="com.teambeme.beme.explore.model.ResponseExplorationMinds.Data" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,7 +32,7 @@
                 android:layout_marginStart="0dp"
                 android:text="@{otherMinds.questionTitle}"
                 android:textColor="@color/item_other_minds_txt_title_white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_other_minds_show_other_answers"

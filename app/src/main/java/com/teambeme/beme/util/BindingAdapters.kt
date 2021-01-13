@@ -1,7 +1,9 @@
 package com.teambeme.beme.util
 
+import android.graphics.Typeface
 import android.text.*
 import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.widget.EditText
 import android.widget.ImageView
@@ -111,6 +113,46 @@ object BindingAdapters {
         } else {
             val text = "[ " + category + "에 관한 질문 ]"
             textView.text = text
+        }
+    }
+
+    @BindingAdapter("user:setNickName", "user:setQuestionTitle", "user:setType")
+    @JvmStatic
+    fun setReplyText(textView: TextView, id: String, title: String?, type: String) {
+        when (type) {
+            "comment" -> {
+                val activity = id + "님이 " + title + "에 대한 나의 글에 댓글을 달았습니다."
+                val spannableString = SpannableStringBuilder(activity)
+                spannableString.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    0,
+                    id.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                textView.append(spannableString)
+            }
+            "cocomment" -> {
+                val activity = id + "님이 " + title + "에 대한 나의 댓글에 답글을 달았습니다."
+                val spannableString = SpannableStringBuilder(activity)
+                spannableString.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    0,
+                    id.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                textView.append(spannableString)
+            }
+            "follow" -> {
+                val activity = id + "님이 나를 팔로우했습니다."
+                val spannableString = SpannableStringBuilder(activity)
+                spannableString.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    0,
+                    id.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                textView.append(spannableString)
+            }
         }
     }
 

@@ -90,10 +90,11 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_other_questions_profile"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            app:layout_constraintDimensionRatio="1"
             android:layout_marginTop="9dp"
-            android:src="@drawable/img_profile_sample"
+            setSrcFromUrl="@{otherQuestions.userProfile}"
             android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"
             app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_content" />
@@ -157,7 +158,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginEnd="128dp"
             android:backgroundTint="@color/item_following_unanswered_questions_btn_background_black"
             android:minWidth="0dp"
             android:minHeight="0dp"
@@ -171,7 +171,6 @@
             android:visibility="@{otherQuestions.isAnswered == true ? View.INVISIBLE : View.VISIBLE}"
             app:cornerRadius="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_other_questions_un_answered" />
 
