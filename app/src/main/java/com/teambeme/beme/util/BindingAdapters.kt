@@ -6,6 +6,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -192,6 +193,15 @@ object BindingAdapters {
             chip.isChecked = false
             val text = "팔로우"
             chip.text = text
+        }
+    }
+
+    @BindingAdapter("home:publicButtonSrc")
+    @JvmStatic
+    fun setSrc(imgButton: ImageButton, publicFlag: Int) {
+        when (publicFlag) {
+            0 -> imgButton.setImageResource(R.drawable.ic_lock)
+            else -> imgButton.setImageResource(R.drawable.ic_unlock)
         }
     }
 }

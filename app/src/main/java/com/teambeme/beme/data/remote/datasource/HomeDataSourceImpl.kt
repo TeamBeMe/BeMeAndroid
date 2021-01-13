@@ -17,6 +17,6 @@ class HomeDataSourceImpl(private val homeService: HomeService) : HomeDataSource 
     override suspend fun changeQuestion(answerId: Int): ResponseAnswer =
         homeService.changeQuestion(answerId)
 
-    override suspend fun deleteQuestion(answerId: Int): ResponseModifyData =
-        homeService.deleteQuestion(answerId)
+    override suspend fun deleteAnswer(answerId: Int): ResponseModifyData =
+        homeService.deleteAnswer(answerId)
 }

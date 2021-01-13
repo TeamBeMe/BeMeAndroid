@@ -18,6 +18,6 @@ class HomeRepositoryImpl(private val homeDataSource: HomeDataSource) : HomeRepos
     override suspend fun changeQuestion(answerId: Int): ResponseAnswer =
         homeDataSource.changeQuestion(answerId)
 
-    override suspend fun deleteQuestion(answerId: Int): ResponseModifyData =
-        homeDataSource.deleteQuestion(answerId)
+    override suspend fun deleteAnswer(answerId: Int): ResponseModifyData =
+        homeDataSource.deleteAnswer(answerId)
 }
