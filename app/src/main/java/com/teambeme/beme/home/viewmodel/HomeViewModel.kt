@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teambeme.beme.home.model.Answer
 import com.teambeme.beme.home.repository.HomeRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
@@ -15,6 +16,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     val answerList: LiveData<MutableList<Answer>>
         get() = _answerList
     private var currentQuestionPage = 1
+    private var canAdd = true
 
     private val _errorMessage = MutableLiveData("")
     val errorMessage: LiveData<String>
@@ -23,10 +25,32 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     val returnToStartEvent: LiveData<Boolean>
         get() = _returnToStartEvent
 
-    fun getAnswers() {
-        val answerList = mutableListOf<Answer>()
-        answerList.addAll(_answerList.value ?: mutableListOf())
-
+    fun getMoreAnswers() {
+        viewModelScope.launch {
+            try {
+                if (canAdd) {
+                    val moreAnswers =
+                        homeRepository.getAnswers(currentQuestionPage++).answers.toMutableList()
+                    val currentList = _answerList.value?.toMutableList()
+                    currentList?.addAll(0, moreAnswers)
+                    _answerList.value = currentList
+                } else {
+                    val moreAnswers =
+                        homeRepository.getAnswers(currentQuestionPage).answers.toMutableList()
+                    val currentList = _answerList.value?.toMutableList()
+                    currentList?.addAll(0, moreAnswers)
+                    _answerList.value = currentList
+                    canAdd = true
+                }
+            } catch (e: HttpException) {
+                if (e.code() == 400) {
+                    _errorMessage.value = "더 이상 페이지가 없습니다"
+                    canAdd = false
+                } else {
+                    _errorMessage.value = "서버 통신에 문제가 발생했습니다"
+                }
+            }
+        }
     }
 
     fun setInitAnswer() {
@@ -35,6 +59,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                 _answerList.value =
                     homeRepository.getAnswers(currentQuestionPage++).answers.toMutableList()
                 startEvent()
+                delay(1000)
             } catch (e: HttpException) {
                 Log.d("Home", e.message())
             }
@@ -110,8 +135,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                 currentList.add(moreQuestion.answer)
                 _answerList.value = currentList
             } catch (e: HttpException) {
-                val errorMessage = e.message()
-                _errorMessage.value = errorMessage
+                _errorMessage.value = "새로운 질문이 없습니다"
             }
         }
     }
