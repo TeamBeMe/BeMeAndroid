@@ -18,18 +18,22 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val otherMindsList: LiveData<List<ResponseExplorationMinds.Data>>
         get() = _otherMindsList
 
-    private var tempOtherQuestionsList: MutableList<ResponseExplorationQuestions.Data.Answer>? =
+    private var _userNickname: String = ""
+    val userNickname: String
+        get() = _userNickname
+
+    private var tempOtherQuestionsList: MutableList<ResponseExplorationQuestions.Data.Answer?>? =
         mutableListOf()
     private val _otherQuestionsList =
-        MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>()
-    val otherQuestionsList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>
+        MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer?>>()
+    val otherQuestionsList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer?>>
         get() = _otherQuestionsList
 
-    private var tempSameQuestionOtherAnswersList: MutableList<ResponseExplorationQuestions.Data.Answer>? =
+    private var tempSameQuestionOtherAnswersList: MutableList<ResponseExplorationQuestions.Data.Answer?>? =
         mutableListOf()
     private val _sameQuestionOtherAnswersList =
-        MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>()
-    val sameQuestionOtherAnswersList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>
+        MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer?>>()
+    val sameQuestionOtherAnswersList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer?>>
         get() = _sameQuestionOtherAnswersList
 
     private var _questionForFirstAnswer =
@@ -90,7 +94,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     }
 
     fun requestOtherMinds() {
-        exploreRepository.getExplorationAnother("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI")
+        exploreRepository.getExplorationAnother("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI")
             .enqueue(
                 object : Callback<ResponseExplorationMinds> {
                     override fun onResponse(
@@ -110,7 +114,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     fun requestOtherQuestions() {
         exploreRepository.getExplorationOtherQuestions(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             page,
             null,
             "최신"
@@ -121,10 +125,14 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         call: Call<ResponseExplorationQuestions>,
                         response: Response<ResponseExplorationQuestions>
                     ) {
+                        Log.d("abc", "통신 성공")
                         if (response.isSuccessful) {
                             tempOtherQuestionsList =
                                 response.body()!!.data?.answers?.toMutableList()
                             _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
+
+                            Log.d("abcexplore", "${response.body()!!.data?.answers?.toMutableList()}")
+
                             if (response.body()!!.data?.pageLen == page) {
                                 _isMaxPage = true
                             } else {
@@ -142,7 +150,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     fun requestOtherQuestionsWithCategorySorting(category: Int?, sorting: String, pageNum: Int = page) {
         exploreRepository.getExplorationOtherQuestions(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             pageNum,
             category,
             sorting
@@ -175,7 +183,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     fun requestPlusOtherQuestions() {
         exploreRepository.getExplorationOtherQuestions(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             page,
             _categoryNum,
             _sortingText
@@ -187,7 +195,11 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         response: Response<ResponseExplorationQuestions>
                     ) {
                         if (response.isSuccessful) {
-                            tempOtherQuestionsList?.addAll(response.body()!!.data?.answers?.toMutableList())
+                            response.body()!!.data?.answers?.toMutableList()?.let {
+                                tempOtherQuestionsList?.addAll(
+                                    it
+                                )
+                            }
                             _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
 
                             if (response.body()!!.data?.pageLen == page) {
@@ -210,7 +222,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         _isMaxPage = false
         otherAnswersQuestionsID = questionId
         exploreRepository.getExplorationSameQuestionOtherAnswers(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             otherAnswersQuestionsID,
             page,
             sorting
@@ -246,7 +258,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     fun requestPlusSameQuestionOtherAnswers() {
         exploreRepository.getExplorationSameQuestionOtherAnswers(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             otherAnswersQuestionsID,
             page,
             _sortingText
@@ -257,7 +269,11 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                     response: Response<ResponseExplorationQuestions>
                 ) {
                     if (response.isSuccessful) {
-                        tempSameQuestionOtherAnswersList?.addAll(response.body()!!.data?.answers?.toMutableList())
+                        response.body()!!.data?.answers?.toMutableList()?.let {
+                            tempSameQuestionOtherAnswersList?.addAll(
+                                it
+                            )
+                        }
                         _sameQuestionOtherAnswersList.value =
                             tempSameQuestionOtherAnswersList?.toMutableList()
 
@@ -278,7 +294,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     fun requestQuestionForFirstAnswer() {
         exploreRepository.getQuestionForFirstAnswer(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI"
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI"
         ).enqueue(
             object : Callback<ResponseExplorationQuestionForFirstAnswer> {
                 override fun onResponse(
@@ -302,7 +318,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     fun requestScrap(answerId: Int, answerData:ResponseExplorationQuestions.Data.Answer){
         exploreRepository.putScrap(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             answerId
         ).enqueue(
             object : Callback<ResponseExplorationScrap> {

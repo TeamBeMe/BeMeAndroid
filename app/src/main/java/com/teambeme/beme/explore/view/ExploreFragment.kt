@@ -2,6 +2,7 @@ package com.teambeme.beme.explore.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,6 +48,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         exploreViewModel.requestOtherQuestions()
         setOtherMindsAdapter()
         setOtherQuestionsAdapter()
+        Log.d("abc_exfloreActivity", exploreViewModel.userNickname)
         setOtherMindsObserve()
         setOtherQuestionsObserve()
         setTabSelectedFromExploreListener()
@@ -65,6 +67,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
             OtherQuestionsRcvAdapter<ItemExploreOtherQuestionsBinding>(
                 requireContext(),
                 R.layout.item_explore_other_questions,
+                exploreViewModel.userNickname,
                 exploreViewModel
             )
         binding.rcvExploreOtherQuestions.adapter = otherQuestionsAdapter

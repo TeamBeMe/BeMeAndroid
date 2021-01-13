@@ -7,12 +7,11 @@ import com.teambeme.beme.following.model.ResponseFollowingSearchId
 import retrofit2.Call
 
 class FollowingDataSourceImpl(private val service: FollowingService) : FollowingDataSource {
-    override fun getFollowingFollowerAnswers(
+    override fun getFollowingAnswers(
         token: String,
-        page: Int,
-        category: String
+        page: Int
     ): Call<ResponseExplorationQuestions> {
-        return service.getFollowingFollowerAnswers(token, page, category)
+        return service.getFollowingAnswers(token, page)
     }
 
     override fun getFollowingFollowerList(token: String): Call<ResponseFollowingList> {

@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.R
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
-import com.teambeme.beme.following.model.FollowingProfilesData
 import com.teambeme.beme.following.model.ResponseFollowingList
 import com.teambeme.beme.following.model.ResponseFollowingSearchId
 import com.teambeme.beme.following.repository.FollowingRepository
@@ -17,10 +15,10 @@ import retrofit2.Response
 class FollowingViewModel(private val followingRepository: FollowingRepository) : ViewModel() {
     private var tempFollowingFollowerAnswersList: MutableList<ResponseExplorationQuestions.Data.Answer>? =
         mutableListOf()
-    private val _followingFollowerAnswersList =
+    private val _followingAnswersList =
         MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>()
-    val followingFollowerAnswersList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>
-        get() = _followingFollowerAnswersList
+    val followingAnswersList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>
+        get() = _followingAnswersList
 
     private val _followerList = MutableLiveData<MutableList<ResponseFollowingList.Data.Follower>>()
     val followerList: LiveData<MutableList<ResponseFollowingList.Data.Follower>>
@@ -35,11 +33,17 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
     val searchList: LiveData<MutableList<ResponseFollowingSearchId.Data>>
         get() = _searchList
 
-    private var page: Int = 1
+    private var _page: Int = 1
+    val page: Int
+        get() = _page
 
-    private var _isMaxPage = false
-    val isMaxPage: Boolean
-        get() = _isMaxPage
+    private var _maxPage: Int = 0
+    val maxPage: Int
+        get() = _maxPage
+
+    private val _userNickname = MutableLiveData<String>()
+    val userNickname: LiveData<String>
+        get() = _userNickname
 
     private var searchQuery: String = ""
     fun setSearchQuery(query: String){
@@ -58,11 +62,10 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
         _searchList.value = tempSearchList?.toMutableList()
     }
 
-    fun requestFollowingFollowerAnswers(pageNum: Int = page) {
-        followingRepository.getFollowingFollowerAnswers(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
-            pageNum,
-            followeeCategory
+    fun requestFollowingFollowerAnswers(pageNum: Int = _page) {
+        followingRepository.getFollowingAnswers(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
+            pageNum
         ).enqueue(
             object : Callback<ResponseExplorationQuestions> {
                 override fun onResponse(
@@ -70,15 +73,22 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                     response: Response<ResponseExplorationQuestions>
                 ) {
                     if (response.isSuccessful) {
-                        page = pageNum
+                        _page = pageNum
+                        if(_userNickname.value == null){
+                            _userNickname.value = response.body()!!.data.userNickname
+                        }
+                        if(_maxPage == 0){
+                            _maxPage = response.body()!!.data?.pageLen
+                        }
                         tempFollowingFollowerAnswersList =
                             response.body()!!.data?.answers?.toMutableList()
-                        _followingFollowerAnswersList.value =
+                        _followingAnswersList.value =
                             tempFollowingFollowerAnswersList?.toMutableList()
-                        if (response.body()!!.data?.pageLen == page) {
-                            _isMaxPage = true
-                        } else {
-                            page++
+
+                        Log.d("abcabc", "${followingList.value?.size}")
+
+                        if (response.body()!!.data?.pageLen != _page) {
+                            _page++
                         }
                     }
                 }
@@ -91,10 +101,9 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
     }
 
     fun requestPlusFollowingFollowerAnswers() {
-        followingRepository.getFollowingFollowerAnswers(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
-            page,
-            followeeCategory
+        followingRepository.getFollowingAnswers(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
+            _page
         ).enqueue(
             object : Callback<ResponseExplorationQuestions> {
                 override fun onResponse(
@@ -102,13 +111,15 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                     response: Response<ResponseExplorationQuestions>
                 ) {
                     if (response.isSuccessful) {
-                        tempFollowingFollowerAnswersList?.addAll(response.body()!!.data?.answers?.toMutableList())
-                        _followingFollowerAnswersList.value =
+                        response.body()!!.data?.answers?.toMutableList()?.let {
+                            tempFollowingFollowerAnswersList?.addAll(
+                                it
+                            )
+                        }
+                        _followingAnswersList.value =
                             tempFollowingFollowerAnswersList?.toMutableList()
-                        if (response.body()!!.data?.pageLen == page) {
-                            _isMaxPage = true
-                        } else {
-                            page++
+                        if (response.body()!!.data?.pageLen != _page) {
+                            _page++
                         }
                     }
                 }
@@ -122,7 +133,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
 
     fun requestFollowerFollowingList() {
         followingRepository.getFollowingFollowerList(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI"
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI"
         ).enqueue(
             object : Callback<ResponseFollowingList> {
                 override fun onResponse(
@@ -145,7 +156,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
     fun requestSearchMyFollowingFollower() {
         Log.d("search______", searchList.toString())
         followingRepository.getSearchMyFollowingFollower(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             searchQuery,
             searchRange
         ).enqueue(

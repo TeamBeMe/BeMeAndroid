@@ -12,10 +12,9 @@ import retrofit2.http.Query
 interface FollowingService {
     @Headers("Content-Type:application/json")
     @GET("follow/answers")
-    fun getFollowingFollowerAnswers(
+    fun getFollowingAnswers(
         @Header("token") token: String,
-        @Query("page") page: Int,
-        @Query("category") category: String
+        @Query("page") page: Int
     ): Call<ResponseExplorationQuestions>
     @GET("follow")
     fun getFollowingFollowerList(

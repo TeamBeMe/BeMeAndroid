@@ -88,6 +88,16 @@ class FollowingShowAllActivity :
                 if (binding.rcvFollowingShowAllProfilesFollowing.adapter != null) with(binding.rcvFollowingShowAllProfilesFollowing.adapter as FollowingProfilesRcvAdapter<*>) {
                     submitList(followingShowAllProfilesList)
                 }
+                if (followingShowAllProfilesList.size == 0) {
+                    binding.rcvFollowingShowAllProfilesFollowing.visibility = View.INVISIBLE
+                    binding.searchViewFollowingShowAll.visibility = View.INVISIBLE
+                    binding.txtFollowingShowAllEmptyInformation.visibility = View.VISIBLE
+                    binding.imgFollowingShowAllEmptyInformation.visibility = View.VISIBLE
+                } else {
+                    binding.rcvFollowingShowAllProfilesFollowing.visibility = View.VISIBLE
+                    binding.txtFollowingShowAllEmptyInformation.visibility = View.INVISIBLE
+                    binding.imgFollowingShowAllEmptyInformation.visibility = View.INVISIBLE
+                }
             }
         }
     }

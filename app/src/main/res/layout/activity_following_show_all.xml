@@ -136,5 +136,30 @@
             app:layout_constraintTop_toBottomOf="@id/search_view_following_show_all"
             tools:listitem="@layout/item_following_show_all_profiles_of_search_follower" />
 
+        <ImageView
+            android:id="@+id/img_following_show_all_empty_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="116dp"
+            android:src="@drawable/ic_information"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_view_following_show_all" />
+
+        <TextView
+            android:id="@+id/txt_following_show_all_empty_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center_horizontal"
+            android:text="나를 팔로우 한 사람이 없습니다"
+            android:textColor="@color/explore_txt_other_questions_un_answer_gray"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_following_show_all_empty_information" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

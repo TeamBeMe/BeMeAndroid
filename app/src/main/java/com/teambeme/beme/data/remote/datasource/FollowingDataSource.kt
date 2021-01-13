@@ -6,10 +6,9 @@ import com.teambeme.beme.following.model.ResponseFollowingSearchId
 import retrofit2.Call
 
 interface FollowingDataSource {
-    fun getFollowingFollowerAnswers(
+    fun getFollowingAnswers(
         token: String,
-        page: Int,
-        category: String
+        page: Int
     ): Call<ResponseExplorationQuestions>
 
     fun getFollowingFollowerList(
