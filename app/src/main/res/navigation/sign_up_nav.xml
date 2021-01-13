@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sign_up_nav"
+    app:startDestination="@id/permissionInfoFragment">
+
+    <fragment
+        android:id="@+id/permissionInfoFragment"
+        android:name="com.teambeme.beme.signup.view.PermissionInfoFragment"
+        android:label="fragment_permission_info"
+        tools:layout="@layout/fragment_permission_info" >
+        <action
+            android:id="@+id/action_permissionInfoFragment_to_termFragment"
+            app:destination="@id/termFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageChooseFragment"
+        android:name="com.teambeme.beme.signup.view.ImageChooseFragment"
+        android:label="ImageChooseFragment" />
+    <fragment
+        android:id="@+id/termFragment"
+        android:name="com.teambeme.beme.signup.view.TermFragment"
+        android:label="TermFragment" >
+        <action
+            android:id="@+id/action_termFragment_to_personalInfoFragment"
+            app:destination="@id/personalInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personalInfoFragment"
+        android:name="com.teambeme.beme.signup.view.PersonalInfoFragment"
+        android:label="PersonalInfoFragment" >
+        <action
+            android:id="@+id/action_personalInfoFragment_to_imageChooseFragment"
+            app:destination="@id/imageChooseFragment" />
+    </fragment>
+</navigation>

@@ -1,86 +1,150 @@
 package com.teambeme.beme.home.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.home.model.ResponseQuestionData
+import androidx.lifecycle.viewModelScope
+import com.teambeme.beme.home.model.Answer
+import com.teambeme.beme.home.repository.HomeRepository
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
-class HomeViewModel : ViewModel() {
-    private val _questionList = MutableLiveData<MutableList<ResponseQuestionData.Answer>>()
-    val questionList: LiveData<MutableList<ResponseQuestionData.Answer>>
-        get() = _questionList
+class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
+    private val _answerList = MutableLiveData<MutableList<Answer>>()
+    val answerList: LiveData<MutableList<Answer>>
+        get() = _answerList
+    private var currentQuestionPage = 1
+    private var canAdd = true
 
-    fun setDummyQuestions() {
-        val dummyQuestionList = listOf(
-            ResponseQuestionData.Answer(
-                id = 21,
-                answerIdx = null,
-                content = null,
-                createdAt = "2021-01-03T13:33:26.000Z",
-                answerDate = null,
-                question = ResponseQuestionData.Answer.Question(
-                    category = ResponseQuestionData.Answer.Question.Category(
-                        id = 1,
-                        name = "일상"
-                    ),
-                    id = 13,
-                    title = "오늘 나를 웃게한 사람은 누구인가요?"
-                ),
-                isToday = true,
-                publicFlag = 1
-            ),
-            ResponseQuestionData.Answer(
-                id = 22,
-                answerIdx = 2,
-                content = "오늘의 나는 존나 짱짱맨이다 후우 나는 멋진 사람이야 엄청 멋지고도 멋진 사람",
-                createdAt = "2021-01-03T13:33:26.000Z",
-                answerDate = "2021-01-03T13:50:26.000Z",
-                question = ResponseQuestionData.Answer.Question(
-                    category = ResponseQuestionData.Answer.Question.Category(
-                        id = 1,
-                        name = "일상"
-                    ),
-                    id = 13,
-                    title = "오늘 나를 웃게한 사람은 누구인가요?"
-                ),
-                isToday = false,
-                publicFlag = 1
-            ),
-            ResponseQuestionData.Answer(
-                id = 23,
-                answerIdx = 3,
-                content = "오늘의 나는 존나 짱짱맨이다 후우 나는 멋진 사람이야 엄청 멋지고도 멋진 사람",
-                createdAt = "2021-01-03T13:33:26.000Z",
-                answerDate = "2021-01-03T13:50:26.000Z",
-                question = ResponseQuestionData.Answer.Question(
-                    category = ResponseQuestionData.Answer.Question.Category(
-                        id = 1,
-                        name = "사랑앓이"
-                    ),
-                    id = 13,
-                    title = "오늘 나를 웃게한 사람은 누구인가요?"
-                ),
-                isToday = false,
-                publicFlag = 1
-            ),
-            ResponseQuestionData.Answer(
-                id = 19,
-                answerIdx = null,
-                content = null,
-                createdAt = "2021-01-05T13:33:26.000Z",
-                answerDate = null,
-                question = ResponseQuestionData.Answer.Question(
-                    category = ResponseQuestionData.Answer.Question.Category(
-                        id = 1,
-                        name = "일상"
-                    ),
-                    id = 13,
-                    title = "오늘 나를 웃게한 사람은 누구인가요?"
-                ),
-                isToday = true,
-                publicFlag = 1
-            )
-        )
-        _questionList.value = dummyQuestionList.toMutableList()
+    private val _errorMessage = MutableLiveData("")
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
+    private val _returnToStartEvent = MutableLiveData<Boolean>()
+    val returnToStartEvent: LiveData<Boolean>
+        get() = _returnToStartEvent
+
+    fun getMoreAnswers() {
+        viewModelScope.launch {
+            try {
+                if (canAdd) {
+                    val moreAnswers =
+                        homeRepository.getAnswers(currentQuestionPage++).answers.toMutableList()
+                    val currentList = _answerList.value?.toMutableList()
+                    currentList?.addAll(0, moreAnswers)
+                    _answerList.value = currentList
+                } else {
+                    val moreAnswers =
+                        homeRepository.getAnswers(currentQuestionPage).answers.toMutableList()
+                    val currentList = _answerList.value?.toMutableList()
+                    currentList?.addAll(0, moreAnswers)
+                    _answerList.value = currentList
+                    canAdd = true
+                }
+            } catch (e: HttpException) {
+                if (e.code() == 400) {
+                    _errorMessage.value = "더 이상 페이지가 없습니다"
+                    canAdd = false
+                } else {
+                    _errorMessage.value = "서버 통신에 문제가 발생했습니다"
+                }
+            }
+        }
+    }
+
+    fun setInitAnswer() {
+        viewModelScope.launch {
+            try {
+                _answerList.value =
+                    homeRepository.getAnswers(currentQuestionPage++).answers.toMutableList()
+                startEvent()
+                delay(1000)
+            } catch (e: HttpException) {
+                Log.d("Home", e.message())
+            }
+        }
+    }
+
+    fun changePublic(position: Int) {
+        viewModelScope.launch {
+            try {
+                val currentList = _answerList.value!!
+                val response = homeRepository.modifyPublic(
+                    currentList[position].id,
+                    currentList[position].publicFlag
+                )
+                if (response.success) {
+                    currentList[position].publicFlag = isPublic(currentList[position].publicFlag)
+                    _answerList.value = currentList
+                }
+            } catch (e: HttpException) {
+
+            }
+        }
+    }
+
+    fun changeQuestion(position: Int) {
+        viewModelScope.launch {
+            try {
+                val currentList = _answerList.value!!.toMutableList()
+                val response = homeRepository.changeQuestion(currentList[position].id)
+                if (response.success) {
+                    currentList[position] = response.answer
+                    _answerList.value = currentList
+                    startEvent()
+                }
+            } catch (e: HttpException) {
+                if (e.code() == 400) {
+                    _errorMessage.value = "새로운 질문이 없습니다"
+                } else {
+                    _errorMessage.value = "서버 통신 중 오류가 발생했습니다"
+                }
+            }
+        }
+    }
+
+    fun deleteAnswer(position: Int) {
+        viewModelScope.launch {
+            val currentList = _answerList.value ?: mutableListOf()
+            try {
+                val response = homeRepository.deleteAnswer(currentList[position].id)
+                if (response.success) {
+                    currentList.removeAt(position)
+                    _answerList.value = currentList
+                    startEvent()
+                }
+            } catch (e: HttpException) {
+
+            }
+        }
+    }
+
+    private fun isPublic(publicFlag: Int): Int {
+        return when (publicFlag) {
+            0 -> 1
+            else -> 0
+        }
+    }
+
+    fun getMoreQuestion() {
+        viewModelScope.launch {
+            val currentList = _answerList.value ?: mutableListOf()
+            try {
+                val moreQuestion = homeRepository.getNewAnswer()
+                currentList.add(moreQuestion.answer)
+                _answerList.value = currentList
+            } catch (e: HttpException) {
+                _errorMessage.value = "새로운 질문이 없습니다"
+            }
+        }
+    }
+
+    fun startEvent() {
+        _returnToStartEvent.value = true
+    }
+
+    fun setReadyToReceiveEvent() {
+        _returnToStartEvent.value = false
     }
 }

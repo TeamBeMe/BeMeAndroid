@@ -1,5 +1,6 @@
 package com.teambeme.beme.idsearchfollowing.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,36 +8,38 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemFollowingAfterIdsearchBinding
-import com.teambeme.beme.idsearchfollowing.model.IdSearchData
+import com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData
 
-class FollowAfterIdSearchAdapter :
-    RecyclerView.Adapter<FollowAfterIdSearchAdapter.FollowAfterIdSearchViewHolder>() {
-    private var iDSearchDatas = mutableListOf<IdSearchData>()
+class IdSearchAdapter :
+    RecyclerView.Adapter<IdSearchAdapter.IdSearchViewHolder>() {
+    private var idSearchDatas = mutableListOf<ResponseIdSearchData.Data>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): FollowAfterIdSearchViewHolder {
+    ): IdSearchViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding: ItemFollowingAfterIdsearchBinding =
             DataBindingUtil.inflate(inflater, R.layout.item_following_after_idsearch, parent, false)
-        return FollowAfterIdSearchViewHolder(binding)
+        return IdSearchViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = iDSearchDatas.size
+    override fun getItemCount(): Int = idSearchDatas.size
 
-    override fun onBindViewHolder(holder: FollowAfterIdSearchViewHolder, position: Int) {
-        holder.bind(iDSearchDatas[position])
+    override fun onBindViewHolder(holder: IdSearchViewHolder, position: Int) {
+        Log.d("Search", "$position")
+        Log.d("Search", "${idSearchDatas[position]}")
+        holder.bind(idSearchDatas[position])
     }
 
-    fun replaceIdSearchList(list: MutableList<IdSearchData>) {
-        iDSearchDatas = list
+    fun replaceIdSearchList(list: MutableList<ResponseIdSearchData.Data>) {
+        idSearchDatas = list
         notifyDataSetChanged()
     }
 
-    inner class FollowAfterIdSearchViewHolder(private val binding: ItemFollowingAfterIdsearchBinding) :
+    inner class IdSearchViewHolder(private val binding: ItemFollowingAfterIdsearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(idSearchData: IdSearchData) {
+        fun bind(idSearchData: ResponseIdSearchData.Data) {
             with(binding) {
                 idSearch = idSearchData
                 executePendingBindings()
@@ -62,5 +65,9 @@ class FollowAfterIdSearchAdapter :
                 binding.btnFollowingUnfollow.visibility = View.VISIBLE
             }
         }
+    }
+    fun removeAllData(){
+        idSearchDatas.clear()
+        notifyDataSetChanged()
     }
 }

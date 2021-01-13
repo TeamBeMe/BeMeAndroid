@@ -10,9 +10,9 @@ import com.teambeme.beme.mypage.model.MyWrite
 import com.teambeme.beme.mypage.model.MyWriteFilter
 import com.teambeme.beme.mypage.model.ResponseProfile
 import com.teambeme.beme.mypage.repository.MyPageRepository
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,12 +40,12 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
         _mywriteFilter.value = myfilter
     }
 
-    fun putProfile(){
-        val file = File(profileString.value)
-        val fileReqBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+    fun putProfile() {
+        val file = File(profileString.value ?: "")
+        val fileReqBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("profile_img", file.name, fileReqBody)
         myPageRepository.putProfile(
-            fileReqBody,part,
+            fileReqBody, part,
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ"
         ).enqueue(object : Callback<ResponseProfile> {
             override fun onResponse(
