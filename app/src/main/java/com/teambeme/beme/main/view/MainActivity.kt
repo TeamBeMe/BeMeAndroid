@@ -23,23 +23,22 @@ import java.util.*
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val mainViewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        super.onCreate(savedInstanceState)
+        LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
+        setViewPagerAdapter(this)
+        setBottomNavigationSelectListener(binding.bnvMain)
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-
         val pendingIntent = PendingIntent.getBroadcast(
             this,
             AlarmReceiver.NOTIFICATION_ID,
-            Intent(this@MainActivity, AlarmReceiver::class.java),
+            Intent(this, AlarmReceiver::class.java),
             PendingIntent.FLAG_UPDATE_CURRENT
         )
+        setOntimePush(alarmManager, pendingIntent)
+    }
 
-        super.onCreate(savedInstanceState)
-        setViewPagerAdapter(this)
-        LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
-        setBottomNavigationSelectListener(binding.bnvMain)
-
-
-        val repeatInterval: Long = 24 * 60 * 60 * 1000
+    private fun setOntimePush(alarmManager: AlarmManager, pendingIntent: PendingIntent) {
+        val repeatInterval: Long = ONE_DAY
         val calendar: Calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
             set(Calendar.HOUR_OF_DAY, 22)
@@ -50,16 +49,13 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             calendar.timeInMillis,
             pendingIntent
         )
-
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
             repeatInterval,
             pendingIntent
         )
-
         Log.d("MainActivity", "OntimePush")
-
     }
 
     private fun setBottomNavigationSelectListener(bottomNavigationView: BottomNavigationView) {
@@ -115,5 +111,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 else -> throw IllegalArgumentException("Wrong Position $position")
             }
         }
+    }
+
+    companion object {
+        private const val ONE_DAY: Long = 24 * 60 * 60 * 1000
     }
 }

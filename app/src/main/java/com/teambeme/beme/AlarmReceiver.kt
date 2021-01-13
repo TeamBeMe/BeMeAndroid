@@ -44,7 +44,6 @@ class AlarmReceiver : BroadcastReceiver() {
             NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("비미")
-//                .setContentText("오늘의 질문 도착")
                 .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)

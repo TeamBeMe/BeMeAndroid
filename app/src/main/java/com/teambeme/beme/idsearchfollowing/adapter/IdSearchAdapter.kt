@@ -1,5 +1,6 @@
 package com.teambeme.beme.idsearchfollowing.adapter
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemFollowingAfterIdsearchBinding
+import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData
 
 class IdSearchAdapter :
@@ -21,6 +23,7 @@ class IdSearchAdapter :
         val inflater = LayoutInflater.from(parent.context)
         val binding: ItemFollowingAfterIdsearchBinding =
             DataBindingUtil.inflate(inflater, R.layout.item_following_after_idsearch, parent, false)
+
         return IdSearchViewHolder(binding)
     }
 
@@ -30,6 +33,15 @@ class IdSearchAdapter :
         Log.d("Search", "$position")
         Log.d("Search", "${idSearchDatas[position]}")
         holder.bind(idSearchDatas[position])
+//        holder.bind(idSearchDatas[position]).let{
+//            with(holder){
+//                profilePic.setOnClickListener {view->
+//                    val intent= Intent(view.context, DetailActivity::class.java)
+//                    intent.putExtra("userId",idSearchDatas[position].id)
+//                    view.context.startActivity(intent)
+//                }
+//            }
+//        }
     }
 
     fun replaceIdSearchList(list: MutableList<ResponseIdSearchData.Data>) {
@@ -44,9 +56,11 @@ class IdSearchAdapter :
                 idSearch = idSearchData
                 executePendingBindings()
             }
+
             setBtnUnfollowClickListener(binding)
             setBtnFollowClickListener(binding)
         }
+//        val profilePic = binding.recentSearchProfilePic
 
         private fun setBtnUnfollowClickListener(
             binding: ItemFollowingAfterIdsearchBinding

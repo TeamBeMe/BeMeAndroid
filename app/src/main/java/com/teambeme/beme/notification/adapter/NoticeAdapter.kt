@@ -1,15 +1,18 @@
 package com.teambeme.beme.notification.adapter
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemRecentActivitiesBinding
+import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.notification.model.ResponseNoticeData
 
 class NoticeAdapter :
@@ -25,10 +28,10 @@ class NoticeAdapter :
         val userProfilePic = binding.notificationProfilePic
     }
 
-    interface ItemClick {
-        fun onClick(view: View, position: Int)
-    }
-    var itemClick: ItemClick? = null
+//    interface ItemClick {
+//        fun onClick(view: View, position: Int)
+//    }
+//    var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -39,6 +42,15 @@ class NoticeAdapter :
 
     override fun onBindViewHolder(holder: NoticeViewHolder, position: Int) {
         holder.bind(getItem(position))
+        holder.bind(getItem(position)).let{
+            with(holder){
+                userProfilePic.setOnClickListener {view->
+                    val intent= Intent(view.context, DetailActivity::class.java)
+                    intent.putExtra("userId",getItem(position).userId)
+                    view.context.startActivity(intent)
+                }
+            }
+        }
 
 //        holder.userProfilePic.setOnClickListener {
 //

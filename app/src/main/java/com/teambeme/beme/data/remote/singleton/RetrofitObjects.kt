@@ -20,9 +20,9 @@ object RetrofitObjects {
     }
 
     private fun getOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(httpLoggingInterceptor())
-        .addInterceptor(AuthInterceptor())
-        .build()
+        .addInterceptor(httpLoggingInterceptor()).build()
+        //.addInterceptor(AuthInterceptor())
+
 
     private val baseRetrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
