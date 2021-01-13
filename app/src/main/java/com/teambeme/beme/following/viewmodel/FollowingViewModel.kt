@@ -64,7 +64,6 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
 
     fun requestFollowingFollowerAnswers(pageNum: Int = _page) {
         followingRepository.getFollowingAnswers(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             pageNum
         ).enqueue(
             object : Callback<ResponseExplorationQuestions> {
@@ -102,7 +101,6 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
 
     fun requestPlusFollowingFollowerAnswers() {
         followingRepository.getFollowingAnswers(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             _page
         ).enqueue(
             object : Callback<ResponseExplorationQuestions> {
@@ -132,9 +130,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
     }
 
     fun requestFollowerFollowingList() {
-        followingRepository.getFollowingFollowerList(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI"
-        ).enqueue(
+        followingRepository.getFollowingFollowerList().enqueue(
             object : Callback<ResponseFollowingList> {
                 override fun onResponse(
                     call: Call<ResponseFollowingList>,
@@ -156,7 +152,6 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
     fun requestSearchMyFollowingFollower() {
         Log.d("search______", searchList.toString())
         followingRepository.getSearchMyFollowingFollower(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             searchQuery,
             searchRange
         ).enqueue(

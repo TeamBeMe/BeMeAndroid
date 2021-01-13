@@ -8,21 +8,19 @@ import retrofit2.Call
 
 class FollowingDataSourceImpl(private val service: FollowingService) : FollowingDataSource {
     override fun getFollowingAnswers(
-        token: String,
         page: Int
     ): Call<ResponseExplorationQuestions> {
-        return service.getFollowingAnswers(token, page)
+        return service.getFollowingAnswers(page)
     }
 
-    override fun getFollowingFollowerList(token: String): Call<ResponseFollowingList> {
-        return service.getFollowingFollowerList(token)
+    override fun getFollowingFollowerList(): Call<ResponseFollowingList> {
+        return service.getFollowingFollowerList()
     }
 
     override fun getSearchMyFollowingFollower(
-        token: String,
         query: String,
         range: String
     ): Call<ResponseFollowingSearchId> {
-        return service.getSearchMyFollowingFollower(token, query, range)
+        return service.getSearchMyFollowingFollower(query, range)
     }
 }

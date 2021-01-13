@@ -94,7 +94,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     }
 
     fun requestOtherMinds() {
-        exploreRepository.getExplorationAnother("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI")
+        exploreRepository.getExplorationAnother()
             .enqueue(
                 object : Callback<ResponseExplorationMinds> {
                     override fun onResponse(
@@ -114,7 +114,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     fun requestOtherQuestions() {
         exploreRepository.getExplorationOtherQuestions(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             page,
             null,
             "최신"
@@ -154,7 +153,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         pageNum: Int = page
     ) {
         exploreRepository.getExplorationOtherQuestions(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             pageNum,
             category,
             sorting
@@ -187,7 +185,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     fun requestPlusOtherQuestions() {
         exploreRepository.getExplorationOtherQuestions(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             page,
             _categoryNum,
             _sortingText
@@ -226,7 +223,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         _isMaxPage = false
         otherAnswersQuestionsID = questionId
         exploreRepository.getExplorationSameQuestionOtherAnswers(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             otherAnswersQuestionsID,
             page,
             sorting
@@ -262,7 +258,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     fun requestPlusSameQuestionOtherAnswers() {
         exploreRepository.getExplorationSameQuestionOtherAnswers(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             otherAnswersQuestionsID,
             page,
             _sortingText
@@ -297,9 +292,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     }
 
     fun requestQuestionForFirstAnswer() {
-        exploreRepository.getQuestionForFirstAnswer(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI"
-        ).enqueue(
+        exploreRepository.getQuestionForFirstAnswer().enqueue(
             object : Callback<ResponseExplorationQuestionForFirstAnswer> {
                 override fun onResponse(
                     call: Call<ResponseExplorationQuestionForFirstAnswer>,
@@ -322,7 +315,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     fun requestScrap(answerId: Int, answerData: ResponseExplorationQuestions.Data.Answer) {
         exploreRepository.putScrap(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsImlhdCI6MTYxMDU1OTY0NiwiZXhwIjoxNjQyMDk1NjQ2LCJpc3MiOiJiZW1lIn0.n37Wdop8r_ZZUEzZJtwGKNDd647nyDrzOrnF62DskjI",
             answerId
         ).enqueue(
             object : Callback<ResponseExplorationScrap> {

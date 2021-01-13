@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{otherMinds.content}"
                 android:textColor="@color/item_other_minds_txt_content_black"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

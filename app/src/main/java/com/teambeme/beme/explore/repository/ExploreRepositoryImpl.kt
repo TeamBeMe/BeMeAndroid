@@ -8,37 +8,34 @@ import com.teambeme.beme.explore.model.ResponseExplorationScrap
 import retrofit2.Call
 
 class ExploreRepositoryImpl(private val exploreDataSource: ExploreDataSource) : ExploreRepository {
-    override fun getExplorationAnother(token: String): Call<ResponseExplorationMinds> =
-        exploreDataSource.getExplorationAnother(token)
+    override fun getExplorationAnother(): Call<ResponseExplorationMinds> =
+        exploreDataSource.getExplorationAnother()
 
     override fun getExplorationOtherQuestions(
-        token: String,
         page: Int,
         category: Int?,
         sorting: String
     ): Call<ResponseExplorationQuestions> {
-        return exploreDataSource.getExplorationOtherQuestions(token, page, category, sorting)
+        return exploreDataSource.getExplorationOtherQuestions(page, category, sorting)
     }
 
     override fun getExplorationSameQuestionOtherAnswers(
-        token: String,
         questionId: Int,
         page: Int,
         sorting: String
     ): Call<ResponseExplorationQuestions> {
         return exploreDataSource.getExplorationSameQuestionOtherAnswers(
-            token,
             questionId,
             page,
             sorting
         )
     }
 
-    override fun getQuestionForFirstAnswer(token: String): Call<ResponseExplorationQuestionForFirstAnswer> {
-        return exploreDataSource.getQuestionForFirstAnswer(token)
+    override fun getQuestionForFirstAnswer(): Call<ResponseExplorationQuestionForFirstAnswer> {
+        return exploreDataSource.getQuestionForFirstAnswer()
     }
 
-    override fun putScrap(token: String, answerId: Int): Call<ResponseExplorationScrap> {
-        return exploreDataSource.putScrap(token, answerId)
+    override fun putScrap(answerId: Int): Call<ResponseExplorationScrap> {
+        return exploreDataSource.putScrap(answerId)
     }
 }

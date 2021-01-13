@@ -161,6 +161,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                 tab?.position?.let {
                     when (tab.position) {
                         0 -> {
+                            binding.rcvFollowingProfilesOfFollower.visibility = View.INVISIBLE
                             if (followingViewModel.followingList.value?.size == 0) {
                                 binding.rcvFollowingProfilesOfFollowing.visibility = View.INVISIBLE
                                 binding.txtFollowingNoFollowerListInformation.visibility =
@@ -171,10 +172,10 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                                     View.VISIBLE
                             } else {
                                 binding.rcvFollowingProfilesOfFollowing.visibility = View.VISIBLE
-                                binding.rcvFollowingProfilesOfFollower.visibility = View.INVISIBLE
                             }
                         }
                         1 -> {
+                            binding.rcvFollowingProfilesOfFollowing.visibility = View.INVISIBLE
                             if (followingViewModel.followerList.value?.size == 0) {
                                 binding.rcvFollowingProfilesOfFollower.visibility = View.INVISIBLE
                                 binding.txtFollowingNoFollowingListInformation.visibility =
@@ -185,7 +186,6 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                                     View.VISIBLE
                             } else {
                                 binding.rcvFollowingProfilesOfFollower.visibility = View.VISIBLE
-                                binding.rcvFollowingProfilesOfFollowing.visibility = View.INVISIBLE
                             }
                         }
                     }
