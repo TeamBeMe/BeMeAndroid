@@ -29,7 +29,7 @@ class QuestionPagerAdapter(
         private val binding: ItemHomeQuestionBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(answer: Answer) {
+        fun onBind(answer: Answer, position: Int) {
             binding.answer = answer
             binding.btnHomeAnswer.setOnClickListener {
                 val intent = Intent(context, AnswerActivity::class.java)
@@ -41,7 +41,13 @@ class QuestionPagerAdapter(
                 context.startActivity(intent)
             }
             binding.imgQuestionLock.setOnClickListener {
-                TransitionPublicFragment().show(fragmentManager, "TransitionPublic")
+                TransitionPublicFragment(answerList[position].publicFlag,
+                    object : TransitionPublicFragment.ChangePublicClickListener {
+                        override fun onClick() {
+                            homeViewModel.changePublic(position)
+                        }
+                    }
+                ).show(fragmentManager, "TransitionPublic")
             }
             binding.txtHomeEdit.setOnClickListener {
                 InfoChangeFragment().show(fragmentManager, "InfoChangeBottomSheet")
@@ -99,7 +105,7 @@ class QuestionPagerAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (position != answerList.size) {
-            with(holder as QuestionViewHolder) { holder.onBind(answerList[position]) }
+            with(holder as QuestionViewHolder) { holder.onBind(answerList[position], position) }
         } else {
             with(holder as MoreQuestionViewHolder) {
                 holder.onBind(fragmentManager)

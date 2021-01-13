@@ -18,7 +18,7 @@ data class Answer(
     @SerializedName("is_today")
     val isToday: Boolean,
     @SerializedName("public_flag")
-    val publicFlag: Int,
+    var publicFlag: Int,
     @SerializedName("Question.Category.id")
     val questionCategoryId: Int,
     @SerializedName("Question.Category.name")

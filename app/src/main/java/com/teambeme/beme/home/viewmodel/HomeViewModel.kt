@@ -41,6 +41,28 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
         }
     }
 
+    fun changePublic(position: Int) {
+        viewModelScope.launch {
+            try {
+                val currentList = _answerList.value!!
+                val response = homeRepository.modifyPublic(currentList[position].id, currentList[position].publicFlag)
+                if(response.success) {
+                    currentList[position].publicFlag = isPublic(currentList[position].publicFlag)
+                    _answerList.value = currentList
+                }
+            } catch (e: HttpException) {
+
+            }
+        }
+    }
+
+    private fun isPublic(publicFlag: Int): Int {
+        return when(publicFlag) {
+            0 -> 1
+            else -> 0
+        }
+    }
+
     fun getMoreQuestion() {
         viewModelScope.launch {
             val currentList = _answerList.value ?: mutableListOf()
