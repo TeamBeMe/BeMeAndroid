@@ -21,6 +21,10 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
         get() = _answerList
     private var currentQuestionPage = 1
 
+    private val _errorMoreQuestion = MutableLiveData("")
+    val errorMoreQuestion: LiveData<String>
+        get() = _errorMoreQuestion
+
     fun getAnswers() {
         val answerList = mutableListOf<Answer>()
         answerList.addAll(_answerList.value ?: mutableListOf())
@@ -33,6 +37,20 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                 _answerList.value = homeRepository.getAnswers(currentQuestionPage++).answers.toMutableList()
             } catch (e: HttpException) {
                 Log.d("Home", e.message())
+            }
+        }
+    }
+
+    fun getMoreQuestion() {
+        viewModelScope.launch {
+            val currentList = _answerList.value ?: mutableListOf()
+            try {
+                val moreQuestion = homeRepository.getNewAnswer()
+                currentList.add(moreQuestion.answer)
+                _answerList.value = currentList
+            } catch (e: HttpException) {
+                val errorMessage = e.message()
+                _errorMoreQuestion.value = errorMessage
             }
         }
     }

@@ -107,7 +107,7 @@ object BindingAdapters {
                 9 + category.length + digit,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-            textView.append(spannableString)
+            textView.text = spannableString
         } else {
             val text = "[ " + category + "에 관한 질문 ]"
             textView.text = text

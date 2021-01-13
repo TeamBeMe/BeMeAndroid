@@ -2,6 +2,7 @@ package com.teambeme.beme.home.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -12,7 +13,6 @@ import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.databinding.ItemHomeMoreQuestionBinding
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
 import com.teambeme.beme.home.model.Answer
-import com.teambeme.beme.home.view.AnswerSuggestFragment
 import com.teambeme.beme.home.view.InfoChangeFragment
 import com.teambeme.beme.home.view.TransitionPublicFragment
 import com.teambeme.beme.home.viewmodel.HomeViewModel
@@ -49,13 +49,17 @@ class QuestionPagerAdapter(
         }
     }
 
-    class MoreQuestionViewHolder(
+    inner class MoreQuestionViewHolder(
         private val binding: ItemHomeMoreQuestionBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(supportFragmentManager: FragmentManager) {
             binding.btnHomeMoreQuestion.setOnClickListener {
-                val answerSuggestFragment = AnswerSuggestFragment()
-                answerSuggestFragment.show(supportFragmentManager, "CustomDialog")
+//                if(answerList.all { answer -> answer.answerDate != null }) {
+                homeViewModel.getMoreQuestion()
+//                } else {
+//                    val answerSuggestFragment = AnswerSuggestFragment()
+//                    answerSuggestFragment.show(supportFragmentManager, "CustomDialog")
+//                }
             }
         }
     }
@@ -104,12 +108,12 @@ class QuestionPagerAdapter(
     }
 
     override fun getItemCount(): Int {
-
         return answerList.size + 1
     }
 
     fun replaceQuestionList(list: List<Answer>) {
         answerList = list.toMutableList()
+        Log.d("Home QPA", answerList.toString())
         notifyDataSetChanged()
     }
 

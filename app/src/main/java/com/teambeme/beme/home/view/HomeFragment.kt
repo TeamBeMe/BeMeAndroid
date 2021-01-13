@@ -1,6 +1,7 @@
 package com.teambeme.beme.home.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         val questionPagerAdapter = QuestionPagerAdapter(childFragmentManager, homeViewModel)
         setAnswerPager(questionPagerAdapter)
 
+        Log.d("Home", homeViewModel.answerList.toString())
         homeViewModel.setInitAnswer()
         homeViewModel.answerList.observe(viewLifecycleOwner) {
             questionPagerAdapter.replaceQuestionList(it.toList())
@@ -86,7 +88,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     fun returnToDefaultPosition() {
         binding.vpHomeQuestionSlider.post {
-            homeViewModel.questionList
+            homeViewModel.answerList
                 .value
                 ?.size
                 ?.minus(1)
