@@ -1,5 +1,8 @@
 package com.teambeme.beme.data.remote.singleton
 
+import com.teambeme.beme.data.remote.api.IdSearchService
+import com.teambeme.beme.data.remote.api.LoginService
+import com.teambeme.beme.data.remote.api.NoticeService
 import com.teambeme.beme.data.remote.api.*
 import com.teambeme.beme.util.AuthInterceptor
 import okhttp3.OkHttpClient
@@ -59,6 +62,20 @@ object RetrofitObjects {
     fun getMyPageService(): MyPageService = MyPageInstance ?: synchronized(this) {
         MyPageInstance ?: baseRetrofit.create(MyPageService::class.java).apply {
             MyPageInstance = this
+        }
+    }
+
+    private var idSearchInstance: IdSearchService? = null
+    fun getIdSearchService(): IdSearchService = idSearchInstance ?: synchronized(this) {
+        idSearchInstance ?: baseRetrofit.create(IdSearchService::class.java).apply {
+            idSearchInstance = this
+        }
+    }
+
+    private var noticeInstance: NoticeService? = null
+    fun getNoticeService(): NoticeService = noticeInstance ?: synchronized(this) {
+        noticeInstance ?: baseRetrofit.create(NoticeService::class.java).apply {
+            noticeInstance = this
         }
     }
 }
