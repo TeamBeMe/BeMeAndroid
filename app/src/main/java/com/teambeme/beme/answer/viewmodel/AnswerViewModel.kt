@@ -4,16 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teambeme.beme.data.local.dao.AnswerDao
+import com.teambeme.beme.answer.repository.AnswerRepository
 import com.teambeme.beme.data.local.entity.AnswerData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AnswerViewModel(
-    private val dataBase: AnswerDao
-) : ViewModel() {
+class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewModel() {
     private var answerId = -1
     val answer: MutableLiveData<String> = MutableLiveData("")
     private val _isCommentBlocked = MutableLiveData<Boolean>()
@@ -41,12 +39,12 @@ class AnswerViewModel(
     }
 
     private suspend fun getStoredAnswer(id: Long): AnswerData? {
-        return withContext(Dispatchers.IO) { dataBase.get(id) }
+        return withContext(Dispatchers.IO) { answerRepository.get(id) }
     }
 
     fun storeAnswer() {
         viewModelScope.launch {
-            dataBase.insert(
+            answerRepository.insert(
                 AnswerData(
                     questionId = questionId.toLong(),
                     answer = answer.value!!

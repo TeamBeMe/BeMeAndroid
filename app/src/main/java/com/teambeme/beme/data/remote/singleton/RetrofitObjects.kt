@@ -89,4 +89,11 @@ object RetrofitObjects {
             noticeInstance = this
         }
     }
+
+    private var answerInstance: AnswerService? = null
+    fun getAnswerService(): AnswerService = answerInstance ?: synchronized(this) {
+        answerInstance ?: baseRetrofit.create(AnswerService::class.java).apply {
+            answerInstance = this
+        }
+    }
 }
