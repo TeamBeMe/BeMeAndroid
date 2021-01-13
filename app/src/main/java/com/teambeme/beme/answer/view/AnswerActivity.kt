@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.teambeme.beme.R
+import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.viewmodel.AnswerViewModel
 import com.teambeme.beme.answer.viewmodel.AnswerViewModelFactory
 import com.teambeme.beme.base.BindingActivity
@@ -24,6 +25,7 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         super.onCreate(savedInstanceState)
         binding.lifecycleOwner = this
         binding.answerActivity = this
+        val intentAnswerData = intent.getParcelableExtra<IntentAnswerData>("intentAnswerData")!!
         initViewModel()
         val id = intent.getIntExtra("id", 0)
         initEditText(id)
