@@ -14,22 +14,22 @@ import retrofit2.Response
 
 class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : ViewModel() {
     private var copyRecentSearchList: MutableList<ResponseRecentSearchRecord.Data> = mutableListOf()
-
-    private val _searchedData = MutableLiveData<MutableList<ResponseRecentSearchRecord.Data>>()
-    val searchedData: MutableLiveData<MutableList<ResponseRecentSearchRecord.Data>>
-        get() = _searchedData
-
     var searchingId: String = ""
 
-    private val _searchingData = MutableLiveData<MutableList<ResponseIdSearchData.Data>>()
-    val searchingData: LiveData<MutableList<ResponseIdSearchData.Data>>
-        get() = _searchingData
+    private val _recentSearchData = MutableLiveData<MutableList<ResponseRecentSearchRecord.Data>>()
+    val recentSearchData: MutableLiveData<MutableList<ResponseRecentSearchRecord.Data>>
+        get() = _recentSearchData
+
+
+    private val _idSearchData = MutableLiveData<MutableList<ResponseIdSearchData.Data>>()
+    val idSearchData: LiveData<MutableList<ResponseIdSearchData.Data>>
+        get() = _idSearchData
 
     private val _deletePosition = MutableLiveData<Int>()
     val deletePosition: LiveData<Int>
         get() = _deletePosition
 
-    fun requestSearchedData() {
+    fun requestRecentSearchData() {
         idSearchRepository.getRecentSearchRecord("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ")
             .enqueue(
                 object : Callback<ResponseRecentSearchRecord> {
@@ -40,7 +40,7 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                         if (response.isSuccessful) {
                             Log.d("Network is success", response.body().toString())
                             copyRecentSearchList = response.body()!!.data!!.toMutableList()
-                            _searchedData.value = copyRecentSearchList.toMutableList()
+                            _recentSearchData.value = copyRecentSearchList.toMutableList()
                         } else {
                             Log.d("Network Error", response.body()?.data.toString())
                             Log.d("Network Error", response.body()?.status.toString())
@@ -80,7 +80,8 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
         })
     }
 
-    fun requestSearchingData() {
+
+    fun requestIdSearchgData() {
         idSearchRepository.idSearch(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             searchingId, "all"
@@ -93,7 +94,7 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                     ) {
                         if (response.isSuccessful) {
                             Log.d("Network is success", response.body().toString())
-                            _searchingData.value =
+                            _idSearchData.value =
                                 response.body()!!.data?.let { mutableListOf(it) }!!
                         } else {
                             Log.d("Network Error", response.body()?.data.toString())

@@ -1,5 +1,6 @@
 package com.teambeme.beme.notification.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -8,6 +9,7 @@ import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.data.remote.datasource.NoticeDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityNotificationBinding
+import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.notification.adapter.NoticeAdapter
 import com.teambeme.beme.notification.repository.NoticeRepositoryImpl
 import com.teambeme.beme.notification.viewmodel.NoticeViewModel
@@ -40,8 +42,7 @@ class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layo
         setClickListenerForPlusData(binding)
         binding.btnBackNotice.setOnClickListener { finish() }
 
-        binding.btnBackNotice.setOnClickListener { finish()
-        }
+
     }
 
     private fun initBinding(binding: ActivityNotificationBinding) {
@@ -65,7 +66,4 @@ class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layo
         }
     }
 
-    companion object {
-        const val TAG = "NotificationActivity"
-    }
 }

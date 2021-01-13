@@ -3,7 +3,6 @@ package com.teambeme.beme.idsearchfollowing.view
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teambeme.beme.R
@@ -29,14 +28,23 @@ class FollowingAfterIdSearchActivity :
 
         initBinding(binding)
         setRecentSearchAdapter(binding)
-        idSearchViewModel.requestSearchedData()
+        idSearchViewModel.requestRecentSearchData()
 
-        setIdSearchAdapter(binding)
+//        setIdSearchAdapter(binding)
+
+        val idSearchAdapter = IdSearchAdapter()
+        binding.rcvFollowingAfterIdsearch.apply {
+            adapter = idSearchAdapter
+            layoutManager = LinearLayoutManager(this@FollowingAfterIdSearchActivity)
+        }
+        idSearchViewModel.idSearchData.observe(this) { list ->
+            idSearchAdapter.replaceIdSearchList(list)
+        }
 
         binding.searchViewFollowingIdsearch.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(newText: String?): Boolean {
                 Log.d("Search", newText ?: "hyunwoo")
-                idSearchViewModel.requestSearchingData()
+                idSearchViewModel.requestIdSearchgData()
                 return false
             }
 
@@ -49,6 +57,7 @@ class FollowingAfterIdSearchActivity :
                 } else {
                     binding.viewRecentSearch.visibility = View.VISIBLE
                     binding.constraintViewFollowingAfterIdsearch.visibility = View.INVISIBLE
+                    idSearchAdapter.removeAllData()
                 }
                 return false
             }
@@ -71,7 +80,7 @@ class FollowingAfterIdSearchActivity :
             adapter = recentSearchAdapter
             layoutManager = LinearLayoutManager(this@FollowingAfterIdSearchActivity)
         }
-        idSearchViewModel.searchedData.observe(this) { list ->
+        idSearchViewModel.recentSearchData.observe(this) { list ->
             recentSearchAdapter.replaceRecentSearchList(list)
         }
         idSearchViewModel.deletePosition.observe(this) {
@@ -81,16 +90,5 @@ class FollowingAfterIdSearchActivity :
 
     private fun deleteListener() {
         idSearchViewModel.deleteRecentSearch()
-    }
-
-    private fun setIdSearchAdapter(binding: ActivityFollowingAfterIdSearchBinding) {
-        val idSearchAdapter = IdSearchAdapter()
-        binding.rcvFollowingAfterIdsearch.apply {
-            adapter = idSearchAdapter
-            layoutManager = LinearLayoutManager(this@FollowingAfterIdSearchActivity)
-        }
-        idSearchViewModel.searchingData.observe(this) { list ->
-            idSearchAdapter.replaceIdSearchList(list)
-        }
     }
 }

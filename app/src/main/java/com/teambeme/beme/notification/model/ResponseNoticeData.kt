@@ -20,13 +20,13 @@ data class ResponseNoticeData(
     ) {
         data class Activity(
             @SerializedName("answer_id")
-            val answerId: Int,
+            val answerId: Int?,
             @SerializedName("createdAt")
             val createdAt: String,
             @SerializedName("profile_img")
             val profileImg: String,
             @SerializedName("question_title")
-            val questionTitle: String,
+            val questionTitle: String?,
             @SerializedName("type")
             val type: String,
             @SerializedName("user_id")

@@ -22,11 +22,14 @@ class NoticeAdapter :
             binding.recentActivities = activities
             Log.d("Network is success_2", activities.toString())
         }
-//        override fun onClick(item : View?){
-//            val intent = Intent(item?.context,  )
-//        }
+
         val userProfilePic = binding.notificationProfilePic
     }
+
+    interface ItemClick{
+        fun onClick(view: View, position: Int)
+    }
+    var itemClick : ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -37,9 +40,10 @@ class NoticeAdapter :
 
     override fun onBindViewHolder(holder: NoticeViewHolder, position: Int) {
         holder.bind(getItem(position))
-        holder.userProfilePic.setOnClickListener {
-            //val intent = Intent(this, )
-        }
+
+//        holder.userProfilePic.setOnClickListener {
+//
+//        }
     }
 
     private class NoticeDiffUtil : DiffUtil.ItemCallback<ResponseNoticeData.Data.Activity>() {
