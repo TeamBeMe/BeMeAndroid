@@ -33,6 +33,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         super.onResume()
         exploreViewModel.requestOtherQuestionsWithCategorySorting(exploreViewModel.categoryNum, exploreViewModel.sortingText, 1)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
