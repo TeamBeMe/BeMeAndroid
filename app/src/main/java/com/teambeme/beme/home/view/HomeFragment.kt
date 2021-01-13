@@ -40,7 +40,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         homeViewModel.setInitAnswer()
         homeViewModel.answerList.observe(viewLifecycleOwner) {
             questionPagerAdapter.replaceQuestionList(it.toList())
-            binding.vpHomeQuestionSlider.setCurrentItem(it.size - 1, false)
+            binding.vpHomeQuestionSlider.setCurrentItem(it.size - 1, true)
         }
 
         binding.vpHomeQuestionSlider.registerOnPageChangeCallback(object :
