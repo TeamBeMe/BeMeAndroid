@@ -10,7 +10,6 @@ import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.teambeme.beme.home.model.Answer
 import com.teambeme.beme.main.view.MainActivity
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -32,7 +31,6 @@ class AlarmReceiver : BroadcastReceiver() {
         createNotificationChannel()
         deliverNotification(context)
     }
-
 
     private fun deliverNotification(context: Context) {
         val contentIntent = Intent(context, MainActivity::class.java)

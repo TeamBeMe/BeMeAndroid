@@ -69,6 +69,8 @@ object RetrofitObjects {
     fun getHomeService(): HomeService = homeInstance ?: synchronized(this) {
         homeInstance ?: baseRetrofit.create(HomeService::class.java).apply {
             homeInstance = this
+        }
+    }
 
     private var followingInstance: FollowingService? = null
     fun getFollowingService(): FollowingService = followingInstance ?: synchronized(this) {
@@ -76,7 +78,7 @@ object RetrofitObjects {
             followingInstance = this
         }
     }
-  
+
     private var idSearchInstance: IdSearchService? = null
     fun getIdSearchService(): IdSearchService = idSearchInstance ?: synchronized(this) {
         idSearchInstance ?: baseRetrofit.create(IdSearchService::class.java).apply {

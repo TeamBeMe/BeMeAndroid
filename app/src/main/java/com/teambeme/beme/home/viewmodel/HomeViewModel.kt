@@ -28,7 +28,6 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     fun getAnswers() {
         val answerList = mutableListOf<Answer>()
         answerList.addAll(_answerList.value ?: mutableListOf())
-
     }
 
     fun setInitAnswer() {
