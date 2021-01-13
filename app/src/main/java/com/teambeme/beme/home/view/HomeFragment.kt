@@ -84,6 +84,8 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
                         true -> binding.txtHomeTitle.text = "오늘의 질문"
                         else -> binding.txtHomeTitle.text = "과거의 질문"
                     }
+                } else {
+                    homeViewModel.getMoreAnswers()
                 }
             }
         })
