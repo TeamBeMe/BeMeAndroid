@@ -14,6 +14,7 @@ import com.teambeme.beme.databinding.ItemHomeMoreQuestionBinding
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
 import com.teambeme.beme.home.model.Answer
 import com.teambeme.beme.home.view.InfoChangeFragment
+import com.teambeme.beme.home.view.InfoChangeFragment.InfoChangeClickListener
 import com.teambeme.beme.home.view.TransitionPublicFragment
 import com.teambeme.beme.home.viewmodel.HomeViewModel
 
@@ -50,7 +51,18 @@ class QuestionPagerAdapter(
                 ).show(fragmentManager, "TransitionPublic")
             }
             binding.txtHomeEdit.setOnClickListener {
-                InfoChangeFragment().show(fragmentManager, "InfoChangeBottomSheet")
+                InfoChangeFragment(object : InfoChangeClickListener {
+                    override fun changeQuestion() {
+                        homeViewModel.changeQuestion(position)
+                    }
+
+                    override fun deleteAnswer() {
+                        homeViewModel.deleteAnswer(position)
+                    }
+                }).show(
+                    fragmentManager,
+                    "InfoChangeBottomSheet"
+                )
             }
         }
     }

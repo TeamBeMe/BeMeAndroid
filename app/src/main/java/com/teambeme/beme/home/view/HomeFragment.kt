@@ -1,10 +1,10 @@
 package com.teambeme.beme.home.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -35,12 +35,44 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         LifeCycleEventLogger(javaClass.name).registerLogger(viewLifecycleOwner.lifecycle)
         val questionPagerAdapter = QuestionPagerAdapter(childFragmentManager, homeViewModel)
         setAnswerPager(questionPagerAdapter)
-
-        Log.d("Home", homeViewModel.answerList.toString())
         homeViewModel.setInitAnswer()
+        setObserve()
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        returnToDefaultPosition()
+    }
+
+    private fun setObserve() {
+        homeViewModel.errorMessage.observe(viewLifecycleOwner) {
+            if (!it.isNullOrBlank())
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
+
+        homeViewModel.returnToStartEvent.observe(viewLifecycleOwner) {
+            if (it) {
+                returnToDefaultPosition()
+                homeViewModel.setReadyToReceiveEvent()
+            }
+        }
+    }
+
+    private fun setAnswerPager(pagerAdapter: QuestionPagerAdapter) {
+        val compositePageTransformer = getPageTransformer()
+        binding.vpHomeQuestionSlider.apply {
+            adapter = pagerAdapter
+            clipToPadding = false
+            clipChildren = false
+            offscreenPageLimit = 4
+            setPageTransformer(compositePageTransformer)
+            setPadding(120, 0, 120, 0)
+            getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+        }
+
         homeViewModel.answerList.observe(viewLifecycleOwner) {
-            questionPagerAdapter.replaceQuestionList(it.toList())
-            binding.vpHomeQuestionSlider.setCurrentItem(it.size - 1, true)
+            pagerAdapter.replaceQuestionList(it.toList())
         }
 
         binding.vpHomeQuestionSlider.registerOnPageChangeCallback(object :
@@ -55,25 +87,6 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
                 }
             }
         })
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        returnToDefaultPosition()
-    }
-
-    private fun setAnswerPager(pagerAdapter: QuestionPagerAdapter) {
-        val compositePageTransformer = getPageTransformer()
-        binding.vpHomeQuestionSlider.apply {
-            adapter = pagerAdapter
-            clipToPadding = false
-            clipChildren = false
-            offscreenPageLimit = 4
-            setPageTransformer(compositePageTransformer)
-            setPadding(120, 0, 120, 0)
-            getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-        }
     }
 
     private fun getPageTransformer(): ViewPager2.PageTransformer {

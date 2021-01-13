@@ -8,7 +8,7 @@ data class Answer(
     @SerializedName("answer_idx")
     val answerIdx: String?,
     @SerializedName("comment_blocked_flag")
-    val commentBlockedFlag: Boolean?,
+    val commentBlockedFlag: Int?,
     @SerializedName("content")
     val content: String?,
     @SerializedName("created_at")

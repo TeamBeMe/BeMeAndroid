@@ -31,7 +31,7 @@ interface HomeService {
 
     @Headers("Content-Type:application/json")
     @DELETE("home/{answerId}")
-    suspend fun deleteQuestion(
+    suspend fun deleteAnswer(
         @Path("answerId") answerId: Int
     ): ResponseModifyData
 }
