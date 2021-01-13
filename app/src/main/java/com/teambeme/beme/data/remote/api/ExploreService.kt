@@ -1,6 +1,6 @@
 package com.teambeme.beme.data.remote.api
 
-import com.teambeme.beme.explore.model.ResponseExplorationAnswers
+import com.teambeme.beme.explore.model.ResponseExplorationMinds
 import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
@@ -12,7 +12,7 @@ interface ExploreService {
     @GET("exploration/another")
     fun getExplorationAnother(
         @Header("token") token: String
-    ): Call<ResponseExplorationAnswers>
+    ): Call<ResponseExplorationMinds>
 
     @GET("exploration")
     fun getExplorationOtherQuestions(

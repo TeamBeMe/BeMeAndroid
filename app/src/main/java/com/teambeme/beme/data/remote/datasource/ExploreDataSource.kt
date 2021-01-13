@@ -1,13 +1,13 @@
 package com.teambeme.beme.data.remote.datasource
 
-import com.teambeme.beme.explore.model.ResponseExplorationAnswers
+import com.teambeme.beme.explore.model.ResponseExplorationMinds
 import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
 import retrofit2.Call
 
 interface ExploreDataSource {
-    fun getExplorationAnother(token: String): Call<ResponseExplorationAnswers>
+    fun getExplorationAnother(token: String): Call<ResponseExplorationMinds>
 
     fun getExplorationOtherQuestions(
         token: String,

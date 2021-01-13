@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="otherAnswers"
             type="com.teambeme.beme.explore.model.ResponseExplorationQuestions.Data.Answer" />
@@ -41,10 +42,10 @@
 
         <TextView
             android:id="@+id/txt_other_answers_time"
-            android:text="@{otherAnswers.answerDate}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:text="@{otherAnswers.answerDate}"
             android:textColor="@color/item_other_answers_txt_time_gray"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@id/txt_other_answers_category"
@@ -64,10 +65,12 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_other_answers_profile"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            setSrcFromUrl="@{otherAnswers.userProfile}"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
             android:layout_marginTop="9dp"
             android:src="@drawable/img_profile_sample"
+            app:layout_constraintDimensionRatio="1"
             app:layout_constraintStart_toStartOf="@+id/txt_other_answers_category"
             app:layout_constraintTop_toBottomOf="@+id/txt_other_answers_content" />
 

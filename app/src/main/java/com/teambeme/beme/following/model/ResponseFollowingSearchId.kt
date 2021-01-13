@@ -1,13 +1,13 @@
-package com.teambeme.beme.explore.model
+package com.teambeme.beme.following.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ResponseExplorationAnswers(
+data class ResponseFollowingSearchId(
     @SerializedName("data")
-    val `data`: List<Data>,
+    val `data`: Data?,
     @SerializedName("message")
     val message: String,
     @SerializedName("status")
@@ -17,15 +17,13 @@ data class ResponseExplorationAnswers(
 ) : Parcelable {
     @Parcelize
     data class Data(
-        @SerializedName("comment_count")
-        val commentCount: Int,
-        @SerializedName("content")
-        val content: String,
         @SerializedName("id")
         val id: Int,
-        @SerializedName("Question.id")
-        val questionId: Int,
-        @SerializedName("Question.title")
-        val questionTitle: String
+        @SerializedName("is_followed")
+        val isFollowed: Boolean?,
+        @SerializedName("nickname")
+        val nickname: String,
+        @SerializedName("profile_img")
+        val profileImg: String
     ) : Parcelable
 }
