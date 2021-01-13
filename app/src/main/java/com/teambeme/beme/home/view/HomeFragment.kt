@@ -1,6 +1,7 @@
 package com.teambeme.beme.home.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +12,19 @@ import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingFragment
+import com.teambeme.beme.data.remote.datasource.HomeDataSourceImpl
+import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentHomeBinding
 import com.teambeme.beme.home.adapter.QuestionPagerAdapter
+import com.teambeme.beme.home.repository.HomeRepositoryImpl
 import com.teambeme.beme.home.viewmodel.HomeViewModel
+import com.teambeme.beme.home.viewmodel.HomeViewModelFactory
 import kotlin.math.abs
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
-    private val homeViewModel: HomeViewModel by activityViewModels()
+    private val homeViewModelFactory =
+        HomeViewModelFactory(HomeRepositoryImpl(HomeDataSourceImpl(RetrofitObjects.getHomeService())))
+    private val homeViewModel: HomeViewModel by activityViewModels() { homeViewModelFactory }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,28 +32,15 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.lifecycleOwner?.lifecycle?.let { lifecycle ->
-            LifeCycleEventLogger(javaClass.name).registerLogger(
-                lifecycle
-            )
-        }
-        val compositePageTransformer = getPageTransformer()
-        val questionPagerAdapter = QuestionPagerAdapter(childFragmentManager)
+        LifeCycleEventLogger(javaClass.name).registerLogger(viewLifecycleOwner.lifecycle)
+        val questionPagerAdapter = QuestionPagerAdapter(childFragmentManager, homeViewModel)
+        setAnswerPager(questionPagerAdapter)
 
-        binding.vpHomeQuestionSlider.apply {
-            adapter = questionPagerAdapter
-            clipToPadding = false
-            clipChildren = false
-            offscreenPageLimit = 4
-            setPageTransformer(compositePageTransformer)
-            setPadding(120, 0, 120, 0)
-            getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-        }
-
-        homeViewModel.setDummyQuestions()
-        homeViewModel.questionList.observe(viewLifecycleOwner) { questionList ->
-            questionPagerAdapter.replaceQuestionList(questionList.toList())
-            binding.vpHomeQuestionSlider.setCurrentItem(questionList.size - 1, false)
+        Log.d("Home", homeViewModel.answerList.toString())
+        homeViewModel.setInitAnswer()
+        homeViewModel.answerList.observe(viewLifecycleOwner) {
+            questionPagerAdapter.replaceQuestionList(it.toList())
+            binding.vpHomeQuestionSlider.setCurrentItem(it.size - 1, false)
         }
 
         binding.vpHomeQuestionSlider.registerOnPageChangeCallback(object :
@@ -54,7 +48,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 if (position != 0) {
-                    when (homeViewModel.questionList.value?.get(position - 1)?.isToday) {
+                    when (homeViewModel.answerList.value?.get(position - 1)?.isToday) {
                         true -> binding.txtHomeTitle.text = "오늘의 질문"
                         else -> binding.txtHomeTitle.text = "과거의 질문"
                     }
@@ -69,6 +63,19 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         returnToDefaultPosition()
     }
 
+    private fun setAnswerPager(pagerAdapter: QuestionPagerAdapter) {
+        val compositePageTransformer = getPageTransformer()
+        binding.vpHomeQuestionSlider.apply {
+            adapter = pagerAdapter
+            clipToPadding = false
+            clipChildren = false
+            offscreenPageLimit = 4
+            setPageTransformer(compositePageTransformer)
+            setPadding(120, 0, 120, 0)
+            getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+        }
+    }
+
     private fun getPageTransformer(): ViewPager2.PageTransformer {
         val compositePageTransformer = CompositePageTransformer()
         compositePageTransformer.addTransformer(MarginPageTransformer(40))
@@ -81,7 +88,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     fun returnToDefaultPosition() {
         binding.vpHomeQuestionSlider.post {
-            homeViewModel.questionList
+            homeViewModel.answerList
                 .value
                 ?.size
                 ?.minus(1)

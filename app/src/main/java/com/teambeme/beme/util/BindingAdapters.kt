@@ -92,7 +92,7 @@ object BindingAdapters {
 
     @BindingAdapter("home:category", "home:answerIdx", "home:categoryColor")
     @JvmStatic
-    fun setCategoryText(textView: TextView, category: String, answerIdx: Int?, color: Int) {
+    fun setCategoryText(textView: TextView, category: String, answerIdx: String?, color: Int) {
         if (answerIdx != null) {
             val text = "[ " + category + "에 관한 " + answerIdx + "번째 질문 ]"
             val digit = answerIdx.toString().length
@@ -109,7 +109,7 @@ object BindingAdapters {
                 9 + category.length + digit,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-            textView.append(spannableString)
+            textView.text = spannableString
         } else {
             val text = "[ " + category + "에 관한 질문 ]"
             textView.text = text
