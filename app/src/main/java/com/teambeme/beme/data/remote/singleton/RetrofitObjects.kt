@@ -61,4 +61,11 @@ object RetrofitObjects {
             MyPageInstance = this
         }
     }
+
+    private var homeInstance: HomeService? = null
+    fun getHomeService(): HomeService = homeInstance ?: synchronized(this) {
+        homeInstance ?: baseRetrofit.create(HomeService::class.java).apply {
+            homeInstance = this
+        }
+    }
 }

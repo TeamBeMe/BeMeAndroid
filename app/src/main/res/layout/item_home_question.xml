@@ -9,7 +9,7 @@
 
         <variable
             name="answer"
-            type="com.teambeme.beme.home.model.ResponseQuestionData.Answer" />
+            type="com.teambeme.beme.home.model.Answer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,7 +32,7 @@
             android:id="@+id/txt_question_info"
             style="@style/question_info_style"
             home:answerIdx="@{answer.answerIdx}"
-            home:category="@{answer.question.category.name}"
+            home:category="@{answer.questionCategoryName}"
             home:categoryColor="@{@color/home_category_white}"
             android:layout_marginTop="20dp"
             android:textSize="12sp"
@@ -55,7 +55,7 @@
             android:id="@+id/txt_question_title"
             style="@style/question_question_style"
             android:layout_marginTop="32dp"
-            android:text="@{answer.question.title}"
+            android:text="@{answer.questionTitle}"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
