@@ -13,6 +13,7 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
+import com.google.android.material.chip.Chip
 import com.teambeme.beme.R
 
 object BindingAdapters {
@@ -20,12 +21,6 @@ object BindingAdapters {
     @JvmStatic
     fun setCategory(textView: TextView, category: String) {
         textView.text = "[ " + category + "에 관한 질문 ]"
-    }
-
-    @BindingAdapter("setTime")
-    @JvmStatic
-    fun setTime(textView: TextView, time: String) {
-        textView.text = time + "분 전"
     }
 
     @BindingAdapter("following:setTextForUnAnswered")
@@ -158,6 +153,45 @@ object BindingAdapters {
                 )
                 textView.append(spannableString)
             }
+        }
+    }
+
+    @BindingAdapter("mypage:category", "mypage:answerIdx")
+    @JvmStatic
+    fun setPageCategoryText(textView: TextView, category: String, answerIdx: Int?) {
+        if (answerIdx != null) {
+            val text = "[ " + category + "에 관한 " + answerIdx + "번째 질문 ]"
+        } else {
+            val text = "[ " + category + "에 관한 질문 ]"
+            textView.text = text
+        }
+    }
+
+    @BindingAdapter("attendCount")
+    @JvmStatic
+    fun setAttendCount(textView: TextView, attend: Int) {
+        val text = "연속 출석 $attend"
+        textView.text = text
+    }
+
+    @BindingAdapter("allAnswerCount")
+    @JvmStatic
+    fun setAllAnswerCount(textView: TextView, count: Int) {
+        val text = "답한 질문 $count"
+        textView.text = text
+    }
+
+    @BindingAdapter("setFollow")
+    @JvmStatic
+    fun setFollow(chip: Chip, isFollow: Boolean) {
+        if (isFollow) {
+            chip.isChecked = true
+            val text = "팔로잉"
+            chip.text = text
+        } else {
+            chip.isChecked = false
+            val text = "팔로우"
+            chip.text = text
         }
     }
 }

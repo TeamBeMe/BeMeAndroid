@@ -64,6 +64,11 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        returnToDefaultPosition()
+    }
+
     private fun getPageTransformer(): ViewPager2.PageTransformer {
         val compositePageTransformer = CompositePageTransformer()
         compositePageTransformer.addTransformer(MarginPageTransformer(40))

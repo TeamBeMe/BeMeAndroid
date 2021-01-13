@@ -1,12 +1,23 @@
 package com.teambeme.beme.mypage.adapter
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class MyPageViewPagerAdapter(fm: FragmentManager) :
-    FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-    var fragments = listOf<Fragment>()
-    override fun getCount(): Int = fragments.size
-    override fun getItem(position: Int): Fragment = fragments[position]
+class MyPageViewPagerAdapter(fragment: Fragment) :
+    FragmentStateAdapter(fragment) {
+
+    var fragments: ArrayList<Fragment> = ArrayList()
+
+    override fun getItemCount(): Int {
+        return fragments.size
+    }
+
+    override fun createFragment(position: Int): Fragment {
+        return fragments[position]
+    }
+
+    fun addFragment(fragment: Fragment) {
+        fragments.add(fragment)
+        notifyItemInserted(fragments.size - 1)
+    }
 }

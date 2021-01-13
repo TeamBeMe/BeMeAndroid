@@ -1,443 +1,333 @@
 package com.teambeme.beme.explore.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.explore.model.OtherMindsData
-import com.teambeme.beme.explore.model.OtherQuestionsData
+import com.teambeme.beme.explore.model.ResponseExplorationAnswers
+import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
+import com.teambeme.beme.explore.model.ResponseExplorationQuestions
+import com.teambeme.beme.explore.model.ResponseExplorationScrap
+import com.teambeme.beme.explore.repository.ExploreRepository
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class ExploreViewModel : ViewModel() {
-    private val _otherMindsList = MutableLiveData<List<OtherMindsData>>()
-    val otherMindsList: LiveData<List<OtherMindsData>>
+class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewModel() {
+    private val _otherMindsList = MutableLiveData<List<ResponseExplorationAnswers.Data>>()
+    val otherMindsList: LiveData<List<ResponseExplorationAnswers.Data>>
         get() = _otherMindsList
 
-    private val _otherQuestionsList = MutableLiveData<MutableList<OtherQuestionsData>>()
-    val otherQuestionsList: LiveData<MutableList<OtherQuestionsData>>
+    private var tempOtherQuestionsList: MutableList<ResponseExplorationQuestions.Data.Answer>? =
+        mutableListOf()
+    private val _otherQuestionsList =
+        MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>()
+    val otherQuestionsList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>
         get() = _otherQuestionsList
 
-    private val _otherAnswersList = MutableLiveData<MutableList<OtherQuestionsData>>()
-    val otherAnswersList: LiveData<MutableList<OtherQuestionsData>>
-        get() = _otherAnswersList
+    private var tempSameQuestionOtherAnswersList: MutableList<ResponseExplorationQuestions.Data.Answer>? =
+        mutableListOf()
+    private val _sameQuestionOtherAnswersList =
+        MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>()
+    val sameQuestionOtherAnswersList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>
+        get() = _sameQuestionOtherAnswersList
 
-    private val dummyOtherAnswersList = mutableListOf(
-        OtherQuestionsData(
-            userId = "1",
-            category = "가치관",
-            title = null,
-            content = "답변1입니다.답변1입니다.답변1입니다.답변1입니다.답변1입니다.답변1입니다.답변1입니다.",
-            time = "5",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "2",
-            category = "사랑",
-            title = null,
-            content = "답변2입니다.답변2입니다.답변2입니다.답변2입니다.답변2입니다.답변2입니다.답변2입니다.",
-            time = "26",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "3",
-            category = "일상",
-            title = null,
-            content = "답변3입니다.답변3입니다.답변3입니다.답변3입니다.답변3입니다.답변3입니다.답변3입니다.",
-            time = "15",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "4",
-            category = "이야기",
-            title = null,
-            content = "답변4입니다.답변4입니다.답변4입니다.답변4입니다.답변4입니다.답변4입니다.답변4입니다.",
-            time = "3",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "5",
-            category = "미래",
-            title = null,
-            content = "답변5입니다.답변5입니다.답변5입니다.답변5입니다.답변5입니다.답변5입니다.답변5입니다.",
-            time = "4",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "6",
-            category = "의미",
-            title = null,
-            content = "답변6입니다.답변6입니다.답변6입니다.답변6입니다.답변6입니다.답변6입니다.답변6입니다.",
-            time = "5",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "7",
-            category = "일상",
-            title = null,
-            content = "답변7입니다.답변7입니다.답변7입니다.답변7입니다.답변7입니다.답변7입니다.답변7입니다.",
-            time = "15",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "8",
-            category = "이야기",
-            title = null,
-            content = "답변8입니다.답변8입니다.답변8입니다.답변8입니다.답변8입니다.답변8입니다.답변8입니다.",
-            time = "3",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "9",
-            category = "미래",
-            title = null,
-            content = "답변9입니다.답변9입니다.답변9입니다.답변9입니다.답변9입니다.답변9입니다.답변9입니다.",
-            time = "4",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "10",
-            category = "의미",
-            title = null,
-            content = "답변10입니다.답변10입니다.답변10입니다.답변10입니다.답변10입니다.답변10입니다.답변10입니다.",
-            time = "5",
-            isBookmarked = false,
-            isAnswered = true
-        )
-    )
+    private var _questionForFirstAnswer =
+        ResponseExplorationQuestionForFirstAnswer.Answer("", 0, 0, "")
+    val questionForFirstAnswer: ResponseExplorationQuestionForFirstAnswer.Answer
+        get() = _questionForFirstAnswer
 
-    fun setDummyOtherAnswers() {
-        _otherAnswersList.value = dummyOtherAnswersList.toMutableList()
+    private var _scrapData = ResponseExplorationScrap("", 0, true)
+    val scrapData: ResponseExplorationScrap
+        get() = _scrapData
+
+    private var _chipChecked = mutableListOf(false, false, false, false, false, false)
+    val chipChecked: MutableList<Boolean>
+        get() = _chipChecked
+
+    private var _categoryNum: Int? = null
+    val categoryNum: Int?
+        get() = _categoryNum
+
+    private var _sortingText: String = "최신"
+    val sortingText: String
+        get() = _sortingText
+
+    private var page: Int = 1
+
+    private var _isMaxPage = false
+    val isMaxPage: Boolean
+        get() = _isMaxPage
+
+    private var otherAnswersQuestionsID: Int = 0
+
+    fun setCategoryNum(category: Int) {
+        page = 1
+        _isMaxPage = false
+        chipChecked[category - 1] = !chipChecked[category - 1]
+        if (chipChecked == listOf(false, false, false, false, false, false)) {
+            _categoryNum = null
+        } else {
+            _chipChecked = mutableListOf(false, false, false, false, false, false)
+            chipChecked[category - 1] = !chipChecked[category - 1]
+            _categoryNum = category
+        }
+        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText)
     }
 
-    fun plusDummyOtherAnswers() {
-        val plusOtherAnswersList = listOf(
-            OtherQuestionsData(
-                userId = "11",
-                category = "가치관",
-                title = null,
-                content = "답변11입니다.",
-                time = "5",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "12",
-                category = "사랑",
-                title = null,
-                content = "답변12입니다.",
-                time = "26",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "13",
-                category = "일상",
-                title = null,
-                content = "답변13입니다.",
-                time = "15",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "14",
-                category = "이야기",
-                title = null,
-                content = "답변14입니다.",
-                time = "3",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "15",
-                category = "미래",
-                title = null,
-                content = "답변15입니다.",
-                time = "4",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "16",
-                category = "의미",
-                title = null,
-                content = "답변16입니다.",
-                time = "5",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "17",
-                category = "일상",
-                title = null,
-                content = "답변17입니다.",
-                time = "15",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "18",
-                category = "이야기",
-                title = null,
-                content = "답변18입니다.",
-                time = "3",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "19",
-                category = "미래",
-                title = null,
-                content = "답변19입니다.",
-                time = "4",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "20",
-                category = "의미",
-                title = null,
-                content = "답변20입니다.",
-                time = "5",
-                isBookmarked = false,
-                isAnswered = true
+    fun setSortingTextFromExplore(sorting: String) {
+        page = 1
+        _isMaxPage = false
+        _sortingText = sorting
+        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText)
+    }
+
+    fun setSortingTextFromExploreDetail(questionId: Int, sorting: String) {
+        page = 1
+        _isMaxPage = false
+        _sortingText = sorting
+        requestSameQuestionsOtherAnswers(questionId, sorting)
+    }
+
+    fun requestOtherMinds() {
+        exploreRepository.getExplorationAnother("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI")
+            .enqueue(
+                object : Callback<ResponseExplorationAnswers> {
+                    override fun onResponse(
+                        call: Call<ResponseExplorationAnswers>,
+                        response: Response<ResponseExplorationAnswers>
+                    ) {
+                        if (response.isSuccessful)
+                            _otherMindsList.value = response.body()!!.data?.toList()
+                    }
+
+                    override fun onFailure(call: Call<ResponseExplorationAnswers>, t: Throwable) {
+                        Log.d("network_requestOtherMinds", "통신실패")
+                    }
+                }
             )
-        )
-        dummyOtherAnswersList.addAll(plusOtherAnswersList.toMutableList())
-        _otherAnswersList.value = dummyOtherAnswersList.toMutableList()
     }
 
-    private val dummyOtherQuestionsList = mutableListOf(
-        OtherQuestionsData(
-            userId = "1",
-            category = "가치관",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "5",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "2",
-            category = "사랑",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "26",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "3",
-            category = "일상",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "15",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "4",
-            category = "이야기",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "3",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "5",
-            category = "미래",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "4",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "6",
-            category = "의미",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "5",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "7",
-            category = "일상",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "15",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "8",
-            category = "이야기",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "3",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "9",
-            category = "미래",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "4",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "10",
-            category = "의미",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "5",
-            isBookmarked = false,
-            isAnswered = true
+    fun requestOtherQuestions() {
+        exploreRepository.getExplorationOtherQuestions(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            page,
+            null,
+            "최신"
         )
-    )
+            .enqueue(
+                object : Callback<ResponseExplorationQuestions> {
+                    override fun onResponse(
+                        call: Call<ResponseExplorationQuestions>,
+                        response: Response<ResponseExplorationQuestions>
+                    ) {
+                        if (response.isSuccessful) {
+                            tempOtherQuestionsList =
+                                response.body()!!.data?.answers?.toMutableList()
+                            _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
+                            if (response.body()!!.data?.pageLen == page) {
+                                _isMaxPage = true
+                            } else {
+                                page++
+                            }
+                        }
+                    }
 
-    fun setDummyOtherQuestions() {
-        _otherQuestionsList.value = dummyOtherQuestionsList.toMutableList()
-    }
-
-    fun plusDummyOtherQuestions() {
-        val plusOtherQuestionsList = listOf(
-            OtherQuestionsData(
-                userId = "11",
-                category = "가치관",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "5",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "12",
-                category = "사랑",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "26",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "13",
-                category = "일상",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "15",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "14",
-                category = "이야기",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "3",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "15",
-                category = "미래",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "4",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "16",
-                category = "의미",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "5",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "17",
-                category = "일상",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "15",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "18",
-                category = "이야기",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "3",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "19",
-                category = "미래",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "4",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "20",
-                category = "의미",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "5",
-                isBookmarked = false,
-                isAnswered = true
+                    override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
+                        Log.d("network_requestOtherQuestions", "통신실패")
+                    }
+                }
             )
-        )
-        dummyOtherQuestionsList.addAll(plusOtherQuestionsList.toMutableList())
-        _otherQuestionsList.value = dummyOtherQuestionsList.toMutableList()
     }
 
-    fun setDummyOtherMinds() {
-        val dummyOtherMindsList = listOf(
-            OtherMindsData(
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재"
-            ),
-            OtherMindsData(
-                title = "나는 요즘 무엇을 사랑하고 잇나요?",
-                content = "비미비미비미업, 비미비미비미업, 비미비미비미업"
-            ),
-            OtherMindsData(
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이"
-            ),
-            OtherMindsData(
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재"
-            ),
-            OtherMindsData(
-                title = "나는 요즘 무엇을 사랑하고 잇나요?",
-                content = "비미비미비미업, 비미비미비미업, 비미비미비미업"
-            ),
-            OtherMindsData(
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이"
-            ),
-            OtherMindsData(
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재"
-            )
+    fun requestOtherQuestionsWithCategorySorting(
+        category: Int?,
+        sorting: String,
+        pageNum: Int = page
+    ) {
+        exploreRepository.getExplorationOtherQuestions(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            pageNum,
+            category,
+            sorting
         )
-        _otherMindsList.value = dummyOtherMindsList.toList()
+            .enqueue(
+                object : Callback<ResponseExplorationQuestions> {
+                    override fun onResponse(
+                        call: Call<ResponseExplorationQuestions>,
+                        response: Response<ResponseExplorationQuestions>
+                    ) {
+                        if (response.isSuccessful) {
+                            page = pageNum
+                            tempOtherQuestionsList =
+                                response.body()!!.data?.answers?.toMutableList()
+                            _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
+                            if (response.body()!!.data?.pageLen == page) {
+                                _isMaxPage = true
+                            } else {
+                                page++
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
+                        Log.d("network_requestOtherQuestionsWithCategorySorting", "통신실패")
+                    }
+                }
+            )
+    }
+
+    fun requestPlusOtherQuestions() {
+        exploreRepository.getExplorationOtherQuestions(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            page,
+            _categoryNum,
+            _sortingText
+        )
+            .enqueue(
+                object : Callback<ResponseExplorationQuestions> {
+                    override fun onResponse(
+                        call: Call<ResponseExplorationQuestions>,
+                        response: Response<ResponseExplorationQuestions>
+                    ) {
+                        if (response.isSuccessful) {
+                            tempOtherQuestionsList?.addAll(response.body()!!.data?.answers?.toMutableList())
+                            _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
+
+                            if (response.body()!!.data?.pageLen == page) {
+                                _isMaxPage = true
+                            } else {
+                                page++
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
+                        Log.d("network_requestPlusOtherQuestions", "통신실패")
+                    }
+                }
+            )
+    }
+
+    fun requestSameQuestionsOtherAnswers(questionId: Int, sorting: String = "최신") {
+        page = 1
+        _isMaxPage = false
+        otherAnswersQuestionsID = questionId
+        exploreRepository.getExplorationSameQuestionOtherAnswers(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            otherAnswersQuestionsID,
+            page,
+            sorting
+        ).enqueue(
+            object : Callback<ResponseExplorationQuestions> {
+                override fun onResponse(
+                    call: Call<ResponseExplorationQuestions>,
+                    response: Response<ResponseExplorationQuestions>
+                ) {
+                    if (response.isSuccessful) {
+                        tempSameQuestionOtherAnswersList =
+                            response.body()!!.data?.answers?.toMutableList()
+                        _sameQuestionOtherAnswersList.value =
+                            tempSameQuestionOtherAnswersList?.toMutableList()
+                        Log.d(
+                            "network_sameQuestionsOtherAnswers",
+                            otherAnswersQuestionsID.toString()
+                        )
+                        if (response.body()!!.data?.pageLen == page) {
+                            _isMaxPage = true
+                        } else {
+                            page++
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
+                    Log.d("network_requestSameQuestionsOtherAnswers", "통신실패")
+                }
+            }
+        )
+    }
+
+    fun requestPlusSameQuestionOtherAnswers() {
+        exploreRepository.getExplorationSameQuestionOtherAnswers(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            otherAnswersQuestionsID,
+            page,
+            _sortingText
+        ).enqueue(
+            object : Callback<ResponseExplorationQuestions> {
+                override fun onResponse(
+                    call: Call<ResponseExplorationQuestions>,
+                    response: Response<ResponseExplorationQuestions>
+                ) {
+                    if (response.isSuccessful) {
+                        tempSameQuestionOtherAnswersList?.addAll(response.body()!!.data?.answers?.toMutableList())
+                        _sameQuestionOtherAnswersList.value =
+                            tempSameQuestionOtherAnswersList?.toMutableList()
+
+                        if (response.body()!!.data?.pageLen == page) {
+                            _isMaxPage = true
+                        } else {
+                            page++
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
+                    Log.d("network_requestPlusSameQuestionsOtherAnswers", "통신실패")
+                }
+            }
+        )
+    }
+
+    fun requestQuestionForFirstAnswer() {
+        exploreRepository.getQuestionForFirstAnswer(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI"
+        ).enqueue(
+            object : Callback<ResponseExplorationQuestionForFirstAnswer> {
+                override fun onResponse(
+                    call: Call<ResponseExplorationQuestionForFirstAnswer>,
+                    response: Response<ResponseExplorationQuestionForFirstAnswer>
+                ) {
+                    if (response.isSuccessful) {
+                        _questionForFirstAnswer = response.body()!!.data
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseExplorationQuestionForFirstAnswer>,
+                    t: Throwable
+                ) {
+                    Log.d("network_requestQuestionForFirstAnswer", "통신실패")
+                }
+            }
+        )
+    }
+
+    fun requestScrap(answerId: Int, answerData: ResponseExplorationQuestions.Data.Answer) {
+        exploreRepository.putScrap(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            answerId
+        ).enqueue(
+            object : Callback<ResponseExplorationScrap> {
+                override fun onResponse(
+                    call: Call<ResponseExplorationScrap>,
+                    response: Response<ResponseExplorationScrap>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("scrap_viewmodel", answerId.toString())
+                        _scrapData = response.body()!!
+                        Log.d("scrap_1", scrapData.message)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseExplorationScrap>,
+                    t: Throwable
+                ) {
+                    Log.d("network_requestQuestionForFirstAnswer", "통신실패")
+                }
+            }
+        )
     }
 }

@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import com.teambeme.beme.data.remote.singleton.BeMeAuthPreference
 import com.teambeme.beme.util.PixelRatio
 
 class BeMeApplication : Application() {
@@ -23,6 +24,7 @@ class BeMeApplication : Application() {
             val msg = getString(R.string.msg_token_fmt, token)
             Log.d("BeMeApplication.TAG", msg)
         })
+        BeMeAuthPreference.init(this)
     }
 
     private fun initPixelUtil() {

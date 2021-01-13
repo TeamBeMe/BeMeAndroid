@@ -1,6 +1,10 @@
 package com.teambeme.beme.otherpage.model
-import com.google.gson.annotations.SerializedName
 
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class ResponseOtherData(
     @SerializedName("data")
     val `data`: Data,
@@ -10,13 +14,15 @@ data class ResponseOtherData(
     val status: Int,
     @SerializedName("success")
     val success: Boolean
-) {
+) : Parcelable {
+    @Parcelize
     data class Data(
         @SerializedName("answers")
         val answers: List<Answer>,
         @SerializedName("page_len")
         val pageLen: Int
-    ) {
+    ) : Parcelable {
+        @Parcelize
         data class Answer(
             @SerializedName("answer_date")
             val answerDate: String,
@@ -37,7 +43,7 @@ data class ResponseOtherData(
             @SerializedName("is_author")
             val isAuthor: Boolean,
             @SerializedName("is_scrapped")
-            val isScrapped: Boolean,
+            var isScrapped: Boolean,
             @SerializedName("public_flag")
             val publicFlag: Boolean,
             @SerializedName("question")
@@ -50,6 +56,6 @@ data class ResponseOtherData(
             val userNickname: String,
             @SerializedName("user_profile")
             val userProfile: String?
-        )
+        ) : Parcelable
     }
 }

@@ -15,11 +15,13 @@
         android:theme="@style/Theme.BeMe"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".signup.view.SignUpActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".login.view.LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".otherpage.view.OtherPageActivity" />
-
         <service
             android:name=".MyFirebaseMessagingService"
             android:enabled="true"

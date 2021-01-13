@@ -56,10 +56,11 @@
             tools:text="5분 전" />
 
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_otheritem_profile"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            app:setSrcFromUrl="@{answer.userProfile}"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -80,10 +81,11 @@
             app:layout_constraintStart_toEndOf="@+id/img_otheritem_profile"
             app:layout_constraintTop_toTopOf="@+id/img_otheritem_profile" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/img_otheritem_scrap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
             android:src="@{answer.scrapped ? @drawable/ic_scrap_on_mypage : @drawable/ic_scrap_off_mypage}"
             app:layout_constraintBottom_toBottomOf="@+id/img_otheritem_profile"
             app:layout_constraintEnd_toEndOf="parent"

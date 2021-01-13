@@ -2,8 +2,8 @@ package com.teambeme.beme.answer.view
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.ViewModelProvider
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.viewmodel.AnswerViewModel
 import com.teambeme.beme.answer.viewmodel.AnswerViewModelFactory
@@ -18,13 +18,13 @@ import kotlinx.coroutines.launch
 
 class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_answer) {
     private var viewJob = Job()
-    private val answerViewModelFactory = AnswerViewModelFactory(AppDatabase.getInstance(applicationContext).answerDao)
+    private lateinit var answerViewModel: AnswerViewModel
     private val uiScope = CoroutineScope(Dispatchers.Main + viewJob)
-    private val answerViewModel: AnswerViewModel by viewModels { answerViewModelFactory }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.lifecycleOwner = this
         binding.answerActivity = this
+        initViewModel()
         val id = intent.getIntExtra("id", 0)
         initEditText(id)
         setSwitchListener()
@@ -33,6 +33,13 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
 
     override fun onBackPressed() {
         super.onBackPressed()
+    }
+
+    private fun initViewModel() {
+        val answerViewModelFactory =
+            AnswerViewModelFactory(AppDatabase.getInstance(applicationContext).answerDao)
+        answerViewModel =
+            ViewModelProvider(this, answerViewModelFactory).get(AnswerViewModel::class.java)
     }
 
     fun setClickText() {
