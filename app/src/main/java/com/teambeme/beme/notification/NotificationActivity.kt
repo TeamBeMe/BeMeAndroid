@@ -11,7 +11,8 @@ import com.teambeme.beme.databinding.ActivityNotificationBinding
 import com.teambeme.beme.notification.adapter.RecentActivitiesAdapter
 import com.teambeme.beme.notification.viewmodel.NotificationViewModel
 
-class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layout.activity_notification) {
+class NotificationActivity :
+    BindingActivity<ActivityNotificationBinding>(R.layout.activity_notification) {
     private val notificationViewModel: NotificationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +39,7 @@ class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layo
             Log.d(TAG, msg)
         })
 
-        binding.btnBackNotice.setOnClickListener{
+        binding.btnBackNotice.setOnClickListener {
             finish()
         }
     }

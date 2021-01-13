@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".signup.view.PermissionInfoFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_permission_info"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/btn_permission_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <ProgressBar
+        android:id="@+id/progress_permission_bar"
+        style="@style/signup_progressbar_style"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:max="100"
+        android:progress="25"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_permission_info" />
+
+    <TextView
+        android:id="@+id/txt_permission_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/notosanskr_medium"
+        android:includeFontPadding="false"
+        android:text="앱 접근권한 안내"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_permission_info" />
+
+    <TextView
+        android:id="@+id/txt_permission_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="* BeMe를 시작하기 전 아래 권한을 확인해 주세요"
+        android:textColor="@color/signup_text_gray"
+        app:layout_constraintStart_toStartOf="@+id/txt_permission_title"
+        app:layout_constraintTop_toBottomOf="@+id/txt_permission_title" />
+
+    <TextView
+        android:id="@+id/txt_permission_essence_access"
+        style="@style/permission_text_title"
+        android:layout_marginTop="52dp"
+        android:text="필수 접근 권한"
+        app:layout_constraintStart_toStartOf="@+id/txt_permission_title"
+        app:layout_constraintTop_toBottomOf="@+id/txt_permission_check" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/signup_background_gray"
+        android:paddingVertical="16dp"
+        android:paddingStart="28dp"
+        android:text="필수 접근 권한 없음"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/txt_permission_essence_access" />
+
+    <TextView
+        android:id="@+id/txt_permission_choice_access"
+        style="@style/permission_text_title"
+        android:layout_marginTop="32dp"
+        android:text="선택 접근 권한"
+        app:layout_constraintStart_toStartOf="@+id/txt_permission_title"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <LinearLayout
+        android:id="@+id/linear_permission_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/signup_background_gray"
+        android:orientation="vertical"
+        android:paddingVertical="12dp"
+        android:paddingStart="28dp"
+        app:layout_constraintTop_toBottomOf="@id/txt_permission_choice_access">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알림 권한"
+            android:textColor="@color/signup_content_title"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="질문 예약 알림 및 ..."
+            android:textColor="@color/signup_content_content"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_permission_album"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/signup_background_gray"
+        android:orientation="vertical"
+        android:paddingVertical="12dp"
+        android:paddingStart="28dp"
+        app:layout_constraintTop_toBottomOf="@id/linear_permission_alarm">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="사진보관함 접근 권한(업로드용)"
+            android:textColor="@color/signup_content_title"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="개인 프로필 사진으로 업로드할 시에 필요"
+            android:textColor="@color/signup_content_content"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_permission_explain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:paddingHorizontal="28dp"
+        android:text="@string/txt_permission_explain"
+        android:textColor="@color/signup_text_gray"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/linear_permission_album" />
+
+    <Button
+        android:id="@+id/btn_permission_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="28dp"
+        android:background="@drawable/btn_signup_background"
+        android:fontFamily="@font/notosankr_bold"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="확인"
+        android:textColor="@color/white"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_permission_explain" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

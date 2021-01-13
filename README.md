@@ -168,13 +168,13 @@ BeMe는 [Google의 Kotlin Coding Style Guide](https://developer.android.com/kotl
 ### Naming Rule
 #### Package
 - 패키지의 이름은 항상 소문자로 하고, 밑줄을 사용하지 않습니다
-- 두 개 이상의 단어를 한 번에 사용하는 것을 금지합니다
+- 두 개 이상의 단어를 한 번에 사용하는 것을 지양합니다
 
 #### Class/Object
 - Pascal Case
 ```
 class BeMe
-open class SampleName { /* ... */ }
+open class BeMeParent { /* ... */ }
 object MoreSampleName : SampleName() { /* ... */ }
 ```
 
@@ -282,7 +282,7 @@ footer(optional)
 
 - App Architecture based on MVVM Architecture
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/54518925/103668648-aa9f2580-4fba-11eb-9698-7f4645f8f073.png" style="zoom:50%;" />
+  <img src="https://user-images.githubusercontent.com/54518925/104303381-5db4d500-550d-11eb-86b7-b8bda29a1987.png" style="zoom:50%;" />
 </p>
 
 - Android Jetpack
@@ -295,6 +295,7 @@ footer(optional)
   - 비동기 작업을 위한 Coroutine
   - 생명주기를 관찰하여 정확한 문제 파악을 위한 AndroidX LifeCycle
   - 쉽고 깔끔한 코딩을 위한 안드로이드 코틀린 확장함수 Android KTX
+  - 쉬운 화면전환을 위한 Navigation Component
 
 - 코틀린 공식 가이드메 맞춘 클린 코드를 작성하기 위한 ktlint
 
@@ -315,6 +316,8 @@ footer(optional)
 - 쉬운 권한 획득을 위한 TedPermission
 
 - 푸시 알람 구현을 위한 Firebase/Firebase Cloud Messaging
+
+- 헤더 고정 스크롤 뷰를 위한 StickyNestedScrollView
 
 ## 구현 기술
 - [Room을 이용한 글 임시저장 구현](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/RoomDataConnection.md)
