@@ -124,7 +124,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="사랑"
+                android:text="관계"
                 android:textColor="@color/explore_chiptext_selector"
                 app:chipBackgroundColor="@color/explore_chip_selector"
                 app:chipCornerRadius="4dp"
@@ -136,7 +136,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="일상"
+                android:text="사랑"
                 android:textColor="@color/explore_chiptext_selector"
                 app:chipBackgroundColor="@color/explore_chip_selector"
                 app:chipCornerRadius="4dp"
@@ -148,7 +148,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="이야기"
+                android:text="일상"
                 android:textColor="@color/explore_chiptext_selector"
                 app:chipBackgroundColor="@color/explore_chip_selector"
                 app:chipCornerRadius="4dp"
@@ -160,7 +160,7 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="미래"
+                android:text="나"
                 android:textColor="@color/explore_chiptext_selector"
                 app:chipBackgroundColor="@color/explore_chip_selector"
                 app:chipCornerRadius="4dp"
@@ -172,36 +172,13 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="의미"
+                android:text="이야기"
                 android:textColor="@color/explore_chiptext_selector"
                 app:chipBackgroundColor="@color/explore_chip_selector"
                 app:chipCornerRadius="4dp"
                 app:chipStrokeColor="@color/explore_chipstroke_selector"
                 app:chipStrokeWidth="1dp" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_write_7"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="가치관"
-                android:textColor="@color/explore_chiptext_selector"
-                app:chipBackgroundColor="@color/explore_chip_selector"
-                app:chipCornerRadius="4dp"
-                app:chipStrokeColor="@color/explore_chipstroke_selector"
-                app:chipStrokeWidth="1dp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_write_8"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="사랑"
-                android:textColor="@color/explore_chiptext_selector"
-                app:chipBackgroundColor="@color/explore_chip_selector"
-                app:chipCornerRadius="4dp"
-                app:chipStrokeColor="@color/explore_chipstroke_selector"
-                app:chipStrokeWidth="1dp" />
         </com.google.android.material.chip.ChipGroup>
 
         <View

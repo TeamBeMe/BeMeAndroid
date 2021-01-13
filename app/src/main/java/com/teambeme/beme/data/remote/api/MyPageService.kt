@@ -1,9 +1,6 @@
 package com.teambeme.beme.data.remote.api
 
-import com.teambeme.beme.mypage.model.ResponseMyAnswer
-import com.teambeme.beme.mypage.model.ResponseMyProfile
-import com.teambeme.beme.mypage.model.ResponseMyScrap
-import com.teambeme.beme.mypage.model.ResponseProfile
+import com.teambeme.beme.mypage.model.*
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -41,4 +38,11 @@ interface MyPageService {
         @Query("query") query: String?,
         @Query("page") page: Int
     ): Call<ResponseMyScrap>
+
+    @Headers("Content-type: application/json")
+    @PUT("home/public")
+    fun putPublic(
+        @Header("token") token: String,
+        @Body body: RequestPublic
+    ): Call<ResponsePublic>
 }

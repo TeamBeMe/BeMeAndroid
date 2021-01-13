@@ -1,12 +1,8 @@
 package com.teambeme.beme.data.remote.datasource
 
 import com.teambeme.beme.data.remote.api.MyPageService
-import com.teambeme.beme.mypage.model.ResponseMyAnswer
-import com.teambeme.beme.mypage.model.ResponseMyProfile
-import com.teambeme.beme.mypage.model.ResponseMyScrap
-import com.teambeme.beme.mypage.model.ResponseProfile
+import com.teambeme.beme.mypage.model.*
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 
 class MyPageDataSourceImpl(private val service: MyPageService) : MyPageDataSource {
@@ -14,7 +10,7 @@ class MyPageDataSourceImpl(private val service: MyPageService) : MyPageDataSourc
         token: String,
         file: MultipartBody.Part?
     ): Call<ResponseProfile> {
-        return service.putProfile( token,file)
+        return service.putProfile(token, file)
     }
 
     override fun getMyAnswer(
@@ -24,10 +20,10 @@ class MyPageDataSourceImpl(private val service: MyPageService) : MyPageDataSourc
         query: String?,
         page: Int
     ): Call<ResponseMyAnswer> {
-        return service.getMyAnswer(token,public,category,query,page)
+        return service.getMyAnswer(token, public, category, query, page)
     }
 
-    override fun getMyProfile(token: String) : Call<ResponseMyProfile> {
+    override fun getMyProfile(token: String): Call<ResponseMyProfile> {
         return service.getMyProfile(token)
     }
 
@@ -38,6 +34,10 @@ class MyPageDataSourceImpl(private val service: MyPageService) : MyPageDataSourc
         query: String?,
         page: Int
     ): Call<ResponseMyScrap> {
-        return service.getMyScrap(token,public,category,query,page)
+        return service.getMyScrap(token, public, category, query, page)
+    }
+
+    override fun putPublic(token: String, answerId: Int, publicFlag: Int): Call<ResponsePublic> {
+        return service.putPublic(token, RequestPublic(answerId, publicFlag))
     }
 }

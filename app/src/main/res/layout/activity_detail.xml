@@ -43,7 +43,9 @@
                 android:id="@+id/btn_detail_scrap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@{detailViewModel.detailData.scrapped ? @drawable/ic_scrap_on_mypage : @drawable/ic_scrap_off_mypage}"
                 android:layout_marginEnd="12dp"
+                android:onClick="@{() -> detailViewModel.scrapClicked()}"
                 android:backgroundTint="@android:color/transparent"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_detail_dot"
                 app:layout_constraintEnd_toStartOf="@+id/txt_detail_dot"
@@ -67,6 +69,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:overScrollMode="never"
             app:layout_constraintBottom_toTopOf="@+id/constraint_detail_replybar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraint_detail_top"
@@ -84,7 +87,8 @@
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="18dp"
                     android:layout_marginEnd="28dp"
-                    android:text="이번 주말을 후회 없이\n 보낼 수 있는 방법은 무엇인가요?"
+                    android:text="@{detailViewModel.detailData.question}"
+                    tools:text="이번 주말을 후회 없이\n 보낼 수 있는 방법은 무엇인가요?"
                     android:textColor="@color/answer_text_black"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -97,7 +101,8 @@
                     style="@style/answer_info_style"
                     android:textColor="@color/answer_text_info_gray"
                     android:layout_marginTop="20dp"
-                    android:text="[ 미래에 관한 2번째 질문 ]"
+                    android:text="@{`[  `+detailViewModel.detailData.category+`에 관한 질문  ]  · `}"
+                    tools:text="[ 미래에 관한 2번째 질문 ]"
                     app:layout_constraintStart_toStartOf="@+id/txt_detail_question"
                     app:layout_constraintTop_toBottomOf="@+id/txt_detail_question" />
 
@@ -106,18 +111,40 @@
                     style="@style/answer_info_style"
                     android:textColor="@color/answer_text_info_gray"
                     android:layout_marginTop="8dp"
-                    android:text="2020.12.24"
+                    android:text="@{detailViewModel.detailData.answerDate}"
+                    tools:text="2020.12.24"
                     app:layout_constraintStart_toStartOf="@+id/txt_detail_info"
                     app:layout_constraintTop_toBottomOf="@+id/txt_detail_info" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_detail_profile"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginTop="18dp"
+                    mypage:setSrcFromUrl="@{detailViewModel.detailData.userProfile}"
+                    mypage:isVisible="@{!detailViewModel.detailData.author}"
+                    app:layout_constraintStart_toStartOf="@+id/txt_detail_data"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_detail_data"
+                    app:srcCompat="@drawable/img_profile_sample_following_show_all" />
+
+                <TextView
+                    android:id="@+id/txt_detail_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_detail_profile"
+                    app:layout_constraintStart_toEndOf="@+id/img_detail_profile"
+                    app:layout_constraintTop_toTopOf="@+id/img_detail_profile" />
 
                 <View
                     android:id="@+id/divider_detail_top"
                     style="@style/answer_divider"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="22dp"
                     android:background="@color/answer_text_gray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_detail_data" />
+                    app:layout_constraintTop_toBottomOf="@+id/img_detail_profile" />
 
                 <TextView
                     android:id="@+id/txt_detail_answer"
@@ -127,7 +154,8 @@
                     android:layout_marginTop="30dp"
                     android:background="@null"
                     android:gravity="top"
-                    android:text="저는 몇일 전 퇴사를 했어요. 수많은 고민 끝에 결국 저질렀습니다. 몇 년간 원해 왔던 일이라 꿈만 같아요. 제가 스스로의 힘으로 하고 싶은 걸 해볼 수있는 시간적 여유를 가지게 된게 정말 만족스러워요. 저는 몇일 전 퇴사를 했어요. 수많은 고민 끝에 결국 저질렀습니다. 몇 년간 원해 왔던 일이라 꿈만 같아요. 제가 스스로의 힘으로 하고 싶은 걸 해볼 수있는 시간적 여유를 가지게 된게 정말 만족스러워요. 저는 몇일 전 퇴사를 했어요. 수많은 고민 끝에 결국 저질렀습니다. 몇 년간 원해 왔던 일이라 꿈만 같아요. 제가 스스로의 힘으로 하고 싶은 걸 해볼 수있는 시간적 여유를 가지게 된게 정말 만족스러워요."
+                    android:text="@{detailViewModel.detailData.content}"
+                    tools:text="저는 몇일 전 퇴사를 했어요. 수많은 고민 끝에 결국 저질렀습니다. 몇 년간 원해 왔던 일이라 꿈만 같아요. 제가 스스로의 힘으로 하고 싶은 걸 해볼 수있는 시간적 여유를 가지게 된게 정말 만족스러워요. 저는 몇일 전 퇴사를 했어요. 수많은 고민 끝에 결국 저질렀습니다. 몇 년간 원해 왔던 일이라 꿈만 같아요. 제가 스스로의 힘으로 하고 싶은 걸 해볼 수있는 시간적 여유를 가지게 된게 정말 만족스러워요. 저는 몇일 전 퇴사를 했어요. 수많은 고민 끝에 결국 저질렀습니다. 몇 년간 원해 왔던 일이라 꿈만 같아요. 제가 스스로의 힘으로 하고 싶은 걸 해볼 수있는 시간적 여유를 가지게 된게 정말 만족스러워요."
                     android:textColor="@color/answer_text_black"
                     android:textColorHint="@color/answer_text_gray"
                     android:textSize="14sp"
@@ -208,6 +236,9 @@
                 android:layout_marginEnd="6dp"
                 android:layout_marginBottom="14dp"
                 android:background="@drawable/border_layout"
+                android:scrollHorizontally="false"
+                android:maxLines="5"
+                android:singleLine="false"
                 android:text="@={detailViewModel.answerText}"
                 android:ems="10"
                 android:hint="댓글 작성"

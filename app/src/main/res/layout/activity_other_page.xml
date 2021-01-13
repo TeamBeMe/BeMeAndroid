@@ -40,6 +40,14 @@
                     android:scaleType="centerCrop"
                     tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
+                <ImageView
+                    android:id="@+id/img_otherpage_darkprofile"
+                    android:layout_width="match_parent"
+                    android:layout_height="158dp"
+                    android:layout_gravity="fill"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/rectangle_25" />
+
                 <ImageButton
                     android:id="@+id/btn_otherpage_dot3"
                     android:layout_width="wrap_content"
@@ -75,7 +83,7 @@
                 tools:text="sushi_isthebest" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_scrap_2"
+                android:id="@+id/chip_follow"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,6 +129,39 @@
                 app:layout_constraintStart_toEndOf="@+id/txt_otherpage_attend"
                 app:layout_constraintTop_toTopOf="@+id/txt_otherpage_attend"
                 tools:text="답한 질문 202" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/constraint_other_empty"
+                app:layout_constraintTop_toBottomOf="@+id/txt_otherpage_attend"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent">
+
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="72dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_info_mypage" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="18dp"
+                    android:text="아직 등록된 글이 없습니다."
+                    app:layout_constraintTop_toBottomOf="@id/imageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_otherdata"

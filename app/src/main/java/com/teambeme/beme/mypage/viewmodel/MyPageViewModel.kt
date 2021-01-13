@@ -7,15 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.mypage.model.*
 import com.teambeme.beme.mypage.repository.MyPageRepository
-import com.teambeme.beme.otherpage.model.ResponseOtherData
-import com.teambeme.beme.otherpage.model.ResponseOtherInfo
-import okhttp3.MediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 
 class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewModel() {
     private var copyMyAnswerList: MutableList<ResponseMyAnswer.Data.Answer> = mutableListOf()
@@ -29,44 +24,74 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
     val myProfileInfo: LiveData<ResponseMyProfile.Data>
         get() = _myProfileInfo
 
-    private var page=1
-    private var scrapPage=1
+    private var page = 1
+    private var scrapPage = 1
 
-    private val _scrapFilter = MutableLiveData<String>()
-    val scrapFilter: LiveData<String>
+    private val _scrapFilter = MutableLiveData<MyWriteFilter>()
+    val scrapFilter: LiveData<MyWriteFilter>
         get() = _scrapFilter
 
-    fun setScrapFilter(scrapFilter: String) {
-        _scrapFilter.value = scrapFilter
+    private val _myQuery = MutableLiveData<String?>()
+    val myQuery: LiveData<String?>
+        get() = _myQuery
+
+    private val _scrapQuery = MutableLiveData<String?>()
+    val scrapQuery: LiveData<String?>
+        get() = _scrapQuery
+
+    fun setMyQuery(query: String) {
+        _myQuery.value = query
+    }
+
+    fun initMyAnswer() {
+        _mywriteFilter.value?.category = null
+        _mywriteFilter.value?.range = null
+        page = 1
+        _isAnswerMax.value = false
+        _myQuery.value = null
+    }
+
+    fun initPage() {
+        page = 1
+        _isAnswerMax.value = false
+    }
+
+    fun initScrap() {
+        scrapPage = 1
+        _isScrapMax.value = false
+        _scrapQuery.value = null
+    }
+
+    fun initScrapPage() {
+        scrapPage = 1
+        _isScrapMax.value = false
+    }
+
+    fun setScrapFilter(range: String?, category: Int?) {
+        val filter = MyWriteFilter(range, category)
+        _scrapFilter.value = filter
     }
 
     private val _mywriteFilter = MutableLiveData<MyWriteFilter>()
     val mywriteFilter: LiveData<MyWriteFilter>
         get() = _mywriteFilter
 
-    fun setWriteFilter(range: String, category: String) {
+    fun setWriteFilter(range: String?, category: Int?) {
         val myfilter = MyWriteFilter(range, category)
         _mywriteFilter.value = myfilter
     }
 
-    //lateinit var multiBody:MultipartBody.Part
-
-    fun putProfiles(multipart:MultipartBody.Part){
-        val file = File(profileString.value)
-        val fileReqBody = RequestBody.create(MediaType.parse("image/jpg"), file)
-        val part = MultipartBody.Part.createFormData("image", file.name, fileReqBody)
-        var map = HashMap<String,@JvmSuppressWildcards RequestBody>()
-        map.put("image",fileReqBody)
+    fun putProfiles(multipart: MultipartBody.Part?) {
         myPageRepository.putProfile(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ"
-            ,multipart
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
+            multipart
         ).enqueue(object : Callback<ResponseProfile> {
             override fun onResponse(
                 call: Call<ResponseProfile>,
                 response: Response<ResponseProfile>
             ) {
                 if (response.isSuccessful) {
-                    Log.d("aa","Asdfsdf")
+                    Log.d("aa", "Asdfsdf")
                 }
             }
 
@@ -76,12 +101,69 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
         })
     }
 
+    private val _isAnswerMax = MutableLiveData<Boolean>()
+    val isAnswerMax: LiveData<Boolean>
+        get() = _isAnswerMax
+
+    private val _publicPosition = MutableLiveData<Int>()
+    val publicPosition: LiveData<Int>
+        get() = _publicPosition
+
+    fun setPublicPosition(position: Int) {
+        _publicPosition.value = position
+    }
+
+    private val _isScrapMax = MutableLiveData<Boolean>()
+    val isScrapMax: LiveData<Boolean>
+        get() = _isScrapMax
+
+    private val _isPublic = MutableLiveData<Boolean>()
+    val isPublic: LiveData<Boolean>
+        get() = _isPublic
+
+    fun Boolean.toInt() = if (this) 0 else 1
+
+    private fun setPublic() {
+        _isPublic.value = _isPublic.value != true
+    }
+
+    fun putPublic() {
+        myPageRepository.putPublic(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
+            copyMyAnswerList[publicPosition.value!!].id,
+            copyMyAnswerList[publicPosition.value!!].publicFlag.toInt()
+        ).enqueue(object :
+            Callback<ResponsePublic> {
+            override fun onResponse(
+                call: Call<ResponsePublic>,
+                response: Response<ResponsePublic>
+            ) {
+                if (response.isSuccessful) {
+                    setPublic()
+                    copyMyAnswerList[publicPosition.value!!].publicFlag = isPublic.value!!
+                    _mypageWriteData.value = copyMyAnswerList.toMutableList()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponsePublic>, t: Throwable) {
+            }
+        })
+    }
+
+    private val _isAnswerEmpty = MutableLiveData<Boolean>()
+    val isAnswerEmpty: LiveData<Boolean>
+        get() = _isAnswerEmpty
+
+    private val _isScrapEmpty = MutableLiveData<Boolean>()
+    val isScrapEmpty: LiveData<Boolean>
+        get() = _isScrapEmpty
+
     fun getMyAnswer() {
         myPageRepository.getMyAnswer(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
-            null,
-            null,
-            null,
+            mywriteFilter.value?.range,
+            mywriteFilter.value?.category,
+            myQuery.value,
             page
         ).enqueue(object :
             Callback<ResponseMyAnswer> {
@@ -90,16 +172,30 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                 response: Response<ResponseMyAnswer>
             ) {
                 if (response.isSuccessful) {
-                    copyMyAnswerList = response.body()!!.data?.answers?.toMutableList()
-                    _mypageWriteData.value=copyMyAnswerList.toMutableList()
-                    /*when (page == response.body()!!.data.pageLen) {
-                        true -> {
-                            _isMax.value = true
+                    if (page == 1) {
+                        copyMyAnswerList = response.body()!!.data?.answers?.toMutableList()
+                        _isAnswerEmpty.value = copyMyAnswerList.size == 0
+                        _mypageWriteData.value = copyMyAnswerList.toMutableList()
+                        when (page >= response.body()!!.data.pageLen) {
+                            true -> {
+                                _isAnswerMax.value = true
+                            }
+                            else -> {
+                                page++
+                            }
                         }
-                        else -> {
-                            page++
+                    } else {
+                        copyMyAnswerList.addAll(response.body()!!.data?.answers?.toMutableList())
+                        _mypageWriteData.value = copyMyAnswerList.toMutableList()
+                        when (page == response.body()!!.data.pageLen) {
+                            true -> {
+                                _isAnswerMax.value = true
+                            }
+                            else -> {
+                                page++
+                            }
                         }
-                    }*/
+                    }
                 }
             }
 
@@ -109,7 +205,11 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
         })
     }
 
-    fun getMyProfile(){
+    fun setScrapQuery(query: String) {
+        _scrapQuery.value = query
+    }
+
+    fun getMyProfile() {
         myPageRepository.getMyProfile(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ"
         ).enqueue(object :
@@ -132,10 +232,10 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
     fun getMyScrap() {
         myPageRepository.getMyScrap(
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
-            null,
-            null,
-            null,
-            page
+            scrapFilter.value?.range,
+            scrapFilter.value?.category,
+            scrapQuery.value,
+            scrapPage
         ).enqueue(object :
             Callback<ResponseMyScrap> {
             override fun onResponse(
@@ -143,16 +243,30 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                 response: Response<ResponseMyScrap>
             ) {
                 if (response.isSuccessful) {
-                    copyMyScrapList = response.body()!!.data?.answers?.toMutableList()
-                    _mypageScrapData.value=copyMyScrapList.toMutableList()
-                    /*when (page == response.body()!!.data.pageLen) {
-                        true -> {
-                            _isMax.value = true
+                    if (scrapPage == 1) {
+                        copyMyScrapList = response.body()!!.data?.answers?.toMutableList()
+                        _isScrapEmpty.value = copyMyScrapList.size == 0
+                        _mypageScrapData.value = copyMyScrapList.toMutableList()
+                        when (scrapPage >= response.body()!!.data.pageLen) {
+                            true -> {
+                                _isScrapMax.value = true
+                            }
+                            else -> {
+                                scrapPage++
+                            }
                         }
-                        else -> {
-                            page++
+                    } else {
+                        copyMyScrapList.addAll(response.body()!!.data?.answers.toMutableList())
+                        _mypageScrapData.value = copyMyScrapList.toMutableList()
+                        when (scrapPage >= response.body()!!.data.pageLen) {
+                            true -> {
+                                _isScrapMax.value = true
+                            }
+                            else -> {
+                                scrapPage++
+                            }
                         }
-                    }*/
+                    }
                 }
             }
 
@@ -161,36 +275,6 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
             }
         })
     }
-
-    /*fun setDummyWrite() {
-        val dummyWrite = listOf(
-            MyWrite(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "으음",
-                time = "5분 전",
-                isSecret = false
-            ),
-            MyWrite(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "행복",
-                time = "5분 전",
-                isSecret = true
-            ),
-            MyWrite(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "사랑",
-                time = "5분 전",
-                isSecret = false
-            ),
-            MyWrite(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "미래",
-                time = "5분 전",
-                isSecret = false
-            )
-        )
-        _mypageWriteData.value = dummyWrite.toMutableList()
-    }*/
 
     private val _mypageScrapData = MutableLiveData<MutableList<ResponseMyScrap.Data.Answer>>()
     val mypageScrapData: LiveData<MutableList<ResponseMyScrap.Data.Answer>>
@@ -207,100 +291,6 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
     private val _profileString = MutableLiveData<String>()
     val profileString: LiveData<String>
         get() = _profileString
-
-    fun setProfileString(uri: String) {
-        _profileString.value = uri
-    }
-
-    /*fun setDummyScrap() {
-        val dummyScrap = listOf(
-            MyScrap(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "[ 미래에 관한 질문 ]",
-                time = "5분 전",
-                userId = "iron man"
-            ),
-            MyScrap(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "[ 미래에 관한 질문 ]",
-                time = "5분 전",
-                userId = "iron man"
-            ),
-            MyScrap(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "[ 미래에 관한 질문 ]",
-                time = "5분 전",
-                userId = "iron man"
-            ),
-            MyScrap(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "[ 미래에 관한 질문 ]",
-                time = "5분 전",
-                userId = "iron man"
-            )
-        )
-        _mypageScrapData.value = dummyScrap.toMutableList()
-    }*/
-
-    /*fun addDummyScrap() {
-        val dummyScrap = listOf(
-            MyScrap(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "[ 미래에 관한 질문 ]",
-                time = "5분 전",
-                userId = "iron man1"
-            ),
-            MyScrap(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "[ 미래에 관한 질문 ]",
-                time = "5분 전",
-                userId = "iron man2"
-            ),
-            MyScrap(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "[ 미래에 관한 질문 ]",
-                time = "5분 전",
-                userId = "iron man3"
-            ),
-            MyScrap(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "[ 미래에 관한 질문 ]",
-                time = "5분 전",
-                userId = "iron man4"
-            )
-        )
-        _mypageScrapData.value?.addAll(dummyScrap.toMutableList())
-    }*/
-
-    /*fun addDummyWrite() {
-        val dummyWrite = listOf(
-            MyWrite(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "으음",
-                time = "5분 전",
-                isSecret = false
-            ),
-            MyWrite(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "행복",
-                time = "5분 전",
-                isSecret = true
-            ),
-            MyWrite(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "사랑",
-                time = "5분 전",
-                isSecret = false
-            ),
-            MyWrite(
-                question = "요즘 내 삶엣어 가장 만족스러운 것은 무엇인가요?",
-                categori = "미래",
-                time = "5분 전",
-                isSecret = false
-            )
-        )
-        _mypageWriteData.value?.addAll(dummyWrite.toMutableList())
-    }*/
 
     private val _isScrapFilterClicked = MutableLiveData<Boolean>()
     val isScrapFilterClicked: LiveData<Boolean>

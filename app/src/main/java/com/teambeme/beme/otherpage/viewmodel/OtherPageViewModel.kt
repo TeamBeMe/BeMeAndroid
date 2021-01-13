@@ -16,7 +16,7 @@ import retrofit2.Response
 
 class OtherPageViewModel(private val otherRepository: OtherPageRepository) : ViewModel() {
     private var copyOtherAnswerList: MutableList<Answer> = mutableListOf()
-    
+
     private val _otherAnswerList = MutableLiveData<MutableList<Answer>>()
     val otherAnswerList: LiveData<MutableList<Answer>>
         get() = _otherAnswerList
@@ -37,6 +37,10 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
     fun setPosition(position: Int) {
         _scrapPosition.value = position
     }
+
+    private val _isOtherEmpty = MutableLiveData<Boolean>()
+    val isOtherEmpty: LiveData<Boolean>
+        get() = _isOtherEmpty
 
     fun putScrap() {
         otherRepository.putScrap(
@@ -149,6 +153,7 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
             ) {
                 if (response.isSuccessful) {
                     copyOtherAnswerList = response.body()!!.data?.answers?.toMutableList()
+                    _isOtherEmpty.value = copyOtherAnswerList.size == 0
                     _otherAnswerList.value = copyOtherAnswerList.toMutableList()
                     when (page == response.body()!!.data.pageLen) {
                         true -> {

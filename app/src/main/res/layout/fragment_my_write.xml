@@ -26,6 +26,7 @@
         <EditText
             android:id="@+id/editxt_write_search"
             android:layout_width="0dp"
+            android:imeOptions="actionSearch"
             android:textColorHint="@color/answer_text_info_gray"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -35,9 +36,9 @@
             android:drawablePadding="4dp"
             android:ems="10"
             android:hint="검색"
-            android:inputType="textPersonName"
+            android:inputType="text"
             android:padding="12dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="28dp"
             app:layout_constraintEnd_toStartOf="@+id/img_write_filter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -46,20 +47,53 @@
             android:id="@+id/img_write_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="28dp"
             android:onClick="@{() -> myPageViewModel.writeFilterOnClick()}"
             app:layout_constraintBottom_toBottomOf="@+id/editxt_write_search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/editxt_write_search"
             app:srcCompat="@drawable/ic_filter_write" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/constraint_write_empty"
+            app:layout_constraintTop_toBottomOf="@+id/editxt_write_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="72dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_info_mypage" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="18dp"
+                android:text="하루에 한 번씩 쓰다보면\n 어느샌가 나에대해 잘 알게 될거에요"
+                app:layout_constraintTop_toBottomOf="@id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_mywrite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginStart="28dp"
             app:layout_constraintBottom_toTopOf="@+id/btn_write_showmore"
             android:nestedScrollingEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
@@ -77,9 +111,9 @@
             android:textColor="#ffffff"
             android:textSize="16sp"
             app:cornerRadius="6dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="28dp"
+            android:layout_marginStart="28dp"
+            app:layout_constraintTop_toBottomOf="@+id/rcv_mywrite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

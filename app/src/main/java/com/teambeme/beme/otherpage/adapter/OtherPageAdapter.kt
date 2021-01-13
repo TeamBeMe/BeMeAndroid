@@ -1,5 +1,6 @@
 package com.teambeme.beme.otherpage.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemOtherPageBinding
+import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.otherpage.model.ResponseOtherData.Data.Answer
 import com.teambeme.beme.otherpage.viewmodel.OtherPageViewModel
 
@@ -32,6 +34,11 @@ class OtherPageAdapter(private val otherViewModel: OtherPageViewModel) :
 
     override fun onBindViewHolder(holder: OtherPageViewHolder, position: Int) {
         holder.bind(getItem(position))
+        holder.itemView.setOnClickListener { view ->
+            val intent = Intent(view.context, DetailActivity::class.java)
+            intent.putExtra("answerId", getItem(position).id)
+            view.context.startActivity(intent)
+        }
         holder.bind(getItem(position)).let {
             with(holder) {
                 scrap.setOnClickListener {

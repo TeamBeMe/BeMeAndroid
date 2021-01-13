@@ -41,13 +41,23 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
+
                         <ImageView
                             android:id="@+id/img_mypage_profile"
                             android:layout_width="match_parent"
                             android:layout_height="158dp"
                             android:layout_gravity="fill"
                             android:scaleType="centerCrop"
+                            setSrcFromUrl="@{myPageViewModel.myProfileInfo.profileImg}"
                             tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+                        <ImageView
+                            android:id="@+id/img_mypage_darkprofile"
+                            android:layout_width="match_parent"
+                            android:layout_height="158dp"
+                            android:layout_gravity="fill"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/rectangle_25" />
 
                         <ImageButton
                             android:id="@+id/img_mypage_setting"
@@ -64,9 +74,9 @@
                         android:id="@+id/txt_mypage_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
+                        android:layout_marginStart="28dp"
                         android:layout_marginTop="24dp"
-                        android:text="sushi_isthebest"
+                        android:text="@{myPageViewModel.myProfileInfo.nickname}"
                         android:textColor="@color/black"
                         android:textSize="24sp"
                         android:textStyle="bold"
@@ -78,14 +88,15 @@
                         android:id="@+id/btn_mypage_profile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="28dp"
                         android:background="@drawable/border_layout"
                         android:paddingHorizontal="20dp"
                         android:paddingVertical="8dp"
                         android:text="프로필 편집"
                         android:textColor="#000000"
                         android:textSize="12sp"
-                        app:layout_constraintStart_toEndOf="@+id/txt_mypage_name"
+                        app:layout_constraintBottom_toBottomOf="@+id/txt_mypage_name"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/txt_mypage_name" />
 
                     <TextView
@@ -93,6 +104,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        attendCount="@{myPageViewModel.myProfileInfo.continuedVisit}"
                         android:backgroundTint="#8E8E93"
                         android:paddingVertical="4dp"
                         android:paddingStart="8dp"
@@ -110,6 +122,7 @@
                         android:layout_marginLeft="10dp"
                         android:paddingVertical="4dp"
                         android:paddingStart="8dp"
+                        allAnswerCount="@{myPageViewModel.myProfileInfo.answerCount}"
                         android:paddingEnd="8dp"
                         android:text="답한 질문 202"
                         android:textColor="@color/answer_text_info_gray"
@@ -128,9 +141,9 @@
                     android:id="@+id/tab_mypage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="28dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginRight="28dp"
                     android:backgroundTint="@android:color/transparent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"

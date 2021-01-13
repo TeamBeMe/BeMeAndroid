@@ -33,6 +33,7 @@ class MyPageFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
         binding.lifecycleOwner = this
         setViewPagerAdapter(childFragmentManager)
+        mypageViewModel.getMyProfile()
         binding.myPageViewModel = mypageViewModel
         mypageViewModel.profileUri.observe(viewLifecycleOwner) {
             editProfileListener(it)
@@ -42,7 +43,7 @@ class MyPageFragment : Fragment() {
     }
 
     private fun setViewPagerAdapter(fragmentManager: FragmentManager) {
-        val pagerAdapter = MyPageViewPagerAdapter(requireActivity())
+        val pagerAdapter = MyPageViewPagerAdapter(this)
         pagerAdapter.addFragment(MyWriteFragment())
         pagerAdapter.addFragment(MyScrapFragment())
         val viewPager = binding.vpMypage

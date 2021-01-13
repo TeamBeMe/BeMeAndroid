@@ -47,6 +47,10 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
         binding.tbProfilebottomEdit.setOnClickListener {
             ImagePicker()
         }
+        binding.tbProfilebottomBase.setOnClickListener {
+            mypageViewModel.putProfiles(null)
+            dismiss()
+        }
         return binding.root
     }
 

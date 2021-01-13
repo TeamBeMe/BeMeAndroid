@@ -7,17 +7,20 @@
 
         <variable
             name="replyParentData"
-            type="com.teambeme.beme.detail.model.ReplyParentData" />
+            type="com.teambeme.beme.detail.model.ResponseDetail.Data.Comment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_replyparent_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            detail:setSrcFromUrl="@{replyParentData.userProfile}"
+            detail:isVisible="@{replyParentData.visible}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_ellipse" />
@@ -36,20 +39,22 @@
             android:id="@+id/txt_replyparent_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="12dp"
             android:textColor="#000000"
+            detail:isVisible="@{replyParentData.visible}"
+            detail:nickname="@{replyParentData.userNickname}"
             tools:text="genie_self"
-            android:text="@{replyParentData.txt_id}"
-            app:layout_constraintBottom_toBottomOf="@+id/img_replyparent_profile"
             app:layout_constraintStart_toEndOf="@+id/img_replyparent_profile"
-            app:layout_constraintTop_toTopOf="@+id/img_replyparent_profile" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txt_replyparent_comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@{replyParentData.txt_comment}"
+            detail:isVisible="@{replyParentData.visible}"
+            detail:comment="@{replyParentData.content}"
             android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txt_replyparent_id"
@@ -62,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:textColor="@color/answer_text_info_gray"
-            android:text="@{replyParentData.txt_time}"
+            android:text="@{replyParentData.updatedAt}"
             tools:text="12월 23일"
             app:layout_constraintStart_toStartOf="@+id/txt_replyparent_comment"
             app:layout_constraintTop_toBottomOf="@+id/txt_replyparent_comment" />
@@ -83,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="답글 보기"
-            android:textColor="@color/answer_text_info_gray"
+            android:textColor="#0A84FF"
             app:layout_constraintStart_toStartOf="@+id/txt_replyparent_time"
             app:layout_constraintTop_toBottomOf="@+id/txt_replyparent_time" />
 
