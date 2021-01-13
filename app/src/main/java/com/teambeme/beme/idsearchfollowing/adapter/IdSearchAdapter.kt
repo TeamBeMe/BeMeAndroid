@@ -1,6 +1,5 @@
 package com.teambeme.beme.idsearchfollowing.adapter
 
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemFollowingAfterIdsearchBinding
-import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData
 
 class IdSearchAdapter :
     RecyclerView.Adapter<IdSearchAdapter.IdSearchViewHolder>() {
-    private var idSearchDatas = mutableListOf<ResponseIdSearchData.Data>()
+    private var idSearchDatas = mutableListOf<ResponseIdSearchData.Data?>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -32,7 +30,7 @@ class IdSearchAdapter :
     override fun onBindViewHolder(holder: IdSearchViewHolder, position: Int) {
         Log.d("Search", "$position")
         Log.d("Search", "${idSearchDatas[position]}")
-        holder.bind(idSearchDatas[position])
+        idSearchDatas[position]?.let { holder.bind(it) }
 //        holder.bind(idSearchDatas[position]).let{
 //            with(holder){
 //                profilePic.setOnClickListener {view->
@@ -44,7 +42,7 @@ class IdSearchAdapter :
 //        }
     }
 
-    fun replaceIdSearchList(list: MutableList<ResponseIdSearchData.Data>) {
+    fun replaceIdSearchList(list: MutableList<ResponseIdSearchData.Data?>) {
         idSearchDatas = list
         notifyDataSetChanged()
     }

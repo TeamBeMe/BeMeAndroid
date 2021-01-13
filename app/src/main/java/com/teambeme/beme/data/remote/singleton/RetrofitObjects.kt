@@ -4,7 +4,6 @@ import com.teambeme.beme.data.remote.api.IdSearchService
 import com.teambeme.beme.data.remote.api.LoginService
 import com.teambeme.beme.data.remote.api.NoticeService
 import com.teambeme.beme.data.remote.api.*
-import com.teambeme.beme.util.AuthInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -90,6 +89,13 @@ object RetrofitObjects {
     fun getNoticeService(): NoticeService = noticeInstance ?: synchronized(this) {
         noticeInstance ?: baseRetrofit.create(NoticeService::class.java).apply {
             noticeInstance = this
+        }
+    }
+
+    private var fbTokenRegisterInstance : FbTokenRegisterService? = null
+    fun getFbTokenRegisterService(): FbTokenRegisterService = fbTokenRegisterInstance ?: synchronized(this) {
+        fbTokenRegisterInstance ?: baseRetrofit.create(FbTokenRegisterService::class.java).apply {
+            fbTokenRegisterInstance = this
         }
     }
 }

@@ -23,7 +23,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".otherpage.view.OtherPageActivity" />
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".firebase.MyFirebaseMessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -52,8 +52,6 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat" />
-        <receiver android:name=".AlarmReceiver"
-            android:exported="false"/>
     </application>
 
 </manifest>

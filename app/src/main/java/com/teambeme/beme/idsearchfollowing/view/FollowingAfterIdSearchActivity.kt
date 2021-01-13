@@ -37,14 +37,19 @@ class FollowingAfterIdSearchActivity :
             adapter = idSearchAdapter
             layoutManager = LinearLayoutManager(this@FollowingAfterIdSearchActivity)
         }
-        idSearchViewModel.idSearchData.observe(this) { list ->
-            idSearchAdapter.replaceIdSearchList(list)
+        idSearchViewModel.idSearchData.observe(this) { list->
+            idSearchAdapter.replaceIdSearchList(list!!)
         }
 
         binding.searchViewFollowingIdsearch.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(newText: String?): Boolean {
                 Log.d("Search", newText ?: "hyunwoo")
                 idSearchViewModel.requestIdSearchgData()
+                if(idSearchViewModel.idSearchData == null){
+                    binding.noticeWhenNoSearchData.visibility = View.VISIBLE
+                    idSearchAdapter.removeAllData()
+                }
+
                 return false
             }
 

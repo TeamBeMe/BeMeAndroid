@@ -20,13 +20,15 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
     val recentSearchData: MutableLiveData<MutableList<ResponseRecentSearchRecord.Data>>
         get() = _recentSearchData
 
-    private val _idSearchData = MutableLiveData<MutableList<ResponseIdSearchData.Data>>()
-    val idSearchData: LiveData<MutableList<ResponseIdSearchData.Data>>
+    private val _idSearchData = MutableLiveData<MutableList<ResponseIdSearchData.Data?>>()
+    val idSearchData: LiveData<MutableList<ResponseIdSearchData.Data?>>
         get() = _idSearchData
 
     private val _deletePosition = MutableLiveData<Int>()
     val deletePosition: LiveData<Int>
         get() = _deletePosition
+
+
 
     fun requestRecentSearchData() {
         idSearchRepository.getRecentSearchRecord("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI")
@@ -92,8 +94,7 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                     ) {
                         if (response.isSuccessful) {
                             Log.d("Network is success", response.body().toString())
-                            _idSearchData.value =
-                                response.body()!!.data?.let { mutableListOf(it) }!!
+                            _idSearchData.value = mutableListOf(response.body()!!.data)
                         } else {
                             Log.d("Network Error", response.body()?.data.toString())
                             Log.d("Network Error", response.body()?.status.toString())
@@ -107,5 +108,9 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                     }
                 }
             )
+    }
+
+    companion object {
+
     }
 }

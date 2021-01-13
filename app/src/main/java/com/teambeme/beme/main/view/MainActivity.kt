@@ -1,61 +1,33 @@
 package com.teambeme.beme.main.view
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.teambeme.beme.AlarmReceiver
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
+import com.teambeme.beme.data.remote.datasource.FbTokenRegisterDataSourceImpl
+import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityMainBinding
 import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.main.adapter.MainViewPagerAdapter
+import com.teambeme.beme.main.repository.MainRepositoryImpl
 import com.teambeme.beme.main.viewmodel.MainViewModel
+import com.teambeme.beme.main.viewmodel.MainViewModelFactory
 import com.teambeme.beme.util.StatusBarUtil
-import java.util.*
 
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
-    private val mainViewModel: MainViewModel by viewModels()
+    private val mainViewModelFactory =
+        MainViewModelFactory(MainRepositoryImpl(FbTokenRegisterDataSourceImpl(RetrofitObjects.getFbTokenRegisterService())))
+    private val mainViewModel: MainViewModel by viewModels { mainViewModelFactory }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
+        mainViewModel.getFireBaseToken()
         setViewPagerAdapter(this)
         setBottomNavigationSelectListener(binding.bnvMain)
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val pendingIntent = PendingIntent.getBroadcast(
-            this,
-            AlarmReceiver.NOTIFICATION_ID,
-            Intent(this, AlarmReceiver::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
-        setOntimePush(alarmManager, pendingIntent)
-    }
-
-    private fun setOntimePush(alarmManager: AlarmManager, pendingIntent: PendingIntent) {
-        val repeatInterval: Long = ONE_DAY
-        val calendar: Calendar = Calendar.getInstance().apply {
-            timeInMillis = System.currentTimeMillis()
-            set(Calendar.HOUR_OF_DAY, 22)
-            set(Calendar.MINUTE, 0)
-        }
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            pendingIntent
-        )
-        alarmManager.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            repeatInterval,
-            pendingIntent
-        )
-        Log.d("MainActivity", "OntimePush")
     }
 
     private fun setBottomNavigationSelectListener(bottomNavigationView: BottomNavigationView) {
@@ -111,9 +83,5 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 else -> throw IllegalArgumentException("Wrong Position $position")
             }
         }
-    }
-
-    companion object {
-        private const val ONE_DAY: Long = 24 * 60 * 60 * 1000
     }
 }
