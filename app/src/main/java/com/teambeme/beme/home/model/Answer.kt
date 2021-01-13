@@ -1,7 +1,10 @@
 package com.teambeme.beme.home.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Answer(
     @SerializedName("answer_date")
     val answerDate: String?,
@@ -27,4 +30,4 @@ data class Answer(
     val questionId: Int,
     @SerializedName("Question.title")
     val questionTitle: String
-)
+) : Parcelable

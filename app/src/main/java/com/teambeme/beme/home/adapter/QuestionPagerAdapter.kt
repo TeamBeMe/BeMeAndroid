@@ -34,11 +34,7 @@ class QuestionPagerAdapter(
             binding.answer = answer
             binding.btnHomeAnswer.setOnClickListener {
                 val intent = Intent(context, AnswerActivity::class.java)
-                intent.apply {
-                    putExtra("id", answer.id)
-                    putExtra("content", answer.content)
-                    putExtra("isPublic", answer.publicFlag)
-                }
+                intent.putExtra("id", answer.id)
                 context.startActivity(intent)
             }
             binding.imgQuestionLock.setOnClickListener {
