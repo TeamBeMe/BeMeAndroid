@@ -454,7 +454,6 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
                 }
 
                 override fun onFailure(call: Call<ResponsePostReply>, t: Throwable) {
-
                     Log.d("Network Fail", t.message.toString())
                 }
             })

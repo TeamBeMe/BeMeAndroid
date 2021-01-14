@@ -16,7 +16,7 @@ import com.teambeme.beme.otherpage.view.OtherPageActivity
 
 class ReplyChildAdapter(
     private val context: Context,
-    private val par: Int,
+    private val parentPosition: Int,
     private val viewModel: DetailViewModel
 ) :
     RecyclerView.Adapter<ReplyChildAdapter.ReplyChildViewHolder>() {
@@ -56,7 +56,7 @@ class ReplyChildAdapter(
         holder.onBind(children[position]).let {
             with(holder) {
                 dot.setOnClickListener {
-                    viewModel.setChildPosition(par, adapterPosition)
+                    viewModel.setChildPosition(parentPosition, adapterPosition)
                 }
                 profile.setOnClickListener { view ->
                     val intent = Intent(view.context, OtherPageActivity::class.java)
