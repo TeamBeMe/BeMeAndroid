@@ -1,53 +1,71 @@
 package com.teambeme.beme.answer.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.repository.AnswerRepository
 import com.teambeme.beme.data.local.entity.AnswerData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewModel() {
-    private var answerId = -1
+    private val _answerData = MutableLiveData<AnswerData?>()
+    val answerData: LiveData<AnswerData?>
+        get() = _answerData
     val answer: MutableLiveData<String> = MutableLiveData("")
-    private val _isCommentBlocked = MutableLiveData<Boolean>()
-    val isCommentBlocked: LiveData<Boolean>
-        get() = _isCommentBlocked
+    private var isCommentBlocked = false
     private val _isPublic = MutableLiveData<Boolean>()
     val isPublic: LiveData<Boolean>
         get() = _isPublic
-    private var questionId = -1
 
-    fun setPublicTrue() {
-        _isPublic.value = true
+    fun checkStored(questionId: Int) {
+        viewModelScope.launch {
+            val data = answerRepository.get(questionId.toLong())
+            Log.d("AnswerViewModel", data.toString())
+            _answerData.value = data
+        }
     }
 
-    fun setPublicFalse() {
-        _isPublic.value = false
+    fun initAnswerData(intentAnswerData: IntentAnswerData) {
+        _answerData.value = AnswerData(
+            questionId = intentAnswerData.questionId.toLong(),
+            answer = "",
+            isCommentBlocked = isCommentBlocked,
+            isPublic = false,
+            title = intentAnswerData.title,
+            category = intentAnswerData.category,
+            categoryIdx = intentAnswerData.categoryIdx ?: 0,
+            createdAt = intentAnswerData.createdAt
+        )
     }
 
-    suspend fun initEditText(id: Int): String {
-        return viewModelScope.async {
-            answer.value = getStoredAnswer(id.toLong())?.answer ?: ""
-            questionId = id
-            answer.value!!
-        }.await()
+    fun setPublicStatus(boolean: Boolean) {
+        _isPublic.value = boolean
     }
 
-    private suspend fun getStoredAnswer(id: Long): AnswerData? {
-        return withContext(Dispatchers.IO) { answerRepository.get(id) }
+    fun setCommentBlockedStatus(boolean: Boolean) {
+        isCommentBlocked = boolean
+    }
+
+    fun initEditText() {
+        answer.value = answerData.value?.answer.toString()
     }
 
     fun storeAnswer() {
         viewModelScope.launch {
+            Log.d("AnswerViewModel", answerData.value.toString())
             answerRepository.insert(
                 AnswerData(
-                    questionId = questionId.toLong(),
-                    answer = answer.value!!
+                    questionId = answerData.value!!.questionId,
+                    answer = answer.value!!,
+                    isCommentBlocked = isCommentBlocked,
+                    isPublic = isPublic.value ?: true,
+                    title = answerData.value!!.title,
+                    category = answerData.value!!.category,
+                    categoryIdx = answerData.value!!.categoryIdx,
+                    createdAt = answerData.value!!.createdAt
                 )
             )
         }
