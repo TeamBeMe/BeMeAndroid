@@ -1,6 +1,7 @@
 package com.teambeme.beme.detail.view
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -20,20 +21,38 @@ import com.teambeme.beme.detail.viewmodel.DetailViewModel
 import com.teambeme.beme.detail.viewmodel.DetailViewModel.Companion.MY_OTHER_REPLY
 import com.teambeme.beme.detail.viewmodel.DetailViewModel.Companion.MY_REPLY
 import com.teambeme.beme.detail.viewmodel.DetailViewModelFactory
+import com.teambeme.beme.explore.view.ExploreDetailActivity
 import com.teambeme.beme.util.StatusBarUtil
 
 class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_detail) {
     private val detailViewModelFactory =
         DetailViewModelFactory(DetailRepositoryImpl(DetailDataSourceImpl(RetrofitObjects.getDetailService())))
     private val detailViewModel: DetailViewModel by viewModels { detailViewModelFactory }
+    private var answerId: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
-        val answerId = intent.getIntExtra("answerId", 0)
+        answerId = intent.getIntExtra("answerId", 0)
+        val deleteBtnOtherAnswers = intent.getBooleanExtra("deleteBtnOtherAnswers", false)
+        setBtnVisible(deleteBtnOtherAnswers)
         binding.detailViewModel = detailViewModel
         binding.lifecycleOwner = this
         setAdapter(answerId)
         clickListener(answerId)
+    }
+
+    override fun onResume() {
+        setAdapter(answerId)
+        clickListener(answerId)
+        super.onResume()
+    }
+
+    private fun setBtnVisible(deleteBtnOtherAnswer: Boolean) {
+        if (deleteBtnOtherAnswer) {
+            binding.btnDetailShowmore.visibility = View.GONE
+        } else {
+            binding.btnDetailShowmore.visibility = View.VISIBLE
+        }
     }
 
     private fun setAdapter(answerId: Int) {
@@ -53,6 +72,11 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
     private fun clickListener(answerId: Int) {
         detailViewModel.isScrapClicked.observe(this) {
             scrapListener()
+        }
+        binding.btnDetailShowmore.setOnClickListener {
+            val intent = Intent(this, ExploreDetailActivity::class.java)
+            intent.putExtra("questionId", detailViewModel.detailData.value!!.questionId)
+            startActivity(intent)
         }
         detailViewModel.isDeleteReply.observe(this) { deleteReplyListener(it) }
 

@@ -79,10 +79,10 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                 ) {
                     if (response.isSuccessful) {
                         _page = pageNum
-                        if(_userNickname.value == null){
+                        if (_userNickname.value == null) {
                             _userNickname.value = response.body()!!.data.userNickname
                         }
-                        if(_maxPage == 0){
+                        if (_maxPage == 0) {
                             _maxPage = response.body()!!.data?.pageLen
                         }
                         tempFollowingFollowerAnswersList =
@@ -182,7 +182,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
         )
     }
 
-    fun requestFollow(userId: Int){
+    fun requestFollow(userId: Int) {
         followingRepository.putFollow(
             RequestFollowingFollow(userId)
         ).enqueue(
