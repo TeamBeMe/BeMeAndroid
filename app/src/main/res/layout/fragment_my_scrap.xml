@@ -30,14 +30,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="28dp"
             android:background="@drawable/border_mypage"
             android:drawableLeft="@drawable/ic_mypage_search"
-            android:textColorHint="@color/answer_text_info_gray"
+            android:textColorHint="@color/mypage_gray"
             android:drawablePadding="4dp"
+            android:imeOptions="actionSearch"
             android:ems="10"
             android:hint="검색"
-            android:inputType="textPersonName"
+            android:inputType="text"
             android:padding="12dp"
             app:layout_constraintEnd_toStartOf="@+id/img_scrap_filter"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,12 +48,46 @@
             android:id="@+id/img_scrap_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="28dp"
             android:onClick="@{() -> myPageViewModel.scrapFilterOnClick()}"
             app:layout_constraintBottom_toBottomOf="@+id/editxt_scrap_search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/editxt_scrap_search"
             app:srcCompat="@drawable/ic_filter_write" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/constraint_scrap_empty"
+            app:layout_constraintTop_toBottomOf="@+id/editxt_scrap_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="72dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_info_mypage" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/mypage_gray"
+                android:layout_marginTop="18dp"
+                android:text="간직하고 싶은 글을 스크랩해보세요"
+                app:layout_constraintTop_toBottomOf="@id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_myscrap"
@@ -60,8 +95,8 @@
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginStart="28dp"
             app:layout_constraintBottom_toTopOf="@+id/btn_scrap_showmore"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -75,16 +110,16 @@
             android:id="@+id/btn_scrap_showmore"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#000000"
+            android:backgroundTint="@color/mypage_black"
             android:paddingTop="12dp"
             android:paddingBottom="16dp"
             android:text="더보기"
-            android:textColor="#ffffff"
+            android:textColor="@color/mypage_white"
             android:textSize="16sp"
             app:cornerRadius="6dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="28dp"
+            android:layout_marginStart="28dp"
+            app:layout_constraintTop_toBottomOf="@+id/rcv_myscrap"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,6 @@
 package com.teambeme.beme.mypage.model
 
 data class MyWriteFilter(
-    val range: String = "",
-    val category: String = ""
+    var range: String? = null,
+    var category: Int? = null
 )

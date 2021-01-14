@@ -8,7 +8,7 @@
 
         <variable
             name="myWrite"
-            type="com.teambeme.beme.mypage.model.MyWrite" />
+            type="com.teambeme.beme.mypage.model.ResponseMyAnswer.Data.Answer" />
     </data>
 
 
@@ -20,7 +20,7 @@
         <TextView
             android:id="@+id/txt_mywrite_question"
             android:layout_width="0dp"
-            android:textColor="@color/black"
+            android:textColor="@color/mypage_black"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
@@ -33,14 +33,16 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="요즘 내 삶에서 \n가장 만족스러운 것은 무엇인가요?" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/img_mywrite_secret"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:src="@{myWrite.isSecret ? @drawable/ic_secret_on_mypage : @drawable/ic_secret_off_mypage}"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@{myWrite.publicFlag ? @drawable/ic_secret_off_mypage : @drawable/ic_secret_on_mypage}"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_mywrite_categori"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txt_mywrite_time"
+            app:layout_constraintTop_toTopOf="@+id/txt_mywrite_categori"
             app:srcCompat="@drawable/ic_secret_off_mypage" />
 
         <TextView
@@ -48,9 +50,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textColor="@color/answer_text_info_gray"
+            android:textColor="@color/mypage_gray"
+            mypage:category="@{myWrite.category}"
+            mypage:answerIdx="@{myWrite.answerIdx}"
             android:layout_marginBottom="16dp"
-            android:text="@{`[  `+myWrite.categori+`에 관한 질문  ]  · `}"
+            android:textSize="12sp"
+            android:text="@{`[  `+myWrite.category+`에 관한 질문  ]  · `}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txt_mywrite_question"
             app:layout_constraintTop_toBottomOf="@+id/txt_mywrite_question"
@@ -61,8 +66,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:textColor="@color/answer_text_info_gray"
-            android:text="@{myWrite.time}"
+            android:textSize="12sp"
+            android:textColor="@color/mypage_gray"
+            android:text="@{`  ·  `+myWrite.answerDate}"
             app:layout_constraintStart_toEndOf="@+id/txt_mywrite_categori"
             app:layout_constraintTop_toTopOf="@+id/txt_mywrite_categori"
             tools:text="5분 전" />

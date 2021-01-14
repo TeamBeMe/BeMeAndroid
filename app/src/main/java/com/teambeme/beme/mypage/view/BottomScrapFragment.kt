@@ -8,13 +8,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.teambeme.beme.R
+import com.teambeme.beme.data.remote.datasource.MyPageDataSourceImpl
+import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ItemBottomScrapBinding
+import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
+import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
 
 class BottomScrapFragment : BottomSheetDialogFragment() {
     private lateinit var binding: ItemBottomScrapBinding
-    private val mypageViewModel: MyPageViewModel by activityViewModels()
-    private var category: String = ""
+    private val myViewModelFactory =
+        MyPageViewModelFactory(MyPageRepositoryImpl(MyPageDataSourceImpl(RetrofitObjects.getMyPageService())))
+    private val mypageViewModel: MyPageViewModel by activityViewModels { myViewModelFactory }
+    private var category: Int? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,20 +42,24 @@ class BottomScrapFragment : BottomSheetDialogFragment() {
 
     private fun setCategoryOnCheckedListener(checkId: Int) {
         when (checkId) {
-            R.id.chip_scrap_1 -> category = binding.chipScrap1.text.toString()
-            R.id.chip_scrap_2 -> category = binding.chipScrap2.text.toString()
-            R.id.chip_scrap_3 -> category = binding.chipScrap3.text.toString()
-            R.id.chip_scrap_4 -> category = binding.chipScrap4.text.toString()
-            R.id.chip_scrap_5 -> category = binding.chipScrap5.text.toString()
-            R.id.chip_scrap_6 -> category = binding.chipScrap6.text.toString()
-            R.id.chip_scrap_7 -> category = binding.chipScrap7.text.toString()
-            R.id.chip_scrap_8 -> category = binding.chipScrap8.text.toString()
+            R.id.chip_scrap_1 -> category = CATEGORY_VALUE
+            R.id.chip_scrap_2 -> category = CATEGORY_RELATION
+            R.id.chip_scrap_3 -> category = CATEGORY_LOVE
+            R.id.chip_scrap_4 -> category = CATEGORY_DAILY
+            R.id.chip_scrap_5 -> category = CATEGORY_ME
+            R.id.chip_scrap_6 -> category = CATEGORY_STORY
         }
     }
 
     private fun applyFilter() {
-        if (category != "") {
-            mypageViewModel.setScrapFilter(category)
-        }
+    }
+
+    companion object {
+        private val CATEGORY_VALUE = 1
+        private val CATEGORY_RELATION = 2
+        private val CATEGORY_LOVE = 3
+        private val CATEGORY_DAILY = 4
+        private val CATEGORY_ME = 5
+        private val CATEGORY_STORY = 6
     }
 }

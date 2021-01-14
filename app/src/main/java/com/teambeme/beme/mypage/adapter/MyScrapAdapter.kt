@@ -10,17 +10,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemMyscrapBinding
 import com.teambeme.beme.detail.view.DetailActivity
-import com.teambeme.beme.mypage.model.MyScrap
+import com.teambeme.beme.mypage.model.ResponseMyScrap
+import com.teambeme.beme.otherpage.view.OtherPageActivity
 
 class MyScrapAdapter :
-    ListAdapter<MyScrap, MyScrapAdapter.MyScrapViewHolder>(MyScrapDiffUtil()) {
-    private var scrapList = mutableListOf<MyScrap>()
+    ListAdapter<ResponseMyScrap.Data.Answer, MyScrapAdapter.MyScrapViewHolder>(MyScrapDiffUtil()) {
+    private var scrapList = mutableListOf<ResponseMyScrap.Data.Answer>()
 
     class MyScrapViewHolder(private val binding: ItemMyscrapBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(scrap: MyScrap) {
+        fun bind(scrap: ResponseMyScrap.Data.Answer) {
             binding.myScrap = scrap
         }
+        val public = binding.imgMyscrapPublic
+        val profile = binding.imgMyscrapProfile
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyScrapViewHolder {
@@ -34,19 +37,35 @@ class MyScrapAdapter :
         holder.bind(getItem(position))
         holder.itemView.setOnClickListener { view ->
             val intent = Intent(view.context, DetailActivity::class.java)
+            intent.putExtra("answerId", getItem(position).id)
             view.context.startActivity(intent)
+        }
+        holder.bind(getItem(position)).let {
+            with(holder) {
+                profile.setOnClickListener { view ->
+                    val intent = Intent(view.context, OtherPageActivity::class.java)
+                    intent.putExtra("userId", getItem(position).userId)
+                    view.context.startActivity(intent)
+                }
+            }
         }
     }
 
-    private class MyScrapDiffUtil : DiffUtil.ItemCallback<MyScrap>() {
-        override fun areItemsTheSame(oldItem: MyScrap, newItem: MyScrap) =
-            (oldItem.question == newItem.question)
+    private class MyScrapDiffUtil : DiffUtil.ItemCallback<ResponseMyScrap.Data.Answer>() {
+        override fun areItemsTheSame(
+            oldItem: ResponseMyScrap.Data.Answer,
+            newItem: ResponseMyScrap.Data.Answer
+        ) =
+            (oldItem.id == newItem.id)
 
-        override fun areContentsTheSame(oldItem: MyScrap, newItem: MyScrap) =
+        override fun areContentsTheSame(
+            oldItem: ResponseMyScrap.Data.Answer,
+            newItem: ResponseMyScrap.Data.Answer
+        ) =
             (oldItem == newItem)
     }
 
-    fun replaceScrapList(list: List<MyScrap>) {
+    fun replaceScrapList(list: List<ResponseMyScrap.Data.Answer>) {
         scrapList = list.toMutableList()
         submitList(scrapList)
     }

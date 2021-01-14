@@ -22,23 +22,51 @@ class BottomMyReplyFragment(private val child: Boolean) : BottomSheetDialogFragm
         binding = DataBindingUtil.inflate(inflater, R.layout.item_bottom_my, container, false)
         binding.lifecycleOwner = this
         binding.detailViewModel = detailViewModel
+        if (child == true) {
+            onAnswerListener()
+        } else {
+            onReplyListener()
+        }
+        return binding.root
+    }
+
+    private fun onReplyListener() {
         binding.tbMybottomFix.setOnClickListener {
             changeReply()
         }
         binding.tbMybottomDelete.setOnClickListener {
             deleteReply()
         }
-        return binding.root
+    }
+
+    private fun onAnswerListener() {
+        binding.txtMybottomFix.text = "내글 수정"
+        binding.txtMybottomDelete.text = "내글 삭제"
+        binding.tbMybottomFix.setOnClickListener {
+            changeAnswer()
+        }
+        binding.tbMybottomDelete.setOnClickListener {
+            deleteAnswer()
+        }
+    }
+
+    private fun deleteAnswer() {
+        detailViewModel.deleteAnswer()
+        dismiss()
+    }
+
+    private fun changeAnswer() {
+        dismiss()
     }
 
     private fun deleteReply() {
         if (detailViewModel.childposition.value != -1) {
-            detailViewModel.deleteDummyReply(
+            detailViewModel.deleteChildReply(
                 detailViewModel.position.value!!,
                 detailViewModel.childposition.value!!
             )
         } else {
-            detailViewModel.deleteDummyParentReply(detailViewModel.position.value!!)
+            detailViewModel.deleteParentReply(detailViewModel.position.value!!)
         }
         dismiss()
     }

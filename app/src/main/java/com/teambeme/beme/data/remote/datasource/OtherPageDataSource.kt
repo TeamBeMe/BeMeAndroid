@@ -7,8 +7,8 @@ import com.teambeme.beme.otherpage.model.ResponseScrap
 import retrofit2.Call
 
 interface OtherPageDataSource {
-    fun getProfileAnswer(token: String, userId: Int, page: Int): Call<ResponseOtherData>
-    fun getOtherInfo(token: String, userId: Int): Call<ResponseOtherInfo>
-    fun putScrap(token: String, answerId: Int): Call<ResponseScrap>
-    fun putFollow(token: String, userId: Int): Call<ResponseFollow>
+    fun getProfileAnswer(userId: Int, page: Int): Call<ResponseOtherData>
+    fun getOtherInfo(userId: Int): Call<ResponseOtherInfo>
+    fun putScrap(answerId: Int): Call<ResponseScrap>
+    fun putFollow(userId: Int): Call<ResponseFollow>
 }
