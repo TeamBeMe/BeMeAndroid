@@ -1,7 +1,6 @@
 package com.teambeme.beme.home.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,8 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
-import com.teambeme.beme.answer.model.IntentAnswerData
-import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.databinding.ItemHomeMoreQuestionBinding
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
 import com.teambeme.beme.home.model.Answer
@@ -21,7 +18,8 @@ import com.teambeme.beme.home.viewmodel.HomeViewModel
 
 class QuestionPagerAdapter(
     private val fragmentManager: FragmentManager,
-    private val homeViewModel: HomeViewModel
+    private val homeViewModel: HomeViewModel,
+    private val answerButtonClickListener: AnswerButtonClickListener
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var answerList = mutableListOf<Answer>()
@@ -35,16 +33,17 @@ class QuestionPagerAdapter(
             binding.answer = answer
 
             binding.btnHomeAnswer.setOnClickListener {
-                val intent = Intent(context, AnswerActivity::class.java)
-                val intentData = IntentAnswerData(
-                    questionId = answer.questionId,
-                    title = answer.questionTitle,
-                    category = answer.questionCategoryName,
-                    categoryIdx = answer.questionCategoryId,
-                    createdAt = answer.createdAt
-                )
-                intent.putExtra("intentAnswerData", intentData)
-                context.startActivity(intent)
+                answerButtonClickListener.onClick(answer, position)
+//                val intent = Intent(context, AnswerActivity::class.java)
+//                val intentData = IntentAnswerData(
+//                    questionId = answer.id,
+//                    title = answer.questionTitle,
+//                    category = answer.questionCategoryName,
+//                    categoryIdx = answer.questionCategoryId,
+//                    createdAt = answer.createdAt
+//                )
+//                intent.putExtra("intentAnswerData", intentData)
+//                context.startActivity(intent)
             }
 
             binding.imgQuestionLock.setOnClickListener {
@@ -140,6 +139,10 @@ class QuestionPagerAdapter(
         answerList = list.toMutableList()
         Log.d("Home QPA", answerList.toString())
         notifyDataSetChanged()
+    }
+
+    interface AnswerButtonClickListener {
+        fun onClick(answer: Answer, position: Int)
     }
 
     companion object {
