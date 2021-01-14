@@ -25,7 +25,7 @@
             android:background="@color/following_constraint_layout_background_white">
 
             <ImageButton
-                android:id="@+id/btn_following_plusFollower"
+                android:id="@+id/btn_following_idSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
@@ -42,9 +42,9 @@
                 android:layout_marginEnd="22dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_alarm"
-                app:layout_constraintBottom_toBottomOf="@id/btn_following_plusFollower"
-                app:layout_constraintEnd_toStartOf="@id/btn_following_plusFollower"
-                app:layout_constraintTop_toTopOf="@id/btn_following_plusFollower" />
+                app:layout_constraintBottom_toBottomOf="@id/btn_following_idSearch"
+                app:layout_constraintEnd_toStartOf="@id/btn_following_idSearch"
+                app:layout_constraintTop_toTopOf="@id/btn_following_idSearch" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout_following_sort"
