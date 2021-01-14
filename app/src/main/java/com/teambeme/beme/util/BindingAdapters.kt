@@ -28,7 +28,7 @@ object BindingAdapters {
     @JvmStatic
     fun setTextForUnAnswered(textView: TextView, userNickname: String) {
         textView.text = "아직 " + userNickname + "님이 답하지 않은 질문입니다.\n" +
-                "답변을 하시고 글을 보시겠습니까?"
+                "답변하시고 글을 보시겠습니까?"
     }
 
     @BindingAdapter("setSrcFromUrl")

@@ -194,7 +194,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="내가 팔로잉하는 사람들의 최근 글이에요"
+                android:text="내가 팔로잉하는 사람들의 글이에요"
                 android:textColor="@color/following_txt_following_desc_of_other_questions_gray"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="@id/txt_following_title_of_other_questions"
