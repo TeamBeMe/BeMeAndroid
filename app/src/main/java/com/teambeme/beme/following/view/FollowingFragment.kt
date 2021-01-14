@@ -61,7 +61,35 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         setClickListenerForShowAll()
         setClickListenerForIdSearchButton()
         setClickListenerForAlarmButton()
+        setDoAnswerDataObserve()
         return binding.root
+    }
+
+    private fun setDoAnswerDataObserve() {
+        followingViewModel.answerData.observe(viewLifecycleOwner) {
+            it?.let {
+                val intent = Intent(context, AnswerActivity::class.java)
+                Log.d("answer", "fragment " + "${followingViewModel.answerData.value}")
+                var intentAnswerData: IntentAnswerData = IntentAnswerData(
+                    it.id,
+                    it.question,
+                    it.category,
+                    it.answerIdx,
+                    it.createdAt
+                )
+                intent.putExtra("intentAnswerData", intentAnswerData)
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun getOtherButtonClickListener(): OtherQuestionsRcvAdapter.OtherQuestionButtonClickListener {
+        return object : OtherQuestionsRcvAdapter.OtherQuestionButtonClickListener {
+            override fun otherQuestionAnswerClickListener(questionId: Int) {
+                val answer = RequestFollowingAnswer(questionId)
+                followingViewModel.requestAnswer(answer)
+            }
+        }
     }
 
     private fun setOtherFollowingQuestionsAdapter() {
@@ -79,31 +107,6 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
             }
         }
     }
-
-    private fun getOtherButtonClickListener(): OtherQuestionsRcvAdapter.OtherQuestionButtonClickListener {
-        return object : OtherQuestionsRcvAdapter.OtherQuestionButtonClickListener {
-            override fun otherQuestionAnswerClickListener(questionId: Int) {
-                val answer = RequestFollowingAnswer(questionId)
-                followingViewModel.requestAnswer(answer)
-                followingViewModel.answerData.observe(viewLifecycleOwner) {
-                    it?.let {
-                        Log.d("answer", "fragment " + "${followingViewModel.answerData.value}")
-                        val intentAnswerData = IntentAnswerData(
-                            it.id,
-                            it.question,
-                            it.category,
-                            it.answerIdx,
-                            it.createdAt
-                        )
-                        val intent = Intent(context, AnswerActivity::class.java)
-                        intent.putExtra("intentAnswerData", intentAnswerData)
-                        startActivity(intent)
-                    }
-                }
-            }
-        }
-    }
-
     private fun setOtherFollowingQuestionsObserve() {
         followingViewModel.followingAnswersList.observe(viewLifecycleOwner) { otherFollowingQuestionsList ->
             otherFollowingQuestionsList?.let {
