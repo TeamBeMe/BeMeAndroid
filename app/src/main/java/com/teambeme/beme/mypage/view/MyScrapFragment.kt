@@ -38,7 +38,7 @@ class MyScrapFragment : Fragment() {
         setAdapter(scrapAdapter)
         mypageViewModel.initScrap()
         mypageViewModel.mypageScrapData.observe(viewLifecycleOwner) { it ->
-            it.let { scrapAdapter.replaceScrapList(it) }
+            it.let { scrapAdapter.submitList(it) }
         }
         mypageViewModel.isScrapFilterClicked.observe(viewLifecycleOwner) {
             filterClickListener(it)
@@ -64,19 +64,19 @@ class MyScrapFragment : Fragment() {
     }
 
     override fun onResume() {
+        super.onResume()
         mypageViewModel.initScrapPage()
         mypageViewModel.getMyScrap()
-        super.onResume()
     }
 
     private fun hideKeyboard() {
-        val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(binding.editxtScrapSearch.windowToken, 0)
     }
 
     private fun isEmptyListener(isEmpty: Boolean) {
         if (isEmpty) {
-
             binding.rcvMyscrap.visibility = View.GONE
             binding.constraintScrapEmpty.visibility = View.VISIBLE
         } else {
