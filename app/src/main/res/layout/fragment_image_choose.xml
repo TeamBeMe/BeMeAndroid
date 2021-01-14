@@ -86,12 +86,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/image_add_crop"
-                android:src="@drawable/ic_image_add"
                 android:scaleX="0.4"
                 android:scaleY="0.4"
-                android:visibility="visible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:src="@drawable/ic_image_add"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/img_choose_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -105,10 +109,10 @@
             android:textColor="#000"
             android:textSize="20sp"
             android:textStyle="bold"
-            tools:text="누누링"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/constraint_view_image_add" />
+            app:layout_constraintTop_toBottomOf="@id/constraint_view_image_add"
+            tools:text="누누링" />
 
         <Button
             android:id="@+id/btn_image_choose_done"
