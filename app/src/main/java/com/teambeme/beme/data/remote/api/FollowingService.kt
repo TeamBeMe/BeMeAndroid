@@ -28,4 +28,9 @@ interface FollowingService {
     fun putFollow(
         @Body body: RequestFollowingFollow
     ): Call<ResponseFollowingFollow>
+
+    @DELETE("follow/{userId}")
+    fun deleteFollower(
+        @Path("userId") userId: String
+    ): Call<ResponseFollowingFollow>
 }
