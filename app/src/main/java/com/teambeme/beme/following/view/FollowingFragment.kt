@@ -2,12 +2,15 @@ package com.teambeme.beme.following.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayout
 import com.teambeme.beme.R
+import com.teambeme.beme.answer.model.IntentAnswerData
+import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.data.remote.datasource.FollowingDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
@@ -15,6 +18,7 @@ import com.teambeme.beme.databinding.*
 import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
 import com.teambeme.beme.following.adapter.FollowerProfilesRcvAdapter
 import com.teambeme.beme.following.adapter.FollowingProfilesRcvAdapter
+import com.teambeme.beme.following.model.RequestFollowingAnswer
 import com.teambeme.beme.following.repository.FollowingRepositoryImpl
 import com.teambeme.beme.following.viewmodel.FollowingViewModel
 import com.teambeme.beme.following.viewmodel.FollowingViewModelFactory
@@ -33,9 +37,6 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         super.onResume()
         followingViewModel.requestFollowingFollowerAnswers(1)
         followingViewModel.requestFollowerFollowingList()
-//        if(followingViewModel.maxPage == 1){
-//            binding.btnFollowingShowMore.visibility = View.INVISIBLE
-//        }
     }
 
     override fun onCreateView(
@@ -71,9 +72,34 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                         requireContext(),
                         R.layout.item_explore_other_questions,
                         it,
-                        followingViewModel
+                        followingViewModel,
+                        getOtherButtonClickListener()
                     )
                 binding.rcvFollowingOtherQuestions.adapter = otherFollowingQuestionsAdapter
+            }
+        }
+    }
+
+    private fun getOtherButtonClickListener(): OtherQuestionsRcvAdapter.OtherQuestionButtonClickListener {
+        return object : OtherQuestionsRcvAdapter.OtherQuestionButtonClickListener {
+            override fun otherQuestionAnswerClickListener(questionId: Int) {
+                val answer = RequestFollowingAnswer(questionId)
+                followingViewModel.requestAnswer(answer)
+                followingViewModel.answerData.observe(viewLifecycleOwner) {
+                    it?.let {
+                        Log.d("answer", "fragment " + "${followingViewModel.answerData.value}")
+                        val intentAnswerData = IntentAnswerData(
+                            it.id,
+                            it.question,
+                            it.category,
+                            it.answerIdx,
+                            it.createdAt
+                        )
+                        val intent = Intent(context, AnswerActivity::class.java)
+                        intent.putExtra("intentAnswerData", intentAnswerData)
+                        startActivity(intent)
+                    }
+                }
             }
         }
     }

@@ -5,10 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
-import com.teambeme.beme.following.model.RequestFollowingFollow
-import com.teambeme.beme.following.model.ResponseFollowingFollow
-import com.teambeme.beme.following.model.ResponseFollowingList
-import com.teambeme.beme.following.model.ResponseFollowingSearchId
+import com.teambeme.beme.explore.model.ResponseExplorationScrap
+import com.teambeme.beme.following.model.*
 import com.teambeme.beme.following.repository.FollowingRepository
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,6 +33,10 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
     val searchList: LiveData<MutableList<ResponseFollowingSearchId.Data>>
         get() = _searchList
 
+    private var _answerData = MutableLiveData<ResponseFollowingAnswer.Data>()
+    val answerData: LiveData<ResponseFollowingAnswer.Data>
+        get() = _answerData
+
     private var _page: Int = 1
     val page: Int
         get() = _page
@@ -42,6 +44,10 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
     private var _maxPage: Int = 0
     val maxPage: Int
         get() = _maxPage
+
+    private var _scrapData = ResponseExplorationScrap("", 0, true)
+    val scrapData: ResponseExplorationScrap
+        get() = _scrapData
 
     private val _userNickname = MutableLiveData<String>()
     val userNickname: LiveData<String>
@@ -203,6 +209,57 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
 
                 override fun onFailure(call: Call<ResponseFollowingFollow>, t: Throwable) {
                     Log.d("network_requestSearch", "통신실패")
+                }
+            }
+        )
+    }
+
+    fun requestScrap(answerId: Int, answerData: ResponseExplorationQuestions.Data.Answer) {
+        followingRepository.putScrap(
+            answerId
+        ).enqueue(
+            object : Callback<ResponseExplorationScrap> {
+                override fun onResponse(
+                    call: Call<ResponseExplorationScrap>,
+                    response: Response<ResponseExplorationScrap>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("scrap_viewmodel", answerId.toString())
+                        _scrapData = response.body()!!
+                        Log.d("scrap_1", scrapData.message)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseExplorationScrap>,
+                    t: Throwable
+                ) {
+                    Log.d("network_requestQuestionForFirstAnswer", "통신실패")
+                }
+            }
+        )
+    }
+
+    fun requestAnswer(answer: RequestFollowingAnswer){
+        followingRepository.postAnswer(
+            answer
+        ).enqueue(
+            object : Callback<ResponseFollowingAnswer> {
+                override fun onResponse(
+                    call: Call<ResponseFollowingAnswer>,
+                    response: Response<ResponseFollowingAnswer>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("answer", "viewmodel")
+                        _answerData.value = response.body()!!.data
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseFollowingAnswer>,
+                    t: Throwable
+                ) {
+                    Log.d("network_requestQuestionForFirstAnswer", "통신실패")
                 }
             }
         )

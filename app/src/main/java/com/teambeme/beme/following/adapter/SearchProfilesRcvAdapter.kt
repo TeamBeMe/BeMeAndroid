@@ -1,6 +1,7 @@
 package com.teambeme.beme.following.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.teambeme.beme.databinding.ItemFollowingShowAllProfilesOfSearchFollowe
 import com.teambeme.beme.databinding.ItemFollowingShowAllProfilesOfSearchFollowingBinding
 import com.teambeme.beme.following.model.ResponseFollowingSearchId
 import com.teambeme.beme.following.viewmodel.FollowingViewModel
+import com.teambeme.beme.otherpage.view.OtherPageActivity
 
 class SearchProfilesRcvAdapter<B : ViewDataBinding>(
     private val context: Context,
@@ -34,6 +36,11 @@ class SearchProfilesRcvAdapter<B : ViewDataBinding>(
                         executePendingBindings()
                         setClickListenerForFollowBtn(binding, searchData, viewModel)
                         setclickListenerForFollowingBtn(binding, searchData, viewModel)
+                        setClickListenerForGoProfilePageFromSearchFollowing(
+                            binding,
+                            searchData,
+                            context
+                        )
                         Log.d("showAll", searchData.toString())
                     }
                 }
@@ -42,6 +49,11 @@ class SearchProfilesRcvAdapter<B : ViewDataBinding>(
                         setVariable(BR.searchFollower, searchData)
                         executePendingBindings()
                         setClickListenerForDeleteFollower(binding, searchData, viewModel)
+                        setClickListenerForGoProfilePageFromSearchFollower(
+                            binding,
+                            searchData,
+                            context
+                        )
                     }
                 }
             }
@@ -115,14 +127,27 @@ class SearchProfilesRcvAdapter<B : ViewDataBinding>(
         }
     }
 
-//    //프로필 사진 누르면 타인 프로필 페이지로 이동
-//    private fun setClickListenerForGoProfilePage(
-//        binding: ItemFollowingOtherProfilesBinding,
-//        followingProfilesData: FollowingProfilesData,
-//        context: Context
-//    ) {
-//        binding.imgFollowingOtherProfile.setOnClickListener {
-//            context.startActivity</*타인프로필페이지 액티비티*/>(/*string값(서버 붙이면 안보내도 될듯*/)
-//        }
-//    }
+    private fun setClickListenerForGoProfilePageFromSearchFollowing(
+        binding: ItemFollowingShowAllProfilesOfSearchFollowingBinding,
+        data: ResponseFollowingSearchId.Data,
+        context: Context
+    ) {
+        binding.imgFollowingShowAllProfiles.setOnClickListener {
+            val intent = Intent(context, OtherPageActivity::class.java)
+            intent.putExtra("userId", data.id)
+            context.startActivity(intent)
+        }
+    }
+
+    private fun setClickListenerForGoProfilePageFromSearchFollower(
+        binding: ItemFollowingShowAllProfilesOfSearchFollowerBinding,
+        data: ResponseFollowingSearchId.Data,
+        context: Context
+    ) {
+        binding.imgFollowingShowAllProfiles.setOnClickListener {
+            val intent = Intent(context, OtherPageActivity::class.java)
+            intent.putExtra("userId", data.id)
+            context.startActivity(intent)
+        }
+    }
 }

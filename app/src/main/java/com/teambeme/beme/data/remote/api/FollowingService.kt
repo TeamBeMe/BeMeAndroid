@@ -1,10 +1,8 @@
 package com.teambeme.beme.data.remote.api
 
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
-import com.teambeme.beme.following.model.RequestFollowingFollow
-import com.teambeme.beme.following.model.ResponseFollowingFollow
-import com.teambeme.beme.following.model.ResponseFollowingList
-import com.teambeme.beme.following.model.ResponseFollowingSearchId
+import com.teambeme.beme.explore.model.ResponseExplorationScrap
+import com.teambeme.beme.following.model.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -33,4 +31,14 @@ interface FollowingService {
     fun deleteFollower(
         @Path("userId") userId: Int
     ): Call<ResponseFollowingFollow>
+
+    @PUT("exploration/{answerId}")
+    fun putScrap(
+        @Path("answerId") answerId: Int
+    ): Call<ResponseExplorationScrap>
+
+    @POST("answers/question")
+    fun postAnswer(
+        @Body questionId: RequestFollowingAnswer
+    ): Call<ResponseFollowingAnswer>
 }
