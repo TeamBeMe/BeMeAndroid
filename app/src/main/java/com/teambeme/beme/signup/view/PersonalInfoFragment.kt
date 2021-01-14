@@ -34,15 +34,15 @@ class PersonalInfoFragment : Fragment() {
     private fun setDoubleCheckListener() {
         signUpViewModel.nickDoubleCheck.observe(viewLifecycleOwner) { checkInfo ->
             if (signUpViewModel.isNickNameValidated.value!!) {
-                if (checkInfo.success) {
-                    if (!checkInfo.data.nicknameExist) {
-                        fixNickName()
-                    } else {
-                        Toast.makeText(requireContext(), "이미 존재하는 닉네임입니다.", Toast.LENGTH_SHORT)
-                            .show()
-                    }
+                if (!checkInfo.data.nicknameExist) {
+                    fixNickName()
+                    signUpViewModel.nickDoubleCheckValidated()
                 } else {
-                    Toast.makeText(requireContext(), "서버통신이 원활하지 않습니다.", Toast.LENGTH_SHORT).show()
+                    binding.txtPersonalNicknameCheck.apply {
+                        text = "이미 존재하는 닉네임입니다"
+                        setTextColor(resources.getColor(R.color.signup_red, null))
+                    }
+                    binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_red)
                 }
             }
         }
@@ -59,7 +59,7 @@ class PersonalInfoFragment : Fragment() {
             edittxtPersonalNickname.setTextColor(resources.getColor(R.color.signup_disabled, null))
             btnPersonalNicknameDoubleCheck.visibility = View.GONE
             txtPersonalNicknameCheck.apply {
-                text = "사용 가능한 닉네임입니다, 중복확인을 해주세요"
+                text = "사용 가능한 닉네임입니다"
                 setTextColor(resources.getColor(R.color.signup_term_blue, null))
             }
         }
@@ -67,16 +67,45 @@ class PersonalInfoFragment : Fragment() {
 
     private fun setObserve() {
         signUpViewModel.userEmail.observe(viewLifecycleOwner) { email ->
-            if (REGEX_EMAIL.matches(email)) {
-                signUpViewModel.emailValidated()
-            } else {
+            if (email.isNullOrBlank()) {
+                binding.txtPersonalEmailCheck.text = "bean@example.com 형식으로 입력해 주세요"
+                binding.txtPersonalEmailCheck.setTextColor(
+                    resources.getColor(
+                        R.color.signup_personal_check,
+                        null
+                    )
+                )
+                binding.imgPersonalEmailCheck.setImageResource(R.drawable.ic_personal_check_gray)
                 signUpViewModel.emailNotValidated()
+            } else {
+                if (REGEX_EMAIL.matches(email)) {
+                    binding.txtPersonalEmailCheck.text = "형식에 맞는 이메일입니다"
+                    binding.txtPersonalEmailCheck.setTextColor(
+                        resources.getColor(
+                            R.color.signup_term_blue,
+                            null
+                        )
+                    )
+                    binding.imgPersonalEmailCheck.setImageResource(R.drawable.ic_personal_check_blue)
+                    signUpViewModel.emailValidated()
+                } else {
+                    binding.txtPersonalEmailCheck.text = "형식에 맞지 않는 이메일입니다"
+                    binding.txtPersonalEmailCheck.setTextColor(
+                        resources.getColor(
+                            R.color.signup_red,
+                            null
+                        )
+                    )
+                    binding.imgPersonalEmailCheck.setImageResource(R.drawable.ic_personal_check_red)
+                    signUpViewModel.emailNotValidated()
+                }
             }
+            checkButtonEnable()
         }
         signUpViewModel.userNickName.observe(viewLifecycleOwner) { nickName ->
             if (nickName.isEmpty()) {
                 binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_gray)
-                binding.txtPersonalNicknameCheck.text = "영문, 숫자로 5자 이상 20자 이내로 입력해주세요."
+                binding.txtPersonalNicknameCheck.text = "영문, 숫자로 5자 이상 20자 이내로 입력해 주세요."
                 binding.txtPersonalNicknameCheck.setTextColor(
                     resources.getColor(
                         R.color.signup_personal_check,
@@ -99,12 +128,14 @@ class PersonalInfoFragment : Fragment() {
                 }
                 signUpViewModel.nickNameValidated()
             }
+
+            checkButtonEnable()
         }
 
         signUpViewModel.userPassWord.observe(viewLifecycleOwner) { passWord ->
             if (passWord.isEmpty()) {
                 binding.imgPersonalPassword.setImageResource(R.drawable.ic_personal_check_gray)
-                binding.txtPersonalPassword.text = "비밀번호는 영문 숫자로 8자 이상 입력해주세요"
+                binding.txtPersonalPassword.text = "비밀번호는 영문 숫자로 8자 이상 입력해 주세요"
                 binding.txtPersonalPassword.setTextColor(
                     resources.getColor(
                         R.color.signup_personal_check,
@@ -130,6 +161,7 @@ class PersonalInfoFragment : Fragment() {
                 }
                 signUpViewModel.passWordValidated()
             }
+            checkButtonEnable()
         }
 
         signUpViewModel.userPassWordCheck.observe(viewLifecycleOwner) { passWordCheck ->
@@ -154,6 +186,7 @@ class PersonalInfoFragment : Fragment() {
                     signUpViewModel.passWordCheckValidated()
                 }
             }
+            checkButtonEnable()
         }
     }
 
@@ -174,6 +207,10 @@ class PersonalInfoFragment : Fragment() {
                 )
             }
         }
+    }
+
+    private fun checkButtonEnable() {
+        binding.btnPersonalDone.isEnabled = signUpViewModel.validateAllValues()
     }
 
     private fun makeProblemToastMessage(
