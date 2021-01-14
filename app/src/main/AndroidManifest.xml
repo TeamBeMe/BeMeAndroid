@@ -23,7 +23,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".otherpage.view.OtherPageActivity" />
         <service
-            android:name=".firebase.MyFirebaseMessagingService"
+            android:name=".MyFirebaseMessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

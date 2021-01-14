@@ -11,6 +11,10 @@
             name="idSearchViewModel"
             type="com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModel" />
 
+        <variable
+            name="idSearch"
+            type="com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData.Data" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,6 +100,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/title_recent_search"
                     tools:listitem="@layout/item_recent_search" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -109,6 +114,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@id/search_view_following_idsearch">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -117,12 +123,13 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:overScrollMode="never"
-                android:visibility="visible"
+                android:visibility="invisible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:listitem="@layout/item_following_after_idsearch" />
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/notice_when_no_search_data"

@@ -14,6 +14,7 @@ import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemRecentActivitiesBinding
 import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.notification.model.ResponseNoticeData
+import com.teambeme.beme.otherpage.view.OtherPageActivity
 
 class NoticeAdapter :
     ListAdapter<ResponseNoticeData.Data.Activity, NoticeAdapter.NoticeViewHolder>(NoticeDiffUtil()) {
@@ -28,10 +29,10 @@ class NoticeAdapter :
         val userProfilePic = binding.notificationProfilePic
     }
 
-//    interface ItemClick {
-//        fun onClick(view: View, position: Int)
-//    }
-//    var itemClick: ItemClick? = null
+    interface ItemClick {
+        fun onClick(view: View, position: Int)
+    }
+    var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -45,12 +46,19 @@ class NoticeAdapter :
         holder.bind(getItem(position)).let{
             with(holder){
                 userProfilePic.setOnClickListener {view->
-                    val intent= Intent(view.context, DetailActivity::class.java)
+                    val intent= Intent(view.context, OtherPageActivity::class.java)
                     intent.putExtra("userId",getItem(position).userId)
+                    Log.d("Internt", position.toString())
+                    Log.d("Internt", getItem(position).userId.toString())
                     view.context.startActivity(intent)
                 }
             }
         }
+        holder.bind(getItem(position)).let{
+            with(holder){
+                
+                }
+            }
 
 //        holder.userProfilePic.setOnClickListener {
 //

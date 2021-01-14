@@ -110,7 +110,4 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
             )
     }
 
-    companion object {
-
-    }
 }

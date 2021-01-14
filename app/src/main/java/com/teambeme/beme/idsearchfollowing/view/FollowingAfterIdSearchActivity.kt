@@ -18,7 +18,8 @@ import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModelFactory
 
 class FollowingAfterIdSearchActivity :
     BindingActivity<ActivityFollowingAfterIdSearchBinding>(R.layout.activity_following_after_id_search) {
-    private val idSearchViewModelFactory = IdSearchViewModelFactory(IdSearchRepositoryImpl(IdSearchDataSourceImpl(RetrofitObjects.getIdSearchService())))
+    private val idSearchViewModelFactory =
+        IdSearchViewModelFactory(IdSearchRepositoryImpl(IdSearchDataSourceImpl(RetrofitObjects.getIdSearchService())))
 
     private val idSearchViewModel: IdSearchViewModel by viewModels { idSearchViewModelFactory }
 
@@ -29,6 +30,7 @@ class FollowingAfterIdSearchActivity :
         initBinding(binding)
         setRecentSearchAdapter(binding)
         idSearchViewModel.requestRecentSearchData()
+        backBtnWorking()
 
 //        setIdSearchAdapter(binding)
 
@@ -37,25 +39,14 @@ class FollowingAfterIdSearchActivity :
             adapter = idSearchAdapter
             layoutManager = LinearLayoutManager(this@FollowingAfterIdSearchActivity)
         }
-        idSearchViewModel.idSearchData.observe(this) { list->
+        idSearchViewModel.idSearchData.observe(this) { list ->
             idSearchAdapter.replaceIdSearchList(list!!)
         }
 
-        binding.searchViewFollowingIdsearch.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(newText: String?): Boolean {
-                Log.d("Search", newText ?: "hyunwoo")
-                idSearchViewModel.requestIdSearchgData()
-                if(idSearchViewModel.idSearchData == null){
-                    binding.noticeWhenNoSearchData.visibility = View.VISIBLE
-                    idSearchAdapter.removeAllData()
-                }
-
-                return false
-            }
-
+        binding.searchViewFollowingIdsearch.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String?): Boolean {
                 val userInputText = newText ?: ""
-                idSearchViewModel.searchingId = newText.toString()
                 if (userInputText.count() > 0) {
                     binding.viewRecentSearch.visibility = View.INVISIBLE
                     binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
@@ -66,11 +57,22 @@ class FollowingAfterIdSearchActivity :
                 }
                 return false
             }
+
+            override fun onQueryTextSubmit(newText: String?): Boolean {
+                Log.d("Search", newText ?: "hyunwoo")
+                idSearchViewModel.searchingId = newText.toString()
+                idSearchViewModel.requestIdSearchgData()
+//                if (idSearchViewModel.idSearchData != null) {
+//                    binding.idSearchProfilePic = idSearchViewModel.idSearchData.value
+//                    idSearchViewModel.idSearchData.binding.noticeWhenNoSearchData.visibility =
+//                        View.VISIBLE
+//                    idSearchAdapter.removeAllData()
+//                }
+                return false
+            }
         })
-        binding.btnBackFollowingIdsearch.setOnClickListener {
-            finish()
-        }
     }
+
 
     private fun initBinding(binding: ActivityFollowingAfterIdSearchBinding) {
         binding.apply {
@@ -95,5 +97,11 @@ class FollowingAfterIdSearchActivity :
 
     private fun deleteListener() {
         idSearchViewModel.deleteRecentSearch()
+    }
+
+    private fun backBtnWorking() {
+        binding.btnBackFollowingIdsearch.setOnClickListener {
+            finish()
+        }
     }
 }
