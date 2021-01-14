@@ -24,42 +24,37 @@
         android:layout_height="match_parent"
         tools:context=".mypage.view.MyScrapFragment">
 
-        <EditText
-            android:id="@+id/editxt_scrap_search"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view_scrap_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="28dp"
-            android:background="@drawable/border_mypage"
-            android:drawableLeft="@drawable/ic_mypage_search"
-            android:textColorHint="@color/mypage_gray"
-            android:drawablePadding="4dp"
-            android:imeOptions="actionSearch"
-            android:ems="10"
-            android:hint="검색"
-            android:inputType="text"
-            android:padding="12dp"
+            android:layout_marginTop="34dp"
+            android:background="@drawable/searchview_background"
+            app:iconifiedByDefault="false"
             app:layout_constraintEnd_toStartOf="@+id/img_scrap_filter"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:queryBackground="@android:color/transparent"
+            app:queryHint="검색" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/img_scrap_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
             android:layout_marginEnd="28dp"
             android:onClick="@{() -> myPageViewModel.scrapFilterOnClick()}"
-            app:layout_constraintBottom_toBottomOf="@+id/editxt_scrap_search"
+            app:layout_constraintBottom_toBottomOf="@+id/search_view_scrap_search"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editxt_scrap_search"
+            app:layout_constraintTop_toTopOf="@+id/search_view_scrap_search"
             app:srcCompat="@drawable/ic_filter_write" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/constraint_scrap_empty"
-            app:layout_constraintTop_toBottomOf="@+id/editxt_scrap_search"
+            app:layout_constraintTop_toBottomOf="@+id/search_view_scrap_search"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent">
@@ -101,7 +96,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editxt_scrap_search"
+            app:layout_constraintTop_toBottomOf="@+id/search_view_scrap_search"
             app:layout_constraintVertical_bias="0.0">
 
         </androidx.recyclerview.widget.RecyclerView>

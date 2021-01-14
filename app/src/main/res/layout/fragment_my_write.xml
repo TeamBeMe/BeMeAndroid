@@ -23,42 +23,37 @@
         android:layout_height="match_parent"
         tools:context=".mypage.view.MyWriteFragment">
 
-        <EditText
-            android:id="@+id/editxt_write_search"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view_write_search"
             android:layout_width="0dp"
-            android:imeOptions="actionSearch"
-            android:textColorHint="@color/answer_text_info_gray"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/border_mypage"
-            android:drawableLeft="@drawable/ic_mypage_search"
-            android:drawablePadding="4dp"
-            android:ems="10"
-            android:hint="검색"
-            android:inputType="text"
-            android:padding="12dp"
             android:layout_marginStart="28dp"
+            android:layout_marginTop="34dp"
+            android:background="@drawable/searchview_background"
+            app:iconifiedByDefault="false"
             app:layout_constraintEnd_toStartOf="@+id/img_write_filter"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:queryBackground="@android:color/transparent"
+            app:queryHint="검색" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/img_write_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="28dp"
+            android:backgroundTint="@android:color/transparent"
             android:onClick="@{() -> myPageViewModel.writeFilterOnClick()}"
-            app:layout_constraintBottom_toBottomOf="@+id/editxt_write_search"
+            app:layout_constraintBottom_toBottomOf="@+id/search_view_write_search"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editxt_write_search"
+            app:layout_constraintTop_toTopOf="@+id/search_view_write_search"
             app:srcCompat="@drawable/ic_filter_write" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/constraint_write_empty"
-            app:layout_constraintTop_toBottomOf="@+id/editxt_write_search"
+            app:layout_constraintTop_toBottomOf="@+id/search_view_write_search"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent">
@@ -99,7 +94,7 @@
             android:nestedScrollingEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editxt_write_search" />
+            app:layout_constraintTop_toBottomOf="@+id/search_view_write_search" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_write_showmore"

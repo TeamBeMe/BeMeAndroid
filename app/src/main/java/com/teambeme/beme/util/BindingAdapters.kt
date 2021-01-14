@@ -210,7 +210,7 @@ object BindingAdapters {
     @BindingAdapter("detail:isVisible", "detail:comment")
     @JvmStatic
     fun setSecretReply(textView: TextView, isVisible: Boolean?, comment: String?) {
-        if (isVisible==true) {
+        if (isVisible == true) {
             textView.text = comment
         } else {
             val text = "비밀 댓글 입니다."
@@ -221,7 +221,7 @@ object BindingAdapters {
     @BindingAdapter("detail:isVisible", "detail:nickname")
     @JvmStatic
     fun setSecretId(textView: TextView, isVisible: Boolean?, nickname: String?) {
-        if (isVisible==true) {
+        if (isVisible == true) {
             textView.text = nickname
         } else {
             val text = "익명"
@@ -232,7 +232,7 @@ object BindingAdapters {
     @BindingAdapter("setSecretReply")
     @JvmStatic
     fun setSecretReply(textView: TextView, isVisible: Boolean?) {
-        if (isVisible==true) {
+        if (isVisible == true) {
             textView.visibility = View.VISIBLE
         } else {
             textView.visibility = View.GONE
@@ -242,7 +242,7 @@ object BindingAdapters {
     @BindingAdapter("mypage:setSrcFromUrl", "mypage:isVisible")
     @JvmStatic
     fun setSrcFromUrlProfile(imageView: ImageView, url: String?, visible: Boolean?) {
-        if (visible==true) {
+        if (visible == true) {
             imageView.visibility = View.VISIBLE
             if (url == null) {
                 imageView.setImageResource(R.drawable.ic_dark_profile)
@@ -260,7 +260,7 @@ object BindingAdapters {
     @BindingAdapter("detail:setReplyUrl", "detail:isVisible")
     @JvmStatic
     fun setSrcReplyUrl(imageView: ImageView, url: String?, visible: Boolean?) {
-        if (visible==true) {
+        if (visible == true) {
             imageView.visibility = View.VISIBLE
             if (url == null) {
                 imageView.setImageResource(R.drawable.ic_dark_profile)
