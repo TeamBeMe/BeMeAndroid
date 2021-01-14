@@ -4,20 +4,31 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.detail.model.ReplyData
-import com.teambeme.beme.detail.model.ReplyParentData
-import com.teambeme.beme.detail.model.initReplyList
+import com.teambeme.beme.detail.model.*
+import com.teambeme.beme.detail.repository.DetailRepository
+import com.teambeme.beme.otherpage.model.ResponseScrap
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(private val detailRepository: DetailRepository) : ViewModel() {
     val answerText = MutableLiveData<String>()
+
+    var copyChildData: MutableList<ResponseDetail.Data.Comment.Children> = mutableListOf()
+
+    var copyReplyData: MutableList<ResponseDetail.Data.Comment> = mutableListOf()
+
+    private val _detailData = MutableLiveData<ResponseDetail.Data>()
+    val detailData: LiveData<ResponseDetail.Data>
+        get() = _detailData
 
     private val _isAddClicked = MutableLiveData<Boolean>()
     val isAddClicked: LiveData<Boolean>
         get() = _isAddClicked
 
-    private val _isSecretClicked = MutableLiveData<Boolean>()
-    val isSecretClicked: LiveData<Boolean>
-        get() = _isSecretClicked
+    private val _isPublic = MutableLiveData<Boolean>()
+    val isPublic: LiveData<Boolean>
+        get() = _isPublic
 
     private val _isOpenClicked = MutableLiveData<Boolean>()
     val isOpenClicked: LiveData<Boolean>
@@ -32,6 +43,13 @@ class DetailViewModel : ViewModel() {
         get() = _position
 
     fun setPosition(position: Int) {
+        if (copyReplyData[position].isAuthor) {
+            authority = MY_REPLY
+        } else if (detailData.value!!.isAuthor) {
+            authority = MY_OTHER_REPLY
+        } else {
+            authority = OTHER_REPLY
+        }
         _position.value = position
         _childposition.value = -1
     }
@@ -41,9 +59,18 @@ class DetailViewModel : ViewModel() {
         get() = _childposition
 
     fun setChildPosition(position: Int, childposition: Int) {
+        if (copyReplyData[position].children[childposition].isAuthor) {
+            authority = MY_REPLY
+        } else if (detailData.value!!.isAuthor) {
+            authority = MY_OTHER_REPLY
+        } else {
+            authority = OTHER_REPLY
+        }
         _childposition.value = childposition
         _position.value = position
     }
+
+    var authority = 0
 
     private val _replyPosition = MutableLiveData<Int>()
     val replyPosition: LiveData<Int>
@@ -71,11 +98,11 @@ class DetailViewModel : ViewModel() {
     }
 
     fun secretButtonClicked() {
-        _isSecretClicked.value = true
+        _isPublic.value = _isPublic.value != true
     }
 
     fun secretButtonClickedFalse() {
-        _isSecretClicked.value = false
+        _isPublic.value = false
     }
 
     fun replyOpenClicked() {
@@ -86,28 +113,36 @@ class DetailViewModel : ViewModel() {
         _isOpenClicked.value = false
     }
 
-    private var dummyParentReply = mutableListOf(
-        ReplyParentData(
-            txt_id = "asdf",
-            txt_comment = "a척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..f",
-            txt_time = "12월24일",
-            dataChild = initReplyList()
-        ),
-        ReplyParentData(
-            txt_id = "asdf",
-            txt_comment = "척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..f",
-            txt_time = "12월22일"
-        ),
-        ReplyParentData(
-            txt_id = "asdf",
-            txt_comment = "척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다..",
-            txt_time = "12월24일",
-            dataChild = initReplyList()
-        )
-    )
-
     fun getId(): String {
-        return dummyParentReply[position.value!!].txt_id
+        return if (copyReplyData[replyPosition.value!!].isVisible)
+            copyReplyData[replyPosition.value!!].userNickname
+        else
+            "익명"
+    }
+
+    fun requestDetail(answerId: Int) {
+        detailRepository.getDetail(
+            answerId
+        )
+            .enqueue(object :
+                Callback<ResponseDetail> {
+                override fun onResponse(
+                    call: Call<ResponseDetail>,
+                    response: Response<ResponseDetail>
+                ) {
+                    if (response.isSuccessful) {
+                        copyReplyData = response.body()!!.data?.comment.toMutableList()
+                        _detailData.value = response.body()!!.data
+                        _canReply.value = response.body()!!.data.commentBlockedFlag
+                        _isScrapped.value = response.body()!!.data.isScrapped
+                        _replyParentData.value = copyReplyData
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseDetail>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
     }
 
     private val _isChangeClicked = MutableLiveData<Boolean>()
@@ -123,18 +158,91 @@ class DetailViewModel : ViewModel() {
     }
 
     fun getParentReplyComment() {
-        answerText.value = dummyParentReply[position.value!!].txt_comment
+        answerText.value = copyReplyData[position.value!!].content
+    }
+
+    fun changeParentReply() {
+        detailRepository.putReply(
+            copyReplyData[position.value!!].id, answerText.value!!
+        )
+            .enqueue(object :
+                Callback<ResponsePutReply> {
+                override fun onResponse(
+                    call: Call<ResponsePutReply>,
+                    response: Response<ResponsePutReply>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseData = ResponseDetail.Data.Comment(
+                            response.body()!!.data.answerId,
+                            copyReplyData[position.value!!].children,
+                            response.body()!!.data.content,
+                            response.body()!!.data.createdAt,
+                            response.body()!!.data.id,
+                            response.body()!!.data.isAuthor,
+                            response.body()!!.data.isVisible,
+                            response.body()!!.data.publicFlag,
+                            response.body()!!.data.updatedAt,
+                            response.body()!!.data.userId,
+                            response.body()!!.data.profileImg,
+                            response.body()!!.data.userNickname
+                        )
+                        copyReplyData[position.value!!] = responseData
+                        _replyParentData.value = copyReplyData.toMutableList()
+                        answerText.value = ""
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponsePutReply>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
+    }
+
+    fun changeChildReply() {
+        detailRepository.putReply(
+            copyReplyData[position.value!!].children[childposition.value!!].id, answerText.value!!
+        )
+            .enqueue(object :
+                Callback<ResponsePutReply> {
+                override fun onResponse(
+                    call: Call<ResponsePutReply>,
+                    response: Response<ResponsePutReply>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseData = ResponseDetail.Data.Comment.Children(
+                            response.body()!!.data.answerId, response.body()!!.data.content,
+                            response.body()!!.data.createdAt, response.body()!!.data.id,
+                            response.body()!!.data.isAuthor, response.body()!!.data.isVisible,
+                            response.body()!!.data.parentId, response.body()!!.data.publicFlag,
+                            response.body()!!.data.updatedAt, response.body()!!.data.userId,
+                            response.body()!!.data.profileImg, response.body()!!.data.userNickname
+                        )
+                        copyChildData[childposition.value!!] = responseData
+                        copyReplyData[position.value!!].children = copyChildData
+                        _replyParentData.value = copyReplyData.toMutableList()
+                        answerText.value = ""
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponsePutReply>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
     }
 
     fun changeParentReplyComment() {
-        dummyParentReply[position.value!!].txt_comment = answerText.value!!
-        _replyParentData.value = dummyParentReply.toMutableList()
+        copyReplyData[position.value!!].content = answerText.value!!
+        _replyParentData.value = copyReplyData.toMutableList()
         answerText.value = ""
     }
 
     private val _isChildChangeClicked = MutableLiveData<Boolean>()
     val isChildChangeClicked: LiveData<Boolean>
         get() = _isChildChangeClicked
+
+    private val _isScrapped = MutableLiveData<Boolean>()
+    val isScrapped: LiveData<Boolean>
+        get() = _isScrapped
 
     fun setChildChangeClicked() {
         _isChildChangeClicked.value = true
@@ -146,86 +254,214 @@ class DetailViewModel : ViewModel() {
 
     fun getChildReplyComment() {
         answerText.value =
-            dummyParentReply[position.value!!].dataChild[childposition.value!!].txt_comment
+            copyReplyData[position.value!!].children[childposition.value!!].content
     }
 
     fun changeChildReplyComment() {
-        dummyParentReply[position.value!!].dataChild[childposition.value!!].txt_comment =
+        copyReplyData[position.value!!].children[childposition.value!!].content =
             answerText.value!!
-        _replyParentData.value = dummyParentReply.toMutableList()
+        _replyParentData.value = copyReplyData.toMutableList()
         answerText.value = ""
     }
 
-    private val _replyParentData = MutableLiveData<MutableList<ReplyParentData>>()
-    val replyParentData: LiveData<MutableList<ReplyParentData>>
+    private val _replyParentData = MutableLiveData<MutableList<ResponseDetail.Data.Comment>>()
+    val replyParentData: LiveData<MutableList<ResponseDetail.Data.Comment>>
         get() = _replyParentData
 
-    fun deleteDummyParentReply(position: Int) {
-        dummyParentReply.removeAt(position)
-        _replyParentData.value = dummyParentReply.toMutableList()
+    fun deleteParentReply(position: Int) {
+        deleteReply(copyReplyData[position].id)
+        copyReplyData.removeAt(position)
+        _replyParentData.value = copyReplyData.toMutableList()
     }
 
-    fun deleteDummyReply(position: Int, childposition: Int) {
-        dummyParentReply[position].dataChild.removeAt(childposition)
-        _replyParentData.value = dummyParentReply.toMutableList()
+    private val _isDeleteReply = MutableLiveData<Boolean>()
+    val isDeleteReply: LiveData<Boolean>
+        get() = _isDeleteReply
+
+    fun putScrap() {
+        detailRepository.putScrap(
+            detailData.value!!.id
+        ).enqueue(object : Callback<ResponseScrap> {
+            override fun onResponse(
+                call: Call<ResponseScrap>,
+                response: Response<ResponseScrap>
+            ) {
+                if (response.isSuccessful) {
+                    setScrapped()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseScrap>, t: Throwable) {
+                Log.d("Network Fail", t.message.toString())
+            }
+        })
+    }
+
+    fun setScrapped() {
+        _isScrapped.value = isScrapped.value != true
+    }
+
+    private val _isScrapClicked = MutableLiveData<Boolean>()
+    val isScrapClicked: LiveData<Boolean>
+        get() = _isScrapClicked
+
+    fun scrapClicked() {
+        _isScrapClicked.value = _isScrapClicked.value != true
+        Log.d("test", "ASGSD")
+    }
+
+    private fun deleteReply(commentId: Int) {
+        detailRepository.deleteReply(
+            commentId
+        )
+            .enqueue(object :
+                Callback<ResponseDeleteReply> {
+                override fun onResponse(
+                    call: Call<ResponseDeleteReply>,
+                    response: Response<ResponseDeleteReply>
+                ) {
+                    if (response.isSuccessful) {
+                        _isDeleteReply.value = true
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseDeleteReply>, t: Throwable) {
+                    _isDeleteReply.value = false
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
+    }
+
+    private val _isDeleteAnswer = MutableLiveData<Boolean>()
+    val isDeleteAnswer: LiveData<Boolean>
+        get() = _isDeleteAnswer
+
+    private val _canReply = MutableLiveData<Boolean>()
+    val canReply: LiveData<Boolean>
+        get() = _canReply
+
+    fun deleteAnswer() {
+        detailRepository.deleteAnswer(
+            detailData.value!!.id
+        )
+            .enqueue(object :
+                Callback<ResponseDeleteAnswer> {
+                override fun onResponse(
+                    call: Call<ResponseDeleteAnswer>,
+                    response: Response<ResponseDeleteAnswer>
+                ) {
+                    if (response.isSuccessful) {
+                        _isDeleteAnswer.value = true
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseDeleteAnswer>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
+    }
+
+    fun deleteChildReply(position: Int, childposition: Int) {
+        copyChildData = copyReplyData[position].children.toMutableList()
+        deleteReply(copyReplyData[position].children[childposition].id)
+        copyChildData.removeAt(childposition)
+        copyReplyData[position].children = copyChildData
+        _replyParentData.value = copyReplyData.toMutableList()
     }
 
     fun setDummyParentReply() {
 
-        _replyParentData.value = dummyParentReply.toMutableList()
+        _replyParentData.value = copyReplyData.toMutableList()
     }
 
-    private val _replyData = MutableLiveData<MutableList<ReplyData>>()
-    val replyData: LiveData<MutableList<ReplyData>>
+    private val _replyData = MutableLiveData<MutableList<ResponseDetail.Data.Comment.Children>>()
+    val replyData: LiveData<MutableList<ResponseDetail.Data.Comment.Children>>
         get() = _replyData
 
-    fun setChildData(child: List<ReplyData>) {
+    fun setChildData(child: List<ResponseDetail.Data.Comment.Children>) {
         _replyData.value = child.toMutableList()
     }
 
-    fun setDummyReply() {
-        val dummyReply = listOf(
-            ReplyData(
-                txt_id = "asdf",
-                txt_comment = "asdfsdafwsdfkjewfulsdglnkvdflnkbvdfiuglewrjflksdf",
-                txt_time = "12월24일"
-            ),
-            ReplyData(
-                txt_id = "asdf",
-                txt_comment = "asdfsdafwsdfkjewfulsdglnkvdflnkbvdfiuglewrjflksdf",
-                txt_time = "12월24일"
-            ),
-            ReplyData(
-                txt_id = "asdf",
-                txt_comment = "asdfsdafwsdfkjewfulsdglnkvdflnkbvdfiuglewrjflksdf",
-                txt_time = "12월24일"
-            )
-        )
-        _replyData.value = dummyReply.toMutableList()
-    }
-
     fun addParentReply() {
-        val dummyReply = ReplyParentData("asdf", answerText.value!!, "12.243")
-        dummyParentReply.add(dummyReply)
-        _replyParentData.value = dummyParentReply.toMutableList()
-        answerText.value = ""
+        var reply: ResponseDetail.Data.Comment
+        detailRepository.postReply(
+            detailData.value!!.id, answerText.value!!, isPublic.value!!, null
+        )
+            .enqueue(object :
+                Callback<ResponsePostReply> {
+                override fun onResponse(
+                    call: Call<ResponsePostReply>,
+                    response: Response<ResponsePostReply>
+                ) {
+                    if (response.isSuccessful) {
+                        reply = ResponseDetail.Data.Comment(
+                            response.body()!!.data.answerId,
+                            listOf(),
+                            response.body()!!.data.content,
+                            response.body()!!.data.createdAt,
+                            response.body()!!.data.id,
+                            response.body()!!.data.isAuthor,
+                            response.body()!!.data.isVisible,
+                            response.body()!!.data.publicFlag,
+                            response.body()!!.data.updatedAt,
+                            response.body()!!.data.userId,
+                            response.body()!!.data.profileImg,
+                            response.body()!!.data.userNickname
+                        )
+                        copyReplyData.add(reply)
+                        _replyParentData.value = copyReplyData.toMutableList()
+                        answerText.value = ""
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponsePostReply>, t: Throwable) {
+
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
     }
 
     fun addChildReply() {
-        val dummyReply = ReplyData("대댓글 추가", answerText.value!!, "12월24일")
-        when {
-            dummyParentReply[replyPosition.value!!].dataChild.size == 0 -> {
-                dummyParentReply[replyPosition.value!!].dataChild.add(dummyReply)
-            }
-            dummyParentReply[replyPosition.value!!].dataChild[0].txt_id == "" -> {
-                dummyParentReply[replyPosition.value!!].dataChild.add(dummyReply)
-                dummyParentReply[replyPosition.value!!].dataChild.removeAt(0)
-            }
-            else -> {
-                dummyParentReply[replyPosition.value!!].dataChild.add(dummyReply)
-            }
-        }
-        _replyParentData.value = dummyParentReply.toMutableList()
-        answerText.value = ""
+        var childrenReply: ResponseDetail.Data.Comment.Children
+        detailRepository.postReply(
+            detailData.value!!.id,
+            answerText.value!!,
+            isPublic.value!!,
+            copyReplyData[replyPosition.value!!].id
+        )
+            .enqueue(object :
+                Callback<ResponsePostReply> {
+                override fun onResponse(
+                    call: Call<ResponsePostReply>,
+                    response: Response<ResponsePostReply>
+                ) {
+                    if (response.isSuccessful) {
+                        childrenReply = ResponseDetail.Data.Comment.Children(
+                            response.body()!!.data.answerId, response.body()!!.data.content,
+                            response.body()!!.data.createdAt, response.body()!!.data.id,
+                            response.body()!!.data.isAuthor, response.body()!!.data.isVisible,
+                            response.body()!!.data.parentId, response.body()!!.data.publicFlag,
+                            response.body()!!.data.updatedAt, response.body()!!.data.userId,
+                            response.body()!!.data.profileImg, response.body()!!.data.userNickname
+                        )
+                        copyChildData =
+                            copyReplyData[replyPosition.value!!].children.toMutableList()
+                        copyChildData.add(childrenReply)
+                        copyReplyData[replyPosition.value!!].children = copyChildData
+                        _replyParentData.value = copyReplyData.toMutableList()
+                        answerText.value = ""
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponsePostReply>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
+    }
+
+    companion object {
+        val MY_REPLY = 1
+        val MY_OTHER_REPLY = 2
+        val OTHER_REPLY = 3
     }
 }

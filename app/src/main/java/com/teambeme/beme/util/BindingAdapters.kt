@@ -5,7 +5,9 @@ import android.text.*
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
+import android.view.View
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -27,14 +29,14 @@ object BindingAdapters {
     @JvmStatic
     fun setTextForUnAnswered(textView: TextView, userNickname: String) {
         textView.text = "아직 " + userNickname + "님이 답하지 않은 질문입니다.\n" +
-                "답변을 하시고 글을 보시겠습니까?"
+                "답변하시고 글을 보시겠습니까?"
     }
 
     @BindingAdapter("setSrcFromUrl")
     @JvmStatic
     fun setSrcFromUrl(imageView: ImageView, url: String?) {
         if (url == null) {
-            imageView.setImageResource(R.drawable.img_profile_sample)
+            imageView.setImageResource(R.drawable.ic_dark_profile)
         } else {
             Glide.with(imageView.context)
                 .load(url)
@@ -161,6 +163,7 @@ object BindingAdapters {
     fun setPageCategoryText(textView: TextView, category: String, answerIdx: Int?) {
         if (answerIdx != null) {
             val text = "[ " + category + "에 관한 " + answerIdx + "번째 질문 ]"
+            textView.text = text
         } else {
             val text = "[ " + category + "에 관한 질문 ]"
             textView.text = text
@@ -192,6 +195,94 @@ object BindingAdapters {
             chip.isChecked = false
             val text = "팔로우"
             chip.text = text
+        }
+    }
+
+    @BindingAdapter("home:publicButtonSrc")
+    @JvmStatic
+    fun setSrc(imgButton: ImageButton, publicFlag: Int) {
+        when (publicFlag) {
+            0 -> imgButton.setImageResource(R.drawable.ic_lock)
+            else -> imgButton.setImageResource(R.drawable.ic_unlock)
+        }
+    }
+
+    @BindingAdapter("detail:isVisible", "detail:comment")
+    @JvmStatic
+    fun setSecretReply(textView: TextView, isVisible: Boolean, comment: String) {
+        if (isVisible) {
+            textView.text = comment
+        } else {
+            val text = "비밀 댓글 입니다."
+            textView.text = text
+        }
+    }
+
+    @BindingAdapter("detail:isVisible", "detail:nickname")
+    @JvmStatic
+    fun setSecretId(textView: TextView, isVisible: Boolean, nickname: String) {
+        if (isVisible) {
+            textView.text = nickname
+        } else {
+            val text = "익명"
+            textView.text = text
+        }
+    }
+
+    @BindingAdapter("mypage:setSrcFromUrl", "mypage:isVisible")
+    @JvmStatic
+    fun setSrcFromUrlProfile(imageView: ImageView, url: String?, visible: Boolean) {
+        if (visible) {
+            imageView.visibility = View.VISIBLE
+            if (url == null) {
+                imageView.setImageResource(R.drawable.ic_dark_profile)
+            } else {
+                Glide.with(imageView.context)
+                    .load(url)
+                    .centerCrop()
+                    .into(imageView)
+            }
+        } else {
+            imageView.visibility = View.GONE
+        }
+    }
+
+    @BindingAdapter("mypage:category", "mypage:isAuthor", "mypage:answerIdx")
+    @JvmStatic
+    fun setScrapCategoryText(
+        textView: TextView,
+        category: String,
+        isAuthor: Boolean?,
+        answerIdx: Int?
+    ) {
+        if (isAuthor == true) {
+            val text = "[ " + category + "에 관한 " + answerIdx + "번째 질문 ]"
+            textView.text = text
+        } else {
+            val text = "[ " + category + "에 관한 질문 ]"
+            textView.text = text
+        }
+    }
+
+    @BindingAdapter("mypage:nickname", "mypage:isAuthor")
+    @JvmStatic
+    fun setScrapNameText(textView: TextView, nickname: String, isAuthor: Boolean?) {
+        if (isAuthor == true) {
+            textView.visibility = View.GONE
+        } else {
+            val text = nickname
+            textView.text = text
+            textView.visibility = View.VISIBLE
+        }
+    }
+
+    @BindingAdapter("setSecretImage")
+    @JvmStatic
+    fun setSecretImage(imageView: ImageView, isAuthor: Boolean?) {
+        if (isAuthor == false) {
+            imageView.visibility = View.GONE
+        } else {
+            imageView.visibility = View.VISIBLE
         }
     }
 }

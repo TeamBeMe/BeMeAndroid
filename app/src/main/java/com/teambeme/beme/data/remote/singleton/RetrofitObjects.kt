@@ -1,8 +1,5 @@
 package com.teambeme.beme.data.remote.singleton
 
-import com.teambeme.beme.data.remote.api.IdSearchService
-import com.teambeme.beme.data.remote.api.LoginService
-import com.teambeme.beme.data.remote.api.NoticeService
 import com.teambeme.beme.data.remote.api.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -96,6 +93,20 @@ object RetrofitObjects {
     fun getFbTokenRegisterService(): FbTokenRegisterService = fbTokenRegisterInstance ?: synchronized(this) {
         fbTokenRegisterInstance ?: baseRetrofit.create(FbTokenRegisterService::class.java).apply {
             fbTokenRegisterInstance = this
+        }
+    }
+
+    private var answerInstance: AnswerService? = null
+    fun getAnswerService(): AnswerService = answerInstance ?: synchronized(this) {
+        answerInstance ?: baseRetrofit.create(AnswerService::class.java).apply {
+            answerInstance = this
+        }
+    }
+
+    private var detailInstance: DetailService? = null
+    fun getDetailService(): DetailService = detailInstance ?: synchronized(this) {
+        detailInstance ?: baseRetrofit.create(DetailService::class.java).apply {
+            detailInstance = this
         }
     }
 }

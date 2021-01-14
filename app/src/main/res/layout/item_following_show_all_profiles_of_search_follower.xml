@@ -42,7 +42,7 @@
             tools:text="123" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_following_show_all_delete_follower"
+            android:id="@+id/btn_following_show_all_delete_follower_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/item_show_all_profiles_btn_follower_background_black"

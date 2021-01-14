@@ -162,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="내가 답한 질문에 대한 다른 사람들의 최신 답변이에요"
+                    android:text="내가 답한 질문의 글을 최신순으로 볼 수 있어요"
                     android:textColor="@color/explore_txt_desc_of_other_questions_gray"
                     android:textSize="13sp"
                     app:layout_constraintStart_toStartOf="@id/txt_explore_title_of_other_questions"
@@ -173,7 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="내가 관심있어 할 다른 사람들의 답변이에요"
+                    android:text="내가 흥미있어 할 사람들의 글이에요"
                     android:textColor="@color/explore_txt_desc_of_other_questions_gray"
                     android:textSize="13sp"
                     android:visibility="invisible"
@@ -362,7 +362,7 @@
                     app:layout_constraintTop_toBottomOf="@id/rcv_explore_other_questions" />
 
                 <ImageView
-                    android:id="@+id/img_explore_un_answered_information"
+                    android:id="@+id/img_following_no_following_answer_information"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="46dp"
@@ -373,7 +373,7 @@
                     app:layout_constraintTop_toBottomOf="@id/constraint_layout_explore_for_tab" />
 
                 <TextView
-                    android:id="@+id/txt_explore_other_questions_un_answer"
+                    android:id="@+id/txt_following_no_following_answer_information"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
@@ -384,7 +384,7 @@
                     android:visibility="@{exploreViewModel.otherQuestionsList == null ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/img_explore_un_answered_information" />
+                    app:layout_constraintTop_toBottomOf="@id/img_following_no_following_answer_information" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,16 +1,19 @@
 package com.teambeme.beme.home.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Answer(
     @SerializedName("answer_date")
     val answerDate: String?,
     @SerializedName("answer_idx")
     val answerIdx: String?,
     @SerializedName("comment_blocked_flag")
-    val commentBlockedFlag: Boolean?,
+    val commentBlockedFlag: Int?,
     @SerializedName("content")
-    val content: String?,
+    var content: String?,
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("id")
@@ -18,7 +21,7 @@ data class Answer(
     @SerializedName("is_today")
     val isToday: Boolean,
     @SerializedName("public_flag")
-    val publicFlag: Int,
+    var publicFlag: Int,
     @SerializedName("Question.Category.id")
     val questionCategoryId: Int,
     @SerializedName("Question.Category.name")
@@ -27,4 +30,4 @@ data class Answer(
     val questionId: Int,
     @SerializedName("Question.title")
     val questionTitle: String
-)
+) : Parcelable

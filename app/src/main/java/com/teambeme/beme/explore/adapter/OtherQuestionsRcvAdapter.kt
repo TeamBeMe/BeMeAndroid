@@ -24,6 +24,7 @@ import com.teambeme.beme.util.startActivity
 class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private val context: Context,
     private val layout: Int,
+    private val userNickname: String,
     private val viewModel: ViewModel
 ) :
     ListAdapter<ResponseExplorationQuestions.Data.Answer, OtherQuestionsRcvAdapter<B>.OtherQuestionsRcvViewHolder<B>>(
@@ -35,10 +36,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
             when (binding) {
                 is ItemExploreOtherQuestionsBinding -> {
                     with(binding as ItemExploreOtherQuestionsBinding) {
-                        Log.d(
-                            "network_1",
-                            otherQuestionsData.toString()
-                        )
+                        setVariable(BR.txtUserNickname, userNickname)
                         setVariable(BR.otherQuestions, otherQuestionsData)
                         executePendingBindings()
                         setClickListenerForQuestionsBookmark(binding, otherQuestionsData)

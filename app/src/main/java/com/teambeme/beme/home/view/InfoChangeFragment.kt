@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.teambeme.beme.databinding.FragmentInfoChangeBinding
 
-class InfoChangeFragment : BottomSheetDialogFragment() {
+class InfoChangeFragment(private val infoChangeClickListener: InfoChangeClickListener) :
+    BottomSheetDialogFragment() {
     private var _binding: FragmentInfoChangeBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -22,13 +23,24 @@ class InfoChangeFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            linearHomeEdit.setOnClickListener { dismiss() }
-            linearHomeDelete.setOnClickListener { dismiss() }
+            linearHomeEdit.setOnClickListener {
+                infoChangeClickListener.changeQuestion()
+                dismiss()
+            }
+            linearHomeDelete.setOnClickListener {
+                infoChangeClickListener.deleteAnswer()
+                dismiss()
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    interface InfoChangeClickListener {
+        fun changeQuestion()
+        fun deleteAnswer()
     }
 }

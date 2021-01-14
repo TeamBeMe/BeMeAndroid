@@ -14,10 +14,12 @@ import com.teambeme.beme.BR
 import com.teambeme.beme.databinding.ItemFollowingProfilesOfFollowingBinding
 import com.teambeme.beme.databinding.ItemFollowingShowAllProfilesOfFollowingBinding
 import com.teambeme.beme.following.model.ResponseFollowingList
+import com.teambeme.beme.following.viewmodel.FollowingViewModel
 
 class FollowingProfilesRcvAdapter<B : ViewDataBinding>(
     private val context: Context,
-    private val layout: Int
+    private val layout: Int,
+    private val viewModel: FollowingViewModel
 ) :
     ListAdapter<ResponseFollowingList.Data.Followee, FollowingProfilesRcvAdapter<B>.FollowingProfilesRcvViewHolder<B>>(
         FollowingProfilesDiffUtil()
@@ -38,8 +40,8 @@ class FollowingProfilesRcvAdapter<B : ViewDataBinding>(
                         setVariable(BR.showAllProfilesFollowing, followingProfilesData)
                         executePendingBindings()
                         Log.d("showAll__", showAllProfilesFollowing.toString())
-                        setClickListenerForFollowBtn(binding, followingProfilesData)
-                        setclickListenerForFollowingBtn(binding, followingProfilesData)
+                        setClickListenerForFollowBtn(binding, followingProfilesData, viewModel)
+                        setclickListenerForFollowingBtn(binding, followingProfilesData, viewModel)
                     }
                 }
             }
@@ -79,9 +81,12 @@ class FollowingProfilesRcvAdapter<B : ViewDataBinding>(
 
     private fun setClickListenerForFollowBtn(
         binding: ItemFollowingShowAllProfilesOfFollowingBinding,
-        followingProfilesData: ResponseFollowingList.Data.Followee
+        followingProfilesData: ResponseFollowingList.Data.Followee,
+        viewModel: FollowingViewModel
     ) {
         binding.btnFollowingShowAllFollow.setOnClickListener {
+            Log.d("btn2", "팔로우")
+            viewModel.requestFollow(followingProfilesData.id)
             binding.btnFollowingShowAllFollow.visibility = View.INVISIBLE
             binding.btnFollowingShowAllFollowing.visibility = View.VISIBLE
         }
@@ -89,9 +94,12 @@ class FollowingProfilesRcvAdapter<B : ViewDataBinding>(
 
     private fun setclickListenerForFollowingBtn(
         binding: ItemFollowingShowAllProfilesOfFollowingBinding,
-        followingProfilesData: ResponseFollowingList.Data.Followee
+        followingProfilesData: ResponseFollowingList.Data.Followee,
+        viewModel: FollowingViewModel
     ) {
         binding.btnFollowingShowAllFollowing.setOnClickListener {
+            Log.d("btn2", "팔로잉")
+            viewModel.requestFollow(followingProfilesData.id)
             binding.btnFollowingShowAllFollowing.visibility = View.INVISIBLE
             binding.btnFollowingShowAllFollow.visibility = View.VISIBLE
         }

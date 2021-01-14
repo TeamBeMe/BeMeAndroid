@@ -28,8 +28,6 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
     val deletePosition: LiveData<Int>
         get() = _deletePosition
 
-
-
     fun requestRecentSearchData() {
         idSearchRepository.getRecentSearchRecord("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI")
             .enqueue(

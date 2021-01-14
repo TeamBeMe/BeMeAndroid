@@ -10,5 +10,5 @@ interface HomeDataSource {
     suspend fun getAnswers(page: Int): ResponseAnswers
     suspend fun getNewAnswer(): ResponseAnswer
     suspend fun changeQuestion(answerId: Int): ResponseAnswer
-    suspend fun deleteQuestion(answerId: Int): ResponseModifyData
+    suspend fun deleteAnswer(answerId: Int): ResponseModifyData
 }

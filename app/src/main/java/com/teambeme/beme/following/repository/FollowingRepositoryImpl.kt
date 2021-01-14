@@ -2,28 +2,31 @@ package com.teambeme.beme.following.repository
 
 import com.teambeme.beme.data.remote.datasource.FollowingDataSource
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
+import com.teambeme.beme.following.model.RequestFollowingFollow
+import com.teambeme.beme.following.model.ResponseFollowingFollow
 import com.teambeme.beme.following.model.ResponseFollowingList
 import com.teambeme.beme.following.model.ResponseFollowingSearchId
 import retrofit2.Call
 
 class FollowingRepositoryImpl(private val followingDataSource: FollowingDataSource) : FollowingRepository {
-    override fun getFollowingFollowerAnswers(
-        token: String,
-        page: Int,
-        category: String
+    override fun getFollowingAnswers(
+        page: Int
     ): Call<ResponseExplorationQuestions> {
-        return followingDataSource.getFollowingFollowerAnswers(token, page, category)
+        return followingDataSource.getFollowingAnswers(page)
     }
 
-    override fun getFollowingFollowerList(token: String): Call<ResponseFollowingList> {
-        return followingDataSource.getFollowingFollowerList(token)
+    override fun getFollowingFollowerList(): Call<ResponseFollowingList> {
+        return followingDataSource.getFollowingFollowerList()
     }
 
     override fun getSearchMyFollowingFollower(
-        token: String,
         query: String,
         range: String
     ): Call<ResponseFollowingSearchId> {
-        return followingDataSource.getSearchMyFollowingFollower(token, query, range)
+        return followingDataSource.getSearchMyFollowingFollower(query, range)
+    }
+
+    override fun putFollow(body: RequestFollowingFollow): Call<ResponseFollowingFollow> {
+        return followingDataSource.putFollow(body)
     }
 }

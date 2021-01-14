@@ -1,21 +1,42 @@
 package com.teambeme.beme.data.remote.api
 
-import com.teambeme.beme.mypage.model.ResponseProfile
+import com.teambeme.beme.mypage.model.*
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
 interface MyPageService {
-    @Headers(
-        "Accept: application/json",
-        "Content-type: application/json"
-    )
     @Multipart
-    @POST("profiles")
+    @PUT("/profiles")
     fun putProfile(
-        @Part("profile_img") profileImg: RequestBody,
-        @Part url: MultipartBody.Part,
-        @Header("token") token: String
+        @Part file: MultipartBody.Part?
     ): Call<ResponseProfile>
+
+    @Headers("Content-type: application/json")
+    @GET("profiles/answers")
+    fun getMyAnswer(
+        @Query("public") public: String?,
+        @Query("category") category: Int?,
+        @Query("query") query: String?,
+        @Query("page") page: Int
+    ): Call<ResponseMyAnswer>
+
+    @Headers("Content-type: application/json")
+    @GET("profiles")
+    fun getMyProfile(): Call<ResponseMyProfile>
+
+    @Headers("Content-type: application/json")
+    @GET("profiles/scraps")
+    fun getMyScrap(
+        @Query("public") public: String?,
+        @Query("category") category: Int?,
+        @Query("query") query: String?,
+        @Query("page") page: Int
+    ): Call<ResponseMyScrap>
+
+    @Headers("Content-type: application/json")
+    @PUT("home/public")
+    fun putPublic(
+        @Body body: RequestPublic
+    ): Call<ResponsePublic>
 }

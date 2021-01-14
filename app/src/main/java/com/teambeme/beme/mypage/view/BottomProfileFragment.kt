@@ -5,8 +5,8 @@ import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -25,7 +25,13 @@ import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
 import com.theartofdev.edmodo.cropper.CropImage
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
+import java.io.File
 
 class BottomProfileFragment : BottomSheetDialogFragment() {
     private lateinit var binding: ItemBottomProfileBinding
@@ -43,7 +49,20 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
         binding.tbProfilebottomEdit.setOnClickListener {
             ImagePicker()
         }
+        binding.tbProfilebottomBase.setOnClickListener {
+            baseImage()
+        }
         return binding.root
+    }
+
+    private fun baseImage() {
+        val jsonObject = JSONObject()
+        jsonObject.put("image", "")
+        val fileReqBody = jsonObject.toString().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        val part = MultipartBody.Part.createFormData("image", "", fileReqBody)
+        mypageViewModel.putProfiles(part)
+        mypageViewModel.setProfileUri(null)
+        dismiss()
     }
 
     private fun ImagePicker() {
@@ -67,24 +86,18 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
             if (resultCode == RESULT_OK) {
                 var resultUri = result.getUri()
                 mypageViewModel.setProfileUri(resultUri)
-                var bitmap =
-                    MediaStore.Images.Media.getBitmap(requireContext().contentResolver, resultUri)
-                var bitmapToUri = getImageUri(requireContext(), bitmap)
-                val filePathColumn =
-                    arrayOf(MediaStore.Images.Media.DATA)
-                val cursor: Cursor? =
-                    requireContext().contentResolver.query(
-                        bitmapToUri!!,
-                        filePathColumn,
-                        null,
-                        null,
-                        null
+                val options = BitmapFactory.Options()
+                val inputStream = requireContext().contentResolver.openInputStream(resultUri)
+                val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                bitmap!!.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
+                val photoBody =
+                    RequestBody.create(
+                        "image/jpg".toMediaTypeOrNull(),
+                        byteArrayOutputStream.toByteArray()
                     )
-                cursor!!.moveToFirst()
-                val columnIndex: Int = cursor.getColumnIndex(filePathColumn[0])
-                val imgDecodableString = cursor.getString(columnIndex)
-                mypageViewModel.setProfileString(imgDecodableString)
-                mypageViewModel.putProfile()
+                val part = MultipartBody.Part.createFormData("image", File(resultUri.toString()).name, photoBody)
+                mypageViewModel.putProfiles(part)
                 dismiss()
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.getError()

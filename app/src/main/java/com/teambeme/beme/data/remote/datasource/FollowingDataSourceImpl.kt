@@ -2,28 +2,31 @@ package com.teambeme.beme.data.remote.datasource
 
 import com.teambeme.beme.data.remote.api.FollowingService
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
+import com.teambeme.beme.following.model.RequestFollowingFollow
+import com.teambeme.beme.following.model.ResponseFollowingFollow
 import com.teambeme.beme.following.model.ResponseFollowingList
 import com.teambeme.beme.following.model.ResponseFollowingSearchId
 import retrofit2.Call
 
 class FollowingDataSourceImpl(private val service: FollowingService) : FollowingDataSource {
-    override fun getFollowingFollowerAnswers(
-        token: String,
-        page: Int,
-        category: String
+    override fun getFollowingAnswers(
+        page: Int
     ): Call<ResponseExplorationQuestions> {
-        return service.getFollowingFollowerAnswers(token, page, category)
+        return service.getFollowingAnswers(page)
     }
 
-    override fun getFollowingFollowerList(token: String): Call<ResponseFollowingList> {
-        return service.getFollowingFollowerList(token)
+    override fun getFollowingFollowerList(): Call<ResponseFollowingList> {
+        return service.getFollowingFollowerList()
     }
 
     override fun getSearchMyFollowingFollower(
-        token: String,
         query: String,
         range: String
     ): Call<ResponseFollowingSearchId> {
-        return service.getSearchMyFollowingFollower(token, query, range)
+        return service.getSearchMyFollowingFollower(query, range)
+    }
+
+    override fun putFollow(body: RequestFollowingFollow): Call<ResponseFollowingFollow> {
+        return service.putFollow(body)
     }
 }
