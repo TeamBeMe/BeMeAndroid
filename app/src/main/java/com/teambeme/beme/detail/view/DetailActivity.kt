@@ -37,14 +37,12 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
         setBtnVisible(deleteBtnOtherAnswers)
         binding.detailViewModel = detailViewModel
         binding.lifecycleOwner = this
-        setAdapter(answerId)
-        clickListener(answerId)
     }
 
     override fun onResume() {
+        super.onResume()
         setAdapter(answerId)
         clickListener(answerId)
-        super.onResume()
     }
 
     private fun setBtnVisible(deleteBtnOtherAnswer: Boolean) {

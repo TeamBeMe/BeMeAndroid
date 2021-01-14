@@ -68,9 +68,9 @@ class MyWriteFragment : Fragment() {
     }
 
     override fun onResume() {
+        super.onResume()
         mypageViewModel.initPage()
         mypageViewModel.getMyAnswer()
-        super.onResume()
     }
 
     private fun hideKeyboard() {
