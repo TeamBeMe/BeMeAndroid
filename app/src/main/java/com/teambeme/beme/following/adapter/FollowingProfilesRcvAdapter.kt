@@ -1,6 +1,7 @@
 package com.teambeme.beme.following.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.teambeme.beme.databinding.ItemFollowingProfilesOfFollowingBinding
 import com.teambeme.beme.databinding.ItemFollowingShowAllProfilesOfFollowingBinding
 import com.teambeme.beme.following.model.ResponseFollowingList
 import com.teambeme.beme.following.viewmodel.FollowingViewModel
+import com.teambeme.beme.otherpage.view.OtherPageActivity
 
 class FollowingProfilesRcvAdapter<B : ViewDataBinding>(
     private val context: Context,
@@ -33,6 +35,11 @@ class FollowingProfilesRcvAdapter<B : ViewDataBinding>(
                         setVariable(BR.followingProfiles, followingProfilesData)
                         executePendingBindings()
                         Log.d("showAll", followingProfiles.toString())
+                        setClickListenerForGoProfilePageFromFragment(
+                            binding,
+                            followingProfilesData,
+                            context
+                        )
                     }
                 }
                 else -> {
@@ -42,6 +49,11 @@ class FollowingProfilesRcvAdapter<B : ViewDataBinding>(
                         Log.d("showAll__", showAllProfilesFollowing.toString())
                         setClickListenerForFollowBtn(binding, followingProfilesData, viewModel)
                         setclickListenerForFollowingBtn(binding, followingProfilesData, viewModel)
+                        setClickListenerForGoProfilePageFromActivity(
+                            binding,
+                            followingProfilesData,
+                            context
+                        )
                     }
                 }
             }
@@ -105,14 +117,27 @@ class FollowingProfilesRcvAdapter<B : ViewDataBinding>(
         }
     }
 
-//    //프로필 사진 누르면 타인 프로필 페이지로 이동
-//    private fun setClickListenerForGoProfilePage(
-//        binding: ItemFollowingOtherProfilesBinding,
-//        followingProfilesData: FollowingProfilesData,
-//        context: Context
-//    ) {
-//        binding.imgFollowingOtherProfile.setOnClickListener {
-//            context.startActivity</*타인프로필페이지 액티비티*/>(/*string값(서버 붙이면 안보내도 될듯*/)
-//        }
-//    }
+    private fun setClickListenerForGoProfilePageFromActivity(
+        binding: ItemFollowingShowAllProfilesOfFollowingBinding,
+        data: ResponseFollowingList.Data.Followee,
+        context: Context
+    ) {
+        binding.imgFollowingShowAllProfiles.setOnClickListener {
+            val intent = Intent(context, OtherPageActivity::class.java)
+            intent.putExtra("userId", data.id)
+            context.startActivity(intent)
+        }
+    }
+
+    private fun setClickListenerForGoProfilePageFromFragment(
+        binding: ItemFollowingProfilesOfFollowingBinding,
+        data: ResponseFollowingList.Data.Followee,
+        context: Context
+    ) {
+        binding.imgFollowingOtherProfile.setOnClickListener {
+            val intent = Intent(context, OtherPageActivity::class.java)
+            intent.putExtra("userId", data.id)
+            context.startActivity(intent)
+        }
+    }
 }

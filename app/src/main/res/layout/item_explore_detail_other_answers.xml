@@ -10,11 +10,14 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_other_answers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:background="@drawable/explore_other_questions_shape"
-        android:padding="18dp">
+        android:paddingStart="18dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp">
 
         <TextView
             android:id="@+id/txt_other_answers_category"
@@ -91,6 +94,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
+            android:paddingEnd="18dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="18dp"
             android:src="@{otherAnswers.isScrapped == true ? @drawable/ic_bookmark_checked : @drawable/ic_bookmark}"
             app:layout_constraintBottom_toBottomOf="@+id/img_other_answers_profile"
             app:layout_constraintEnd_toEndOf="parent"

@@ -13,19 +13,22 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.BR
 import com.teambeme.beme.R
-import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
 import com.teambeme.beme.databinding.ItemExploreDetailOtherAnswersBinding
+import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.view.ExploreDetailActivity
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
+import com.teambeme.beme.following.viewmodel.FollowingViewModel
+import com.teambeme.beme.otherpage.view.OtherPageActivity
 import com.teambeme.beme.util.startActivity
 
 class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private val context: Context,
     private val layout: Int,
     private val userNickname: String,
-    private val viewModel: ViewModel
+    private val viewModel: ViewModel,
+    private val otherQuestionButtonClickListener: OtherQuestionButtonClickListener?
 ) :
     ListAdapter<ResponseExplorationQuestions.Data.Answer, OtherQuestionsRcvAdapter<B>.OtherQuestionsRcvViewHolder<B>>(
         OtherQuestionsDiffUtil()
@@ -41,6 +44,16 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                         executePendingBindings()
                         setClickListenerForQuestionsBookmark(binding, otherQuestionsData)
                         setClickListenerForShowOtherAnswers(binding, otherQuestionsData, context)
+                        setClickListenerForGoProfilePageFromFragment(
+                            binding,
+                            otherQuestionsData,
+                            context
+                        )
+                        setClickListenerForGoDetailFromFragment(
+                            binding,
+                            otherQuestionsData,
+                            context
+                        )
                         setClickListenerForBtnDoAnswer(binding, otherQuestionsData)
                     }
                 }
@@ -49,9 +62,15 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                         setVariable(BR.otherAnswers, otherQuestionsData)
                         executePendingBindings()
                         setClickListenerForAnswersBookmark(binding, otherQuestionsData)
-                        Log.d(
-                            "network_2",
-                            otherQuestionsData.toString()
+                        setClickListenerForGoProfilePageFromActivity(
+                            binding,
+                            otherQuestionsData,
+                            context
+                        )
+                        setClickListenerForGoDetailFromActivity(
+                            binding,
+                            otherQuestionsData,
+                            context
                         )
                     }
                 }
@@ -113,14 +132,16 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
             when (viewModel) {
                 is ExploreViewModel -> {
                     viewModel.requestScrap(otherQuestionsData.id, otherQuestionsData)
-                    otherQuestionsData.isScrapped = !otherQuestionsData.isScrapped
-                    if (otherQuestionsData.isScrapped) {
-                        binding.btnOtherQuestionsBookmark.setImageResource(R.drawable.ic_bookmark_checked)
-                    } else {
-                        binding.btnOtherQuestionsBookmark.setImageResource(R.drawable.ic_bookmark)
-                    }
-                    Log.d("scrap", otherQuestionsData.isScrapped.toString())
                 }
+                is FollowingViewModel -> {
+                    viewModel.requestScrap(otherQuestionsData.id, otherQuestionsData)
+                }
+            }
+            otherQuestionsData.isScrapped = !otherQuestionsData.isScrapped
+            if (otherQuestionsData.isScrapped) {
+                binding.btnOtherQuestionsBookmark.setImageResource(R.drawable.ic_bookmark_checked)
+            } else {
+                binding.btnOtherQuestionsBookmark.setImageResource(R.drawable.ic_bookmark)
             }
         }
     }
@@ -149,8 +170,61 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         otherQuestionsData: ResponseExplorationQuestions.Data.Answer
     ) {
         binding.btnOtherQuestionsDoAnswer.setOnClickListener {
-            val intent = Intent(context, AnswerActivity::class.java)
+            Log.d("answer", "adapter")
+            otherQuestionButtonClickListener?.otherQuestionAnswerClickListener(otherQuestionsData.questionId)
+        }
+    }
+
+    private fun setClickListenerForGoProfilePageFromFragment(
+        binding: ItemExploreOtherQuestionsBinding,
+        data: ResponseExplorationQuestions.Data.Answer,
+        context: Context
+    ) {
+        binding.imgOtherQuestionsProfile.setOnClickListener {
+            val intent = Intent(context, OtherPageActivity::class.java)
+            intent.putExtra("userId", data.userId)
             context.startActivity(intent)
         }
+    }
+
+    private fun setClickListenerForGoProfilePageFromActivity(
+        binding: ItemExploreDetailOtherAnswersBinding,
+        data: ResponseExplorationQuestions.Data.Answer,
+        context: Context
+    ) {
+        binding.imgOtherAnswersProfile.setOnClickListener {
+            val intent = Intent(context, OtherPageActivity::class.java)
+            intent.putExtra("userId", data.userId)
+            context.startActivity(intent)
+        }
+    }
+
+    private fun setClickListenerForGoDetailFromFragment(
+        binding: ItemExploreOtherQuestionsBinding,
+        data: ResponseExplorationQuestions.Data.Answer,
+        context: Context
+    ) {
+        binding.constraintLayoutOtherQuestions.setOnClickListener {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("answerId", data.id)
+            context.startActivity(intent)
+        }
+    }
+
+    private fun setClickListenerForGoDetailFromActivity(
+        binding: ItemExploreDetailOtherAnswersBinding,
+        data: ResponseExplorationQuestions.Data.Answer,
+        context: Context
+    ) {
+        binding.constraintLayoutOtherAnswers.setOnClickListener {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("answerId", data.id)
+            intent.putExtra("deleteBtnOtherAnswers", true)
+            context.startActivity(intent)
+        }
+    }
+
+    interface OtherQuestionButtonClickListener {
+        fun otherQuestionAnswerClickListener(questionId: Int)
     }
 }

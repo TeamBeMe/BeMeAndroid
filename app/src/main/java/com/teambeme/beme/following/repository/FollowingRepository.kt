@@ -1,10 +1,8 @@
 package com.teambeme.beme.following.repository
 
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
-import com.teambeme.beme.following.model.RequestFollowingFollow
-import com.teambeme.beme.following.model.ResponseFollowingFollow
-import com.teambeme.beme.following.model.ResponseFollowingList
-import com.teambeme.beme.following.model.ResponseFollowingSearchId
+import com.teambeme.beme.explore.model.ResponseExplorationScrap
+import com.teambeme.beme.following.model.*
 import retrofit2.Call
 
 interface FollowingRepository {
@@ -22,4 +20,14 @@ interface FollowingRepository {
     fun putFollow(
         body: RequestFollowingFollow
     ): Call<ResponseFollowingFollow>
+
+    fun deleteFollow(userId: Int): Call<ResponseFollowingFollow>
+
+    fun putScrap(
+        answerId: Int
+    ): Call<ResponseExplorationScrap>
+
+    fun postAnswer(
+        questionId: RequestFollowingAnswer
+    ): Call<ResponseFollowingAnswer>
 }

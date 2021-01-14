@@ -36,9 +36,8 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val sameQuestionOtherAnswersList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer?>>
         get() = _sameQuestionOtherAnswersList
 
-    private var _questionForFirstAnswer =
-        ResponseExplorationQuestionForFirstAnswer.Answer("", 0, 0, "")
-    val questionForFirstAnswer: ResponseExplorationQuestionForFirstAnswer.Answer
+    private var _questionForFirstAnswer = MutableLiveData<ResponseExplorationQuestionForFirstAnswer.Answer>()
+    val questionForFirstAnswer: LiveData<ResponseExplorationQuestionForFirstAnswer.Answer>
         get() = _questionForFirstAnswer
 
     private var _scrapData = ResponseExplorationScrap("", 0, true)
@@ -130,7 +129,10 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                                 response.body()!!.data?.answers?.toMutableList()
                             _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
 
-                            Log.d("abcexplore", "${response.body()!!.data?.answers?.toMutableList()}")
+                            Log.d(
+                                "abcexplore",
+                                "${response.body()!!.data?.answers?.toMutableList()}"
+                            )
 
                             if (response.body()!!.data?.pageLen == page) {
                                 _isMaxPage = true
@@ -299,7 +301,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                     response: Response<ResponseExplorationQuestionForFirstAnswer>
                 ) {
                     if (response.isSuccessful) {
-                        _questionForFirstAnswer = response.body()!!.data
+                        _questionForFirstAnswer.value = response.body()!!.data
                     }
                 }
 

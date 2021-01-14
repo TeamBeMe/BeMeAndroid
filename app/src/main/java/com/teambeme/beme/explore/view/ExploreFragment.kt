@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.google.android.material.tabs.TabLayout
 import com.teambeme.beme.R
+import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.data.remote.datasource.ExploreDataSourceImpl
@@ -21,6 +22,8 @@ import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
 import com.teambeme.beme.explore.repository.ExploreRepositoryImpl
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
 import com.teambeme.beme.explore.viewmodel.ExploreViewModelFactory
+import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
+import com.teambeme.beme.notification.view.NotificationActivity
 
 class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragment_explore) {
     private val exploreViewModelFactory = ExploreViewModelFactory(
@@ -32,7 +35,11 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
 
     override fun onResume() {
         super.onResume()
-        exploreViewModel.requestOtherQuestionsWithCategorySorting(exploreViewModel.categoryNum, exploreViewModel.sortingText, 1)
+        exploreViewModel.requestOtherQuestionsWithCategorySorting(
+            exploreViewModel.categoryNum,
+            exploreViewModel.sortingText,
+            1
+        )
     }
 
     override fun onCreateView(
@@ -54,6 +61,8 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         setTabSelectedFromExploreListener()
         setSnapHelper()
         setClickListenerForExploreBtnDoAnswer()
+        setClickListenerForIdSearchButton()
+        setClickListenerForAlarmButton()
         return binding.root
     }
 
@@ -68,7 +77,8 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
                 requireContext(),
                 R.layout.item_explore_other_questions,
                 exploreViewModel.userNickname,
-                exploreViewModel
+                exploreViewModel,
+                null
             )
         binding.rcvExploreOtherQuestions.adapter = otherQuestionsAdapter
     }
@@ -127,8 +137,33 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
     private fun setClickListenerForExploreBtnDoAnswer() {
         binding.btnExploreDoAnswer.setOnClickListener {
             exploreViewModel.requestQuestionForFirstAnswer()
-            val intent = Intent(context, AnswerActivity::class.java)
-            intent.putExtra("questionId", exploreViewModel.questionForFirstAnswer.questionId)
+            exploreViewModel.questionForFirstAnswer.observe(viewLifecycleOwner) {
+                it?.let {
+                    val intentAnswerData = IntentAnswerData(
+                        it.id,
+                        it.questionTitle,
+                        it.questionCategoryName,
+                        it.answerIdx,
+                        it.createdAt
+                    )
+                    val intent = Intent(context, AnswerActivity::class.java)
+                    intent.putExtra("intentAnswerData", intentAnswerData)
+                    startActivity(intent)
+                }
+            }
+        }
+    }
+
+    private fun setClickListenerForIdSearchButton() {
+        binding.btnExploreIdSearch.setOnClickListener {
+            val intent = Intent(activity, FollowingAfterIdSearchActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun setClickListenerForAlarmButton() {
+        binding.btnExploreAlarm.setOnClickListener {
+            val intent = Intent(activity, NotificationActivity::class.java)
             startActivity(intent)
         }
     }

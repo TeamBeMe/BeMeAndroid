@@ -14,9 +14,14 @@
         <variable
             name="txtUserNickname"
             type="String" />
+
+        <variable
+            name="followingViewModel"
+            type="com.teambeme.beme.following.viewmodel.FollowingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_other_questions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
@@ -169,7 +174,7 @@
             android:text="답변하고 확인하기"
             android:textColor="@color/item_following_unanswered_questions_btn_txt_white"
             android:textSize="16sp"
-            android:visibility="@{otherQuestions.isAnswered == true ? View.INVISIBLE : View.VISIBLE}"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.GONE : View.VISIBLE}"
             app:cornerRadius="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
