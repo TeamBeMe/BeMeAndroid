@@ -1,9 +1,11 @@
 package com.teambeme.beme.mypage.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -59,6 +61,7 @@ class MyWriteFragment : Fragment() {
             mypageViewModel.initPage()
             mypageViewModel.setMyQuery(binding.editxtWriteSearch.text.toString())
             mypageViewModel.getMyAnswer()
+            hideKeyboard()
             true
         }
         return binding.root
@@ -68,6 +71,11 @@ class MyWriteFragment : Fragment() {
         mypageViewModel.initPage()
         mypageViewModel.getMyAnswer()
         super.onResume()
+    }
+
+    private fun hideKeyboard() {
+        val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(binding.editxtWriteSearch.windowToken, 0)
     }
 
     private fun isEmptyListener(isEmpty: Boolean) {

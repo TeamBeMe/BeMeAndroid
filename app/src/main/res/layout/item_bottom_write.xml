@@ -12,7 +12,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/white"
+        android:background="@color/mypage_white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -20,7 +20,7 @@
             android:id="@+id/txt_writesheet_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/detail_black"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:text="필터"
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:textColor="#636366"
+            android:textColor="@color/mypage_gray"
             android:text="공개범위"
             app:layout_constraintStart_toStartOf="@+id/txt_writesheet_filter"
             app:layout_constraintTop_toBottomOf="@+id/txt_writesheet_filter" />
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:textColor="#636366"
+            android:textColor="@color/mypage_gray"
             android:text="카테고리"
             app:layout_constraintStart_toStartOf="@+id/chipGroup_range"
             app:layout_constraintTop_toBottomOf="@+id/chipGroup_range" />
@@ -186,7 +186,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="40dp"
-            android:background="#DFDFDF"
+            android:background="@color/mypage_view_gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/chipGroup_write_categori" />
 
@@ -196,7 +196,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingTop="16dp"
-            android:textColor="@color/black"
+            android:textColor="@color/mypage_black"
             android:paddingBottom="16dp"
             android:text="적용하기"
             android:textSize="16sp"

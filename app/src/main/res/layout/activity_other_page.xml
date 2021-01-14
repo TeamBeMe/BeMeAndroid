@@ -20,7 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffff">
+            android:background="@color/other_white">
 
 
             <FrameLayout
@@ -75,7 +75,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="24dp"
                 android:text="@{otherPageViewModel.otherUserInfo.nickname}"
-                android:textColor="@color/black"
+                android:textColor="@color/other_black"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -105,12 +105,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="#8E8E93"
+                android:backgroundTint="@color/other_background_gray"
                 attendCount="@{otherPageViewModel.otherUserInfo.continuedVisit}"
                 android:paddingVertical="4dp"
                 android:paddingEnd="8dp"
                 android:text="연속 출석 11"
-                android:textColor="@color/answer_text_info_gray"
+                android:textColor="@color/other_gray"
                 app:layout_constraintStart_toStartOf="@+id/txt_otherpage_name"
                 app:layout_constraintTop_toBottomOf="@+id/txt_otherpage_name"
                 tools:text="연속 출석 11" />
@@ -125,7 +125,7 @@
                 android:paddingEnd="8dp"
                 allAnswerCount="@{otherPageViewModel.otherUserInfo.answerCount}"
                 android:text="답한 질문 202"
-                android:textColor="@color/answer_text_info_gray"
+                android:textColor="@color/other_gray"
                 app:layout_constraintStart_toEndOf="@+id/txt_otherpage_attend"
                 app:layout_constraintTop_toTopOf="@+id/txt_otherpage_attend"
                 tools:text="답한 질문 202" />
@@ -186,11 +186,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
-                android:backgroundTint="#000000"
+                android:backgroundTint="@color/other_black"
                 android:paddingTop="12dp"
                 android:paddingBottom="16dp"
                 android:text="더보기"
-                android:textColor="#ffffff"
+                android:textColor="@color/other_white"
                 android:textSize="16sp"
                 app:cornerRadius="6dp"
                 app:layout_constraintBottom_toBottomOf="parent"

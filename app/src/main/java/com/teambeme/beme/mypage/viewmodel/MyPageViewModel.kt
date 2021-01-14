@@ -284,8 +284,12 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
     val profileUri: LiveData<Uri>
         get() = _profileUri
 
-    fun setProfileUri(uri: Uri) {
+    fun setProfileUri(uri: Uri?) {
         _profileUri.value = uri
+    }
+
+    fun setProfileNull(){
+        _myProfileInfo.value!!.profileImg=null
     }
 
     private val _profileString = MutableLiveData<String>()

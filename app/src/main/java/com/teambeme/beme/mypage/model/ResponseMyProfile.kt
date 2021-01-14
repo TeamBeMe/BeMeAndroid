@@ -28,6 +28,6 @@ data class ResponseMyProfile(
         @SerializedName("nickname")
         val nickname: String,
         @SerializedName("profile_img")
-        val profileImg: String?
+        var profileImg: String?
     ) : Parcelable
 }

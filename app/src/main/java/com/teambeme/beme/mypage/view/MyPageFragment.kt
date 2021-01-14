@@ -54,8 +54,12 @@ class MyPageFragment : Fragment() {
         }.attach()
     }
 
-    private fun editProfileListener(uri: Uri) {
-        binding.imgMypageProfile.setImageURI(uri)
+    private fun editProfileListener(uri: Uri?) {
+        if (uri == null) {
+            binding.imgMypageProfile.setImageResource(R.drawable.ic_dark_profile)
+        } else {
+            binding.imgMypageProfile.setImageURI(uri)
+        }
     }
 
     private fun editProfileClickListener() {

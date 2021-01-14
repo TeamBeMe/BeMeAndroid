@@ -1,9 +1,11 @@
 package com.teambeme.beme.mypage.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -52,6 +54,7 @@ class MyScrapFragment : Fragment() {
             mypageViewModel.initScrapPage()
             mypageViewModel.setScrapQuery(binding.editxtScrapSearch.text.toString())
             mypageViewModel.getMyScrap()
+            hideKeyboard()
             true
         }
         mypageViewModel.isScrapEmpty.observe(viewLifecycleOwner) {
@@ -64,6 +67,11 @@ class MyScrapFragment : Fragment() {
         mypageViewModel.initScrapPage()
         mypageViewModel.getMyScrap()
         super.onResume()
+    }
+
+    private fun hideKeyboard() {
+        val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(binding.editxtScrapSearch.windowToken, 0)
     }
 
     private fun isEmptyListener(isEmpty: Boolean) {

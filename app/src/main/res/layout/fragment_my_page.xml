@@ -25,13 +25,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
-                app:contentScrim="#ffffff"
+                app:contentScrim="@color/mypage_white"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#ffffff">
+                    android:background="@color/mypage_white">
 
                     <FrameLayout
                         android:id="@+id/frame_mypage"
@@ -77,7 +77,7 @@
                         android:layout_marginStart="28dp"
                         android:layout_marginTop="24dp"
                         android:text="@{myPageViewModel.myProfileInfo.nickname}"
-                        android:textColor="@color/black"
+                        android:textColor="@color/mypage_black"
                         android:textSize="24sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +93,7 @@
                         android:paddingHorizontal="20dp"
                         android:paddingVertical="8dp"
                         android:text="프로필 편집"
-                        android:textColor="#000000"
+                        android:textColor="@color/mypage_black"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="@+id/txt_mypage_name"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -110,7 +110,7 @@
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
                         android:text="연속 출석 11"
-                        android:textColor="@color/answer_text_info_gray"
+                        android:textColor="@color/mypage_gray"
                         app:layout_constraintStart_toStartOf="@+id/txt_mypage_name"
                         app:layout_constraintTop_toBottomOf="@+id/txt_mypage_name"
                         tools:text="연속 출석 11" />
@@ -125,7 +125,7 @@
                         allAnswerCount="@{myPageViewModel.myProfileInfo.answerCount}"
                         android:paddingEnd="8dp"
                         android:text="답한 질문 202"
-                        android:textColor="@color/answer_text_info_gray"
+                        android:textColor="@color/mypage_gray"
                         app:layout_constraintStart_toEndOf="@+id/txt_mypage_attend"
                         app:layout_constraintTop_toTopOf="@+id/txt_mypage_attend"
                         tools:text="답한 질문 202" />
@@ -135,7 +135,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#ffffff">
+                android:background="@color/mypage_white">
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_mypage"
@@ -149,9 +149,9 @@
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_mypage_ans"
-                    app:tabIndicatorColor="@color/black"
-                    app:tabSelectedTextColor="@color/black"
-                    app:tabTextColor="#8E8E93">
+                    app:tabIndicatorColor="@color/mypage_black"
+                    app:tabSelectedTextColor="@color/mypage_black"
+                    app:tabTextColor="@color/mypage_background_gray">
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
@@ -182,7 +182,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="14dp"
-                    android:background="#DFDFDF"
+                    android:background="@color/mypage_view_gray"
                     app:layout_constraintTop_toTopOf="parent" />
 
 

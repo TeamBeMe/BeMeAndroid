@@ -39,7 +39,7 @@ object BindingAdapters {
     @JvmStatic
     fun setSrcFromUrl(imageView: ImageView, url: String?) {
         if (url == null) {
-            imageView.setImageResource(R.drawable.img_profile_sample)
+            imageView.setImageResource(R.drawable.ic_dark_profile)
         } else {
             Glide.with(imageView.context)
                 .load(url)
@@ -189,7 +189,7 @@ object BindingAdapters {
         if (visible) {
             imageView.visibility = View.VISIBLE
             if (url == null) {
-                imageView.setImageResource(R.drawable.img_profile_sample)
+                imageView.setImageResource(R.drawable.ic_dark_profile)
             } else {
                 Glide.with(imageView.context)
                     .load(url)

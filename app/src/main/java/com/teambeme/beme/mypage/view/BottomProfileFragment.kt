@@ -48,10 +48,17 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
             ImagePicker()
         }
         binding.tbProfilebottomBase.setOnClickListener {
-            mypageViewModel.putProfiles(null)
-            dismiss()
+            baseImage()
         }
         return binding.root
+    }
+
+    private fun baseImage() {
+        val fileReqBody = RequestBody.create(MediaType.parse("image/jpg"), "")
+        val part = MultipartBody.Part.createFormData("image", "", fileReqBody)
+        mypageViewModel.putProfiles(part)
+        mypageViewModel.setProfileUri(null)
+        dismiss()
     }
 
     private fun ImagePicker() {

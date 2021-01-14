@@ -218,6 +218,7 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
             InputMethodManager.SHOW_FORCED,
             InputMethodManager.HIDE_IMPLICIT_ONLY
         )
+        binding.edttextDetailContent.requestFocus()
     }
 
     private fun changeChildclickListener(isChildChangeClicked: Boolean) {
