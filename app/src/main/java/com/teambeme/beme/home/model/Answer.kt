@@ -13,7 +13,7 @@ data class Answer(
     @SerializedName("comment_blocked_flag")
     val commentBlockedFlag: Int?,
     @SerializedName("content")
-    val content: String?,
+    var content: String?,
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("id")

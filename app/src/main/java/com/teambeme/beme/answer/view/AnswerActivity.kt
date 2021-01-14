@@ -8,11 +8,11 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
+import com.teambeme.beme.answer.model.RequestAnswerData
 import com.teambeme.beme.answer.repository.AnswerRepositoryImpl
 import com.teambeme.beme.answer.viewmodel.AnswerViewModel
 import com.teambeme.beme.answer.viewmodel.AnswerViewModelFactory
@@ -86,7 +86,30 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
     }
 
     fun setClickText() {
-        Toast.makeText(this, "클릭가능", Toast.LENGTH_SHORT).show()
+        // Toast.makeText(this, "클릭가능", Toast.LENGTH_SHORT).show()
+        val requestAnswerData = RequestAnswerData(
+            answerId = answerViewModel.answerData.value!!.questionId.toInt(),
+            content = answerViewModel.answer.value ?: "",
+            isPublic = answerViewModel.isPublic.value ?: false,
+            isCommentBlocked = getIsCommentBlockedValue(answerViewModel.isPublic.value)
+        )
+        answerViewModel.registerAnswer(requestAnswerData)
+        val position = intent.getIntExtra("position", -1)
+        intent.putExtra("posittion", position)
+        intent.putExtra("content", answerViewModel.answer.value)
+        setResult(RESULT_OK, intent)
+        finish()
+    }
+
+    private fun getIsCommentBlockedValue(isPublic: Boolean?): Boolean {
+        return if (isPublic != null) {
+            when (answerViewModel.isPublic.value!!) {
+                true -> answerViewModel.isCommentBlocked
+                else -> false
+            }
+        } else {
+            false
+        }
     }
 
     private fun observePublicSwitch() {

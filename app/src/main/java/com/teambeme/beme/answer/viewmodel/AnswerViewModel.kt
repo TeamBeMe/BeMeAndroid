@@ -6,17 +6,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teambeme.beme.answer.model.IntentAnswerData
+import com.teambeme.beme.answer.model.RequestAnswerData
 import com.teambeme.beme.answer.repository.AnswerRepository
 import com.teambeme.beme.data.local.entity.AnswerData
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewModel() {
     private val _answerData = MutableLiveData<AnswerData?>()
     val answerData: LiveData<AnswerData?>
         get() = _answerData
     val answer: MutableLiveData<String> = MutableLiveData("")
-    private var isCommentBlocked = false
-    private val _isPublic = MutableLiveData<Boolean>()
+    private var _isCommentBlocked = false
+    val isCommentBlocked: Boolean
+        get() = _isCommentBlocked
+    private val _isPublic = MutableLiveData<Boolean>(false)
     val isPublic: LiveData<Boolean>
         get() = _isPublic
 
@@ -28,11 +32,27 @@ class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewMode
         }
     }
 
+    fun registerAnswer(requestAnswerData: RequestAnswerData) {
+        viewModelScope.launch {
+            try {
+                answerRepository.registerAnswer(requestAnswerData)
+            } catch (e: HttpException) { }
+        }
+    }
+
+    fun modifyAnswer(requestAnswerData: RequestAnswerData) {
+        viewModelScope.launch {
+            try {
+                answerRepository.modifyAnswer(requestAnswerData)
+            } catch (e: HttpException) { }
+        }
+    }
+
     fun initAnswerData(intentAnswerData: IntentAnswerData) {
         _answerData.value = AnswerData(
             questionId = intentAnswerData.questionId.toLong(),
             answer = "",
-            isCommentBlocked = isCommentBlocked,
+            isCommentBlocked = _isCommentBlocked,
             isPublic = false,
             title = intentAnswerData.title,
             category = intentAnswerData.category,
@@ -46,7 +66,7 @@ class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewMode
     }
 
     fun setCommentBlockedStatus(boolean: Boolean) {
-        isCommentBlocked = boolean
+        _isCommentBlocked = boolean
     }
 
     fun initEditText() {
@@ -60,7 +80,7 @@ class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewMode
                 AnswerData(
                     questionId = answerData.value!!.questionId,
                     answer = answer.value!!,
-                    isCommentBlocked = isCommentBlocked,
+                    isCommentBlocked = _isCommentBlocked,
                     isPublic = isPublic.value ?: true,
                     title = answerData.value!!.title,
                     category = answerData.value!!.category,
