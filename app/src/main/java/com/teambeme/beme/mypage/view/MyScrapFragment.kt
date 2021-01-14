@@ -64,9 +64,9 @@ class MyScrapFragment : Fragment() {
     }
 
     override fun onResume() {
+        super.onResume()
         mypageViewModel.initScrapPage()
         mypageViewModel.getMyScrap()
-        super.onResume()
     }
 
     private fun hideKeyboard() {
