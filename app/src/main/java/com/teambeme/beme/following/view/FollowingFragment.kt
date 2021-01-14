@@ -18,6 +18,8 @@ import com.teambeme.beme.following.adapter.FollowingProfilesRcvAdapter
 import com.teambeme.beme.following.repository.FollowingRepositoryImpl
 import com.teambeme.beme.following.viewmodel.FollowingViewModel
 import com.teambeme.beme.following.viewmodel.FollowingViewModelFactory
+import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
+import com.teambeme.beme.notification.view.NotificationActivity
 
 class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fragment_following) {
     private val followingViewModelFactory = FollowingViewModelFactory(
@@ -53,6 +55,8 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         setListFromTabLayoutAtFirst()
         setTabSelectedFromFollowingListener()
         setClickListenerForShowAll()
+        setClickListenerForIdSearchButton()
+        setClickListenerForAlarmButton()
         return binding.root
     }
 
@@ -205,6 +209,20 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
     private fun setClickListenerForShowAll() {
         binding.txtFollowingShowAll.setOnClickListener {
             val intent = Intent(activity, FollowingShowAllActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun setClickListenerForIdSearchButton() {
+        binding.btnFollowingIdSearch.setOnClickListener {
+            val intent = Intent(activity, FollowingAfterIdSearchActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun setClickListenerForAlarmButton() {
+        binding.btnFollowingAlarm.setOnClickListener {
+            val intent = Intent(activity, NotificationActivity::class.java)
             startActivity(intent)
         }
     }
