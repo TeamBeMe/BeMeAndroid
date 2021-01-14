@@ -1,5 +1,6 @@
 package com.teambeme.beme.detail.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.teambeme.beme.R
+import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.databinding.ItemBottomMyBinding
 import com.teambeme.beme.detail.viewmodel.DetailViewModel
 
@@ -56,6 +58,11 @@ class BottomMyReplyFragment(private val child: Boolean) : BottomSheetDialogFragm
     }
 
     private fun changeAnswer() {
+        detailViewModel.setIntentData()
+        val intent = Intent(requireContext(), AnswerActivity::class.java)
+        intent.putExtra("intentAnswerData", detailViewModel.intentData.value)
+        intent.putExtra("isChange", 100)
+        startActivity(intent)
         dismiss()
     }
 

@@ -84,7 +84,9 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                         if (_userNickname.value == null) {
                             _userNickname.value = response.body()!!.data.userNickname
                         }
+                      
                         _maxPage = response.body()!!.data?.pageLen
+
                         tempFollowingFollowerAnswersList =
                             response.body()!!.data?.answers?.toMutableList()
                         _followingAnswersList.value =

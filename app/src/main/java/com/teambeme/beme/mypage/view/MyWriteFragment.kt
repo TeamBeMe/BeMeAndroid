@@ -39,7 +39,7 @@ class MyWriteFragment : Fragment() {
         setAdapter(writeAdapter)
         mypageViewModel.initMyAnswer()
         mypageViewModel.mypageWriteData.observe(viewLifecycleOwner) { it ->
-            it.let { writeAdapter.replaceWriteList(it) }
+            it.let { writeAdapter.submitList(it) }
         }
         mypageViewModel.isWriteFilterClicked.observe(viewLifecycleOwner) {
             filterClickListener(it)
@@ -68,9 +68,9 @@ class MyWriteFragment : Fragment() {
     }
 
     override fun onResume() {
+        super.onResume()
         mypageViewModel.initPage()
         mypageViewModel.getMyAnswer()
-        super.onResume()
     }
 
     private fun hideKeyboard() {

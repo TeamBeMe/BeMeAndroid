@@ -1,6 +1,7 @@
 package com.teambeme.beme.mypage.adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -35,16 +36,16 @@ class MyScrapAdapter :
 
     override fun onBindViewHolder(holder: MyScrapViewHolder, position: Int) {
         holder.bind(getItem(position))
-        holder.itemView.setOnClickListener { view ->
-            val intent = Intent(view.context, DetailActivity::class.java)
-            intent.putExtra("answerId", getItem(position).id)
-            view.context.startActivity(intent)
-        }
         holder.bind(getItem(position)).let {
             with(holder) {
                 profile.setOnClickListener { view ->
                     val intent = Intent(view.context, OtherPageActivity::class.java)
-                    intent.putExtra("userId", getItem(position).userId)
+                    intent.putExtra("userId", getItem(holder.adapterPosition).userId)
+                    view.context.startActivity(intent)
+                }
+                itemView.setOnClickListener { view ->
+                    val intent = Intent(view.context, DetailActivity::class.java)
+                    intent.putExtra("answerId", getItem(holder.adapterPosition).id)
                     view.context.startActivity(intent)
                 }
             }
