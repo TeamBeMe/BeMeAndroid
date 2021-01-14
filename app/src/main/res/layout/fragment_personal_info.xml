@@ -71,6 +71,33 @@
             app:layout_constraintStart_toStartOf="@+id/txt_term_title"
             app:layout_constraintTop_toBottomOf="@+id/txt_term_title" />
 
+        <LinearLayout
+            android:id="@+id/linear_personal_email_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/txt_term_title"
+            app:layout_constraintTop_toBottomOf="@id/edittxt_personal_email">
+
+            <ImageView
+                android:id="@+id/img_personal_email_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_personal_check_gray" />
+
+            <TextView
+                android:id="@+id/txt_personal_email_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:text="beme@example.com 형식으로 입력해주세요"
+                android:textColor="@color/signup_personal_check"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
         <FrameLayout
             android:id="@+id/layout_personal_nickname"
             android:layout_width="match_parent"
@@ -93,8 +120,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="16dp"
-                android:text="중복확인"
                 android:onClick="@{() -> signUpViewModel.nickNameDoubleCheck()}"
+                android:text="중복확인"
                 android:textColor="@color/signup_term_blue"
                 android:textSize="16sp" />
         </FrameLayout>
@@ -209,7 +236,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="28dp"
-            android:background="@drawable/btn_signup_background"
+            android:background="@drawable/signup_button_background"
+            android:enabled="false"
             android:fontFamily="@font/notosankr_bold"
             android:insetTop="0dp"
             android:insetBottom="0dp"

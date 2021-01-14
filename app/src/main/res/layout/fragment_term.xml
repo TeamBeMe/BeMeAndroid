@@ -131,7 +131,7 @@
                 android:maxHeight="140dp"
                 android:paddingHorizontal="28dp"
                 android:paddingVertical="16dp"
-                android:scaleType="matrix"
+                android:scaleType="fitXY"
                 android:scrollbars="vertical"
                 android:src="@drawable/img_clause_account" />
 
@@ -196,7 +196,6 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/img_clause_service" />
         </ScrollView>
-
 
         <Button
             android:id="@+id/btn_term_done"

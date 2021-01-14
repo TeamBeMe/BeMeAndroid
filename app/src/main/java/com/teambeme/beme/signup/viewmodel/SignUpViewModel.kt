@@ -79,8 +79,12 @@ class SignUpViewModel : ViewModel() {
         _isPassWordCheckValidated.value = false
     }
 
+    fun nickDoubleCheckValidated() {
+        _isNickNameDoubleChecked.value = true
+    }
+
     fun validateAllValues() =
-        isEmailValidated.value!! && isNickNameValidated.value!! && isPassWordValidated.value!! && isPassWordCheckValidated.value!!
+        isEmailValidated.value!! && isNickNameValidated.value!! && isPassWordValidated.value!! && isPassWordCheckValidated.value!! && isNickNameDoubleChecked.value!!
 
     fun signUp() = viewModelScope.launch {
         _signUpUserInfo.value = signUpRepository.signUp(
