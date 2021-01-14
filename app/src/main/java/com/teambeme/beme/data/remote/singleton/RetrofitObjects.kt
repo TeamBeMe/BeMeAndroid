@@ -21,7 +21,6 @@ object RetrofitObjects {
         .addInterceptor(AuthInterceptor())
         .build()
 
-
     private val baseRetrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
@@ -91,7 +90,7 @@ object RetrofitObjects {
         }
     }
 
-    private var fbTokenRegisterInstance : FbTokenRegisterService? = null
+    private var fbTokenRegisterInstance: FbTokenRegisterService? = null
     fun getFbTokenRegisterService(): FbTokenRegisterService = fbTokenRegisterInstance ?: synchronized(this) {
         fbTokenRegisterInstance ?: baseRetrofit.create(FbTokenRegisterService::class.java).apply {
             fbTokenRegisterInstance = this

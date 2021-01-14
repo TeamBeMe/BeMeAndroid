@@ -18,7 +18,7 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
                 call: Call<ResponseFbTokenRegister>,
                 response: Response<ResponseFbTokenRegister>
             ) {
-                if(response.isSuccessful) {
+                if (response.isSuccessful) {
                     Log.d("FireBase", "등록이 완료되었습니다.")
                 } else {
                     Log.d("FireBase", "등록 과정에서 오류가 발생되었습니다.")
@@ -27,7 +27,6 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
 
             override fun onFailure(call: Call<ResponseFbTokenRegister>, t: Throwable) {
             }
-
         })
     }
 }

@@ -16,7 +16,7 @@ data class ResponseIdSearchData(
         @SerializedName("id")
         val id: Int,
         @SerializedName("is_followed")
-        val isFollowed: Boolean,
+        val isFollowed: Boolean?,
         @SerializedName("nickname")
         val nickname: String,
         @SerializedName("profile_img")

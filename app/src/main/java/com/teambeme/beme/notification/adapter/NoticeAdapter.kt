@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -32,6 +31,7 @@ class NoticeAdapter :
     interface ItemClick {
         fun onClick(view: View, position: Int)
     }
+
     var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {
@@ -43,33 +43,43 @@ class NoticeAdapter :
 
     override fun onBindViewHolder(holder: NoticeViewHolder, position: Int) {
         holder.bind(getItem(position))
-        holder.bind(getItem(position)).let{
-            with(holder){
-                userProfilePic.setOnClickListener {view->
-                    val intent= Intent(view.context, OtherPageActivity::class.java)
-                    intent.putExtra("userId",getItem(position).userId)
+        holder.bind(getItem(position)).let {
+            with(holder) {
+                userProfilePic.setOnClickListener { view ->
+                    val intent = Intent(view.context, OtherPageActivity::class.java)
+                    intent.putExtra("userId", getItem(position).userId)
                     Log.d("Internt", position.toString())
                     Log.d("Internt", getItem(position).userId.toString())
                     view.context.startActivity(intent)
                 }
-            }
-        }
-        holder.bind(getItem(position)).let{
-            with(holder){
-                
+                itemView.setOnClickListener { view ->
+                    if(getItem(position).questionTitle != null){
+                        val intent = Intent(view.context, DetailActivity::class.java)
+                        intent.putExtra("answerId", getItem(holder.adapterPosition).answerId)
+                        view.context.startActivity(intent)
+                    }else{
+                        val intent = Intent(view.context, OtherPageActivity::class.java)
+                        intent.putExtra("userId", getItem(holder.adapterPosition).userId)
+                        view.context.startActivity(intent)
+
+                    }
+
                 }
             }
-
-//        holder.userProfilePic.setOnClickListener {
-//
-//        }
+        }
     }
 
     private class NoticeDiffUtil : DiffUtil.ItemCallback<ResponseNoticeData.Data.Activity>() {
-        override fun areItemsTheSame(oldItem: ResponseNoticeData.Data.Activity, newItem: ResponseNoticeData.Data.Activity) =
+        override fun areItemsTheSame(
+            oldItem: ResponseNoticeData.Data.Activity,
+            newItem: ResponseNoticeData.Data.Activity
+        ) =
             (oldItem.userId == newItem.userId) && (oldItem.questionTitle == newItem.questionTitle) && (oldItem.type == newItem.type)
 
-        override fun areContentsTheSame(oldItem: ResponseNoticeData.Data.Activity, newItem: ResponseNoticeData.Data.Activity) =
+        override fun areContentsTheSame(
+            oldItem: ResponseNoticeData.Data.Activity,
+            newItem: ResponseNoticeData.Data.Activity
+        ) =
             (oldItem == newItem)
     }
 }

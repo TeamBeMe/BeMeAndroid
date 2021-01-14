@@ -37,7 +37,6 @@ class RecentSearchAdapter(private val idSearchViewModel: IdSearchViewModel) :
                     view.context.startActivity(intent)
                 }
             }
-
         }
 
         holder.btnDeleteRecentRecearch.setOnClickListener {
@@ -61,10 +60,7 @@ class RecentSearchAdapter(private val idSearchViewModel: IdSearchViewModel) :
             }
             Log.d("Network is success_2", recentSearchData.toString())
         }
-
         val btnDeleteRecentRecearch = binding.btnDeleteRecentSearch
         val recentSearchProfilePic = binding.recentSearchProfilePic
-
-
     }
 }

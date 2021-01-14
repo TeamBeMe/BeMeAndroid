@@ -1,8 +1,8 @@
-package com.teambeme.beme.main.model
+package com.teambeme.beme.idsearchfollowing.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseFbTokenRegister(
+data class ResponseFollowAndFollowing(
     @SerializedName("message")
     val message: String,
     @SerializedName("status")

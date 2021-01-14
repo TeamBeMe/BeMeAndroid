@@ -1,8 +1,6 @@
 package com.teambeme.beme.data.remote.api
 
-import com.teambeme.beme.idsearchfollowing.model.ResponseDeleteRecentSearchRecord
-import com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData
-import com.teambeme.beme.idsearchfollowing.model.ResponseRecentSearchRecord
+import com.teambeme.beme.idsearchfollowing.model.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -16,11 +14,15 @@ interface IdSearchService {
     ): Call<ResponseIdSearchData>
 
     @GET("users/search/history")
-    fun getRecentSearchRecord(
-    ): Call<ResponseRecentSearchRecord>
+    fun getRecentSearchRecord(): Call<ResponseRecentSearchRecord>
 
     @DELETE("users/search/{searchedId}")
     fun deleteRecentSearchRecord(
         @Path("searchedId") searchedId: Int
     ): Call<ResponseDeleteRecentSearchRecord>
+
+    @PUT("follow")
+    fun putFollowAndFollowing(
+        @Body body: RequestFollowAndFollowing
+    ): Call<ResponseFollowAndFollowing>
 }

@@ -4,11 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.R
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.following.model.RequestFollowingFollow
 import com.teambeme.beme.following.model.ResponseFollowingFollow
-import com.teambeme.beme.following.model.FollowingProfilesData
 import com.teambeme.beme.following.model.ResponseFollowingList
 import com.teambeme.beme.following.model.ResponseFollowingSearchId
 import com.teambeme.beme.following.repository.FollowingRepository
@@ -81,10 +79,10 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                 ) {
                     if (response.isSuccessful) {
                         _page = pageNum
-                        if(_userNickname.value == null){
+                        if (_userNickname.value == null) {
                             _userNickname.value = response.body()!!.data.userNickname
                         }
-                        if(_maxPage == 0){
+                        if (_maxPage == 0) {
                             _maxPage = response.body()!!.data?.pageLen
                         }
                         tempFollowingFollowerAnswersList =
@@ -184,7 +182,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
         )
     }
 
-    fun requestFollow(userId: Int){
+    fun requestFollow(userId: Int) {
         followingRepository.putFollow(
             RequestFollowingFollow(userId)
         ).enqueue(
