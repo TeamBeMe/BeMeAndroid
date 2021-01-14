@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.detail.model.*
 import com.teambeme.beme.detail.repository.DetailRepository
 import com.teambeme.beme.otherpage.model.ResponseScrap
@@ -75,6 +76,24 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
     private val _replyPosition = MutableLiveData<Int>()
     val replyPosition: LiveData<Int>
         get() = _replyPosition
+
+    private val _intentData = MutableLiveData<IntentAnswerData>()
+    val intentData: LiveData<IntentAnswerData>
+        get() = _intentData
+
+    fun setIntentData() {
+        val data: IntentAnswerData = IntentAnswerData(
+            detailData.value!!.id,
+            detailData.value!!.question,
+            detailData.value!!.category,
+            detailData.value!!.answerIdx,
+            detailData.value!!.answerDate,
+            detailData.value!!.content,
+            detailData.value!!.publicFlag,
+            detailData.value!!.commentBlockedFlag
+        )
+        _intentData.value = data
+    }
 
     fun setReplyPosition(position: Int) {
         _replyPosition.value = position

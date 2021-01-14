@@ -23,7 +23,6 @@ class MyWriteAdapter(private val myViewModel: MyPageViewModel) :
         fun bind(write: ResponseMyAnswer.Data.Answer) {
             binding.myWrite = write
         }
-
         val secretBtn: ImageButton = binding.imgMywriteSecret
     }
 
@@ -36,11 +35,6 @@ class MyWriteAdapter(private val myViewModel: MyPageViewModel) :
 
     override fun onBindViewHolder(holder: MyWriteViewHolder, position: Int) {
         holder.bind(getItem(position))
-        holder.itemView.setOnClickListener { view ->
-            val intent = Intent(view.context, DetailActivity::class.java)
-            intent.putExtra("answerId", getItem(position).id)
-            view.context.startActivity(intent)
-        }
         holder.bind(getItem(position)).let {
             with(holder) {
                 secretBtn.setOnClickListener {
@@ -50,6 +44,11 @@ class MyWriteAdapter(private val myViewModel: MyPageViewModel) :
                     } else {
                         secretBtn.setImageResource(R.drawable.ic_secret_off_mypage)
                     }
+                }
+                itemView.setOnClickListener { view ->
+                    val intent = Intent(view.context, DetailActivity::class.java)
+                    intent.putExtra("answerId", getItem(holder.adapterPosition).id)
+                    view.context.startActivity(intent)
                 }
             }
         }

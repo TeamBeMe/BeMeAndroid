@@ -188,11 +188,11 @@ object BindingAdapters {
     @JvmStatic
     fun setFollow(chip: Chip, isFollow: Boolean) {
         if (isFollow) {
-            chip.isChecked = true
+            chip.isChecked = false
             val text = "팔로잉"
             chip.text = text
         } else {
-            chip.isChecked = false
+            chip.isChecked = true
             val text = "팔로우"
             chip.text = text
         }
@@ -229,6 +229,16 @@ object BindingAdapters {
         }
     }
 
+    @BindingAdapter("setSecretReply")
+    @JvmStatic
+    fun setSecretReply(textView: TextView, isVisible: Boolean) {
+        if (isVisible) {
+            textView.visibility = View.VISIBLE
+        } else {
+            textView.visibility = View.GONE
+        }
+    }
+
     @BindingAdapter("mypage:setSrcFromUrl", "mypage:isVisible")
     @JvmStatic
     fun setSrcFromUrlProfile(imageView: ImageView, url: String?, visible: Boolean) {
@@ -244,6 +254,24 @@ object BindingAdapters {
             }
         } else {
             imageView.visibility = View.GONE
+        }
+    }
+
+    @BindingAdapter("detail:setReplyUrl", "detail:isVisible")
+    @JvmStatic
+    fun setSrcReplyUrl(imageView: ImageView, url: String?, visible: Boolean) {
+        if (visible) {
+            imageView.visibility = View.VISIBLE
+            if (url == null) {
+                imageView.setImageResource(R.drawable.ic_dark_profile)
+            } else {
+                Glide.with(imageView.context)
+                    .load(url)
+                    .centerCrop()
+                    .into(imageView)
+            }
+        } else {
+            imageView.visibility = View.VISIBLE
         }
     }
 

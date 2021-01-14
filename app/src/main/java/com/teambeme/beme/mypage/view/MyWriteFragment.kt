@@ -39,7 +39,7 @@ class MyWriteFragment : Fragment() {
         setAdapter(writeAdapter)
         mypageViewModel.initMyAnswer()
         mypageViewModel.mypageWriteData.observe(viewLifecycleOwner) { it ->
-            it.let { writeAdapter.replaceWriteList(it) }
+            it.let { writeAdapter.submitList(it) }
         }
         mypageViewModel.isWriteFilterClicked.observe(viewLifecycleOwner) {
             filterClickListener(it)
