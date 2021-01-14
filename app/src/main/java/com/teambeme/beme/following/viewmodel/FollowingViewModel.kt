@@ -81,7 +81,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                 ) {
                     if (response.isSuccessful) {
                         _page = pageNum
-                        if(_userNickname.value == null){
+                        if (_userNickname.value == null) {
                             _userNickname.value = response.body()!!.data.userNickname
                         }
                         _maxPage = response.body()!!.data?.pageLen
@@ -182,7 +182,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
         )
     }
 
-    fun requestFollow(userId: Int){
+    fun requestFollow(userId: Int) {
         followingRepository.putFollow(
             RequestFollowingFollow(userId)
         ).enqueue(
@@ -190,7 +190,8 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                 override fun onResponse(
                     call: Call<ResponseFollowingFollow>,
                     response: Response<ResponseFollowingFollow>
-                ) {}
+                ) {
+                }
 
                 override fun onFailure(call: Call<ResponseFollowingFollow>, t: Throwable) {
                     Log.d("network_requestSearch", "통신실패")
@@ -199,13 +200,14 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
         )
     }
 
-    fun requestDeleteFollower(userId: Int){
+    fun requestDeleteFollower(userId: Int) {
         followingRepository.deleteFollow(userId).enqueue(
             object : Callback<ResponseFollowingFollow> {
                 override fun onResponse(
                     call: Call<ResponseFollowingFollow>,
                     response: Response<ResponseFollowingFollow>
-                ) {}
+                ) {
+                }
 
                 override fun onFailure(call: Call<ResponseFollowingFollow>, t: Throwable) {
                     Log.d("network_requestSearch", "통신실패")
@@ -240,7 +242,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
         )
     }
 
-    fun requestAnswer(answer: RequestFollowingAnswer){
+    fun requestAnswer(answer: RequestFollowingAnswer) {
         followingRepository.postAnswer(
             answer
         ).enqueue(
