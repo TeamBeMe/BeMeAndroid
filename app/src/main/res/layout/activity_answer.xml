@@ -50,7 +50,7 @@
                     android:clickable="@{answerViewModel.answer.length() != 0 ? true : false}"
                     android:onClick="@{()->answerActivity.setClickText()}"
                     android:text="완료"
-                    android:textColor="@{answerViewModel.answer.length() != 0 ? @color/home_black : @color/home_title_gray}}"
+                    android:textColor="@{answerViewModel.answer.length() != 0 ? @color/home_black : @color/home_title_gray}"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -66,29 +66,31 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="28dp"
-            android:text="이번 주말을 후회 없이\n 보낼 수 있는 방법은 무엇인가요?"
+            android:text="@{answerViewModel.answerData.title}"
             android:textColor="@color/answer_text_black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tb_answer_toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/tb_answer_toolbar"
+            tools:text="이번 주말을 후회 없이\n 보낼 수 있는 방법은 무엇인가요?" />
 
         <TextView
             android:id="@+id/txt_answer_info"
             style="@style/answer_info_style"
             android:layout_marginTop="24dp"
-            android:text="[ 미래에 관한 2번째 질문 ]"
             app:layout_constraintStart_toStartOf="@+id/txt_answer_question"
-            app:layout_constraintTop_toBottomOf="@+id/txt_answer_question" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_answer_question"
+            tools:text="[ 미래에 관한 2번째 질문 ]" />
 
         <TextView
             android:id="@+id/txt_answer_data"
             style="@style/answer_info_style"
             android:layout_marginTop="8dp"
-            android:text="2020.12.24"
+            android:text="@{answerViewModel.answerData.createdAt}"
             app:layout_constraintStart_toStartOf="@+id/txt_answer_info"
-            app:layout_constraintTop_toBottomOf="@+id/txt_answer_info" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_answer_info"
+            tools:text="2020.12.24" />
 
         <View
             android:id="@+id/divider_answer_top"

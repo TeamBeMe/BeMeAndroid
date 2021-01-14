@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.R
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
-import com.teambeme.beme.following.model.FollowingProfilesData
 import com.teambeme.beme.following.model.ResponseFollowingList
 import com.teambeme.beme.following.model.ResponseFollowingSearchId
 import com.teambeme.beme.following.repository.FollowingRepository
@@ -42,16 +40,16 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
         get() = _isMaxPage
 
     private var searchQuery: String = ""
-    fun setSearchQuery(query: String){
+    fun setSearchQuery(query: String) {
         searchQuery = query
     }
 
     private var searchRange: String = followeeCategory
-    fun setSearchRange(range: String){
+    fun setSearchRange(range: String) {
         searchRange = range
     }
 
-    fun deleteSearchRecord(){
+    fun deleteSearchRecord() {
         tempSearchList = mutableListOf(
             ResponseFollowingSearchId.Data(0, null, "", "")
         )
@@ -158,7 +156,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                     if (response.isSuccessful) {
                         tempSearchList = response.body()!!.data?.let { mutableListOf(it) }
                         _searchList.value = tempSearchList?.toMutableList()
-                        if(tempSearchList == null){
+                        if (tempSearchList == null) {
                             deleteSearchRecord()
                         }
                     }

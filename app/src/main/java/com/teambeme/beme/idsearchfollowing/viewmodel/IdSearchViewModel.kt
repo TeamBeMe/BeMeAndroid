@@ -20,7 +20,6 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
     val recentSearchData: MutableLiveData<MutableList<ResponseRecentSearchRecord.Data>>
         get() = _recentSearchData
 
-
     private val _idSearchData = MutableLiveData<MutableList<ResponseIdSearchData.Data>>()
     val idSearchData: LiveData<MutableList<ResponseIdSearchData.Data>>
         get() = _idSearchData
@@ -79,7 +78,6 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
             }
         })
     }
-
 
     fun requestIdSearchgData() {
         idSearchRepository.idSearch(

@@ -2,14 +2,14 @@ package com.teambeme.beme.answer.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teambeme.beme.data.local.dao.AnswerDao
+import com.teambeme.beme.answer.repository.AnswerRepository
 
 class AnswerViewModelFactory(
-    private val dataSource: AnswerDao
+    private val answerRepository: AnswerRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AnswerViewModel::class.java)) {
-            return AnswerViewModel(dataSource) as T
+            return AnswerViewModel(answerRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

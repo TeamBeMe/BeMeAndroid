@@ -79,7 +79,6 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     _answerList.value = currentList
                 }
             } catch (e: HttpException) {
-
             }
         }
     }
@@ -114,9 +113,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     _answerList.value = currentList
                     startEvent()
                 }
-            } catch (e: HttpException) {
-
-            }
+            } catch (e: HttpException) { }
         }
     }
 

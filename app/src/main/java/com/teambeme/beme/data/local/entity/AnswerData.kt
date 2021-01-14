@@ -9,7 +9,7 @@ data class AnswerData(
     @PrimaryKey
     var questionId: Long,
     @ColumnInfo(name = "answer")
-    var answer: String,
+    var answer: String = "",
     @ColumnInfo(name = "isCommentBlocked")
     var isCommentBlocked: Boolean = true,
     @ColumnInfo(name = "isPublic")

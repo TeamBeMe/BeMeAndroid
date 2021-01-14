@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
+import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.databinding.ItemHomeMoreQuestionBinding
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
@@ -32,11 +33,20 @@ class QuestionPagerAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(answer: Answer, position: Int) {
             binding.answer = answer
+
             binding.btnHomeAnswer.setOnClickListener {
                 val intent = Intent(context, AnswerActivity::class.java)
-                intent.putExtra("id", answer.id)
+                val intentData = IntentAnswerData(
+                    questionId = answer.questionId,
+                    title = answer.questionTitle,
+                    category = answer.questionCategoryName,
+                    categoryIdx = answer.questionCategoryId,
+                    createdAt = answer.createdAt
+                )
+                intent.putExtra("intentAnswerData", intentData)
                 context.startActivity(intent)
             }
+
             binding.imgQuestionLock.setOnClickListener {
                 TransitionPublicFragment(answerList[position].publicFlag,
                     object : TransitionPublicFragment.ChangePublicClickListener {
@@ -46,6 +56,7 @@ class QuestionPagerAdapter(
                     }
                 ).show(fragmentManager, "TransitionPublic")
             }
+
             binding.txtHomeEdit.setOnClickListener {
                 InfoChangeFragment(object : InfoChangeClickListener {
                     override fun changeQuestion() {
