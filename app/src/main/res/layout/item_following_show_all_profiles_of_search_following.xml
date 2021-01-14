@@ -42,7 +42,7 @@
             tools:text="123" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_following_show_all_following"
+            android:id="@+id/btn_following_show_all_following_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/item_show_all_profiles_btn_following_background_white"
@@ -56,7 +56,7 @@
             android:text="팔로잉"
             android:textColor="@color/item_show_all_profiles_btn_following_name_black"
             android:textSize="12dp"
-            android:visibility="@{searchFollowing.isFollowed() == null || searchFollowing.isFollowed() == false ? View.INVISIBLE : View.VISIBLE}"
+            android:visibility="@{searchFollowing.isFollowed() == null ? View.INVISIBLE : View.VISIBLE}"
             app:cornerRadius="3dp"
             app:layout_constraintBottom_toBottomOf="@+id/img_following_show_all_profiles"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +65,7 @@
             app:strokeWidth="1dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_following_show_all_follow"
+            android:id="@+id/btn_following_show_all_follow_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/item_show_all_profiles_btn_follower_background_black"

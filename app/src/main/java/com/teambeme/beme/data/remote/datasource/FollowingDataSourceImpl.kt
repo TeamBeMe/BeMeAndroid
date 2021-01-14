@@ -2,6 +2,8 @@ package com.teambeme.beme.data.remote.datasource
 
 import com.teambeme.beme.data.remote.api.FollowingService
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
+import com.teambeme.beme.following.model.RequestFollowingFollow
+import com.teambeme.beme.following.model.ResponseFollowingFollow
 import com.teambeme.beme.following.model.ResponseFollowingList
 import com.teambeme.beme.following.model.ResponseFollowingSearchId
 import retrofit2.Call
@@ -22,5 +24,9 @@ class FollowingDataSourceImpl(private val service: FollowingService) : Following
         range: String
     ): Call<ResponseFollowingSearchId> {
         return service.getSearchMyFollowingFollower(query, range)
+    }
+
+    override fun putFollow(body: RequestFollowingFollow): Call<ResponseFollowingFollow> {
+        return service.putFollow(body)
     }
 }

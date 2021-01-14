@@ -30,6 +30,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
     override fun onResume() {
         super.onResume()
         followingViewModel.requestFollowingFollowerAnswers(1)
+        followingViewModel.requestFollowerFollowingList()
     }
 
     override fun onCreateView(
@@ -93,7 +94,8 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         val followingProfilesRcvAdapter =
             FollowingProfilesRcvAdapter<ItemFollowingProfilesOfFollowingBinding>(
                 requireContext(),
-                R.layout.item_following_profiles_of_following
+                R.layout.item_following_profiles_of_following,
+                followingViewModel
             )
         binding.rcvFollowingProfilesOfFollowing.adapter = followingProfilesRcvAdapter
     }
@@ -119,7 +121,9 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                     binding.imgFollowingNoFollowingListInformation.visibility = View.VISIBLE
                     binding.txtFollowingNoFollowingListInformation.visibility = View.VISIBLE
                 } else {
-                    binding.rcvFollowingProfilesOfFollowing.visibility = View.VISIBLE
+                    if (binding.tabLayoutFollowingSort.selectedTabPosition == 0) {
+                        binding.rcvFollowingProfilesOfFollowing.visibility = View.VISIBLE
+                    }
                     binding.imgFollowingNoFollowingListInformation.visibility = View.INVISIBLE
                     binding.txtFollowingNoFollowingListInformation.visibility = View.INVISIBLE
                 }
@@ -191,6 +195,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                     }
                 }
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         }

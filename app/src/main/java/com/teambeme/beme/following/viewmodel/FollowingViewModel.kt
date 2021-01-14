@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
+import com.teambeme.beme.following.model.RequestFollowingFollow
+import com.teambeme.beme.following.model.ResponseFollowingFollow
 import com.teambeme.beme.following.model.ResponseFollowingList
 import com.teambeme.beme.following.model.ResponseFollowingSearchId
 import com.teambeme.beme.following.repository.FollowingRepository
@@ -32,6 +34,10 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
     private var _searchList = MutableLiveData<MutableList<ResponseFollowingSearchId.Data>>()
     val searchList: LiveData<MutableList<ResponseFollowingSearchId.Data>>
         get() = _searchList
+
+    private var _isFollowing: String = ""
+    val isFollowing: String
+        get() = _isFollowing
 
     private var _page: Int = 1
     val page: Int
@@ -150,7 +156,6 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
     }
 
     fun requestSearchMyFollowingFollower() {
-        Log.d("search______", searchList.toString())
         followingRepository.getSearchMyFollowingFollower(
             searchQuery,
             searchRange
@@ -171,6 +176,28 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                 }
 
                 override fun onFailure(call: Call<ResponseFollowingSearchId>, t: Throwable) {
+                    Log.d("network_requestSearch", "통신실패")
+                }
+            }
+        )
+    }
+
+    fun requestFollow(userId: Int){
+        followingRepository.putFollow(
+            RequestFollowingFollow(userId)
+        ).enqueue(
+            object : Callback<ResponseFollowingFollow> {
+                override fun onResponse(
+                    call: Call<ResponseFollowingFollow>,
+                    response: Response<ResponseFollowingFollow>
+                ) {
+                    Log.d("network_requestSearch", "통신성")
+                    if (response.isSuccessful) {
+                        _isFollowing = response.body()!!.message
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseFollowingFollow>, t: Throwable) {
                     Log.d("network_requestSearch", "통신실패")
                 }
             }

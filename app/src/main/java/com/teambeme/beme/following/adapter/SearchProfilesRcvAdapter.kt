@@ -14,10 +14,12 @@ import com.teambeme.beme.BR
 import com.teambeme.beme.databinding.ItemFollowingShowAllProfilesOfSearchFollowerBinding
 import com.teambeme.beme.databinding.ItemFollowingShowAllProfilesOfSearchFollowingBinding
 import com.teambeme.beme.following.model.ResponseFollowingSearchId
+import com.teambeme.beme.following.viewmodel.FollowingViewModel
 
 class SearchProfilesRcvAdapter<B : ViewDataBinding>(
     private val context: Context,
-    private val layout: Int
+    private val layout: Int,
+    private val viewModel: FollowingViewModel
 ) :
     ListAdapter<ResponseFollowingSearchId.Data, SearchProfilesRcvAdapter<B>.SearchProfilesRcvViewHolder<B>>(
         SearchProfilesDiffUtil()
@@ -30,8 +32,8 @@ class SearchProfilesRcvAdapter<B : ViewDataBinding>(
                     with(binding as ItemFollowingShowAllProfilesOfSearchFollowingBinding) {
                         setVariable(BR.searchFollowing, searchData)
                         executePendingBindings()
-                        setClickListenerForFollowBtn(binding, searchData)
-                        setclickListenerForFollowingBtn(binding, searchData)
+                        setClickListenerForFollowBtn(binding, searchData, viewModel)
+                        setclickListenerForFollowingBtn(binding, searchData, viewModel)
                         Log.d("showAll", searchData.toString())
                     }
                 }
@@ -77,21 +79,27 @@ class SearchProfilesRcvAdapter<B : ViewDataBinding>(
 
     private fun setClickListenerForFollowBtn(
         binding: ItemFollowingShowAllProfilesOfSearchFollowingBinding,
-        followingProfilesData: ResponseFollowingSearchId.Data
+        data: ResponseFollowingSearchId.Data,
+        viewModel: FollowingViewModel
     ) {
-        binding.btnFollowingShowAllFollow.setOnClickListener {
-            binding.btnFollowingShowAllFollow.visibility = View.VISIBLE
-            binding.btnFollowingShowAllFollowing.visibility = View.INVISIBLE
+        binding.btnFollowingShowAllFollowSearch.setOnClickListener {
+            Log.d("btn", "팔로우")
+            viewModel.requestFollow(data.id)
+            binding.btnFollowingShowAllFollowSearch.visibility = View.INVISIBLE
+            binding.btnFollowingShowAllFollowingSearch.visibility = View.VISIBLE
         }
     }
 
     private fun setclickListenerForFollowingBtn(
         binding: ItemFollowingShowAllProfilesOfSearchFollowingBinding,
-        followingProfilesData: ResponseFollowingSearchId.Data
+        data: ResponseFollowingSearchId.Data,
+        viewModel: FollowingViewModel
     ) {
-        binding.btnFollowingShowAllFollow.setOnClickListener {
-            binding.btnFollowingShowAllFollow.visibility = View.VISIBLE
-            binding.btnFollowingShowAllFollowing.visibility = View.INVISIBLE
+        binding.btnFollowingShowAllFollowingSearch.setOnClickListener {
+            Log.d("btn", "팔로잉")
+            viewModel.requestFollow(data.id)
+            binding.btnFollowingShowAllFollowingSearch.visibility = View.INVISIBLE
+            binding.btnFollowingShowAllFollowSearch.visibility = View.VISIBLE
         }
     }
 
