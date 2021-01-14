@@ -60,9 +60,9 @@
             android:layout_height="132dp"
             android:background="@drawable/explore_other_minds_content_shape"
             android:paddingStart="18dp"
-            android:paddingTop="15dp"
+            android:paddingTop="16dp"
             android:paddingEnd="18dp"
-            android:paddingBottom="20dp"
+            android:paddingBottom="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/constraintlayout_other_minds_title">
 

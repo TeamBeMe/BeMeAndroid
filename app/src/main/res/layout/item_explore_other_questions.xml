@@ -12,8 +12,8 @@
             type="com.teambeme.beme.explore.model.ResponseExplorationQuestions.Data.Answer" />
 
         <variable
-            name="OtherQuestionsExploreViewModel"
-            type="com.teambeme.beme.explore.viewmodel.ExploreViewModel" />
+            name="txtUserNickname"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,12 +30,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
-            android:layout_marginEnd="44dp"
+            android:layout_marginEnd="30dp"
             android:text="@{otherQuestions.question}"
             android:textColor="@color/item_other_questions_txt_title_black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/btn_other_questions_show_other_answers"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -84,7 +84,7 @@
             android:text="@{otherQuestions.content}"
             android:textColor="@color/item_other_questions_txt_content_black"
             android:textSize="14sp"
-            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"
             app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_category" />
 
@@ -121,8 +121,9 @@
             android:paddingStart="18dp"
             android:paddingTop="18dp"
             android:paddingEnd="18dp"
+            android:paddingBottom="4dp"
             android:src="@drawable/ic_showdetail_black"
-            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/txt_other_questions_title"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -151,7 +152,7 @@
             android:visibility="@{otherQuestions.isAnswered == true ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"
             app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_category"
-            following:setTextForUnAnswered="@{otherQuestions.userNickname}" />
+            following:setTextForUnAnswered="@{txtUserNickname}" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_other_questions_do_answer"

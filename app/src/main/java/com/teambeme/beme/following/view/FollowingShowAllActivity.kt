@@ -52,7 +52,8 @@ class FollowingShowAllActivity :
         val followingShowAllProfilesAdapter =
             FollowingProfilesRcvAdapter<ItemFollowingShowAllProfilesOfFollowingBinding>(
                 this,
-                R.layout.item_following_show_all_profiles_of_following
+                R.layout.item_following_show_all_profiles_of_following,
+                followingShowAllViewModel
             )
         binding.rcvFollowingShowAllProfilesFollowing.adapter = followingShowAllProfilesAdapter
     }
@@ -69,7 +70,9 @@ class FollowingShowAllActivity :
     private fun setFollowingSearchProfilesAdapter() {
         val followingSearchProfilesAdapter =
             SearchProfilesRcvAdapter<ItemFollowingShowAllProfilesOfSearchFollowingBinding>(
-                this, R.layout.item_following_show_all_profiles_of_search_following
+                this,
+                R.layout.item_following_show_all_profiles_of_search_following,
+                followingShowAllViewModel
             )
         binding.rcvFollowingShowAllProfilesSearchFollowing.adapter = followingSearchProfilesAdapter
     }
@@ -77,7 +80,9 @@ class FollowingShowAllActivity :
     private fun setFollowerSearchProfilesAdapter() {
         val followerSearchProfilesAdapter =
             SearchProfilesRcvAdapter<ItemFollowingShowAllProfilesOfSearchFollowerBinding>(
-                this, R.layout.item_following_show_all_profiles_of_search_follower
+                this,
+                R.layout.item_following_show_all_profiles_of_search_follower,
+                followingShowAllViewModel
             )
         binding.rcvFollowingShowAllProfilesSearchFollower.adapter = followerSearchProfilesAdapter
     }
@@ -87,6 +92,19 @@ class FollowingShowAllActivity :
             followingShowAllProfilesList?.let {
                 if (binding.rcvFollowingShowAllProfilesFollowing.adapter != null) with(binding.rcvFollowingShowAllProfilesFollowing.adapter as FollowingProfilesRcvAdapter<*>) {
                     submitList(followingShowAllProfilesList)
+                }
+                if (followingShowAllProfilesList.size == 0) {
+                    binding.rcvFollowingShowAllProfilesFollowing.visibility = View.INVISIBLE
+                    binding.searchViewFollowingShowAll.visibility = View.INVISIBLE
+                    binding.txtFollowingShowAllFollowerEmptyInformation.visibility = View.INVISIBLE
+                    binding.txtFollowingShowAllFollowingEmptyInformation.visibility = View.VISIBLE
+                    binding.imgFollowingShowAllEmptyInformation.visibility = View.VISIBLE
+                } else {
+                    if (binding.tabLayoutFollowingShowAllSort.selectedTabPosition == 0) {
+                        binding.rcvFollowingShowAllProfilesFollowing.visibility = View.VISIBLE
+                    }
+                    binding.txtFollowingShowAllFollowingEmptyInformation.visibility = View.INVISIBLE
+                    binding.imgFollowingShowAllEmptyInformation.visibility = View.INVISIBLE
                 }
             }
         }
@@ -98,6 +116,19 @@ class FollowingShowAllActivity :
                 if (binding.rcvFollowingShowAllProfilesFollower.adapter != null) with(binding.rcvFollowingShowAllProfilesFollower.adapter as FollowerProfilesRcvAdapter<*>) {
                     submitList(followerShowAllProfilesList)
                 }
+                if (followerShowAllProfilesList.size == 0) {
+                    binding.rcvFollowingShowAllProfilesFollower.visibility = View.INVISIBLE
+                    binding.searchViewFollowingShowAll.visibility = View.INVISIBLE
+                    binding.txtFollowingShowAllFollowingEmptyInformation.visibility = View.INVISIBLE
+                    binding.txtFollowingShowAllFollowerEmptyInformation.visibility = View.VISIBLE
+                    binding.imgFollowingShowAllEmptyInformation.visibility = View.VISIBLE
+                } else {
+                    if (binding.tabLayoutFollowingShowAllSort.selectedTabPosition == 1) {
+                        binding.rcvFollowingShowAllProfilesFollower.visibility = View.VISIBLE
+                    }
+                    binding.txtFollowingShowAllFollowerEmptyInformation.visibility = View.INVISIBLE
+                    binding.imgFollowingShowAllEmptyInformation.visibility = View.INVISIBLE
+                }
             }
         }
     }
@@ -108,6 +139,13 @@ class FollowingShowAllActivity :
                 if (binding.rcvFollowingShowAllProfilesSearchFollowing.adapter != null) with(binding.rcvFollowingShowAllProfilesSearchFollowing.adapter as SearchProfilesRcvAdapter<*>) {
                     submitList(followingSearchList)
                 }
+                if (followingSearchList[0].isFollowed == null) {
+                    binding.txtFollowingShowAllNoSearchInformation.visibility = View.VISIBLE
+                    binding.imgFollowingShowAllEmptyInformation.visibility = View.VISIBLE
+                } else {
+                    binding.txtFollowingShowAllNoSearchInformation.visibility = View.INVISIBLE
+                    binding.imgFollowingShowAllEmptyInformation.visibility = View.INVISIBLE
+                }
             }
         }
     }
@@ -117,6 +155,13 @@ class FollowingShowAllActivity :
             followerSearchList?.let {
                 if (binding.rcvFollowingShowAllProfilesSearchFollower.adapter != null) with(binding.rcvFollowingShowAllProfilesSearchFollower.adapter as SearchProfilesRcvAdapter<*>) {
                     submitList(followerSearchList)
+                }
+                if (followerSearchList[0].isFollowed == null) {
+                    binding.txtFollowingShowAllNoSearchInformation.visibility = View.VISIBLE
+                    binding.imgFollowingShowAllEmptyInformation.visibility = View.VISIBLE
+                } else {
+                    binding.txtFollowingShowAllNoSearchInformation.visibility = View.INVISIBLE
+                    binding.imgFollowingShowAllEmptyInformation.visibility = View.INVISIBLE
                 }
             }
         }
@@ -143,14 +188,38 @@ class FollowingShowAllActivity :
                         0 -> {
                             followingShowAllViewModel.setSearchRange("followee")
                             binding.searchViewFollowingShowAll.setQuery(null, false)
-                            binding.rcvFollowingShowAllProfilesFollowing.visibility = View.VISIBLE
                             binding.rcvFollowingShowAllProfilesFollower.visibility = View.INVISIBLE
+                            if (followingShowAllViewModel.followingList.value?.size == 0) {
+                                binding.rcvFollowingShowAllProfilesFollowing.visibility =
+                                    View.INVISIBLE
+                                binding.txtFollowingShowAllFollowerEmptyInformation.visibility =
+                                    View.INVISIBLE
+                                binding.txtFollowingShowAllFollowingEmptyInformation.visibility =
+                                    View.VISIBLE
+                                binding.imgFollowingShowAllEmptyInformation.visibility =
+                                    View.VISIBLE
+                            } else {
+                                binding.rcvFollowingShowAllProfilesFollowing.visibility =
+                                    View.VISIBLE
+                            }
                         }
                         1 -> {
                             followingShowAllViewModel.setSearchRange("follower")
                             binding.searchViewFollowingShowAll.setQuery(null, false)
                             binding.rcvFollowingShowAllProfilesFollowing.visibility = View.INVISIBLE
-                            binding.rcvFollowingShowAllProfilesFollower.visibility = View.VISIBLE
+                            if (followingShowAllViewModel.followerList.value?.size == 0) {
+                                binding.rcvFollowingShowAllProfilesFollower.visibility =
+                                    View.INVISIBLE
+                                binding.txtFollowingShowAllFollowingEmptyInformation.visibility =
+                                    View.INVISIBLE
+                                binding.txtFollowingShowAllFollowerEmptyInformation.visibility =
+                                    View.VISIBLE
+                                binding.imgFollowingShowAllEmptyInformation.visibility =
+                                    View.VISIBLE
+                            } else {
+                                binding.rcvFollowingShowAllProfilesFollower.visibility =
+                                    View.VISIBLE
+                            }
                         }
                     }
                 }
@@ -177,6 +246,9 @@ class FollowingShowAllActivity :
                     }
                 } else {
                     followingShowAllViewModel.deleteSearchRecord()
+                    followingShowAllViewModel.requestFollowerFollowingList()
+                    binding.txtFollowingShowAllNoSearchInformation.visibility = View.INVISIBLE
+                    binding.imgFollowingShowAllEmptyInformation.visibility = View.INVISIBLE
                     if (binding.tabLayoutFollowingShowAllSort.selectedTabPosition == 0) {
                         binding.rcvFollowingShowAllProfilesFollowing.visibility = View.VISIBLE
                     } else {

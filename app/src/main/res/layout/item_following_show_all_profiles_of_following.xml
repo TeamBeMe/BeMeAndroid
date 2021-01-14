@@ -52,7 +52,6 @@
             android:text="팔로잉"
             android:textColor="@color/item_show_all_profiles_btn_following_name_black"
             android:textSize="12dp"
-            android:visibility="visible"
             app:cornerRadius="3dp"
             app:layout_constraintBottom_toBottomOf="@+id/img_following_show_all_profiles"
             app:layout_constraintEnd_toEndOf="parent"

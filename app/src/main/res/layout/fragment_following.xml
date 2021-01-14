@@ -138,17 +138,56 @@
 
             </com.teambeme.beme.util.NestedScrollableHost>
 
+            <ImageView
+                android:id="@+id/img_following_no_following_list_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/ic_idsearch"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tab_layout_following_sort" />
+
+            <TextView
+                android:id="@+id/txt_following_no_following_list_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center_horizontal"
+                android:text="회원님이 팔로우 하는 사람들이 여기에 표시됩니다"
+                android:textColor="@color/explore_txt_other_questions_un_answer_gray"
+                android:textSize="12sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_following_no_following_list_information" />
+
+            <TextView
+                android:id="@+id/txt_following_no_follower_list_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center_horizontal"
+                android:text="회원님을 팔로우 하는 사람들이 여기에 표시됩니다"
+                android:textColor="@color/explore_txt_other_questions_un_answer_gray"
+                android:textSize="12sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_following_no_following_list_information" />
+
 
             <TextView
                 android:id="@+id/txt_following_title_of_other_questions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="46dp"
+                android:layout_marginTop="144dp"
                 android:text="팔로잉"
                 android:textColor="@color/following_txt_following_title_of_other_questions_black"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@id/tab_layout_following_sort"
-                app:layout_constraintTop_toBottomOf="@id/nested_scrollable_host_following" />
+                app:layout_constraintTop_toBottomOf="@id/tab_layout_following_sort" />
 
             <TextView
                 android:id="@+id/txt_following_desc_of_other_questions"
@@ -193,12 +232,36 @@
                 android:text="더보기"
                 android:textColor="@color/following_btn_show_more_txt_white"
                 android:textSize="16sp"
-                android:visibility="@{followingViewModel.followingFollowerAnswersList == null || followingViewModel.isMaxPage == true ? View.INVISIBLE : View.VISIBLE}"
                 app:cornerRadius="6dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rcv_following_other_questions" />
+
+            <ImageView
+                android:id="@+id/img_following_no_following_answer_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_information"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_following_desc_of_other_questions" />
+
+            <TextView
+                android:id="@+id/txt_following_no_following_answer_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center_horizontal"
+                android:text="아이쿠..! 아직 팔로우하는 사람이 없군요\n팔로잉을 하고 다른 사람들의 글을 둘러보세요"
+                android:textColor="@color/explore_txt_other_questions_un_answer_gray"
+                android:textSize="14sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_following_no_following_answer_information" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
