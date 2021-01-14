@@ -100,18 +100,27 @@ class SignUpViewModel : ViewModel() {
         isEmailValidated.value!! && isNickNameValidated.value!! && isPassWordValidated.value!! && isPassWordCheckValidated.value!! && isNickNameDoubleChecked.value!!
 
     fun signUp() = viewModelScope.launch {
-        val file = File(profileImageString.value ?: "")
-        val fileReqBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-        val part: MultipartBody.Part =
-            MultipartBody.Part.createFormData("profile_img", file.name, fileReqBody)
-        try {
-            _signUpUserInfo.value = signUpRepository.signUp(getPartMap(), part)
-        } catch (e: HttpException) {
-            Log.d("SignUp", e.code().toString())
-            Log.d("SignUp", e.message())
-            Log.d("SignUp", e.stackTraceToString())
+        if (profileImageString.value != null) {
+            val file = File(profileImageString.value!!)
+            val fileReqBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+            val part: MultipartBody.Part =
+                MultipartBody.Part.createFormData("profile_img", file.name, fileReqBody)
+            try {
+                _signUpUserInfo.value = signUpRepository.signUp(getPartMap(), part)
+            } catch (e: HttpException) {
+                Log.d("SignUp", e.code().toString())
+                Log.d("SignUp", e.message())
+                Log.d("SignUp", e.stackTraceToString())
+            }
+        } else {
+            try {
+                _signUpUserInfo.value = signUpRepository.signUp(getPartMap(), null)
+            } catch (e: HttpException) {
+                Log.d("SignUp", e.code().toString())
+                Log.d("SignUp", e.message())
+                Log.d("SignUp", e.stackTraceToString())
+            }
         }
-
     }
 
     fun signUpWithoutImage() = viewModelScope.launch {
@@ -137,7 +146,7 @@ class SignUpViewModel : ViewModel() {
 
     private fun getPartMap(): HashMap<String, RequestBody> {
         val email = userEmail.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
-        val nickName = userEmail.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
+        val nickName = userNickName.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
         val passWord = userPassWord.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
         return hashMapOf(
             "email" to email,
