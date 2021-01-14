@@ -122,7 +122,6 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
 
     fun requestDetail(answerId: Int) {
         detailRepository.getDetail(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             answerId
         )
             .enqueue(object :
@@ -164,7 +163,6 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
 
     fun changeParentReply() {
         detailRepository.putReply(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             copyReplyData[position.value!!].id, answerText.value!!
         )
             .enqueue(object :
@@ -202,7 +200,6 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
 
     fun changeChildReply() {
         detailRepository.putReply(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             copyReplyData[position.value!!].children[childposition.value!!].id, answerText.value!!
         )
             .enqueue(object :
@@ -283,7 +280,6 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
 
     fun putScrap() {
         detailRepository.putScrap(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             detailData.value!!.id
         ).enqueue(object : Callback<ResponseScrap> {
             override fun onResponse(
@@ -316,7 +312,6 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
 
     private fun deleteReply(commentId: Int) {
         detailRepository.deleteReply(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             commentId
         )
             .enqueue(object :
@@ -347,7 +342,6 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
 
     fun deleteAnswer() {
         detailRepository.deleteAnswer(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             detailData.value!!.id
         )
             .enqueue(object :
@@ -391,7 +385,6 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
     fun addParentReply() {
         var reply: ResponseDetail.Data.Comment
         detailRepository.postReply(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             detailData.value!!.id, answerText.value!!, isPublic.value!!, null
         )
             .enqueue(object :
@@ -431,7 +424,6 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
     fun addChildReply() {
         var childrenReply: ResponseDetail.Data.Comment.Children
         detailRepository.postReply(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             detailData.value!!.id,
             answerText.value!!,
             isPublic.value!!,

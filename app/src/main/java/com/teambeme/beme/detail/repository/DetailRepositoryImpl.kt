@@ -7,27 +7,26 @@ import retrofit2.Call
 
 class DetailRepositoryImpl(private val detailDataSource: DetailDataSource) :
     DetailRepository {
-    override fun getDetail(token: String, answerId: Int): Call<ResponseDetail> =
-        detailDataSource.getDetail(token, answerId)
+    override fun getDetail(answerId: Int): Call<ResponseDetail> =
+        detailDataSource.getDetail(answerId)
 
-    override fun deleteReply(token: String, commentId: Int): Call<ResponseDeleteReply> =
-        detailDataSource.deleteReply(token, commentId)
+    override fun deleteReply(commentId: Int): Call<ResponseDeleteReply> =
+        detailDataSource.deleteReply(commentId)
 
     override fun postReply(
-        token: String,
         answerId: Int,
         content: String,
         isPublic: Boolean,
         parentId: Int?
     ): Call<ResponsePostReply> =
-        detailDataSource.postReply(token, answerId, content, isPublic, parentId)
+        detailDataSource.postReply(answerId, content, isPublic, parentId)
 
-    override fun putReply(token: String, commentId: Int, content: String): Call<ResponsePutReply> =
-        detailDataSource.putReply(token, commentId, content)
+    override fun putReply(commentId: Int, content: String): Call<ResponsePutReply> =
+        detailDataSource.putReply(commentId, content)
 
-    override fun putScrap(token: String, answerId: Int): Call<ResponseScrap> =
-        detailDataSource.putScrap(token, answerId)
+    override fun putScrap(answerId: Int): Call<ResponseScrap> =
+        detailDataSource.putScrap(answerId)
 
-    override fun deleteAnswer(token: String, answerId: Int): Call<ResponseDeleteAnswer> =
-        detailDataSource.deleteAnswer(token, answerId)
+    override fun deleteAnswer(answerId: Int): Call<ResponseDeleteAnswer> =
+        detailDataSource.deleteAnswer(answerId)
 }

@@ -6,15 +6,13 @@ import retrofit2.Call
 
 interface MyPageDataSource {
     fun putProfile(
-        token: String,
         file: MultipartBody.Part?
 
     ): Call<ResponseProfile>
 
-    fun getMyProfile(token: String): Call<ResponseMyProfile>
+    fun getMyProfile(): Call<ResponseMyProfile>
 
     fun getMyAnswer(
-        token: String,
         public: String?,
         category: Int?,
         query: String?,
@@ -22,12 +20,11 @@ interface MyPageDataSource {
     ): Call<ResponseMyAnswer>
 
     fun getMyScrap(
-        token: String,
         public: String?,
         category: Int?,
         query: String?,
         page: Int
     ): Call<ResponseMyScrap>
 
-    fun putPublic(token: String, answerId: Int, publicFlag: Int): Call<ResponsePublic>
+    fun putPublic(answerId: Int, publicFlag: Int): Call<ResponsePublic>
 }

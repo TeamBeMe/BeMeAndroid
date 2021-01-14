@@ -9,14 +9,12 @@ interface MyPageService {
     @Multipart
     @PUT("/profiles")
     fun putProfile(
-        @Header("token") token: String,
         @Part file: MultipartBody.Part?
     ): Call<ResponseProfile>
 
     @Headers("Content-type: application/json")
     @GET("profiles/answers")
     fun getMyAnswer(
-        @Header("token") token: String,
         @Query("public") public: String?,
         @Query("category") category: Int?,
         @Query("query") query: String?,
@@ -25,14 +23,11 @@ interface MyPageService {
 
     @Headers("Content-type: application/json")
     @GET("profiles")
-    fun getMyProfile(
-        @Header("token") token: String
-    ): Call<ResponseMyProfile>
+    fun getMyProfile(): Call<ResponseMyProfile>
 
     @Headers("Content-type: application/json")
     @GET("profiles/scraps")
     fun getMyScrap(
-        @Header("token") token: String,
         @Query("public") public: String?,
         @Query("category") category: Int?,
         @Query("query") query: String?,
@@ -42,7 +37,6 @@ interface MyPageService {
     @Headers("Content-type: application/json")
     @PUT("home/public")
     fun putPublic(
-        @Header("token") token: String,
         @Body body: RequestPublic
     ): Call<ResponsePublic>
 }

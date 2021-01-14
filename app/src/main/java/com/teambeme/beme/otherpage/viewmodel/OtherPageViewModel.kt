@@ -44,7 +44,6 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
 
     fun putScrap() {
         otherRepository.putScrap(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             copyOtherAnswerList[scrapPosition.value!!].id
         ).enqueue(object : Callback<ResponseScrap> {
             override fun onResponse(
@@ -68,7 +67,6 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
     fun putFollow() {
         _isFollow.value = !_isFollow.value!!
         otherRepository.putFollow(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             otherUserInfo.value!!.id
         ).enqueue(object : Callback<ResponseFollow> {
             override fun onResponse(
@@ -88,7 +86,6 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
     fun requestUser(userId: Int) {
         page = 1
         otherRepository.getOtherInfo(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             userId
         )
             .enqueue(object :
@@ -111,7 +108,6 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
 
     fun requestAddItem(userId: Int) {
         otherRepository.getProfileAnswer(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             userId,
             page
         ).enqueue(object :
@@ -142,7 +138,6 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
 
     fun requestItem(userId: Int) {
         otherRepository.getProfileAnswer(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             userId,
             page
         ).enqueue(object :

@@ -25,10 +25,12 @@ import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
 import com.theartofdev.edmodo.cropper.CropImage
-import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import java.io.File
 
 class BottomProfileFragment : BottomSheetDialogFragment() {
@@ -54,7 +56,9 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
     }
 
     private fun baseImage() {
-        val fileReqBody = RequestBody.create(MediaType.parse("image/jpg"), "")
+        val jsonObject = JSONObject()
+        jsonObject.put("image", "")
+        val fileReqBody = jsonObject.toString().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("image", "", fileReqBody)
         mypageViewModel.putProfiles(part)
         mypageViewModel.setProfileUri(null)
@@ -89,15 +93,11 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
                 bitmap!!.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
                 val photoBody =
                     RequestBody.create(
-                        MediaType.parse("image/jpg"),
+                        "image/jpg".toMediaTypeOrNull(),
                         byteArrayOutputStream.toByteArray()
                     )
-                val multiBody = MultipartBody.Part.createFormData(
-                    "image",
-                    File(resultUri.toString()).name,
-                    photoBody
-                )
-                mypageViewModel.putProfiles(multiBody)
+                val part = MultipartBody.Part.createFormData("image", File(resultUri.toString()).name, photoBody)
+                mypageViewModel.putProfiles(part)
                 dismiss()
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.getError()
@@ -111,12 +111,7 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
         inImage.compress(Bitmap.CompressFormat.PNG, 1, bytes)
         val titlename = Math.random()
         var path =
-            MediaStore.Images.Media.insertImage(
-                context.contentResolver,
-                inImage,
-                "bemeProfile",
-                null
-            )
+            MediaStore.Images.Media.insertImage(context.contentResolver, inImage, "asdsad", null)
         return Uri.parse(path)
     }
 

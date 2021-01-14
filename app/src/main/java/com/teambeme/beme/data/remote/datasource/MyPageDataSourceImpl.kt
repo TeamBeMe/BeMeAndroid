@@ -7,37 +7,34 @@ import retrofit2.Call
 
 class MyPageDataSourceImpl(private val service: MyPageService) : MyPageDataSource {
     override fun putProfile(
-        token: String,
         file: MultipartBody.Part?
     ): Call<ResponseProfile> {
-        return service.putProfile(token, file)
+        return service.putProfile(file)
     }
 
     override fun getMyAnswer(
-        token: String,
         public: String?,
         category: Int?,
         query: String?,
         page: Int
     ): Call<ResponseMyAnswer> {
-        return service.getMyAnswer(token, public, category, query, page)
+        return service.getMyAnswer(public, category, query, page)
     }
 
-    override fun getMyProfile(token: String): Call<ResponseMyProfile> {
-        return service.getMyProfile(token)
+    override fun getMyProfile(): Call<ResponseMyProfile> {
+        return service.getMyProfile()
     }
 
     override fun getMyScrap(
-        token: String,
         public: String?,
         category: Int?,
         query: String?,
         page: Int
     ): Call<ResponseMyScrap> {
-        return service.getMyScrap(token, public, category, query, page)
+        return service.getMyScrap(public, category, query, page)
     }
 
-    override fun putPublic(token: String, answerId: Int, publicFlag: Int): Call<ResponsePublic> {
-        return service.putPublic(token, RequestPublic(answerId, publicFlag))
+    override fun putPublic(answerId: Int, publicFlag: Int): Call<ResponsePublic> {
+        return service.putPublic(RequestPublic(answerId, publicFlag))
     }
 }

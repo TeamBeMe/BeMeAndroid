@@ -6,32 +6,31 @@ import com.teambeme.beme.otherpage.model.ResponseScrap
 import retrofit2.Call
 
 class DetailDataSourceImpl(private val service: DetailService) : DetailDataSource {
-    override fun getDetail(token: String, answerId: Int): Call<ResponseDetail> {
-        return service.getDetail(token, answerId)
+    override fun getDetail(answerId: Int): Call<ResponseDetail> {
+        return service.getDetail(answerId)
     }
 
-    override fun deleteReply(token: String, commentId: Int): Call<ResponseDeleteReply> {
-        return service.deleteReply(token, commentId)
+    override fun deleteReply(commentId: Int): Call<ResponseDeleteReply> {
+        return service.deleteReply(commentId)
     }
 
     override fun postReply(
-        token: String,
         answerId: Int,
         content: String,
         isPublic: Boolean,
         parentId: Int?
     ): Call<ResponsePostReply> {
-        return service.postReply(token, RequestPostReply(answerId, content, isPublic, parentId))
+        return service.postReply(RequestPostReply(answerId, content, isPublic, parentId))
     }
 
-    override fun putReply(token: String, commentId: Int, content: String): Call<ResponsePutReply> {
-        return service.putReply(token, RequestPutReply(commentId, content))
+    override fun putReply(commentId: Int, content: String): Call<ResponsePutReply> {
+        return service.putReply(RequestPutReply(commentId, content))
     }
 
-    override fun putScrap(token: String, answerId: Int): Call<ResponseScrap> =
-        service.putScrap(token, answerId)
+    override fun putScrap(answerId: Int): Call<ResponseScrap> =
+        service.putScrap(answerId)
 
-    override fun deleteAnswer(token: String, answerId: Int): Call<ResponseDeleteAnswer> {
-        return service.deleteAnswer(token, answerId)
+    override fun deleteAnswer(answerId: Int): Call<ResponseDeleteAnswer> {
+        return service.deleteAnswer(answerId)
     }
 }

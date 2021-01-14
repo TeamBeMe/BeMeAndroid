@@ -83,7 +83,6 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
 
     fun putProfiles(multipart: MultipartBody.Part?) {
         myPageRepository.putProfile(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             multipart
         ).enqueue(object : Callback<ResponseProfile> {
             override fun onResponse(
@@ -129,7 +128,6 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
 
     fun putPublic() {
         myPageRepository.putPublic(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             copyMyAnswerList[publicPosition.value!!].id,
             copyMyAnswerList[publicPosition.value!!].publicFlag.toInt()
         ).enqueue(object :
@@ -160,7 +158,6 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
 
     fun getMyAnswer() {
         myPageRepository.getMyAnswer(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             mywriteFilter.value?.range,
             mywriteFilter.value?.category,
             myQuery.value,
@@ -210,9 +207,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
     }
 
     fun getMyProfile() {
-        myPageRepository.getMyProfile(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ"
-        ).enqueue(object :
+        myPageRepository.getMyProfile().enqueue(object :
             Callback<ResponseMyProfile> {
             override fun onResponse(
                 call: Call<ResponseMyProfile>,
@@ -231,7 +226,6 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
 
     fun getMyScrap() {
         myPageRepository.getMyScrap(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             scrapFilter.value?.range,
             scrapFilter.value?.category,
             scrapQuery.value,
@@ -288,8 +282,8 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
         _profileUri.value = uri
     }
 
-    fun setProfileNull(){
-        _myProfileInfo.value!!.profileImg=null
+    fun setProfileNull() {
+        _myProfileInfo.value!!.profileImg = null
     }
 
     private val _profileString = MutableLiveData<String>()
