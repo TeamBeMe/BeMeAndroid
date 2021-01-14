@@ -1,11 +1,10 @@
 package com.teambeme.beme.mypage.view
 
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -57,13 +56,7 @@ class MyWriteFragment : Fragment() {
         mypageViewModel.isAnswerEmpty.observe(viewLifecycleOwner) {
             isEmptyListener(it)
         }
-        binding.editxtWriteSearch.setOnEditorActionListener { view, i, event ->
-            mypageViewModel.initPage()
-            mypageViewModel.setMyQuery(binding.editxtWriteSearch.text.toString())
-            mypageViewModel.getMyAnswer()
-            hideKeyboard()
-            true
-        }
+        setSearchView()
         return binding.root
     }
 
@@ -73,9 +66,27 @@ class MyWriteFragment : Fragment() {
         mypageViewModel.getMyAnswer()
     }
 
-    private fun hideKeyboard() {
-        val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(binding.editxtWriteSearch.windowToken, 0)
+    private fun setSearchView() {
+        binding.searchViewWriteSearch.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(newText: String?): Boolean {
+                Log.d("Search", newText ?: "hyunwoo")
+                mypageViewModel.initPage()
+                mypageViewModel.getMyAnswer()
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val userInputText = newText ?: ""
+                mypageViewModel.setMyQuery(newText.toString())
+                if (userInputText.count() == 0) {
+                    mypageViewModel.initPage()
+                    mypageViewModel.deleteMyQuery()
+                    mypageViewModel.getMyAnswer()
+                }
+                return false
+            }
+        })
     }
 
     private fun isEmptyListener(isEmpty: Boolean) {

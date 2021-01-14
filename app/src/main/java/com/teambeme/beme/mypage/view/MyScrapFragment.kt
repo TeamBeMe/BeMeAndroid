@@ -1,11 +1,9 @@
 package com.teambeme.beme.mypage.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -50,16 +48,10 @@ class MyScrapFragment : Fragment() {
         mypageViewModel.isScrapMax.observe(viewLifecycleOwner) {
             isMaxListener(it)
         }
-        binding.editxtScrapSearch.setOnEditorActionListener { view, i, event ->
-            mypageViewModel.initScrapPage()
-            mypageViewModel.setScrapQuery(binding.editxtScrapSearch.text.toString())
-            mypageViewModel.getMyScrap()
-            hideKeyboard()
-            true
-        }
         mypageViewModel.isScrapEmpty.observe(viewLifecycleOwner) {
             isEmptyListener(it)
         }
+        setSearchView()
         return binding.root
     }
 
@@ -69,10 +61,26 @@ class MyScrapFragment : Fragment() {
         mypageViewModel.getMyScrap()
     }
 
-    private fun hideKeyboard() {
-        val inputManager =
-            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(binding.editxtScrapSearch.windowToken, 0)
+    private fun setSearchView() {
+        binding.searchViewScrapSearch.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(newText: String?): Boolean {
+                mypageViewModel.initScrapPage()
+                mypageViewModel.getMyScrap()
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val userInputText = newText ?: ""
+                mypageViewModel.setScrapQuery(newText.toString())
+                if (userInputText.count() == 0) {
+                    mypageViewModel.initScrapPage()
+                    mypageViewModel.deleteScrapQuery()
+                    mypageViewModel.getMyScrap()
+                }
+                return false
+            }
+        })
     }
 
     private fun isEmptyListener(isEmpty: Boolean) {
