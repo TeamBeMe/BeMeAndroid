@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="otherMindsTitle"
             type="String" />
@@ -24,8 +26,10 @@
             android:id="@+id/btn_explore_detail_go_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginStart="8dp"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:paddingTop="18dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_arrow_back_black"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,14 +37,16 @@
 
         <TextView
             android:id="@+id/txt_explore_detail_question"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="28dp"
             android:text="@{otherMindsTitle}"
             android:textColor="@color/explore_detail_txt_question_black"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@id/btn_explore_detail_go_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_explore_detail_go_back" />
 
         <com.google.android.material.tabs.TabLayout
@@ -111,12 +117,13 @@
                     android:layout_marginEnd="28dp"
                     android:layout_marginBottom="152dp"
                     android:backgroundTint="@color/explore_detail_btn_show_more_background_black"
-                    android:onClick="@{()->exploreDetailViewModel.plusDummyOtherAnswers()}"
+                    android:onClick="@{()->exploreDetailViewModel.requestPlusSameQuestionOtherAnswers()}"
                     android:paddingTop="12dp"
                     android:paddingBottom="16dp"
                     android:text="더보기"
                     android:textColor="@color/explore_detail_btn_show_more_txt_white"
                     android:textSize="16sp"
+                    android:visibility="@{exploreDetailViewModel.sameQuestionOtherAnswersList == null || exploreDetailViewModel.isMaxPage == true ? View.INVISIBLE : View.VISIBLE}"
                     app:cornerRadius="6dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

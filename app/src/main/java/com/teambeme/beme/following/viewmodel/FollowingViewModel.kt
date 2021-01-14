@@ -1,326 +1,175 @@
 package com.teambeme.beme.following.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.R
-import com.teambeme.beme.explore.model.OtherQuestionsData
-import com.teambeme.beme.following.model.FollowingProfilesData
+import com.teambeme.beme.explore.model.ResponseExplorationQuestions
+import com.teambeme.beme.following.model.ResponseFollowingList
+import com.teambeme.beme.following.model.ResponseFollowingSearchId
+import com.teambeme.beme.following.repository.FollowingRepository
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class FollowingViewModel : ViewModel() {
-    private val _otherFollowingQuestionsList = MutableLiveData<MutableList<OtherQuestionsData>>()
-    val otherFollowingQuestionsList: LiveData<MutableList<OtherQuestionsData>>
-        get() = _otherFollowingQuestionsList
+class FollowingViewModel(private val followingRepository: FollowingRepository) : ViewModel() {
+    private var tempFollowingFollowerAnswersList: MutableList<ResponseExplorationQuestions.Data.Answer>? =
+        mutableListOf()
+    private val _followingFollowerAnswersList =
+        MutableLiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>()
+    val followingFollowerAnswersList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer>>
+        get() = _followingFollowerAnswersList
 
-    private val _followingProfilesList = MutableLiveData<List<FollowingProfilesData>>()
-    val followingProfilesList: LiveData<List<FollowingProfilesData>>
-        get() = _followingProfilesList
+    private val _followerList = MutableLiveData<MutableList<ResponseFollowingList.Data.Follower>>()
+    val followerList: LiveData<MutableList<ResponseFollowingList.Data.Follower>>
+        get() = _followerList
 
-    private val _followingShowAllProfilesList = MutableLiveData<List<FollowingProfilesData>>()
-    val followingShowAllProfilesList: LiveData<List<FollowingProfilesData>>
-        get() = _followingShowAllProfilesList
+    private val _followingList = MutableLiveData<MutableList<ResponseFollowingList.Data.Followee>>()
+    val followingList: LiveData<MutableList<ResponseFollowingList.Data.Followee>>
+        get() = _followingList
 
-    private val _dummyFollowingShowAllProfilesList = listOf(
-        FollowingProfilesData(
-            profile_img = R.drawable.img_profile_sample_following,
-            profile_id = "1_ox",
-            isFollowing = true,
-            isFollower = false
-        ),
-        FollowingProfilesData(
-            profile_img = R.drawable.img_profile_sample_following,
-            profile_id = "2_xo",
-            isFollowing = false,
-            isFollower = true
-        ),
-        FollowingProfilesData(
-            profile_img = R.drawable.img_profile_sample_following,
-            profile_id = "3_oo",
-            isFollowing = true,
-            isFollower = true
-        ),
-        FollowingProfilesData(
-            profile_img = R.drawable.img_profile_sample_following,
-            profile_id = "4_ox",
-            isFollowing = true,
-            isFollower = false
-        ),
-        FollowingProfilesData(
-            profile_img = R.drawable.img_profile_sample_following,
-            profile_id = "5_xo",
-            isFollowing = false,
-            isFollower = true
-        ),
-        FollowingProfilesData(
-            profile_img = R.drawable.img_profile_sample_following,
-            profile_id = "6_oo",
-            isFollowing = true,
-            isFollower = true
+    private var tempSearchList: MutableList<ResponseFollowingSearchId.Data>? = mutableListOf()
+    private var _searchList = MutableLiveData<MutableList<ResponseFollowingSearchId.Data>>()
+    val searchList: LiveData<MutableList<ResponseFollowingSearchId.Data>>
+        get() = _searchList
+
+    private var page: Int = 1
+
+    private var _isMaxPage = false
+    val isMaxPage: Boolean
+        get() = _isMaxPage
+
+    private var searchQuery: String = ""
+    fun setSearchQuery(query: String) {
+        searchQuery = query
+    }
+
+    private var searchRange: String = followeeCategory
+    fun setSearchRange(range: String) {
+        searchRange = range
+    }
+
+    fun deleteSearchRecord() {
+        tempSearchList = mutableListOf(
+            ResponseFollowingSearchId.Data(0, null, "", "")
         )
-    )
-    val dummyFollowingShowAllProfilesList: List<FollowingProfilesData>
-        get() = _dummyFollowingShowAllProfilesList
-
-    fun setDummyFollowingShowAllProfiles() {
-        _followingShowAllProfilesList.value = dummyFollowingShowAllProfilesList.toList()
+        _searchList.value = tempSearchList?.toMutableList()
     }
 
-    fun selectFollowingShowAll(followingProfilesList: List<FollowingProfilesData>) {
-        val isFollowingList = followingProfilesList.filter { data -> data.isFollowing }
-        _followingShowAllProfilesList.value = isFollowingList.toList()
-    }
+    fun requestFollowingFollowerAnswers(pageNum: Int = page) {
+        followingRepository.getFollowingFollowerAnswers(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            pageNum,
+            followeeCategory
+        ).enqueue(
+            object : Callback<ResponseExplorationQuestions> {
+                override fun onResponse(
+                    call: Call<ResponseExplorationQuestions>,
+                    response: Response<ResponseExplorationQuestions>
+                ) {
+                    if (response.isSuccessful) {
+                        page = pageNum
+                        tempFollowingFollowerAnswersList =
+                            response.body()!!.data?.answers?.toMutableList()
+                        _followingFollowerAnswersList.value =
+                            tempFollowingFollowerAnswersList?.toMutableList()
+                        if (response.body()!!.data?.pageLen == page) {
+                            _isMaxPage = true
+                        } else {
+                            page++
+                        }
+                    }
+                }
 
-    fun selectFollowerShowAll(followingProfilesList: List<FollowingProfilesData>) {
-        val isFollowerList = followingProfilesList.filter { data -> data.isFollower }
-        _followingShowAllProfilesList.value = isFollowerList.toList()
-    }
-
-    private val _dummyFollowingProfilesList = listOf(
-        FollowingProfilesData(
-            profile_img = R.drawable.img_profile_sample_following,
-            profile_id = "1_ox",
-            isFollowing = true,
-            isFollower = false
-        ),
-        FollowingProfilesData(
-            profile_img = R.drawable.img_profile_sample_following,
-            profile_id = "2_xo",
-            isFollowing = false,
-            isFollower = true
-        ),
-        FollowingProfilesData(
-            profile_img = R.drawable.img_profile_sample_following,
-            profile_id = "3_oo",
-            isFollowing = true,
-            isFollower = true
-        ),
-        FollowingProfilesData(
-            profile_img = R.drawable.img_profile_sample_following,
-            profile_id = "4_ox",
-            isFollowing = true,
-            isFollower = false
-        ),
-        FollowingProfilesData(
-            profile_img = R.drawable.img_profile_sample_following,
-            profile_id = "5_xo",
-            isFollowing = false,
-            isFollower = true
-        ),
-        FollowingProfilesData(
-            profile_img = R.drawable.img_profile_sample_following,
-            profile_id = "6_oo",
-            isFollowing = true,
-            isFollower = true
+                override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
+                    Log.d("network_requestOtherQuestions", "통신실패")
+                }
+            }
         )
-    )
-    val dummyFollowingProfilesList: List<FollowingProfilesData>
-        get() = _dummyFollowingProfilesList
-
-    fun setDummyFollowingProfiles() {
-        _followingProfilesList.value = dummyFollowingProfilesList.toList()
     }
 
-    fun selectFollowing(followingProfilesList: List<FollowingProfilesData>) {
-        val isFollowingList = followingProfilesList.filter { data -> data.isFollowing }
-        _followingProfilesList.value = isFollowingList.toList()
-    }
+    fun requestPlusFollowingFollowerAnswers() {
+        followingRepository.getFollowingFollowerAnswers(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            page,
+            followeeCategory
+        ).enqueue(
+            object : Callback<ResponseExplorationQuestions> {
+                override fun onResponse(
+                    call: Call<ResponseExplorationQuestions>,
+                    response: Response<ResponseExplorationQuestions>
+                ) {
+                    if (response.isSuccessful) {
+                        tempFollowingFollowerAnswersList?.addAll(response.body()!!.data?.answers?.toMutableList())
+                        _followingFollowerAnswersList.value =
+                            tempFollowingFollowerAnswersList?.toMutableList()
+                        if (response.body()!!.data?.pageLen == page) {
+                            _isMaxPage = true
+                        } else {
+                            page++
+                        }
+                    }
+                }
 
-    fun selectFollower(followingProfilesList: List<FollowingProfilesData>) {
-        val isFollowerList = followingProfilesList.filter { data -> data.isFollower }
-        _followingProfilesList.value = isFollowerList.toList()
-    }
-
-    private val dummyOtherFollowingQuestionsList = mutableListOf(
-        OtherQuestionsData(
-            userId = "1",
-            category = "가치관",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "5",
-            isBookmarked = false,
-            isAnswered = false
-        ),
-        OtherQuestionsData(
-            userId = "2",
-            category = "사랑",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "26",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "3",
-            category = "일상",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "15",
-            isBookmarked = false,
-            isAnswered = false
-        ),
-        OtherQuestionsData(
-            userId = "4",
-            category = "이야기",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "3",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "5",
-            category = "미래",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "4",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "6",
-            category = "의미",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "5",
-            isBookmarked = false,
-            isAnswered = false
-        ),
-        OtherQuestionsData(
-            userId = "7",
-            category = "일상",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "15",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "8",
-            category = "이야기",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "3",
-            isBookmarked = false,
-            isAnswered = false
-        ),
-        OtherQuestionsData(
-            userId = "9",
-            category = "미래",
-            title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-            content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-            time = "4",
-            isBookmarked = false,
-            isAnswered = true
-        ),
-        OtherQuestionsData(
-            userId = "10",
-            category = "의미",
-            title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-            content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-            time = "5",
-            isBookmarked = false,
-            isAnswered = true
+                override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
+                    Log.d("network_requestOtherQuestions", "통신실패")
+                }
+            }
         )
-    )
-
-    fun setDummyOtherFollowingQuestions() {
-        _otherFollowingQuestionsList.value = dummyOtherFollowingQuestionsList.toMutableList()
     }
 
-    fun plusDummyOtherFollowingQuestions() {
-        val plusOtherFollowingQuestionsList = listOf(
-            OtherQuestionsData(
-                userId = "11",
-                category = "가치관",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "5",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "12",
-                category = "사랑",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "26",
-                isBookmarked = false,
-                isAnswered = false
-            ),
-            OtherQuestionsData(
-                userId = "13",
-                category = "일상",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "15",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "14",
-                category = "이야기",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "3",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "15",
-                category = "미래",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "4",
-                isBookmarked = false,
-                isAnswered = false
-            ),
-            OtherQuestionsData(
-                userId = "16",
-                category = "의미",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "5",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "17",
-                category = "일상",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "15",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "18",
-                category = "이야기",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "3",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "19",
-                category = "미래",
-                title = "과거, 미래 둘 중 하나로 시간 여행을 할 수 있다면 무엇을 선택할 것인가요?",
-                content = "과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재, 과거, 미래, 현재",
-                time = "4",
-                isBookmarked = false,
-                isAnswered = true
-            ),
-            OtherQuestionsData(
-                userId = "20",
-                category = "의미",
-                title = "올해 1월과 가장 달라진 점은 무엇인가요?",
-                content = "나이, 나이, 나이, 나이, 나이, 나이, 나이",
-                time = "5",
-                isBookmarked = false,
-                isAnswered = false
-            )
+    fun requestFollowerFollowingList() {
+        followingRepository.getFollowingFollowerList(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI"
+        ).enqueue(
+            object : Callback<ResponseFollowingList> {
+                override fun onResponse(
+                    call: Call<ResponseFollowingList>,
+                    response: Response<ResponseFollowingList>
+                ) {
+                    if (response.isSuccessful) {
+                        _followerList.value = response.body()!!.data?.followers?.toMutableList()
+                        _followingList.value = response.body()!!.data?.followees?.toMutableList()
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseFollowingList>, t: Throwable) {
+                    Log.d("network_requestOtherQuestions", "통신실패")
+                }
+            }
         )
-        dummyOtherFollowingQuestionsList.addAll(plusOtherFollowingQuestionsList.toMutableList())
-        _otherFollowingQuestionsList.value = dummyOtherFollowingQuestionsList.toMutableList()
+    }
+
+    fun requestSearchMyFollowingFollower() {
+        Log.d("search______", searchList.toString())
+        followingRepository.getSearchMyFollowingFollower(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+            searchQuery,
+            searchRange
+        ).enqueue(
+            object : Callback<ResponseFollowingSearchId> {
+                override fun onResponse(
+                    call: Call<ResponseFollowingSearchId>,
+                    response: Response<ResponseFollowingSearchId>
+                ) {
+                    Log.d("network_requestSearch", "통신성")
+                    if (response.isSuccessful) {
+                        tempSearchList = response.body()!!.data?.let { mutableListOf(it) }
+                        _searchList.value = tempSearchList?.toMutableList()
+                        if (tempSearchList == null) {
+                            deleteSearchRecord()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseFollowingSearchId>, t: Throwable) {
+                    Log.d("network_requestSearch", "통신실패")
+                }
+            }
+        )
+    }
+
+    companion object {
+        private const val followeeCategory: String = "followee"
     }
 }

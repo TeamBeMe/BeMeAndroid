@@ -1,10 +1,13 @@
 package com.teambeme.beme.util
 
+import android.graphics.Typeface
 import android.text.*
 import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -20,12 +23,6 @@ object BindingAdapters {
     @JvmStatic
     fun setCategory(textView: TextView, category: String) {
         textView.text = "[ " + category + "에 관한 질문 ]"
-    }
-
-    @BindingAdapter("setTime")
-    @JvmStatic
-    fun setTime(textView: TextView, time: String) {
-        textView.text = time + "분 전"
     }
 
     @BindingAdapter("following:setTextForUnAnswered")
@@ -97,7 +94,7 @@ object BindingAdapters {
 
     @BindingAdapter("home:category", "home:answerIdx", "home:categoryColor")
     @JvmStatic
-    fun setCategoryText(textView: TextView, category: String, answerIdx: Int?, color: Int) {
+    fun setCategoryText(textView: TextView, category: String, answerIdx: String?, color: Int) {
         if (answerIdx != null) {
             val text = "[ " + category + "에 관한 " + answerIdx + "번째 질문 ]"
             val digit = answerIdx.toString().length
@@ -114,10 +111,50 @@ object BindingAdapters {
                 9 + category.length + digit,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-            textView.append(spannableString)
+            textView.text = spannableString
         } else {
             val text = "[ " + category + "에 관한 질문 ]"
             textView.text = text
+        }
+    }
+
+    @BindingAdapter("user:setNickName", "user:setQuestionTitle", "user:setType")
+    @JvmStatic
+    fun setReplyText(textView: TextView, id: String, title: String?, type: String) {
+        when (type) {
+            "comment" -> {
+                val activity = id + "님이 " + title + "에 대한 나의 글에 댓글을 달았습니다."
+                val spannableString = SpannableStringBuilder(activity)
+                spannableString.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    0,
+                    id.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                textView.append(spannableString)
+            }
+            "cocomment" -> {
+                val activity = id + "님이 " + title + "에 대한 나의 댓글에 답글을 달았습니다."
+                val spannableString = SpannableStringBuilder(activity)
+                spannableString.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    0,
+                    id.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                textView.append(spannableString)
+            }
+            "follow" -> {
+                val activity = id + "님이 나를 팔로우했습니다."
+                val spannableString = SpannableStringBuilder(activity)
+                spannableString.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    0,
+                    id.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                textView.append(spannableString)
+            }
         }
     }
 
@@ -158,6 +195,15 @@ object BindingAdapters {
             chip.isChecked = false
             val text = "팔로우"
             chip.text = text
+        }
+    }
+
+    @BindingAdapter("home:publicButtonSrc")
+    @JvmStatic
+    fun setSrc(imgButton: ImageButton, publicFlag: Int) {
+        when (publicFlag) {
+            0 -> imgButton.setImageResource(R.drawable.ic_lock)
+            else -> imgButton.setImageResource(R.drawable.ic_unlock)
         }
     }
 

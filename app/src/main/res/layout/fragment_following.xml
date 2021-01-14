@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="followingViewModel"
             type="com.teambeme.beme.following.viewmodel.FollowingViewModel" />
@@ -112,7 +114,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tab_layout_following_sort">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcv_following_other_profiles"
+                    android:id="@+id/rcv_following_profiles_of_following"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
@@ -120,7 +122,20 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_following_other_profiles" />
+                    tools:listitem="@layout/item_following_profiles_of_following" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcv_following_profiles_of_follower"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:visibility="invisible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_following_profiles_of_follower" />
+
             </com.teambeme.beme.util.NestedScrollableHost>
 
 
@@ -172,12 +187,13 @@
                 android:layout_marginEnd="28dp"
                 android:layout_marginBottom="152dp"
                 android:backgroundTint="@color/following_btn_show_more_background_black"
-                android:onClick="@{()->followingViewModel.plusDummyOtherFollowingQuestions()}"
+                android:onClick="@{()->followingViewModel.requestPlusFollowingFollowerAnswers()}"
                 android:paddingTop="12dp"
                 android:paddingBottom="16dp"
                 android:text="더보기"
                 android:textColor="@color/following_btn_show_more_txt_white"
                 android:textSize="16sp"
+                android:visibility="@{followingViewModel.followingFollowerAnswersList == null || followingViewModel.isMaxPage == true ? View.INVISIBLE : View.VISIBLE}"
                 app:cornerRadius="6dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

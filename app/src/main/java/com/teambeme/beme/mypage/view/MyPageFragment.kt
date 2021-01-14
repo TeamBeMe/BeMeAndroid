@@ -65,7 +65,7 @@ class MyPageFragment : Fragment() {
     private fun editProfileClickListener() {
         val bottomSheetFragment = BottomProfileFragment()
         bottomSheetFragment.show(
-            requireActivity().supportFragmentManager,
+            childFragmentManager,
             bottomSheetFragment.tag
         )
         mypageViewModel.scrapFilterOnClickFalse()

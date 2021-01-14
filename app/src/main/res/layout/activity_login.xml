@@ -83,6 +83,35 @@
                 android:textColorHint="@color/login_text_gray" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <LinearLayout
+            android:id="@+id/linear_login_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/txtlayout_login_password"
+            app:layout_constraintTop_toBottomOf="@id/txtlayout_login_password">
+
+            <ImageView
+                android:id="@+id/img_login_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_personal_check_red" />
+
+            <TextView
+                android:id="@+id/txt_login_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:text="@{loginViewModel.errorMessage}"
+                android:textColor="@color/signup_red"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
         <Button
             android:id="@+id/btn_login_login"
             android:layout_width="match_parent"
@@ -94,9 +123,9 @@
             android:includeFontPadding="false"
             android:insetTop="0dp"
             android:insetBottom="0dp"
+            android:onClick="@{() -> loginViewModel.requestLogin()}"
             android:text="로그인"
             android:textColor="@color/white"
-            android:onClick="@{() -> loginViewModel.requestLogin()}"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <LinearLayout
@@ -129,6 +158,7 @@
                 android:text="|" />
 
             <TextView
+                android:id="@+id/btn_login_signup"
                 style="@style/login_register_text"
                 android:text="회원가입" />
         </LinearLayout>

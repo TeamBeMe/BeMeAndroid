@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="otherAnswers"
-            type="com.teambeme.beme.explore.model.OtherQuestionsData" />
+            type="com.teambeme.beme.explore.model.ResponseExplorationQuestions.Data.Answer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,10 +42,10 @@
 
         <TextView
             android:id="@+id/txt_other_answers_time"
-            setTime="@{otherAnswers.time}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:text="@{otherAnswers.answerDate}"
             android:textColor="@color/item_other_answers_txt_time_gray"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@id/txt_other_answers_category"
@@ -64,10 +65,12 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_other_answers_profile"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            setSrcFromUrl="@{otherAnswers.userProfile}"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
             android:layout_marginTop="9dp"
             android:src="@drawable/img_profile_sample"
+            app:layout_constraintDimensionRatio="1"
             app:layout_constraintStart_toStartOf="@+id/txt_other_answers_category"
             app:layout_constraintTop_toBottomOf="@+id/txt_other_answers_content" />
 
@@ -76,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:text="@{otherAnswers.userId}"
+            android:text="@{otherAnswers.userNickname}"
             android:textColor="@color/item_other_answers_txt_user_id_black"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/img_other_answers_profile"
@@ -88,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_bookmark"
+            android:src="@{otherAnswers.isScrapped == true ? @drawable/ic_bookmark_checked : @drawable/ic_bookmark}"
             app:layout_constraintBottom_toBottomOf="@+id/img_other_answers_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/img_other_answers_profile" />
