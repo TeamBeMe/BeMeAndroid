@@ -12,7 +12,6 @@ import retrofit2.Response
 class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
     fun getFireBaseToken() {
         mainRepository.fbTokenRegister(
-            token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
             fb_token = BeMeAuthPreference.userToken
         ).enqueue(object : Callback<ResponseFbTokenRegister> {
             override fun onResponse(

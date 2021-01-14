@@ -1,6 +1,7 @@
 package com.teambeme.beme.data.remote.singleton
 
 import com.teambeme.beme.data.remote.api.*
+import com.teambeme.beme.util.AuthInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -16,8 +17,9 @@ object RetrofitObjects {
     }
 
     private fun getOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(httpLoggingInterceptor()).build()
-        //.addInterceptor(AuthInterceptor())
+        .addInterceptor(httpLoggingInterceptor())
+        .addInterceptor(AuthInterceptor())
+        .build()
 
 
     private val baseRetrofit = Retrofit.Builder()

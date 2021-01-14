@@ -6,7 +6,7 @@ import com.teambeme.beme.main.model.ResponseFbTokenRegister
 import retrofit2.Call
 
 class FbTokenRegisterDataSourceImpl(private val service: FbTokenRegisterService) : FbTokenRegisterDataSource {
-    override fun fbTokenRegister(token: String, fb_token: String): Call<ResponseFbTokenRegister> {
-        return service.fbTokenRegister(token, RequestFbTokenRegister(fb_token))
+    override fun fbTokenRegister(fb_token: String): Call<ResponseFbTokenRegister> {
+        return service.fbTokenRegister(RequestFbTokenRegister(fb_token))
     }
 }

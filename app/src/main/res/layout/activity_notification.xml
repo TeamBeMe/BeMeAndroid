@@ -21,10 +21,8 @@
             android:id="@+id/btn_back_notice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="20dp"
             android:background="@android:color/transparent"
-            android:padding="10dp"
+            android:padding="25dp"
             android:src="@drawable/ic_back_noticeview"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

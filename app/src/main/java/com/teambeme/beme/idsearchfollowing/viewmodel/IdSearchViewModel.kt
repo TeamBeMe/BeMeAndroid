@@ -29,7 +29,7 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
         get() = _deletePosition
 
     fun requestRecentSearchData() {
-        idSearchRepository.getRecentSearchRecord("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI")
+        idSearchRepository.getRecentSearchRecord()
             .enqueue(
                 object : Callback<ResponseRecentSearchRecord> {
                     override fun onResponse(
@@ -61,7 +61,7 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
 
     fun deleteRecentSearch() {
         idSearchRepository.deleteRecentSearchRecord(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+
             copyRecentSearchList[deletePosition.value!!].id
         ).enqueue(object : Callback<ResponseDeleteRecentSearchRecord> {
             override fun onResponse(
@@ -81,7 +81,7 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
 
     fun requestIdSearchgData() {
         idSearchRepository.idSearch(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
+
             searchingId, "all"
         )
             .enqueue(

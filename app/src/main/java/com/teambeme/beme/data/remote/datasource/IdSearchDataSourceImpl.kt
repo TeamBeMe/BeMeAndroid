@@ -8,10 +8,10 @@ import retrofit2.Call
 
 class IdSearchDataSourceImpl(private val service: IdSearchService) :
     IdSearchDataSource {
-    override fun idSearch(token: String, query: String, range: String?): Call<ResponseIdSearchData> = service.idSearch(token, query, range)
+    override fun idSearch(query: String, range: String?): Call<ResponseIdSearchData> = service.idSearch( query, range)
 
-    override fun getRecentSearchRecord(token: String): Call<ResponseRecentSearchRecord> = service.getRecentSearchRecord(token)
+    override fun getRecentSearchRecord(): Call<ResponseRecentSearchRecord> = service.getRecentSearchRecord()
 
-    override fun deleteRecentSearchRecord(token: String, searchedId: Int): Call<ResponseDeleteRecentSearchRecord> =
-        service.deleteRecentSearchRecord(token, searchedId)
+    override fun deleteRecentSearchRecord(searchedId: Int): Call<ResponseDeleteRecentSearchRecord> =
+        service.deleteRecentSearchRecord(searchedId)
 }

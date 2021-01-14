@@ -4,5 +4,5 @@ import com.teambeme.beme.main.model.ResponseFbTokenRegister
 import retrofit2.Call
 
 interface MainRepository{
-    fun fbTokenRegister(token: String, fb_token: String): Call<ResponseFbTokenRegister>
+    fun fbTokenRegister(fb_token: String): Call<ResponseFbTokenRegister>
 }

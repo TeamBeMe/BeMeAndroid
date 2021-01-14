@@ -101,7 +101,7 @@ class FollowingAfterIdSearchActivity :
 
     private fun backBtnWorking() {
         binding.btnBackFollowingIdsearch.setOnClickListener {
-            finish()
+            onBackPressed()
         }
     }
 }

@@ -6,7 +6,7 @@ import com.teambeme.beme.idsearchfollowing.model.ResponseRecentSearchRecord
 import retrofit2.Call
 
 interface IdSearchRepository {
-    fun idSearch(token: String, query: String, range: String?): Call<ResponseIdSearchData>
-    fun getRecentSearchRecord(token: String): Call<ResponseRecentSearchRecord>
-    fun deleteRecentSearchRecord(token: String, searchedId: Int): Call<ResponseDeleteRecentSearchRecord>
+    fun idSearch(query: String, range: String?): Call<ResponseIdSearchData>
+    fun getRecentSearchRecord(): Call<ResponseRecentSearchRecord>
+    fun deleteRecentSearchRecord(searchedId: Int): Call<ResponseDeleteRecentSearchRecord>
 }

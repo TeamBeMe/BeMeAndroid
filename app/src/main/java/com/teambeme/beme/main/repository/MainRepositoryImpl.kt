@@ -7,10 +7,10 @@ import retrofit2.Call
 class MainRepositoryImpl(private val fbTokenRegisterDataSource: FbTokenRegisterDataSource) :
     MainRepository {
     override fun fbTokenRegister(
-        token: String,
+
         fb_token: String
     ): Call<ResponseFbTokenRegister> =
         fbTokenRegisterDataSource.fbTokenRegister(
-            token, fb_token
+            fb_token
         )
 }

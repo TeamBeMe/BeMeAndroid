@@ -9,7 +9,6 @@ interface FbTokenRegisterService {
     @Headers("Content-type: application/json")
     @POST("users/fb-token")
     fun fbTokenRegister(
-        @Header("token") token: String,
         @Body body: RequestFbTokenRegister
     ): Call<ResponseFbTokenRegister>
 }
