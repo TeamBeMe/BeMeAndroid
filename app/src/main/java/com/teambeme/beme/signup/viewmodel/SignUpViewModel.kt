@@ -42,6 +42,9 @@ class SignUpViewModel : ViewModel() {
     private val _nickNameDoubleCheck = MutableLiveData<ResponseNickDoubleCheck>()
     val nickDoubleCheck: LiveData<ResponseNickDoubleCheck>
         get() = _nickNameDoubleCheck
+    private val _profileImageString = MutableLiveData<String>()
+    val profileImageString: LiveData<String>
+        get() = _profileImageString
 
     private val _signUpUserInfo = MutableLiveData<ResponseSignUp?>()
     val signUpUserInfo: LiveData<ResponseSignUp?>
