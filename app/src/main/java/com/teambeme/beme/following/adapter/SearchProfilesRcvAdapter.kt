@@ -41,6 +41,7 @@ class SearchProfilesRcvAdapter<B : ViewDataBinding>(
                     with(binding as ItemFollowingShowAllProfilesOfSearchFollowerBinding) {
                         setVariable(BR.searchFollower, searchData)
                         executePendingBindings()
+                        setClickListenerForDeleteFollower(binding, searchData, viewModel)
                     }
                 }
             }
@@ -100,6 +101,17 @@ class SearchProfilesRcvAdapter<B : ViewDataBinding>(
             viewModel.requestFollow(data.id)
             binding.btnFollowingShowAllFollowingSearch.visibility = View.INVISIBLE
             binding.btnFollowingShowAllFollowSearch.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setClickListenerForDeleteFollower(
+        binding: ItemFollowingShowAllProfilesOfSearchFollowerBinding,
+        data: ResponseFollowingSearchId.Data,
+        viewModel: FollowingViewModel
+    ) {
+        binding.btnFollowingShowAllDeleteFollowerSearch.setOnClickListener {
+            viewModel.requestDeleteFollower(data.id)
+            viewModel.requestSearchMyFollowingFollower()
         }
     }
 

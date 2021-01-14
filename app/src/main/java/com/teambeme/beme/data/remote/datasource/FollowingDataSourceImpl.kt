@@ -29,4 +29,8 @@ class FollowingDataSourceImpl(private val service: FollowingService) : Following
     override fun putFollow(body: RequestFollowingFollow): Call<ResponseFollowingFollow> {
         return service.putFollow(body)
     }
+
+    override fun deleteFollower(userId: Int): Call<ResponseFollowingFollow> {
+        return service.deleteFollower(userId)
+    }
 }

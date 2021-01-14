@@ -35,10 +35,6 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
     val searchList: LiveData<MutableList<ResponseFollowingSearchId.Data>>
         get() = _searchList
 
-    private var _isFollowing: String = ""
-    val isFollowing: String
-        get() = _isFollowing
-
     private var _page: Int = 1
     val page: Int
         get() = _page
@@ -82,9 +78,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                         if(_userNickname.value == null){
                             _userNickname.value = response.body()!!.data.userNickname
                         }
-                        if(_maxPage == 0){
-                            _maxPage = response.body()!!.data?.pageLen
-                        }
+                        _maxPage = response.body()!!.data?.pageLen
                         tempFollowingFollowerAnswersList =
                             response.body()!!.data?.answers?.toMutableList()
                         _followingAnswersList.value =
@@ -190,12 +184,22 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                 override fun onResponse(
                     call: Call<ResponseFollowingFollow>,
                     response: Response<ResponseFollowingFollow>
-                ) {
-                    Log.d("network_requestSearch", "통신성")
-                    if (response.isSuccessful) {
-                        _isFollowing = response.body()!!.message
-                    }
+                ) {}
+
+                override fun onFailure(call: Call<ResponseFollowingFollow>, t: Throwable) {
+                    Log.d("network_requestSearch", "통신실패")
                 }
+            }
+        )
+    }
+
+    fun requestDeleteFollower(userId: Int){
+        followingRepository.deleteFollow(userId).enqueue(
+            object : Callback<ResponseFollowingFollow> {
+                override fun onResponse(
+                    call: Call<ResponseFollowingFollow>,
+                    response: Response<ResponseFollowingFollow>
+                ) {}
 
                 override fun onFailure(call: Call<ResponseFollowingFollow>, t: Throwable) {
                     Log.d("network_requestSearch", "통신실패")

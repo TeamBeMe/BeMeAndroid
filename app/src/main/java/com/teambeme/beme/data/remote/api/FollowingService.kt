@@ -31,6 +31,6 @@ interface FollowingService {
 
     @DELETE("follow/{userId}")
     fun deleteFollower(
-        @Path("userId") userId: String
+        @Path("userId") userId: Int
     ): Call<ResponseFollowingFollow>
 }

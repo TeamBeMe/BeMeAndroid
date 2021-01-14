@@ -22,4 +22,8 @@ interface FollowingDataSource {
     fun putFollow(
         body: RequestFollowingFollow
     ): Call<ResponseFollowingFollow>
+
+    fun deleteFollower(
+        userId: Int
+    ): Call<ResponseFollowingFollow>
 }

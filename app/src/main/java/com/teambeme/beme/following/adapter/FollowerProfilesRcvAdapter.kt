@@ -13,10 +13,12 @@ import com.teambeme.beme.BR
 import com.teambeme.beme.databinding.ItemFollowingProfilesOfFollowerBinding
 import com.teambeme.beme.databinding.ItemFollowingShowAllProfilesOfFollowerBinding
 import com.teambeme.beme.following.model.ResponseFollowingList
+import com.teambeme.beme.following.viewmodel.FollowingViewModel
 
 class FollowerProfilesRcvAdapter<B : ViewDataBinding>(
     private val context: Context,
-    private val layout: Int
+    private val layout: Int,
+    private val viewModel: FollowingViewModel
 ) :
     ListAdapter<ResponseFollowingList.Data.Follower, FollowerProfilesRcvAdapter<B>.FollowerProfilesRcvViewHolder<B>>(
         FollowerProfilesDiffUtil()
@@ -37,6 +39,7 @@ class FollowerProfilesRcvAdapter<B : ViewDataBinding>(
                         setVariable(BR.showAllProfilesFollower, followerProfilesData)
                         executePendingBindings()
                         Log.d("showAll__", showAllProfilesFollower.toString())
+                        setClickListenerForDeleteFollower(binding, followerProfilesData, viewModel)
                     }
                 }
             }
@@ -72,6 +75,17 @@ class FollowerProfilesRcvAdapter<B : ViewDataBinding>(
             newItem: ResponseFollowingList.Data.Follower
         ) =
             (oldItem == newItem)
+    }
+
+    private fun setClickListenerForDeleteFollower(
+        binding: ItemFollowingShowAllProfilesOfFollowerBinding,
+        data: ResponseFollowingList.Data.Follower,
+        viewModel: FollowingViewModel
+    ) {
+        binding.btnFollowingShowAllDeleteFollower.setOnClickListener {
+            viewModel.requestDeleteFollower(data.id)
+            viewModel.requestFollowerFollowingList()
+        }
     }
 
 //    //프로필 사진 누르면 타인 프로필 페이지로 이동
