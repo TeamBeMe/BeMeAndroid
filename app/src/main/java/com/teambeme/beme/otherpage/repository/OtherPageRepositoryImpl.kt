@@ -8,15 +8,15 @@ import retrofit2.Call
 
 class OtherPageRepositoryImpl(private val otherDataSource: OtherPageDataSource) :
     OtherPageRepository {
-    override fun getProfileAnswer(token: String, userId: Int, page: Int) =
-        otherDataSource.getProfileAnswer(token, userId, page)
+    override fun getProfileAnswer(userId: Int, page: Int) =
+        otherDataSource.getProfileAnswer(userId, page)
 
-    override fun getOtherInfo(token: String, userId: Int): Call<ResponseOtherInfo> =
-        otherDataSource.getOtherInfo(token, userId)
+    override fun getOtherInfo(userId: Int): Call<ResponseOtherInfo> =
+        otherDataSource.getOtherInfo(userId)
 
-    override fun putScrap(token: String, answerId: Int): Call<ResponseScrap> =
-        otherDataSource.putScrap(token, answerId)
+    override fun putScrap(answerId: Int): Call<ResponseScrap> =
+        otherDataSource.putScrap(answerId)
 
-    override fun putFollow(token: String, userId: Int): Call<ResponseFollow> =
-        otherDataSource.putFollow(token, userId)
+    override fun putFollow(userId: Int): Call<ResponseFollow> =
+        otherDataSource.putFollow(userId)
 }

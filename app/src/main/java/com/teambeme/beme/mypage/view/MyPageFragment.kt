@@ -33,6 +33,7 @@ class MyPageFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
         binding.lifecycleOwner = this
         setViewPagerAdapter(childFragmentManager)
+        mypageViewModel.getMyProfile()
         binding.myPageViewModel = mypageViewModel
         mypageViewModel.profileUri.observe(viewLifecycleOwner) {
             editProfileListener(it)
@@ -53,8 +54,12 @@ class MyPageFragment : Fragment() {
         }.attach()
     }
 
-    private fun editProfileListener(uri: Uri) {
-        binding.imgMypageProfile.setImageURI(uri)
+    private fun editProfileListener(uri: Uri?) {
+        if (uri == null) {
+            binding.imgMypageProfile.setImageResource(R.drawable.ic_dark_profile)
+        } else {
+            binding.imgMypageProfile.setImageURI(uri)
+        }
     }
 
     private fun editProfileClickListener() {

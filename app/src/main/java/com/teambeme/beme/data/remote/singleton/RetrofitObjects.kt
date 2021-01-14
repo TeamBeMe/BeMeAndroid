@@ -96,4 +96,11 @@ object RetrofitObjects {
             answerInstance = this
         }
     }
+
+    private var detailInstance: DetailService? = null
+    fun getDetailService(): DetailService = detailInstance ?: synchronized(this) {
+        detailInstance ?: baseRetrofit.create(DetailService::class.java).apply {
+            detailInstance = this
+        }
+    }
 }

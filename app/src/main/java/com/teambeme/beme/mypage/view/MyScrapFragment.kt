@@ -1,24 +1,31 @@
 package com.teambeme.beme.mypage.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
+import com.teambeme.beme.data.remote.datasource.MyPageDataSourceImpl
+import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentMyScrapBinding
 import com.teambeme.beme.mypage.adapter.MyScrapAdapter
+import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
+import com.teambeme.beme.mypage.view.BottomWriteFragment.Companion.SCRAP_FILTER
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
+import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
 
 class MyScrapFragment : Fragment() {
     private lateinit var binding: FragmentMyScrapBinding
-    private val mypageViewModel: MyPageViewModel by activityViewModels()
+    private val myViewModelFactory =
+        MyPageViewModelFactory(MyPageRepositoryImpl(MyPageDataSourceImpl(RetrofitObjects.getMyPageService())))
+    private val mypageViewModel: MyPageViewModel by activityViewModels { myViewModelFactory }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,8 +36,7 @@ class MyScrapFragment : Fragment() {
         binding.myPageViewModel = mypageViewModel
         val scrapAdapter = MyScrapAdapter()
         setAdapter(scrapAdapter)
-        mypageViewModel.setDummyScrap()
-
+        mypageViewModel.initScrap()
         mypageViewModel.mypageScrapData.observe(viewLifecycleOwner) { it ->
             it.let { scrapAdapter.replaceScrapList(it) }
         }
@@ -38,15 +44,50 @@ class MyScrapFragment : Fragment() {
             filterClickListener(it)
         }
         mypageViewModel.scrapFilter.observe(viewLifecycleOwner) {
-            getSheetDataListener(it)
+            getSheetDataListener()
         }
         setClickListenerForPlusData(binding, scrapAdapter)
+        mypageViewModel.isScrapMax.observe(viewLifecycleOwner) {
+            isMaxListener(it)
+        }
+        binding.editxtScrapSearch.setOnEditorActionListener { view, i, event ->
+            mypageViewModel.initScrapPage()
+            mypageViewModel.setScrapQuery(binding.editxtScrapSearch.text.toString())
+            mypageViewModel.getMyScrap()
+            hideKeyboard()
+            true
+        }
+        mypageViewModel.isScrapEmpty.observe(viewLifecycleOwner) {
+            isEmptyListener(it)
+        }
         return binding.root
+    }
+
+    override fun onResume() {
+        mypageViewModel.initScrapPage()
+        mypageViewModel.getMyScrap()
+        super.onResume()
+    }
+
+    private fun hideKeyboard() {
+        val inputManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(binding.editxtScrapSearch.windowToken, 0)
+    }
+
+    private fun isEmptyListener(isEmpty: Boolean) {
+        if (isEmpty) {
+
+            binding.rcvMyscrap.visibility = View.GONE
+            binding.constraintScrapEmpty.visibility = View.VISIBLE
+        } else {
+            binding.constraintScrapEmpty.visibility = View.GONE
+            binding.rcvMyscrap.visibility = View.VISIBLE
+        }
     }
 
     private fun filterClickListener(isFilterClicked: Boolean) {
         if (isFilterClicked) {
-            val bottomSheetFragment = BottomScrapFragment()
+            val bottomSheetFragment = BottomWriteFragment(SCRAP_FILTER)
             bottomSheetFragment.show(
                 requireActivity().supportFragmentManager,
                 bottomSheetFragment.tag
@@ -58,25 +99,21 @@ class MyScrapFragment : Fragment() {
     private fun setAdapter(scrapAdapter: MyScrapAdapter) {
         binding.rcvMyscrap.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    val lastVisiblePosition =
-                        (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-                    val itemTotalCount = adapter!!.itemCount - 1
-                    if (lastVisiblePosition == itemTotalCount) {
-                        binding.btnScrapShowmore.visibility = View.VISIBLE
-                    } else {
-                        binding.btnScrapShowmore.visibility = View.GONE
-                    }
-                    super.onScrolled(recyclerView, dx, dy)
-                }
-            })
             adapter = scrapAdapter
         }
     }
 
-    private fun getSheetDataListener(category: String) {
-        Toast.makeText(requireContext(), category, Toast.LENGTH_SHORT).show()
+    private fun getSheetDataListener() {
+        mypageViewModel.initScrapPage()
+        mypageViewModel.getMyScrap()
+    }
+
+    private fun isMaxListener(isMax: Boolean) {
+        if (isMax) {
+            binding.btnScrapShowmore.visibility = View.GONE
+        } else {
+            binding.btnScrapShowmore.visibility = View.VISIBLE
+        }
     }
 
     private fun setClickListenerForPlusData(
@@ -85,7 +122,7 @@ class MyScrapFragment : Fragment() {
     ) {
         binding.btnScrapShowmore.setOnClickListener {
             binding.btnScrapShowmore.visibility = View.GONE
-            mypageViewModel.addDummyScrap()
+            mypageViewModel.getMyScrap()
             scrapAdapter.submitList(mypageViewModel.mypageScrapData.value?.toMutableList())
         }
     }
