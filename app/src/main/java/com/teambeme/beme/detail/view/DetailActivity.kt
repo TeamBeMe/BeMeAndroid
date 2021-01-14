@@ -74,6 +74,7 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
         binding.btnDetailShowmore.setOnClickListener {
             val intent = Intent(this, ExploreDetailActivity::class.java)
             intent.putExtra("questionId", detailViewModel.detailData.value!!.questionId)
+            intent.putExtra("otherMindsTitle", detailViewModel.detailData.value!!.question)
             startActivity(intent)
         }
         detailViewModel.isDeleteReply.observe(this) { deleteReplyListener(it) }
