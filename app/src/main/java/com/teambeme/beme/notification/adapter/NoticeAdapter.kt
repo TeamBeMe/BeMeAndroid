@@ -1,6 +1,5 @@
 package com.teambeme.beme.notification.adapter
 
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,10 +25,11 @@ class NoticeAdapter :
         val userProfilePic = binding.notificationProfilePic
     }
 
-    interface ItemClick{
+    interface ItemClick {
         fun onClick(view: View, position: Int)
     }
-    var itemClick : ItemClick? = null
+
+    var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -47,10 +47,16 @@ class NoticeAdapter :
     }
 
     private class NoticeDiffUtil : DiffUtil.ItemCallback<ResponseNoticeData.Data.Activity>() {
-        override fun areItemsTheSame(oldItem: ResponseNoticeData.Data.Activity, newItem: ResponseNoticeData.Data.Activity) =
+        override fun areItemsTheSame(
+            oldItem: ResponseNoticeData.Data.Activity,
+            newItem: ResponseNoticeData.Data.Activity
+        ) =
             (oldItem.userId == newItem.userId) && (oldItem.questionTitle == newItem.questionTitle) && (oldItem.type == newItem.type)
 
-        override fun areContentsTheSame(oldItem: ResponseNoticeData.Data.Activity, newItem: ResponseNoticeData.Data.Activity) =
+        override fun areContentsTheSame(
+            oldItem: ResponseNoticeData.Data.Activity,
+            newItem: ResponseNoticeData.Data.Activity
+        ) =
             (oldItem == newItem)
     }
 }

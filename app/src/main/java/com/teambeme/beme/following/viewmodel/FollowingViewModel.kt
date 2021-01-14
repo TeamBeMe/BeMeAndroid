@@ -52,16 +52,16 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
         get() = _userNickname
 
     private var searchQuery: String = ""
-    fun setSearchQuery(query: String){
+    fun setSearchQuery(query: String) {
         searchQuery = query
     }
 
     private var searchRange: String = followeeCategory
-    fun setSearchRange(range: String){
+    fun setSearchRange(range: String) {
         searchRange = range
     }
 
-    fun deleteSearchRecord(){
+    fun deleteSearchRecord() {
         tempSearchList = mutableListOf(
             ResponseFollowingSearchId.Data(0, null, "", "")
         )
@@ -169,7 +169,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                     if (response.isSuccessful) {
                         tempSearchList = response.body()!!.data?.let { mutableListOf(it) }
                         _searchList.value = tempSearchList?.toMutableList()
-                        if(tempSearchList == null){
+                        if (tempSearchList == null) {
                             deleteSearchRecord()
                         }
                     }

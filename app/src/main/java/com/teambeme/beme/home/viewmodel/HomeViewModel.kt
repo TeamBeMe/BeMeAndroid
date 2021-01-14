@@ -15,7 +15,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     private val _answerList = MutableLiveData<MutableList<Answer>>()
     val answerList: LiveData<MutableList<Answer>>
         get() = _answerList
-    private var currentQuestionPage = 1
+    private var _currentQuestionPage = 1
     private var canAdd = true
 
     private val _errorMessage = MutableLiveData("")
@@ -30,13 +30,13 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
             try {
                 if (canAdd) {
                     val moreAnswers =
-                        homeRepository.getAnswers(currentQuestionPage++).answers.toMutableList()
+                        homeRepository.getAnswers(_currentQuestionPage++).answers.toMutableList()
                     val currentList = _answerList.value?.toMutableList()
                     currentList?.addAll(0, moreAnswers)
                     _answerList.value = currentList
                 } else {
                     val moreAnswers =
-                        homeRepository.getAnswers(currentQuestionPage).answers.toMutableList()
+                        homeRepository.getAnswers(_currentQuestionPage).answers.toMutableList()
                     val currentList = _answerList.value?.toMutableList()
                     currentList?.addAll(0, moreAnswers)
                     _answerList.value = currentList
@@ -53,11 +53,15 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
         }
     }
 
+    fun refreshList(list: MutableList<Answer>) {
+        _answerList.value = list
+    }
+
     fun setInitAnswer() {
         viewModelScope.launch {
             try {
                 _answerList.value =
-                    homeRepository.getAnswers(currentQuestionPage++).answers.toMutableList()
+                    homeRepository.getAnswers(_currentQuestionPage++).answers.toMutableList()
                 startEvent()
                 delay(1000)
             } catch (e: HttpException) {
@@ -79,7 +83,6 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     _answerList.value = currentList
                 }
             } catch (e: HttpException) {
-
             }
         }
     }
@@ -115,7 +118,6 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     startEvent()
                 }
             } catch (e: HttpException) {
-
             }
         }
     }
@@ -140,7 +142,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
         }
     }
 
-    fun startEvent() {
+    private fun startEvent() {
         _returnToStartEvent.value = true
     }
 

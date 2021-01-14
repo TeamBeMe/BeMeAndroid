@@ -1,55 +1,91 @@
 package com.teambeme.beme.answer.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teambeme.beme.data.local.dao.AnswerDao
+import com.teambeme.beme.answer.model.IntentAnswerData
+import com.teambeme.beme.answer.model.RequestAnswerData
+import com.teambeme.beme.answer.repository.AnswerRepository
 import com.teambeme.beme.data.local.entity.AnswerData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 
-class AnswerViewModel(
-    private val dataBase: AnswerDao
-) : ViewModel() {
-    private var answerId = -1
+class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewModel() {
+    private val _answerData = MutableLiveData<AnswerData?>()
+    val answerData: LiveData<AnswerData?>
+        get() = _answerData
     val answer: MutableLiveData<String> = MutableLiveData("")
-    private val _isCommentBlocked = MutableLiveData<Boolean>()
-    val isCommentBlocked: LiveData<Boolean>
+    private var _isCommentBlocked = false
+    val isCommentBlocked: Boolean
         get() = _isCommentBlocked
-    private val _isPublic = MutableLiveData<Boolean>()
+    private val _isPublic = MutableLiveData<Boolean>(false)
     val isPublic: LiveData<Boolean>
         get() = _isPublic
-    private var questionId = -1
 
-    fun setPublicTrue() {
-        _isPublic.value = true
+    fun checkStored(questionId: Int) {
+        viewModelScope.launch {
+            val data = answerRepository.get(questionId.toLong())
+            Log.d("AnswerViewModel", data.toString())
+            _answerData.value = data
+        }
     }
 
-    fun setPublicFalse() {
-        _isPublic.value = false
+    fun registerAnswer(requestAnswerData: RequestAnswerData) {
+        viewModelScope.launch {
+            try {
+                answerRepository.registerAnswer(requestAnswerData)
+            } catch (e: HttpException) { }
+        }
     }
 
-    suspend fun initEditText(id: Int): String {
-        return viewModelScope.async {
-            answer.value = getStoredAnswer(id.toLong())?.answer ?: ""
-            questionId = id
-            answer.value!!
-        }.await()
+    fun modifyAnswer(requestAnswerData: RequestAnswerData) {
+        viewModelScope.launch {
+            try {
+                answerRepository.modifyAnswer(requestAnswerData)
+            } catch (e: HttpException) { }
+        }
     }
 
-    private suspend fun getStoredAnswer(id: Long): AnswerData? {
-        return withContext(Dispatchers.IO) { dataBase.get(id) }
+    fun initAnswerData(intentAnswerData: IntentAnswerData) {
+        _answerData.value = AnswerData(
+            questionId = intentAnswerData.questionId.toLong(),
+            answer = "",
+            isCommentBlocked = _isCommentBlocked,
+            isPublic = false,
+            title = intentAnswerData.title,
+            category = intentAnswerData.category,
+            categoryIdx = intentAnswerData.categoryIdx ?: 0,
+            createdAt = intentAnswerData.createdAt
+        )
+    }
+
+    fun setPublicStatus(boolean: Boolean) {
+        _isPublic.value = boolean
+    }
+
+    fun setCommentBlockedStatus(boolean: Boolean) {
+        _isCommentBlocked = boolean
+    }
+
+    fun initEditText() {
+        answer.value = answerData.value?.answer.toString()
     }
 
     fun storeAnswer() {
         viewModelScope.launch {
-            dataBase.insert(
+            Log.d("AnswerViewModel", answerData.value.toString())
+            answerRepository.insert(
                 AnswerData(
-                    questionId = questionId.toLong(),
-                    answer = answer.value!!
+                    questionId = answerData.value!!.questionId,
+                    answer = answer.value!!,
+                    isCommentBlocked = _isCommentBlocked,
+                    isPublic = isPublic.value ?: true,
+                    title = answerData.value!!.title,
+                    category = answerData.value!!.category,
+                    categoryIdx = answerData.value!!.categoryIdx,
+                    createdAt = answerData.value!!.createdAt
                 )
             )
         }

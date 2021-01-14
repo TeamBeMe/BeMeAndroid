@@ -66,7 +66,8 @@ class IdSearchAdapter :
             }
         }
     }
-    fun removeAllData(){
+
+    fun removeAllData() {
         idSearchDatas.clear()
         notifyDataSetChanged()
     }

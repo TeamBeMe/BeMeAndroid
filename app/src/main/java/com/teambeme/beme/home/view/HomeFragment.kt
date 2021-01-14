@@ -1,5 +1,7 @@
 package com.teambeme.beme.home.view
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +13,14 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.teambeme.beme.R
+import com.teambeme.beme.answer.model.IntentAnswerData
+import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.data.remote.datasource.HomeDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentHomeBinding
 import com.teambeme.beme.home.adapter.QuestionPagerAdapter
+import com.teambeme.beme.home.model.Answer
 import com.teambeme.beme.home.repository.HomeRepositoryImpl
 import com.teambeme.beme.home.viewmodel.HomeViewModel
 import com.teambeme.beme.home.viewmodel.HomeViewModelFactory
@@ -33,7 +38,8 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         super.onCreateView(inflater, container, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         LifeCycleEventLogger(javaClass.name).registerLogger(viewLifecycleOwner.lifecycle)
-        val questionPagerAdapter = QuestionPagerAdapter(childFragmentManager, homeViewModel)
+        val questionPagerAdapter =
+            QuestionPagerAdapter(childFragmentManager, homeViewModel, getHomeButtonClickListener())
         setAnswerPager(questionPagerAdapter)
         homeViewModel.setInitAnswer()
         setObserve()
@@ -43,6 +49,24 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     override fun onResume() {
         super.onResume()
         returnToDefaultPosition()
+    }
+
+    private fun getHomeButtonClickListener(): QuestionPagerAdapter.AnswerButtonClickListener {
+        return object : QuestionPagerAdapter.AnswerButtonClickListener {
+            override fun onClick(answer: Answer, position: Int) {
+                val intent = Intent(context, AnswerActivity::class.java)
+                val intentData = IntentAnswerData(
+                    questionId = answer.id,
+                    title = answer.questionTitle,
+                    category = answer.questionCategoryName,
+                    categoryIdx = answer.questionCategoryId,
+                    createdAt = answer.createdAt
+                )
+                intent.putExtra("intentAnswerData", intentData)
+                intent.putExtra("position", position)
+                startActivityForResult(intent, ANSWER_ACTIVITY)
+            }
+        }
     }
 
     private fun setObserve() {
@@ -109,5 +133,21 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
                 ?.minus(1)
                 ?.let { binding.vpHomeQuestionSlider.setCurrentItem(it, true) }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ANSWER_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                val position = data!!.getIntExtra("position", -1)
+                val answerList = homeViewModel.answerList.value!!.toMutableList()
+                answerList[position].content = data!!.getStringExtra("content")
+                homeViewModel.refreshList(answerList)
+            }
+        }
+    }
+
+    companion object {
+        const val ANSWER_ACTIVITY = 1000
     }
 }
