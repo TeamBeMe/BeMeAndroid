@@ -12,37 +12,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemFollowingAfterIdsearchBinding
 import com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData
+import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModel
 import com.teambeme.beme.otherpage.view.OtherPageActivity
 
-class IdSearchAdapter : ListAdapter<ResponseIdSearchData.Data, IdSearchAdapter.IdSearchViewHolder>(
+class IdSearchAdapter(
+    private val viewModel: IdSearchViewModel
+) : ListAdapter<ResponseIdSearchData.Data, IdSearchAdapter.IdSearchViewHolder>(
     IdSearchDiffUtil()
 ) {
-    class IdSearchViewHolder(private val binding: ItemFollowingAfterIdsearchBinding) :
+    inner class IdSearchViewHolder(private val binding: ItemFollowingAfterIdsearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(idSearchData: ResponseIdSearchData.Data) {
-            binding.idSearch = idSearchData
-            Log.d("Network is success_2", idSearchData.toString())
+            with(binding) {
+                binding.idSearch = idSearchData
+                executePendingBindings()
+                Log.d("Network is success_2", idSearchData.toString())
+                setBtnFollowClickListener(binding, idSearchData, viewModel)
+                setBtnUnfollowClickListener(binding, idSearchData, viewModel)
+                setFollowingFollowBtn(binding, viewModel)
+            }
         }
 
         val userProfilePic = binding.idSearchProfilePic
-
-        private fun setBtnUnfollowClickListener(
-            binding: ItemFollowingAfterIdsearchBinding
-        ) {
-            binding.btnFollowingUnfollow.setOnClickListener {
-                binding.btnFollowingFollow.visibility = View.VISIBLE
-                binding.btnFollowingUnfollow.visibility = View.INVISIBLE
-            }
-        }
-
-        private fun setBtnFollowClickListener(
-            binding: ItemFollowingAfterIdsearchBinding
-        ) {
-            binding.btnFollowingFollow.setOnClickListener {
-                binding.btnFollowingFollow.visibility = View.INVISIBLE
-                binding.btnFollowingUnfollow.visibility = View.VISIBLE
-            }
-        }
     }
 
     override fun onCreateViewHolder(
@@ -71,9 +62,11 @@ class IdSearchAdapter : ListAdapter<ResponseIdSearchData.Data, IdSearchAdapter.I
                     Log.d("Internt", getItem(position).id.toString())
                     view.context.startActivity(intent)
                 }
+
             }
         }
     }
+
 
     private class IdSearchDiffUtil : DiffUtil.ItemCallback<ResponseIdSearchData.Data>() {
         override fun areItemsTheSame(
@@ -89,5 +82,44 @@ class IdSearchAdapter : ListAdapter<ResponseIdSearchData.Data, IdSearchAdapter.I
             (oldItem == newItem)
     }
 
-    private var idSearchDatas = mutableListOf<ResponseIdSearchData.Data>()
+    private fun setBtnUnfollowClickListener(
+        binding: ItemFollowingAfterIdsearchBinding,
+        data: ResponseIdSearchData.Data,
+        viewModel: IdSearchViewModel
+    ) {
+        binding.btnFollowingFollowing.setOnClickListener {
+            Log.d("btn", "팔로우")
+            viewModel.requestFollowAndFollowing(data.id)
+            binding.btnFollowingFollow.visibility = View.VISIBLE
+            binding.btnFollowingFollowing.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun setBtnFollowClickListener(
+        binding: ItemFollowingAfterIdsearchBinding,
+        data: ResponseIdSearchData.Data,
+        viewModel: IdSearchViewModel
+    ) {
+        binding.btnFollowingFollow.setOnClickListener {
+            Log.d("btn", "팔로잉")
+            viewModel.requestFollowAndFollowing(data.id)
+            binding.btnFollowingFollow.visibility = View.INVISIBLE
+            binding.btnFollowingFollowing.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setFollowingFollowBtn(
+        binding: ItemFollowingAfterIdsearchBinding,
+        viewModel: IdSearchViewModel
+    ) {
+        if (viewModel.isFollowed.value == true) {
+            binding.btnFollowingFollowing.visibility = View.VISIBLE
+            binding.btnFollowingFollow.visibility = View.INVISIBLE
+        } else {
+            binding.btnFollowingFollowing.visibility = View.INVISIBLE
+            binding.btnFollowingFollow.visibility = View.VISIBLE
+        }
+    }
+
 }
+
