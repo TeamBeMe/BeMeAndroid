@@ -124,6 +124,7 @@
         <li> 마이페이지 </li>
         <li> 상세페이지 </li>
         <li> 타인 프로필  </li>
+        <li> 설정 창 </li>
       </ul>
     </td>
     <td>
@@ -275,8 +276,7 @@ footer(optional)
 <img src = "https://user-images.githubusercontent.com/54518925/103665534-dd471f00-4fb6-11eb-9246-7fe89cf2aff0.png" />
 
 ## BeMe Package Structure
-
-
+<img src = "https://user-images.githubusercontent.com/54518925/104716200-ed0af400-576a-11eb-8d47-a1c5affbe11f.png" />
 
 ## Tech Spec
 
@@ -301,7 +301,9 @@ footer(optional)
 
 - URL로 ImageView에 사진을 넣기 위한 Glide
 
-- 네트워크 송/수신 데이터 상태 파악을 위한 OkHttp
+- 네트워크 송/수신 데이터 상태 파악과 Auth Token 저장을 위한 OkHttp
+
+- 간결한 비동기 서버 통신을 위한 Kotlin Coroutine
 
 - 서버통신을 위한
   - Retrofit

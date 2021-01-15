@@ -184,8 +184,6 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                         when (page < response.body()!!.data.pageLen) {
                             true -> {
                                 _isAnswerMax.value = true
-                            }
-                            else -> {
                                 page++
                             }
                         }
@@ -195,8 +193,6 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                         when (page < response.body()!!.data.pageLen) {
                             true -> {
                                 _isAnswerMax.value = true
-                            }
-                            else -> {
                                 page++
                             }
                         }
@@ -252,8 +248,6 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                         when (scrapPage < response.body()!!.data.pageLen) {
                             true -> {
                                 _isScrapMax.value = true
-                            }
-                            else -> {
                                 scrapPage++
                             }
                         }
@@ -263,8 +257,6 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                         when (scrapPage < response.body()!!.data.pageLen) {
                             true -> {
                                 _isScrapMax.value = true
-                            }
-                            else -> {
                                 scrapPage++
                             }
                         }

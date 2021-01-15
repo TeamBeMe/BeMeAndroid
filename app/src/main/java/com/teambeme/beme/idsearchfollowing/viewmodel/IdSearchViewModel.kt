@@ -46,9 +46,10 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
         get() = _isFollowed
 
     fun deleteSearchRecord() {
-        tempIdSearchList = mutableListOf(
-            ResponseIdSearchData.Data(0, null, "", "")
-        )
+//        tempIdSearchList = mutableListOf(
+//            ResponseIdSearchData.Data(0, null, "", "")
+//        )
+        tempIdSearchList = null
         _idSearchData.value = tempIdSearchList?.toMutableList()
     }
 
