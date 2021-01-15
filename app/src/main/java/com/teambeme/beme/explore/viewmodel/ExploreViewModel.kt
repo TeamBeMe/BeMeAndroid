@@ -56,17 +56,18 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val sortingText: String
         get() = _sortingText
 
-    private var page: Int = 1
+    private var _page: Int = 1
+    val page: Int
+        get() = _page
 
-    private var _isMaxPage = false
-    val isMaxPage: Boolean
-        get() = _isMaxPage
+    private var _isMorePage = MutableLiveData(false)
+    val isMorePage: LiveData<Boolean>
+        get() = _isMorePage
 
     private var otherAnswersQuestionsID: Int = 0
 
     fun setCategoryNum(category: Int) {
-        page = 1
-        _isMaxPage = false
+        _page = 1
         chipChecked[category - 1] = !chipChecked[category - 1]
         if (chipChecked == listOf(false, false, false, false, false, false)) {
             _categoryNum = null
@@ -79,15 +80,13 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     }
 
     fun setSortingTextFromExplore(sorting: String) {
-        page = 1
-        _isMaxPage = false
+        _page = 1
         _sortingText = sorting
         requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText)
     }
 
     fun setSortingTextFromExploreDetail(questionId: Int, sorting: String) {
-        page = 1
-        _isMaxPage = false
+        _page = 1
         _sortingText = sorting
         requestSameQuestionsOtherAnswers(questionId, sorting)
     }
@@ -113,7 +112,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     fun requestOtherQuestions() {
         exploreRepository.getExplorationOtherQuestions(
-            page,
+            _page,
             null,
             "최신"
         )
@@ -129,16 +128,15 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                                 response.body()!!.data?.answers?.toMutableList()
                             _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
 
-                            Log.d(
-                                "abcexplore",
-                                "${response.body()!!.data?.answers?.toMutableList()}"
-                            )
-
-                            if (response.body()!!.data?.pageLen == page) {
-                                _isMaxPage = true
-                            } else {
-                                page++
+                            if(response.body()!!.data != null){
+                                if (response.body()!!.data?.pageLen > _page) {
+                                    _page++
+                                    _isMorePage.value = true
+                                } else {
+                                    _isMorePage.value = false
+                                }
                             }
+
                         }
                     }
 
@@ -152,7 +150,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     fun requestOtherQuestionsWithCategorySorting(
         category: Int?,
         sorting: String,
-        pageNum: Int = page
+        pageNum: Int = _page
     ) {
         exploreRepository.getExplorationOtherQuestions(
             pageNum,
@@ -166,15 +164,19 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         response: Response<ResponseExplorationQuestions>
                     ) {
                         if (response.isSuccessful) {
-                            page = pageNum
+                            _page = pageNum
                             tempOtherQuestionsList =
                                 response.body()!!.data?.answers?.toMutableList()
                             _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
-                            if (response.body()!!.data?.pageLen == page) {
-                                _isMaxPage = true
-                            } else {
-                                page++
+                            if(response.body()!!.data != null){
+                                if (response.body()!!.data?.pageLen > _page) {
+                                    _page++
+                                    _isMorePage.value = true
+                                } else {
+                                    _isMorePage.value = false
+                                }
                             }
+
                         }
                     }
 
@@ -187,7 +189,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     fun requestPlusOtherQuestions() {
         exploreRepository.getExplorationOtherQuestions(
-            page,
+            _page,
             _categoryNum,
             _sortingText
         )
@@ -205,11 +207,13 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                             }
                             _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
 
-                            if (response.body()!!.data?.pageLen == page) {
-                                _isMaxPage = true
+                            if (response.body()!!.data?.pageLen > _page) {
+                                _page++
+                                _isMorePage.value = true
                             } else {
-                                page++
+                                _isMorePage.value = false
                             }
+
                         }
                     }
 
@@ -221,12 +225,11 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     }
 
     fun requestSameQuestionsOtherAnswers(questionId: Int, sorting: String = "최신") {
-        page = 1
-        _isMaxPage = false
+        _page = 1
         otherAnswersQuestionsID = questionId
         exploreRepository.getExplorationSameQuestionOtherAnswers(
             otherAnswersQuestionsID,
-            page,
+            _page,
             sorting
         ).enqueue(
             object : Callback<ResponseExplorationQuestions> {
@@ -239,14 +242,11 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                             response.body()!!.data?.answers?.toMutableList()
                         _sameQuestionOtherAnswersList.value =
                             tempSameQuestionOtherAnswersList?.toMutableList()
-                        Log.d(
-                            "network_sameQuestionsOtherAnswers",
-                            otherAnswersQuestionsID.toString()
-                        )
-                        if (response.body()!!.data?.pageLen == page) {
-                            _isMaxPage = true
+                        if (response.body()!!.data?.pageLen > _page) {
+                            _page++
+                            _isMorePage.value = true
                         } else {
-                            page++
+                            _isMorePage.value = false
                         }
                     }
                 }
@@ -261,7 +261,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     fun requestPlusSameQuestionOtherAnswers() {
         exploreRepository.getExplorationSameQuestionOtherAnswers(
             otherAnswersQuestionsID,
-            page,
+            _page,
             _sortingText
         ).enqueue(
             object : Callback<ResponseExplorationQuestions> {
@@ -278,10 +278,11 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         _sameQuestionOtherAnswersList.value =
                             tempSameQuestionOtherAnswersList?.toMutableList()
 
-                        if (response.body()!!.data?.pageLen == page) {
-                            _isMaxPage = true
+                        if (response.body()!!.data?.pageLen > _page) {
+                            _page++
+                            _isMorePage.value = true
                         } else {
-                            page++
+                            _isMorePage.value = false
                         }
                     }
                 }

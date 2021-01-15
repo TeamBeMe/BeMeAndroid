@@ -2,6 +2,7 @@ package com.teambeme.beme.explore.view
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import com.google.android.material.tabs.TabLayout
 import com.teambeme.beme.R
@@ -39,6 +40,19 @@ class ExploreDetailActivity :
         setOtherAnswersObserve()
         setClickListenerForGoback()
         setTabSelectedFromExploreDetailListener()
+        setIsMorePageObserve()
+    }
+
+    private fun setIsMorePageObserve() {
+        exploreDetailViewModel.isMorePage.observe(this) { morePage ->
+            morePage?.let {
+                if (morePage == true) {
+                    binding.btnExploreDetailShowMore.visibility = View.VISIBLE
+                } else {
+                    binding.btnExploreDetailShowMore.visibility = View.INVISIBLE
+                }
+            }
+        }
     }
 
     private fun setOtherAnswersObserve() {
@@ -46,6 +60,11 @@ class ExploreDetailActivity :
             otherAnswersList?.let {
                 if (binding.rcvExploreDetailOtherAnswers.adapter != null) with(binding.rcvExploreDetailOtherAnswers.adapter as OtherQuestionsRcvAdapter<*>) {
                     submitList(otherAnswersList)
+                }
+                if (otherAnswersList.size == 0) {
+                    binding.constraintLayoutExploreDetailEmpty.visibility = View.VISIBLE
+                } else {
+                    binding.constraintLayoutExploreDetailEmpty.visibility = View.INVISIBLE
                 }
             }
         }
