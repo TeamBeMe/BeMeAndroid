@@ -25,6 +25,9 @@ class PersonalInfoFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_personal_info, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.signUpViewModel = signUpViewModel
+        binding.btnPersonalBack.setOnClickListener { view ->
+            view.findNavController().popBackStack()
+        }
         setDoubleCheckListener()
         setDoneButtonClickListener()
         setObserve()

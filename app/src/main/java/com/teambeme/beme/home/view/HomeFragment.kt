@@ -48,6 +48,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     override fun onResume() {
         super.onResume()
+        homeViewModel.refreshTaskCompleted()
         returnToDefaultPosition()
     }
 

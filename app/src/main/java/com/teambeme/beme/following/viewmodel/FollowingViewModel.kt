@@ -89,7 +89,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                         _followingAnswersList.value =
                             tempFollowingFollowerAnswersList?.toMutableList()
 
-                        if(response.body()!!.data.answers?.size != 0){
+                        if (response.body()!!.data.answers?.size != 0) {
                             if (response.body()!!.data?.pageLen > _page) {
                                 _page++
                                 _isMorePage.value = true
@@ -124,7 +124,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                         }
                         _followingAnswersList.value =
                             tempFollowingFollowerAnswersList?.toMutableList()
-                        if(response.body()!!.data.answers?.size != 0){
+                        if (response.body()!!.data.answers?.size != 0) {
                             if (response.body()!!.data?.pageLen > _page) {
                                 _page++
                                 _isMorePage.value = true

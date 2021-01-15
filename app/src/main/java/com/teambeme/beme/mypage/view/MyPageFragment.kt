@@ -1,5 +1,6 @@
 package com.teambeme.beme.mypage.view
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import com.teambeme.beme.mypage.adapter.MyPageViewPagerAdapter
 import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
+import com.teambeme.beme.setting.view.SettingActivity
 
 class MyPageFragment : Fragment() {
     private lateinit var binding: FragmentMyPageBinding
@@ -40,6 +42,7 @@ class MyPageFragment : Fragment() {
             isChangeProfile = true
         }
         binding.btnMypageProfile.setOnClickListener { editProfileClickListener() }
+        settingClickListener()
         return binding.root
     }
 
@@ -49,6 +52,13 @@ class MyPageFragment : Fragment() {
             isChangeProfile = false
         } else {
             mypageViewModel.getMyProfile()
+        }
+    }
+
+    private fun settingClickListener() {
+        binding.imgMypageSetting.setOnClickListener {
+            val intent = Intent(requireContext(), SettingActivity::class.java)
+            startActivity(intent)
         }
     }
 

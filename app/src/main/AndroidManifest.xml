@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeMe"
         android:usesCleartextTraffic="true">
+        <activity android:name=".setting.view.SettingActivity"></activity>
         <activity
             android:name=".signup.view.SignUpActivity"
             android:screenOrientation="portrait"
