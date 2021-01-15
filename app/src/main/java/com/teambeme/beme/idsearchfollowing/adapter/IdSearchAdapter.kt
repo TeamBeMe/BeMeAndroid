@@ -119,8 +119,5 @@ class IdSearchAdapter(
             binding.btnFollowingFollow.visibility = View.VISIBLE
         }
     }
-
-
-
 }
 

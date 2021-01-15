@@ -2,13 +2,17 @@ package com.teambeme.beme.main.view
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.data.remote.datasource.FbTokenRegisterDataSourceImpl
+import com.teambeme.beme.data.remote.singleton.BeMeAuthPreference
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityMainBinding
 import com.teambeme.beme.home.view.HomeFragment
@@ -25,6 +29,23 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(
+                    "BeMeApplication.TAG",
+                    "Fetching FCM registration token failed",
+                    task.exception
+                )
+                return@OnCompleteListener
+            } else {
+                // Get new FCM registration token
+                val token = task.result
+                BeMeAuthPreference.fireBaseToken = token ?: "SomeThing"
+                // Log and toast
+                val msg = getString(R.string.msg_token_fmt, token)
+                Log.d("BeMeApplication.TAG", msg)
+            }
+        })
         mainViewModel.getFireBaseToken()
         setViewPagerAdapter(this)
         setBottomNavigationSelectListener(binding.bnvMain)
