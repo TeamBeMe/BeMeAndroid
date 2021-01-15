@@ -36,7 +36,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                     val type = object : TypeToken<ErrorBody>() {}.type
                     val errorResponse: ErrorBody? =
                         gson.fromJson(response.errorBody()!!.charStream(), type)
-                    _errorMessage.value = errorResponse?.message
+                    _errorMessage.value = "아이디 또는 비밀번호를 다시 확인해주세요"
                 }
             }
 

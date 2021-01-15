@@ -31,15 +31,21 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                 if (canAdd) {
                     val moreAnswers =
                         homeRepository.getAnswers(_currentQuestionPage++).answers.toMutableList()
+                    moreAnswers.reverse()
                     val currentList = _answerList.value?.toMutableList()
-                    currentList?.addAll(0, moreAnswers)
-                    _answerList.value = currentList
+                    if (currentList != null) {
+                        moreAnswers.addAll(currentList)
+                    }
+                    _answerList.value = moreAnswers.toMutableList()
                 } else {
                     val moreAnswers =
                         homeRepository.getAnswers(_currentQuestionPage).answers.toMutableList()
+                    moreAnswers.reverse()
                     val currentList = _answerList.value?.toMutableList()
-                    currentList?.addAll(0, moreAnswers)
-                    _answerList.value = currentList
+                    if (currentList != null) {
+                        moreAnswers.addAll(currentList)
+                    }
+                    _answerList.value = moreAnswers.toMutableList()
                     canAdd = true
                 }
             } catch (e: HttpException) {
@@ -60,8 +66,9 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     fun setInitAnswer() {
         viewModelScope.launch {
             try {
-                _answerList.value =
+                val currentList =
                     homeRepository.getAnswers(_currentQuestionPage++).answers.toMutableList()
+                _answerList.value = currentList.reversed().toMutableList()
                 startEvent()
                 delay(1000)
             } catch (e: HttpException) {
