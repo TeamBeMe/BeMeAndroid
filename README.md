@@ -331,6 +331,42 @@ footer(optional)
 - [검색 필터 바텀시트 구성하고 뷰모델을 통해 값을 받아와 봅시다](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/BottomSheetDialogFragment.md)
 - [맨 밑까지 스크롤을 할 때 더보기 버튼 띄우기](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/ScrollAddMoreButton.md)
 - [SnapHelper로 RecyclerView에 ViewPager 효과 주기](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/SnapHelperWithRecyclerView.md)
+- [이미지를 원하는 비율로 잘라봅시다, Image Cropper를 이용해서](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/ImageCropper.md)
+- [MultiPart 서버통신으로 Image 서버로 날려버리기](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/Multipart.md)
+- [이메일 양식받아서 문의 이메일 보내기](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/IntentEmail.md)
 
 ## [BeMeetingLog](https://www.notion.so/fun-beMeAndroid-6a0ac949cb294ca8b619d8736ffcc477)
 - 회의록 노션에 기록
+
+## CollapsingToolbarLayout : 툴바를 상단에 고정시키고 이미지를 사라지게 하기 위해
+```
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".mypage.view.MyPageFragment">
+```
+
+우선 layout을 지정해준다
+
+```
+<com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+```
+
+이 후 하단 layout으로 AppBarLayout을 지정해준다 ->Coordinatorlayout으로 인해 변화하는 영역을 지정할 수 있다.
+
+```
+<com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                app:contentScrim="@color/mypage_white"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+```
+
+이 후 하단으로 스크롤을 하게되면 사라지는 영역을 지정하는 CollapsingToolbarLayout을 지정해준다.
+즉 AppBarLayout에 포함이 되면서 CollapsingToolbarLayout에 포함이 된다면 하단으로 스크롤 할떄 사라지지않고 상단에 고정이 된다.
+이 후에는 각각영역에 속하는 레이아웃을 지정하면 된다.
+
