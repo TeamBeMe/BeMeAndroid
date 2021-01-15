@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_permission_info" >
         <action
             android:id="@+id/action_permissionInfoFragment_to_termFragment"
-            app:destination="@id/termFragment" />
+            app:destination="@id/termFragment"
+            app:popUpTo="@id/permissionInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/imageChooseFragment"
@@ -24,7 +25,8 @@
         android:label="TermFragment" >
         <action
             android:id="@+id/action_termFragment_to_personalInfoFragment"
-            app:destination="@id/personalInfoFragment" />
+            app:destination="@id/personalInfoFragment"
+            app:popUpTo="@id/termFragment" />
     </fragment>
     <fragment
         android:id="@+id/personalInfoFragment"
@@ -32,6 +34,7 @@
         android:label="PersonalInfoFragment" >
         <action
             android:id="@+id/action_personalInfoFragment_to_imageChooseFragment"
-            app:destination="@id/imageChooseFragment" />
+            app:destination="@id/imageChooseFragment"
+            app:popUpTo="@id/permissionInfoFragment" />
     </fragment>
 </navigation>

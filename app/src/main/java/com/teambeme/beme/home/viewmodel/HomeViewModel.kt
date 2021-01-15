@@ -15,7 +15,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     private val _answerList = MutableLiveData<MutableList<Answer>>()
     val answerList: LiveData<MutableList<Answer>>
         get() = _answerList
-    private var _currentQuestionPage = 1
+    private var _currentQuestionPage = 0
     private var canAdd = true
 
     private val _errorMessage = MutableLiveData("")
@@ -56,6 +56,18 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     _errorMessage.value = "서버 통신에 문제가 발생했습니다"
                 }
             }
+        }
+    }
+
+    fun refreshTaskCompleted() {
+        viewModelScope.launch {
+            val list = mutableListOf<Answer>()
+            for (i in 1.._currentQuestionPage) {
+                val moreAnswers = homeRepository.getAnswers(i).answers.toMutableList()
+                moreAnswers.reverse()
+                list.addAll(0, moreAnswers)
+            }
+            _answerList.value = list.toMutableList()
         }
     }
 

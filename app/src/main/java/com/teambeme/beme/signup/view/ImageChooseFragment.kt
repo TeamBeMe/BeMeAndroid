@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.teambeme.beme.R
@@ -41,6 +42,10 @@ class ImageChooseFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_image_choose, container, false)
         binding.viewModel = signUpViewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        binding.btnBack.setOnClickListener { view ->
+            view.findNavController().popBackStack()
+        }
 
         binding.btnImageChooseDone.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {

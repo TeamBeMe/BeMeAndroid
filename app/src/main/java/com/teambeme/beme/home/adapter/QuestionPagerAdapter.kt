@@ -1,6 +1,7 @@
 package com.teambeme.beme.home.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
+import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.databinding.ItemHomeMoreQuestionBinding
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
 import com.teambeme.beme.home.model.Answer
@@ -50,18 +52,22 @@ class QuestionPagerAdapter(
             binding.txtHomeEdit.setOnClickListener {
                 InfoChangeFragment(object : InfoChangeClickListener {
                     override fun modifyAnswer() {
-                        val answer = answerList[position - 1]
+                        val currentAnswer = answerList[position - 1]
                         val intentAnswerData = IntentAnswerData(
-                            questionId = answer.id,
-                            title = answer.questionTitle,
-                            category = answer.questionCategoryName,
-                            categoryIdx = answer.answerIdx?.toInt(),
-                            createdAt = answer.createdAt,
-                            content = answer.content ?: "",
-                            isPublic = transformIntToBoolean(answer.publicFlag),
-                            isCommentBlocked = transformIntToBoolean(answer.commentBlockedFlag)
+                            questionId = currentAnswer.id,
+                            title = currentAnswer.questionTitle,
+                            category = currentAnswer.questionCategoryName,
+                            categoryIdx = currentAnswer.answerIdx?.toInt(),
+                            createdAt = currentAnswer.createdAt,
+                            content = currentAnswer.content ?: "",
+                            isPublic = transformIntToBoolean(currentAnswer.publicFlag),
+                            isCommentBlocked = transformIntToBoolean(currentAnswer.commentBlockedFlag)
                         )
-                        val isModify = 1
+                        val isModify = 100
+                        val intent = Intent(context, AnswerActivity::class.java)
+                        intent.putExtra("intentAnswerData", intentAnswerData)
+                        intent.putExtra("isChange", 100)
+                        context.startActivity(intent)
                     }
 
                     override fun deleteAnswer() {
