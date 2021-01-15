@@ -51,9 +51,9 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         returnToDefaultPosition()
     }
 
-    private fun getHomeButtonClickListener(): QuestionPagerAdapter.AnswerButtonClickListener {
-        return object : QuestionPagerAdapter.AnswerButtonClickListener {
-            override fun onClick(answer: Answer, position: Int) {
+    private fun getHomeButtonClickListener(): QuestionPagerAdapter.QuestionButtonClickListener {
+        return object : QuestionPagerAdapter.QuestionButtonClickListener {
+            override fun onAnswerButtonClick(answer: Answer, position: Int) {
                 val intent = Intent(context, AnswerActivity::class.java)
                 val intentData = IntentAnswerData(
                     questionId = answer.id,
@@ -103,13 +103,11 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                if (position != 0) {
+                if (position != 0 && position != homeViewModel.answerList.value?.size?.plus(1)) {
                     when (homeViewModel.answerList.value?.get(position - 1)?.isToday) {
                         true -> binding.txtHomeTitle.text = "오늘의 질문"
                         else -> binding.txtHomeTitle.text = "과거의 질문"
                     }
-                } else {
-                    homeViewModel.getMoreAnswers()
                 }
             }
         })
@@ -130,7 +128,6 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             homeViewModel.answerList
                 .value
                 ?.size
-                ?.minus(1)
                 ?.let { binding.vpHomeQuestionSlider.setCurrentItem(it, true) }
         }
     }

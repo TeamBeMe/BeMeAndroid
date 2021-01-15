@@ -5,6 +5,7 @@ import android.text.*
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
@@ -89,6 +90,13 @@ object BindingAdapters {
     @BindingAdapter("home:setDate")
     @JvmStatic
     fun setHomeCreatedDate(textView: TextView, date: String) {
+        textView.text = date.substring(0..9)
+    }
+
+    @BindingAdapter("answer:setDate")
+    @JvmStatic
+    fun setAnswerCreatedDate(textView: TextView, date: String) {
+        Log.d("answer", "called setAnswerCreatedDate")
         textView.text = date.substring(0..9)
     }
 
