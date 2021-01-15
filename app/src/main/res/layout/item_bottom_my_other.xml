@@ -41,7 +41,7 @@
                     android:id="@+id/txt_myotherbottom_complete"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="18dp"
+                    android:layout_marginLeft="10dp"
                     android:text="신고하기"
                     android:textColor="@color/detail_red"
                     android:textSize="15sp"
