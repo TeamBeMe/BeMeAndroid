@@ -224,16 +224,17 @@
 
                     <HorizontalScrollView
                         android:id="@+id/scrollview_explore_chip"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scrollbars="none"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tab_layout_explore_sort">
 
                         <com.google.android.material.chip.ChipGroup
                             android:id="@+id/chip_explore_other_questions"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
-                            android:paddingStart="28dp"
                             android:paddingTop="14dp"
                             app:singleLine="true"
                             app:singleSelection="true">
