@@ -109,7 +109,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             home:text="변경"
-            home:underlineText="@{`변경`}" />
+            home:underlineText="@{`편집`}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
