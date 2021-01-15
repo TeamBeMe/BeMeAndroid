@@ -66,7 +66,6 @@ class IdSearchAdapter(
         }
     }
 
-
     private class IdSearchDiffUtil : DiffUtil.ItemCallback<ResponseIdSearchData.Data>() {
         override fun areItemsTheSame(
             oldItem: ResponseIdSearchData.Data,
@@ -119,8 +118,4 @@ class IdSearchAdapter(
             binding.btnFollowingFollow.visibility = View.VISIBLE
         }
     }
-
-
-
 }
-

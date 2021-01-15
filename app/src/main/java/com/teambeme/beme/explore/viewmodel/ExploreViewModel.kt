@@ -36,7 +36,8 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val sameQuestionOtherAnswersList: LiveData<MutableList<ResponseExplorationQuestions.Data.Answer?>>
         get() = _sameQuestionOtherAnswersList
 
-    private var _questionForFirstAnswer = MutableLiveData<ResponseExplorationQuestionForFirstAnswer.Answer>()
+    private var _questionForFirstAnswer =
+        MutableLiveData<ResponseExplorationQuestionForFirstAnswer.Answer>()
     val questionForFirstAnswer: LiveData<ResponseExplorationQuestionForFirstAnswer.Answer>
         get() = _questionForFirstAnswer
 
@@ -128,7 +129,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                                 response.body()!!.data?.answers?.toMutableList()
                             _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
 
-                            if(response.body()!!.data != null){
+                            if (response.body()!!.data != null) {
                                 if (response.body()!!.data?.pageLen > _page) {
                                     _page++
                                     _isMorePage.value = true
@@ -136,7 +137,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                                     _isMorePage.value = false
                                 }
                             }
-
                         }
                     }
 
@@ -168,7 +168,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                             tempOtherQuestionsList =
                                 response.body()!!.data?.answers?.toMutableList()
                             _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
-                            if(response.body()!!.data != null){
+                            if (response.body()!!.data != null) {
                                 if (response.body()!!.data?.pageLen > _page) {
                                     _page++
                                     _isMorePage.value = true
@@ -176,7 +176,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                                     _isMorePage.value = false
                                 }
                             }
-
                         }
                     }
 
@@ -213,7 +212,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                             } else {
                                 _isMorePage.value = false
                             }
-
                         }
                     }
 
