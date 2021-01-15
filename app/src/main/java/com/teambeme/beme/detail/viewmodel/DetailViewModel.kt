@@ -236,6 +236,7 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
                             response.body()!!.data.updatedAt, response.body()!!.data.userId,
                             response.body()!!.data.profileImg, response.body()!!.data.userNickname
                         )
+                        copyChildData = copyReplyData[position.value!!].children.toMutableList()
                         copyChildData[childposition.value!!] = responseData
                         copyReplyData[position.value!!].children = copyChildData
                         _replyParentData.value = copyReplyData.toMutableList()
@@ -438,6 +439,18 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
                     Log.d("Network Fail", t.message.toString())
                 }
             })
+    }
+
+    fun getReplyFlag(): Boolean {
+        return replyParentData.value!![replyPosition.value!!].publicFlag
+    }
+
+    fun getReplyParentFlag(): Boolean {
+        return replyParentData.value!![position.value!!].publicFlag
+    }
+
+    fun getReplyChildFlag(): Boolean {
+        return replyParentData.value!![position.value!!].children[childposition.value!!].publicFlag
     }
 
     fun addChildReply() {

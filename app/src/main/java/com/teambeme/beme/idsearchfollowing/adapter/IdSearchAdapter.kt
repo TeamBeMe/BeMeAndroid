@@ -62,7 +62,6 @@ class IdSearchAdapter(
                     Log.d("Internt", getItem(position).id.toString())
                     view.context.startActivity(intent)
                 }
-
             }
         }
     }
