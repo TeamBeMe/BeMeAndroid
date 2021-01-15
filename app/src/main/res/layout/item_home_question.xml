@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:home="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="answer"
+            type="com.teambeme.beme.home.model.Answer" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@{answer.today ? @drawable/question_shape_background : @drawable/past_question_shape_background}"
+        home:background="@drawable/question_shape_background">
+
+        <ImageButton
+            android:id="@+id/img_question_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            home:publicButtonSrc="@{answer.publicFlag}" />
+
+        <TextView
+            android:id="@+id/txt_question_info"
+            style="@style/question_info_style"
+            android:layout_marginTop="20dp"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_question_lock"
+            home:answerIdx="@{answer.answerIdx}"
+            home:category="@{answer.questionCategoryName}"
+            home:categoryColor="@{@color/home_category_white}"
+            home:text="[ 미래에 관한 질문 ]" />
+
+        <TextView
+            android:id="@+id/txt_question_date"
+            style="@style/question_info_style"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/txt_question_info"
+            app:layout_constraintStart_toStartOf="@+id/txt_question_info"
+            app:layout_constraintTop_toBottomOf="@+id/txt_question_info"
+            home:setDate="@{answer.createdAt}"
+            home:text="2020.12.24" />
+
+        <TextView
+            android:id="@+id/txt_question_title"
+            style="@style/question_question_style"
+            android:layout_marginTop="32dp"
+            android:text="@{answer.questionTitle}"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_question_date"
+            home:text="이번 주말을 후회 없이\n보내는 방법은 무엇인가요?" />
+
+        <TextView
+            android:id="@+id/txt_question_content"
+            style="@style/question_content_style"
+            android:layout_marginTop="16dp"
+            android:text="@{answer.content != null ? answer.content : ` `}"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_question_title"
+            home:text="저는 몇일 전 퇴사를 했어요. 그래서 웅앵웅웅앵 수많은 고민 끝에 저질렀답니다. 엄청난 실수이었지만 저는 해낼 수가 있었고 없었고 웅웅웅" />
+
+        <Button
+            android:id="@+id/btn_home_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginBottom="60dp"
+            android:background="@drawable/home_answer_button"
+            android:paddingVertical="12dp"
+            android:text="답변하기"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:visibility="@{answer.content == null ? View.VISIBLE : View.GONE}"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_home_change_question"
+            style="@style/home_text_bottom"
+            android:layout_marginBottom="20dp"
+            android:visibility="@{answer.content == null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btn_home_answer"
+            app:layout_constraintStart_toStartOf="@+id/btn_home_answer"
+            home:text="질문 변경하기"
+            home:underlineText="@{`질문 변경하기`}" />
+
+        <TextView
+            android:id="@+id/txt_home_edit"
+            style="@style/home_text_bottom"
+            android:layout_marginBottom="20dp"
+            android:visibility="@{answer.content == null ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            home:text="변경"
+            home:underlineText="@{`편집`}" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

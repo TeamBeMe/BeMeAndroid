@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="question_info_style">
+        <item name="android:textColor">@color/home_title_gray</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="question_question_style">
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginHorizontal">36dp</item>
+        <item name="android:textColor">@color/home_white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="question_content_style" parent="question_question_style">
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="answer_info_style">
+        <item name="android:textColor">@color/answer_text_info_gray</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="answer_divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="background">@color/answer_text_gray</item>
+    </style>
+
+    <style name="answer_setting">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:textColor">@color/answer_text_black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+    </style>
+
+    <style name="home_answer_button">
+        <item name="android:radius">6dp</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="home_text_bottom">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:textColor">@color/home_text_gray</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="following_show_all_search_view" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/ic_mypage_search</item>
+        <item name="iconifiedByDefault">false</item>
+        <item name="queryHint">"검색"</item>
+        <item name="queryBackground">@android:color/transparent</item>
+        <item name="android:textColorHint">@color/following_show_all_search_view_hint_gray</item>
+        <item name="android:textColor">@color/following_show_all_search_view_hint_gray</item>
+    </style>
+
+    <style name="login_register_text">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/notosanskr_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="tab_text_size" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="signup_progressbar_style" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:indeterminateDrawable">@drawable/progress_bar_drawble</item>
+    </style>
+
+    <style name="permission_text_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:fontFamily">@font/notosanskr_medium</item>
+    </style>
+
+    <style name="permission_text_content">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="personal_info_edittext">
+        <item name="android:background">@drawable/personal_info_edittext_background</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/signup_personal_hint</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingVertical">16dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+</resources>

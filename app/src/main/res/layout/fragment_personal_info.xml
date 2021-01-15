@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="signUpViewModel"
+            type="com.teambeme.beme.signup.viewmodel.SignUpViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".signup.view.PersonalInfoFragment">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_personal_info"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/btn_personal_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <ProgressBar
+            android:id="@+id/progress_personal_bar"
+            style="@style/signup_progressbar_style"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:max="100"
+            android:progress="75"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_personal_info" />
+
+        <TextView
+            android:id="@+id/txt_term_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/notosanskr_medium"
+            android:includeFontPadding="false"
+            android:text="매일 질문에 대한\n답을 하며\n나를 더 알아갈 수 있어요"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_personal_info" />
+
+        <EditText
+            android:id="@+id/edittxt_personal_email"
+            style="@style/personal_info_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="28dp"
+            android:layout_marginTop="36dp"
+            android:hint="이메일"
+            android:importantForAutofill="no"
+            android:text="@={signUpViewModel.userEmail}"
+            app:layout_constraintStart_toStartOf="@+id/txt_term_title"
+            app:layout_constraintTop_toBottomOf="@+id/txt_term_title" />
+
+        <LinearLayout
+            android:id="@+id/linear_personal_email_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/txt_term_title"
+            app:layout_constraintTop_toBottomOf="@id/edittxt_personal_email">
+
+            <ImageView
+                android:id="@+id/img_personal_email_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_personal_check_gray" />
+
+            <TextView
+                android:id="@+id/txt_personal_email_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:text="beme@example.com 형식으로 입력해주세요"
+                android:textColor="@color/signup_personal_check"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/layout_personal_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="28dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintTop_toBottomOf="@id/edittxt_personal_email">
+
+            <EditText
+                android:id="@+id/edittxt_personal_nickname"
+                style="@style/personal_info_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="닉네임 *"
+                android:importantForAutofill="no"
+                android:text="@={signUpViewModel.userNickName}" />
+
+            <TextView
+                android:id="@+id/btn_personal_nickname_double_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="16dp"
+                android:onClick="@{() -> signUpViewModel.nickNameDoubleCheck()}"
+                android:text="중복확인"
+                android:textColor="@color/signup_term_blue"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_personal_nickname_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/txt_term_title"
+            app:layout_constraintTop_toBottomOf="@id/layout_personal_nickname">
+
+            <ImageView
+                android:id="@+id/img_personal_nickname_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_personal_check_gray" />
+
+            <TextView
+                android:id="@+id/txt_personal_nickname_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:text="영문, 숫자로 20자 이내로 입력해주세요."
+                android:textColor="@color/signup_personal_check"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edittxt_personal_password"
+            style="@style/personal_info_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="28dp"
+            android:layout_marginTop="16dp"
+            android:hint="비밀번호 *"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:text="@={signUpViewModel.userPassWord}"
+            app:layout_constraintTop_toBottomOf="@id/linear_personal_nickname_check" />
+
+        <LinearLayout
+            android:id="@+id/linear_personal_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/txt_term_title"
+            app:layout_constraintTop_toBottomOf="@id/edittxt_personal_password">
+
+            <ImageView
+                android:id="@+id/img_personal_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_personal_check_gray" />
+
+            <TextView
+                android:id="@+id/txt_personal_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:text="영문, 숫자로 20자 이내로 입력해주세요."
+                android:textColor="@color/signup_personal_check"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edittxt_personal_password_check"
+            style="@style/personal_info_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="28dp"
+            android:layout_marginTop="16dp"
+            android:hint="비밀번호 확인 *"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:text="@={signUpViewModel.userPassWordCheck}"
+            app:layout_constraintTop_toBottomOf="@+id/linear_personal_password" />
+
+        <LinearLayout
+            android:id="@+id/linear_personal_password_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/txt_term_title"
+            app:layout_constraintTop_toBottomOf="@id/edittxt_personal_password_check">
+
+            <ImageView
+                android:id="@+id/img_personal_password_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_personal_check_gray" />
+
+            <TextView
+                android:id="@+id/txt_personal_password_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:text="영문, 숫자로 20자 이내로 입력해주세요."
+                android:textColor="@color/signup_personal_check"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_personal_done"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="28dp"
+            android:background="@drawable/signup_button_background"
+            android:enabled="false"
+            android:fontFamily="@font/notosankr_bold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="확인"
+            android:textColor="@color/white"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linear_personal_password_check"
+            tools:layout_editor_absoluteX="28dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

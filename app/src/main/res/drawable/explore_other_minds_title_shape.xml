@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners
+        android:topLeftRadius="6dp"
+        android:topRightRadius="6dp"/>
+    <solid
+        android:color="@color/shape_other_minds_title_gray"/>
+</shape>

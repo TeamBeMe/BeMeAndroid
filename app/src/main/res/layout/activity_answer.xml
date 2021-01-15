@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="answerActivity"
+            type="com.teambeme.beme.answer.view.AnswerActivity" />
+
+        <variable
+            name="answerViewModel"
+            type="com.teambeme.beme.answer.viewmodel.AnswerViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".answer.view.AnswerActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_answer_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/btn_answer_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:onClick="@{()->answerActivity.onBackPressed()}"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_answer_complete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:clickable="@{answerViewModel.answer.length() != 0 ? true : false}"
+                    android:text="완료"
+                    android:textColor="@{answerViewModel.answer.length() != 0 ? @color/home_black : @color/home_title_gray}"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/txt_answer_question"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="28dp"
+            android:text="@{answerViewModel.answerData.title}"
+            android:textColor="@color/answer_text_black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tb_answer_toolbar"
+            tools:text="이번 주말을 후회 없이\n 보낼 수 있는 방법은 무엇인가요?" />
+
+        <TextView
+            android:id="@+id/txt_answer_info"
+            style="@style/answer_info_style"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="@+id/txt_answer_question"
+            app:layout_constraintTop_toBottomOf="@+id/txt_answer_question"
+            tools:text="[ 미래에 관한 2번째 질문 ]" />
+
+        <TextView
+            android:id="@+id/txt_answer_data"
+            style="@style/answer_info_style"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/txt_answer_info"
+            app:layout_constraintTop_toBottomOf="@+id/txt_answer_info"
+            tools:text="2020.12.24" />
+
+        <View
+            android:id="@+id/divider_answer_top"
+            style="@style/answer_divider"
+            android:layout_marginTop="16dp"
+            android:background="@color/answer_text_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_answer_data" />
+
+        <EditText
+            android:id="@+id/txt_answer_answer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="128dp"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="답변을 써주세요"
+            android:text="@={answerViewModel.answer}"
+            android:textColor="@color/answer_text_black"
+            android:textColorHint="@color/answer_text_gray"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_answer_top" />
+
+        <LinearLayout
+            android:id="@+id/linear_answer_public"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <View
+                android:id="@+id/divider_answer_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/answer_text_gray" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_answer_make_public"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:text="답변 공개하기"
+                    android:textColor="@color/home_black"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_answer_public"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="168dp"
+                    android:checked="false"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/answer_switch_selector" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_answer_block_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:visibility="@{answerViewModel.isPublic ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:visibility="visible">
+
+            <TextView
+                android:id="@+id/txt_answer_reply_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:text="댓글 기능 해제"
+                android:textColor="@color/home_black"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_answer_reply_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="168dp"
+                android:checked="false"
+                android:thumb="@drawable/switch_thumb"
+                app:track="@drawable/answer_switch_selector" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

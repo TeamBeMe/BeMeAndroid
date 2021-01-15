@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="replyParentData"
+            type="com.teambeme.beme.detail.model.ResponseDetail.Data.Comment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_replyparent_profile"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="4dp"
+            detail:setReplyUrl="@{replyParentData.userProfile}"
+            detail:isVisible="@{replyParentData.visible}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:civ_border_color="@color/detail_circle"
+            app:civ_border_width="1dp"
+            app:srcCompat="@drawable/ic_ellipse" />
+
+        <ImageButton
+            android:id="@+id/img_replyparent_dot3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_replyparent_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_replyparent_id"
+            app:srcCompat="@drawable/ic_dot3_detail" />
+
+        <TextView
+            android:id="@+id/txt_replyparent_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/detail_black"
+            android:textStyle="bold"
+            detail:isVisible="@{replyParentData.visible}"
+            detail:nickname="@{replyParentData.userNickname}"
+            tools:text="genie_self"
+            app:layout_constraintStart_toEndOf="@+id/img_replyparent_profile"
+            app:layout_constraintTop_toTopOf="@id/img_replyparent_profile"
+            app:layout_constraintBottom_toBottomOf="@id/img_replyparent_profile"/>
+
+        <TextView
+            android:id="@+id/txt_replyparent_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            detail:isVisible="@{replyParentData.visible}"
+            detail:comment="@{replyParentData.content}"
+            android:textColor="@color/detail_black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/txt_replyparent_id"
+            app:layout_constraintTop_toBottomOf="@+id/txt_replyparent_id"
+            tools:text="척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다.." />
+
+        <TextView
+            android:id="@+id/txt_replyparent_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/detail_gray"
+            android:text="@{replyParentData.updatedAt}"
+            tools:text="12월 23일"
+            app:layout_constraintStart_toStartOf="@+id/txt_replyparent_comment"
+            app:layout_constraintTop_toBottomOf="@+id/txt_replyparent_comment" />
+
+        <TextView
+            android:id="@+id/txt_replyparent_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            setSecretReply="@{replyParentData.visible}"
+            android:text="답글 달기"
+            android:textColor="@color/detail_black"
+            app:layout_constraintStart_toEndOf="@+id/txt_replyparent_time"
+            app:layout_constraintTop_toTopOf="@+id/txt_replyparent_time" />
+
+        <TextView
+            android:id="@+id/txt_replyparent_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="답글 보기"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/detail_blue"
+            app:layout_constraintStart_toStartOf="@+id/txt_replyparent_time"
+            app:layout_constraintTop_toBottomOf="@+id/txt_replyparent_time" />
+
+        <ImageView
+            android:id="@+id/img_replyparent_secret"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            setSecretReplyImage="@{replyParentData.publicFlag}"
+            app:layout_constraintBottom_toBottomOf="@+id/img_replyparent_dot3"
+            app:layout_constraintEnd_toStartOf="@+id/img_replyparent_dot3"
+            app:layout_constraintTop_toTopOf="@+id/img_replyparent_dot3"
+            app:srcCompat="@drawable/ic_reply_secret" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_replyparent_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_replyparent_open" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

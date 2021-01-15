@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="followingShowAllViewModel"
+            type="com.teambeme.beme.following.viewmodel.FollowingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        tools:context=".following.view.FollowingShowAllActivity">
+
+        <ImageButton
+            android:id="@+id/btn_following_show_all_go_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="18dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_arrow_back_black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout_following_show_all_sort"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="74dp"
+            android:layout_marginEnd="28dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabIndicatorColor="@color/following_show_all_tab_indicator_black"
+            app:tabSelectedTextColor="@color/following_show_all_tab_selected_txt_black"
+            app:tabTextAppearance="@style/tab_text_size"
+            app:tabTextColor="@color/following_show_all_tab_txt_gray">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:text="팔로잉" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:text="팔로워" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <View
+            android:id="@+id/view_following_show_all_divide_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/following_show_all_divide_line_gray"
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout_following_show_all_sort" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view_following_show_all"
+            style="@style/following_show_all_search_view"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/following_show_all_search_view_shape"
+            android:imeOptions="actionSearch"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tab_layout_following_show_all_sort" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_following_show_all_profiles_following"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_view_following_show_all"
+            tools:listitem="@layout/item_following_show_all_profiles_of_following" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_following_show_all_profiles_follower"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:overScrollMode="never"
+            android:visibility="invisible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_view_following_show_all"
+            tools:listitem="@layout/item_following_show_all_profiles_of_follower" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_following_show_all_profiles_search_following"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:overScrollMode="never"
+            android:visibility="invisible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_view_following_show_all"
+            tools:listitem="@layout/item_following_show_all_profiles_of_search_following" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_following_show_all_profiles_search_follower"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:overScrollMode="never"
+            android:visibility="invisible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_view_following_show_all"
+            tools:listitem="@layout/item_following_show_all_profiles_of_search_follower" />
+
+        <ImageView
+            android:id="@+id/img_following_show_all_empty_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="108dp"
+            android:src="@drawable/ic_information"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_view_following_show_all" />
+
+        <TextView
+            android:id="@+id/txt_following_show_all_following_empty_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center_horizontal"
+            android:text="팔로잉 한 사람이 없습니다"
+            android:textColor="@color/explore_txt_other_questions_un_answer_gray"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_following_show_all_empty_information" />
+
+        <TextView
+            android:id="@+id/txt_following_show_all_follower_empty_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center_horizontal"
+            android:text="나를 팔로우 한 사람이 없습니다"
+            android:textColor="@color/explore_txt_other_questions_un_answer_gray"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_following_show_all_empty_information" />
+
+        <TextView
+            android:id="@+id/txt_following_show_all_no_search_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center_horizontal"
+            android:text="검색 결과가 없습니다"
+            android:textColor="@color/explore_txt_other_questions_un_answer_gray"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_following_show_all_empty_information" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

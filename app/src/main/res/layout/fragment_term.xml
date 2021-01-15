@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.teambeme.beme.signup.viewmodel.SignUpViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".signup.view.TermFragment">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_term_info"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/btn_term_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <ProgressBar
+            android:id="@+id/progress_term_bar"
+            style="@style/signup_progressbar_style"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:max="100"
+            android:progress="50"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_term_info" />
+
+        <TextView
+            android:id="@+id/txt_term_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/notosanskr_medium"
+            android:includeFontPadding="false"
+            android:text="이용약관"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_term_info" />
+
+        <TextView
+            android:id="@+id/txt_term_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="* 마이페이지>프로필 편집에서 사진 변경이 가능합니다"
+            android:textColor="@color/signup_text_gray"
+            app:layout_constraintStart_toStartOf="@+id/txt_term_title"
+            app:layout_constraintTop_toBottomOf="@+id/txt_term_title" />
+
+        <LinearLayout
+            android:id="@+id/linear_term_essence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@+id/txt_term_title"
+            app:layout_constraintTop_toBottomOf="@id/txt_term_check">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkbox_term_essence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:fontFamily="@font/notosanskr_medium"
+                    android:includeFontPadding="false"
+                    android:text="개인정보 수집 및 이용 동의"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="4dp"
+                    android:text="(필수)"
+                    android:textColor="@color/signup_term_blue"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scrollview_term_essence"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="400dp"
+            android:maxHeight="120dp"
+            app:layout_constraintBottom_toTopOf="@+id/linear_term_service"
+            app:layout_constraintTop_toBottomOf="@+id/linear_term_essence">
+
+            <ImageView
+                android:id="@+id/img_term_essence"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/signup_background_gray"
+                android:maxHeight="140dp"
+                android:paddingHorizontal="28dp"
+                android:paddingVertical="16dp"
+                android:scaleType="fitXY"
+                android:scrollbars="vertical"
+                android:src="@drawable/img_clause_account" />
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/linear_term_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@+id/txt_term_title"
+            app:layout_constraintTop_toBottomOf="@id/scrollview_term_essence">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkbox_term_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/black"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:fontFamily="@font/notosanskr_medium"
+                    android:includeFontPadding="false"
+                    android:text="서비스 이용약관 동의"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="4dp"
+                    android:text="(필수)"
+                    android:textColor="@color/signup_term_blue"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scrollview_term_service"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/signup_background_gray"
+            app:layout_constraintTop_toBottomOf="@+id/linear_term_service">
+
+            <ImageView
+                android:id="@+id/img_term_service"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="16dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_clause_service" />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btn_term_done"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="28dp"
+            android:background="@drawable/signup_button_background"
+            android:fontFamily="@font/notosankr_bold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="확인"
+            android:textColor="@color/white"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollview_term_service"
+            tools:layout_editor_absoluteX="28dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="replyData"
+            type="com.teambeme.beme.detail.model.ResponseDetail.Data.Comment.Children" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_replychild_profile"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            detail:setReplyUrl="@{replyData.userProfile}"
+            detail:isVisible="@{replyData.visible}"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:civ_border_color="@color/detail_circle"
+            app:civ_border_width="1dp"
+            app:srcCompat="@drawable/ic_ellipse" />
+
+        <ImageButton
+            android:id="@+id/img_replychild_dot3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_replychild_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_replychild_id"
+            app:srcCompat="@drawable/ic_dot3_detail" />
+
+        <TextView
+            android:id="@+id/txt_replychild_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textStyle="bold"
+            detail:isVisible="@{replyData.visible}"
+            detail:nickname="@{replyData.userNickname}"
+            android:textColor="@color/detail_black"
+            tools:text="genie_self"
+            app:layout_constraintStart_toEndOf="@+id/img_replychild_profile"
+            app:layout_constraintTop_toTopOf="@+id/img_replychild_profile"
+            app:layout_constraintBottom_toBottomOf="@+id/img_replychild_profile"/>
+
+        <TextView
+            android:id="@+id/txt_replychild_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            detail:isVisible="@{replyData.visible}"
+            detail:comment="@{replyData.content}"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/detail_black"
+            app:layout_constraintStart_toStartOf="@+id/txt_replychild_id"
+            app:layout_constraintTop_toBottomOf="@+id/txt_replychild_id"
+            tools:text="척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다.." />
+
+        <ImageView
+            android:id="@+id/img_replychild_secret"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            setSecretReplyImage="@{replyData.publicFlag}"
+            app:layout_constraintBottom_toBottomOf="@+id/img_replychild_dot3"
+            app:layout_constraintEnd_toStartOf="@+id/img_replychild_dot3"
+            app:layout_constraintTop_toTopOf="@+id/img_replychild_dot3"
+            app:srcCompat="@drawable/ic_reply_secret" />
+
+        <TextView
+            android:id="@+id/txt_replychild_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/detail_gray"
+            android:text="@{replyData.updatedAt}"
+            tools:text="12월 23일"
+            app:layout_constraintStart_toStartOf="@+id/txt_replychild_comment"
+            app:layout_constraintTop_toBottomOf="@+id/txt_replychild_comment" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

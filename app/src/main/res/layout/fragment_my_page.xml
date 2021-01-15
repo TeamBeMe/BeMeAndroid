@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="myPageViewModel"
+            type="com.teambeme.beme.mypage.viewmodel.MyPageViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".mypage.view.MyPageFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                app:contentScrim="@color/mypage_white"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/mypage_white">
+
+                    <FrameLayout
+                        android:id="@+id/frame_mypage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <ImageView
+                            android:id="@+id/img_mypage_profile"
+                            android:layout_width="match_parent"
+                            android:layout_height="158dp"
+                            android:layout_gravity="fill"
+                            android:scaleType="centerCrop"
+                            setSrcFromUrl="@{myPageViewModel.myProfileInfo.profileImg}"
+                            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+                        <ImageView
+                            android:id="@+id/img_mypage_darkprofile"
+                            android:layout_width="match_parent"
+                            android:layout_height="158dp"
+                            android:layout_gravity="fill"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/rectangle_25" />
+
+                        <ImageButton
+                            android:id="@+id/img_mypage_setting"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginEnd="30dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:src="@drawable/ic_setting_profile" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/txt_mypage_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginTop="24dp"
+                        android:text="@{myPageViewModel.myProfileInfo.nickname}"
+                        android:textColor="@color/mypage_black"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/frame_mypage"
+                        tools:text="sushi_isthebest" />
+
+                    <TextView
+                        android:id="@+id/btn_mypage_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="28dp"
+                        android:background="@drawable/border_layout"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="8dp"
+                        android:text="프로필 편집"
+                        android:textColor="@color/mypage_black"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/txt_mypage_name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txt_mypage_name" />
+
+                    <TextView
+                        android:id="@+id/txt_mypage_attend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        attendCount="@{myPageViewModel.myProfileInfo.continuedVisit}"
+                        android:backgroundTint="#8E8E93"
+                        android:paddingVertical="4dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="연속 출석 11"
+                        android:textColor="@color/mypage_gray"
+                        app:layout_constraintStart_toStartOf="@+id/txt_mypage_name"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_mypage_name"
+                        tools:text="연속 출석 11" />
+
+                    <TextView
+                        android:id="@+id/txt_mypage_ans"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:paddingVertical="4dp"
+                        android:paddingStart="8dp"
+                        allAnswerCount="@{myPageViewModel.myProfileInfo.answerCount}"
+                        android:paddingEnd="8dp"
+                        android:text="답한 질문 202"
+                        android:textColor="@color/mypage_gray"
+                        app:layout_constraintStart_toEndOf="@+id/txt_mypage_attend"
+                        app:layout_constraintTop_toTopOf="@+id/txt_mypage_attend"
+                        tools:text="답한 질문 202" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/mypage_white">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_mypage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="28dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="28dp"
+                    android:backgroundTint="@android:color/transparent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_mypage_ans"
+                    app:tabIndicatorColor="@color/mypage_black"
+                    app:tabSelectedTextColor="@color/mypage_black"
+                    app:tabTextColor="@color/mypage_background_gray">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="내 글" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="스크랩" />
+                </com.google.android.material.tabs.TabLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff">
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/mypage_view_gray"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <com.teambeme.beme.util.NestedScrollableHost
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/vp_mypage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+                </com.teambeme.beme.util.NestedScrollableHost>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</layout>
