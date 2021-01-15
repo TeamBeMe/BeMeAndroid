@@ -125,4 +125,5 @@
     <color name="signup_disabled">#c9c9c9</color>
     <color name="signup_personal_check">#888686</color>
     <color name="signup_red">#ff0000</color>
+    <color name="circle_view_gray">#F0F0F0</color>
 </resources>
