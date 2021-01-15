@@ -108,6 +108,7 @@ class FollowingAfterIdSearchActivity :
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
                     binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
+
                     idSearchViewModel.setSearchQuery(query)
                     idSearchViewModel.requestIdSearchgData()
                 }

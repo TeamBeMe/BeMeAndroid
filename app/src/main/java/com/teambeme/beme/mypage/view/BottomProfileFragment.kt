@@ -1,5 +1,6 @@
 package com.teambeme.beme.mypage.view
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Activity.RESULT_OK
@@ -17,6 +18,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
 import com.teambeme.beme.R
 import com.teambeme.beme.data.remote.datasource.MyPageDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
@@ -47,7 +50,7 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
         binding.lifecycleOwner = this
         binding.mypageViewModel = mypageViewModel
         binding.tbProfilebottomEdit.setOnClickListener {
-            ImagePicker()
+            addPermission()
         }
         binding.tbProfilebottomBase.setOnClickListener {
             baseImage()
@@ -58,11 +61,32 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
     private fun baseImage() {
         val jsonObject = JSONObject()
         jsonObject.put("image", "")
-        val fileReqBody = jsonObject.toString().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        val fileReqBody = jsonObject.toString()
+            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("image", "", fileReqBody)
         mypageViewModel.putProfiles(part)
         mypageViewModel.setProfileUri(null)
         dismiss()
+    }
+
+    private fun addPermission() {
+        val permissionListener = object : PermissionListener {
+            override fun onPermissionGranted() {
+                ImagePicker()
+            }
+
+            override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {}
+        }
+        TedPermission.with(requireContext())
+            .setPermissionListener(permissionListener)
+            .setRationaleConfirmText("이미지 앨범을 접근하기 위해 접근 권한이 필요합니다")
+            .setDeniedMessage("[설정] > [권한]에서 권한을 허용할 수 있습니다")
+            .setGotoSettingButton(true)
+            .setPermissions(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            .check()
     }
 
     private fun ImagePicker() {
@@ -85,7 +109,7 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
             val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
                 var resultUri = result.getUri()
-                mypageViewModel.setProfileUri(resultUri)
+
                 val options = BitmapFactory.Options()
                 val inputStream = requireContext().contentResolver.openInputStream(resultUri)
                 val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
@@ -96,8 +120,13 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
                         "image/jpg".toMediaTypeOrNull(),
                         byteArrayOutputStream.toByteArray()
                     )
-                val part = MultipartBody.Part.createFormData("image", File(resultUri.toString()).name, photoBody)
+                val part = MultipartBody.Part.createFormData(
+                    "image",
+                    File(resultUri.toString()).name,
+                    photoBody
+                )
                 mypageViewModel.putProfiles(part)
+                mypageViewModel.setProfileUri(resultUri)
                 dismiss()
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.getError()

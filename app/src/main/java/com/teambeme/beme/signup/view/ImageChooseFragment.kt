@@ -2,13 +2,10 @@ package com.teambeme.beme.signup.view
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.database.Cursor
 import android.graphics.Bitmap
-import android.net.Uri
+import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +23,11 @@ import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
+import java.io.File
 
 class ImageChooseFragment : Fragment() {
     private lateinit var binding: FragmentImageChooseBinding
@@ -71,7 +72,10 @@ class ImageChooseFragment : Fragment() {
                 .setRationaleConfirmText("이미지 앨범을 접근하기 위해 접근 권한이 필요합니다")
                 .setDeniedMessage("[설정] > [권한]에서 권한을 허용할 수 있습니다")
                 .setGotoSettingButton(true)
-                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .setPermissions(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
                 .check()
         }
 
@@ -112,36 +116,27 @@ class ImageChooseFragment : Fragment() {
             if (resultCode == Activity.RESULT_OK) {
                 val resultUri = result.uri
                 signUpViewModel.setProfileUri(resultUri)
-                val bitmap =
-                    MediaStore.Images.Media.getBitmap(requireContext().contentResolver, resultUri)
-                val bitmapToUri = getImageUri(requireContext(), bitmap)
-                val filePathColumn =
-                    arrayOf(MediaStore.Images.Media.DATA)
-                val cursor: Cursor? =
-                    requireContext().contentResolver.query(
-                        bitmapToUri!!,
-                        filePathColumn,
-                        null,
-                        null,
-                        null
+                val options = BitmapFactory.Options()
+                val inputStream = requireContext().contentResolver.openInputStream(resultUri)
+                val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                bitmap!!.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
+                val photoBody =
+                    RequestBody.create(
+                        "image/jpg".toMediaTypeOrNull(),
+                        byteArrayOutputStream.toByteArray()
                     )
-                cursor!!.moveToFirst()
-                val columnIndex: Int = cursor.getColumnIndex(filePathColumn[0])
-                val imgDecodableString = cursor.getString(columnIndex)
-                signUpViewModel.setProfileString(imgDecodableString)
+                val part = MultipartBody.Part.createFormData(
+                    "image",
+                    File(resultUri.toString()).name,
+                    photoBody
+                )
+                signUpViewModel.setProfilePart(part)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
                 Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    private fun getImageUri(context: Context, inImage: Bitmap): Uri? {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.PNG, 1, bytes)
-        val path =
-            MediaStore.Images.Media.insertImage(context.contentResolver, inImage, "asdsad", null)
-        return Uri.parse(path)
     }
 
     companion object {

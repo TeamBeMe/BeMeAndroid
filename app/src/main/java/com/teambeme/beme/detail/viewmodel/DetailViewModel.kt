@@ -236,6 +236,7 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
                             response.body()!!.data.updatedAt, response.body()!!.data.userId,
                             response.body()!!.data.profileImg, response.body()!!.data.userNickname
                         )
+                        copyChildData = copyReplyData[position.value!!].children.toMutableList()
                         copyChildData[childposition.value!!] = responseData
                         copyReplyData[position.value!!].children = copyChildData
                         _replyParentData.value = copyReplyData.toMutableList()
@@ -404,7 +405,7 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
     fun addParentReply() {
         var reply: ResponseDetail.Data.Comment
         detailRepository.postReply(
-            detailData.value!!.id, answerText.value!!, isPublic.value!!, null
+            detailData.value!!.id, answerText.value!!, !isPublic.value!!, null
         )
             .enqueue(object :
                 Callback<ResponsePostReply> {
@@ -440,12 +441,24 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
             })
     }
 
+    fun getReplyFlag(): Boolean {
+        return replyParentData.value!![replyPosition.value!!].publicFlag
+    }
+
+    fun getReplyParentFlag(): Boolean {
+        return replyParentData.value!![position.value!!].publicFlag
+    }
+
+    fun getReplyChildFlag(): Boolean {
+        return replyParentData.value!![position.value!!].children[childposition.value!!].publicFlag
+    }
+
     fun addChildReply() {
         var childrenReply: ResponseDetail.Data.Comment.Children
         detailRepository.postReply(
             detailData.value!!.id,
             answerText.value!!,
-            isPublic.value!!,
+            !isPublic.value!!,
             copyReplyData[replyPosition.value!!].id
         )
             .enqueue(object :

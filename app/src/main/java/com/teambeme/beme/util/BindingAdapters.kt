@@ -5,6 +5,7 @@ import android.text.*
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
@@ -89,6 +90,13 @@ object BindingAdapters {
     @BindingAdapter("home:setDate")
     @JvmStatic
     fun setHomeCreatedDate(textView: TextView, date: String) {
+        textView.text = date.substring(0..9)
+    }
+
+    @BindingAdapter("answer:setDate")
+    @JvmStatic
+    fun setAnswerCreatedDate(textView: TextView, date: String) {
+        Log.d("answer", "called setAnswerCreatedDate")
         textView.text = date.substring(0..9)
     }
 
@@ -189,11 +197,11 @@ object BindingAdapters {
     fun setFollow(chip: Chip, isFollow: Boolean) {
         if (isFollow) {
             chip.isChecked = false
-            val text = "팔로잉"
+            val text = "       팔로잉       "
             chip.text = text
         } else {
             chip.isChecked = true
-            val text = "팔로우"
+            val text = "       팔로우       "
             chip.text = text
         }
     }
@@ -236,6 +244,16 @@ object BindingAdapters {
             textView.visibility = View.VISIBLE
         } else {
             textView.visibility = View.GONE
+        }
+    }
+
+    @BindingAdapter("setSecretReplyImage")
+    @JvmStatic
+    fun setSecretReplyImage(imageView: ImageView, isVisible: Boolean?) {
+        if (isVisible == false) {
+            imageView.visibility = View.VISIBLE
+        } else {
+            imageView.visibility = View.GONE
         }
     }
 

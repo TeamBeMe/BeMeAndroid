@@ -15,10 +15,8 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
-import java.io.File
 
 class SignUpViewModel : ViewModel() {
     private val signUpRepository =
@@ -49,12 +47,12 @@ class SignUpViewModel : ViewModel() {
     private val _nickNameDoubleCheck = MutableLiveData<ResponseNickDoubleCheck>()
     val nickDoubleCheck: LiveData<ResponseNickDoubleCheck>
         get() = _nickNameDoubleCheck
-    private val _profileImageString = MutableLiveData<String>()
-    val profileImageString: LiveData<String>
-        get() = _profileImageString
     private val _profileImageUri = MutableLiveData<Uri>()
     val profileImageUri: LiveData<Uri>
         get() = _profileImageUri
+    private val _profilePart = MutableLiveData<MultipartBody.Part>()
+    val profilePart: LiveData<MultipartBody.Part>
+        get() = _profilePart
 
     private val _signUpUserInfo = MutableLiveData<ResponseSignUp?>()
     val signUpUserInfo: LiveData<ResponseSignUp?>
@@ -100,16 +98,22 @@ class SignUpViewModel : ViewModel() {
         isEmailValidated.value!! && isNickNameValidated.value!! && isPassWordValidated.value!! && isPassWordCheckValidated.value!! && isNickNameDoubleChecked.value!!
 
     fun signUp() = viewModelScope.launch {
-        val file = File(profileImageString.value ?: "")
-        val fileReqBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-        val part: MultipartBody.Part =
-            MultipartBody.Part.createFormData("profile_img", file.name, fileReqBody)
-        try {
-            _signUpUserInfo.value = signUpRepository.signUp(getPartMap(), part)
-        } catch (e: HttpException) {
-            Log.d("SignUp", e.code().toString())
-            Log.d("SignUp", e.message())
-            Log.d("SignUp", e.stackTraceToString())
+        if (profilePart.value != null) {
+            try {
+                _signUpUserInfo.value = signUpRepository.signUp(getPartMap(), profilePart.value!!)
+            } catch (e: HttpException) {
+                Log.d("SignUp", e.code().toString())
+                Log.d("SignUp", e.message())
+                Log.d("SignUp", e.stackTraceToString())
+            }
+        } else {
+            try {
+                _signUpUserInfo.value = signUpRepository.signUp(getPartMap(), null)
+            } catch (e: HttpException) {
+                Log.d("SignUp", e.code().toString())
+                Log.d("SignUp", e.message())
+                Log.d("SignUp", e.stackTraceToString())
+            }
         }
     }
 
@@ -126,8 +130,8 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    fun setProfileString(imageString: String) {
-        _profileImageString.value = imageString
+    fun setProfilePart(part: MultipartBody.Part) {
+        _profilePart.value = part
     }
 
     fun setProfileUri(uri: Uri) {
@@ -136,7 +140,7 @@ class SignUpViewModel : ViewModel() {
 
     private fun getPartMap(): HashMap<String, RequestBody> {
         val email = userEmail.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
-        val nickName = userEmail.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
+        val nickName = userNickName.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
         val passWord = userPassWord.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
         return hashMapOf(
             "email" to email,

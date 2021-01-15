@@ -118,9 +118,9 @@ class MyScrapFragment : Fragment() {
 
     private fun isMaxListener(isMax: Boolean) {
         if (isMax) {
-            binding.btnScrapShowmore.visibility = View.GONE
-        } else {
             binding.btnScrapShowmore.visibility = View.VISIBLE
+        } else {
+            binding.btnScrapShowmore.visibility = View.GONE
         }
     }
 

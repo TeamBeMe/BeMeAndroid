@@ -61,6 +61,8 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             app:setSrcFromUrl="@{answer.userProfile}"
+            app:civ_border_color="@color/other_circle"
+            app:civ_border_width="1dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
