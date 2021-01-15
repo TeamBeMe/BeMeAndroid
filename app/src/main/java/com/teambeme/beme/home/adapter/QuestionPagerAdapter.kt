@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
+import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.databinding.ItemHomeMoreQuestionBinding
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
 import com.teambeme.beme.home.model.Answer
@@ -19,7 +20,7 @@ import com.teambeme.beme.home.viewmodel.HomeViewModel
 class QuestionPagerAdapter(
     private val fragmentManager: FragmentManager,
     private val homeViewModel: HomeViewModel,
-    private val answerButtonClickListener: AnswerButtonClickListener
+    private val questionButtonClickListener: QuestionButtonClickListener
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var answerList = mutableListOf<Answer>()
@@ -33,24 +34,14 @@ class QuestionPagerAdapter(
             binding.answer = answer
 
             binding.btnHomeAnswer.setOnClickListener {
-                answerButtonClickListener.onClick(answer, position)
-//                val intent = Intent(context, AnswerActivity::class.java)
-//                val intentData = IntentAnswerData(
-//                    questionId = answer.id,
-//                    title = answer.questionTitle,
-//                    category = answer.questionCategoryName,
-//                    categoryIdx = answer.questionCategoryId,
-//                    createdAt = answer.createdAt
-//                )
-//                intent.putExtra("intentAnswerData", intentData)
-//                context.startActivity(intent)
+                questionButtonClickListener.onAnswerButtonClick(answer, position - 1)
             }
 
             binding.imgQuestionLock.setOnClickListener {
-                TransitionPublicFragment(answerList[position].publicFlag,
+                TransitionPublicFragment(answerList[position - 1].publicFlag,
                     object : TransitionPublicFragment.ChangePublicClickListener {
                         override fun onClick() {
-                            homeViewModel.changePublic(position)
+                            homeViewModel.changePublic(position - 1)
                         }
                     }
                 ).show(fragmentManager, "TransitionPublic")
@@ -58,8 +49,19 @@ class QuestionPagerAdapter(
 
             binding.txtHomeEdit.setOnClickListener {
                 InfoChangeFragment(object : InfoChangeClickListener {
-                    override fun changeQuestion() {
-                        homeViewModel.changeQuestion(position)
+                    override fun modifyAnswer() {
+                        val answer = answerList[position - 1]
+                        val intentAnswerData = IntentAnswerData(
+                            questionId = answer.id,
+                            title = answer.questionTitle,
+                            category = answer.questionCategoryName,
+                            categoryIdx = answer.answerIdx?.toInt(),
+                            createdAt = answer.createdAt,
+                            content = answer.content ?: "",
+                            isPublic = transformIntToBoolean(answer.publicFlag),
+                            isCommentBlocked = transformIntToBoolean(answer.commentBlockedFlag)
+                        )
+                        val isModify = 1
                     }
 
                     override fun deleteAnswer() {
@@ -69,6 +71,10 @@ class QuestionPagerAdapter(
                     fragmentManager,
                     "InfoChangeBottomSheet"
                 )
+            }
+
+            binding.txtHomeChangeQuestion.setOnClickListener {
+                homeViewModel.changeQuestion(position)
             }
         }
     }
@@ -88,9 +94,21 @@ class QuestionPagerAdapter(
         }
     }
 
+    inner class AddPastQuestionViewHolder(
+        private val binding: ItemHomeMoreQuestionBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun onBind() {
+            binding.txtHomeMoreQuestion.text = "나를 돌아보기 위한 과거의 질문들이 준비되어 있어요"
+            binding.btnHomeMoreQuestion.setOnClickListener {
+                homeViewModel.getMoreAnswers()
+            }
+        }
+    }
+
     override fun getItemViewType(position: Int): Int {
         return when (position) {
-            answerList.size -> TYPE_HEADER
+            0 -> TYPE_HEADER
+            answerList.size + 1 -> TYPE_FOOTER
             else -> TYPE_ITEM
         }
     }
@@ -99,6 +117,16 @@ class QuestionPagerAdapter(
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             TYPE_HEADER -> {
+                val binding: ItemHomeMoreQuestionBinding =
+                    DataBindingUtil.inflate(
+                        layoutInflater,
+                        R.layout.item_home_more_question,
+                        parent,
+                        false
+                    )
+                AddPastQuestionViewHolder(binding)
+            }
+            TYPE_FOOTER -> {
                 val binding: ItemHomeMoreQuestionBinding =
                     DataBindingUtil.inflate(
                         layoutInflater,
@@ -122,31 +150,48 @@ class QuestionPagerAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (position != answerList.size) {
-            with(holder as QuestionViewHolder) { holder.onBind(answerList[position], position) }
-        } else {
-            with(holder as MoreQuestionViewHolder) {
-                holder.onBind(fragmentManager)
+        when (position) {
+            0 -> {
+                with(holder as AddPastQuestionViewHolder) { holder.onBind() }
+            }
+            answerList.size + 1 -> {
+                with(holder as MoreQuestionViewHolder) { holder.onBind(fragmentManager) }
+            }
+            else -> {
+                with(holder as QuestionViewHolder) {
+                    holder.onBind(
+                        answerList[position - 1],
+                        position
+                    )
+                }
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return answerList.size + 1
+        return answerList.size + 2
     }
 
     fun replaceQuestionList(list: List<Answer>) {
         answerList = list.toMutableList()
-        Log.d("Home QPA", answerList.toString())
+        Log.d("Home", answerList.toString())
         notifyDataSetChanged()
     }
 
-    interface AnswerButtonClickListener {
-        fun onClick(answer: Answer, position: Int)
+    interface QuestionButtonClickListener {
+        fun onAnswerButtonClick(answer: Answer, position: Int)
+    }
+
+    fun transformIntToBoolean(value: Int?): Boolean {
+        return when (value) {
+            0 -> false
+            else -> true
+        }
     }
 
     companion object {
-        const val TYPE_HEADER = 0
+        const val TYPE_FOOTER = 0
         const val TYPE_ITEM = 1
+        const val TYPE_HEADER = 2
     }
 }

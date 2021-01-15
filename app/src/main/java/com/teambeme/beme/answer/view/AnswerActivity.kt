@@ -86,7 +86,6 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
     }
 
     fun setClickText() {
-        // Toast.makeText(this, "클릭가능", Toast.LENGTH_SHORT).show()
         val requestAnswerData = RequestAnswerData(
             answerId = answerViewModel.answerData.value!!.questionId.toInt(),
             content = answerViewModel.answer.value ?: "",
