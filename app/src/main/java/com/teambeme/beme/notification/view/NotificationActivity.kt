@@ -32,7 +32,6 @@ class NotificationActivity :
         binding.rcvRecentActivities.adapter = noticeAdapter
 
         noticeViewModel.requestNoticeItem()
-        noticeViewModel.requestAddNoticeItem()
 
         noticeViewModel.noticeDataList.observe(this) { it ->
             it.let { noticeAdapter.submitList(it) }
