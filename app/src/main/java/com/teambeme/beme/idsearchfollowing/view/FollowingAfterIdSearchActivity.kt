@@ -105,7 +105,8 @@ class FollowingAfterIdSearchActivity :
                 if (queryText.count() > 0) {
                     binding.viewRecentSearch.visibility = View.GONE
                     binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE
-                    idSearchViewModel.deleteSearchRecord()//   여기가 비지블이라 검색중에 검색결과 남은게 보였던것
+                    idSearchViewModel.deleteSearchRecord()
+                    // 여기가 비지블이라 검색중에 검색결과 남은게 보였던것
                 } else {
                     binding.viewRecentSearch.visibility = View.VISIBLE
                     binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE
