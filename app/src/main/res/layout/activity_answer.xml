@@ -87,7 +87,7 @@
             android:id="@+id/txt_answer_data"
             style="@style/answer_info_style"
             android:layout_marginTop="8dp"
-            android:text="@{answerViewModel.answerData.createdAt}"
+            answer:setDate="@{answerViewModel.intentAnswerData.createdAt}"
             app:layout_constraintStart_toStartOf="@+id/txt_answer_info"
             app:layout_constraintTop_toBottomOf="@+id/txt_answer_info"
             tools:text="2020.12.24" />

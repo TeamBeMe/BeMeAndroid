@@ -8,6 +8,7 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.teambeme.beme.R
@@ -30,13 +31,16 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
     private lateinit var answerViewModel: AnswerViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initViewModel(this)
         binding.lifecycleOwner = this
         binding.answerActivity = this
-        initViewModel(this)
         binding.answerViewModel = answerViewModel
+
         StatusBarUtil.setStatusBar(this, Color.WHITE)
 
         val intentAnswerData = intent.getParcelableExtra<IntentAnswerData>("intentAnswerData")!!
+        answerViewModel.setIntentAnswerData(intentAnswerData)
+        Log.d("answer", intentAnswerData.toString())
         answerViewModel.checkStored(intentAnswerData.questionId)
         answerViewModel.answerData.observe(this) {
             if (it != null) {
@@ -86,7 +90,6 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
     }
 
     fun setClickText() {
-        // Toast.makeText(this, "클릭가능", Toast.LENGTH_SHORT).show()
         val requestAnswerData = RequestAnswerData(
             answerId = answerViewModel.answerData.value!!.questionId.toInt(),
             content = answerViewModel.answer.value ?: "",
