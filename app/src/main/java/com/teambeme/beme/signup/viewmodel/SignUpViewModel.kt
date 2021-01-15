@@ -111,7 +111,6 @@ class SignUpViewModel : ViewModel() {
             Log.d("SignUp", e.message())
             Log.d("SignUp", e.stackTraceToString())
         }
-
     }
 
     fun signUpWithoutImage() = viewModelScope.launch {

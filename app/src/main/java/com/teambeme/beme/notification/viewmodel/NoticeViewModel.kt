@@ -26,7 +26,6 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
     fun requestNoticeItem() {
         Log.d("Network ViewModel", "start")
         noticeRepository.notice(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
             page
         ).enqueue(object :
             Callback<ResponseNoticeData> {
@@ -58,7 +57,6 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
 
     fun requestAddNoticeItem() {
         noticeRepository.notice(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjEwMjk4ODkzLCJleHAiOjE2NDE4MzQ4OTMsImlzcyI6ImJlbWUifQ.hR-HzFpSO6N97Y-7c_l3cUkFvXdtVMuDmAOhTaRhAhI",
             page
         ).enqueue(object :
             Callback<ResponseNoticeData> {

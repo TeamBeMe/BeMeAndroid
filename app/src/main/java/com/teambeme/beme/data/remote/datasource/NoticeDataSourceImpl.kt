@@ -7,9 +7,8 @@ import retrofit2.Call
 
 class NoticeDataSourceImpl(private val service: NoticeService) :
     NoticeDataSource {
-    override fun notice(token: String, page: Int?): Call<ResponseNoticeData> {
-        Log.d("Network Repo", "$token and $page")
-        val call = service.notice(token, page)
+    override fun notice(page: Int?): Call<ResponseNoticeData> {
+        val call = service.notice(page)
         Log.d("Network Repo", "$call")
         return call
     }

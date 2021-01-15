@@ -90,6 +90,13 @@ object RetrofitObjects {
         }
     }
 
+    private var fbTokenRegisterInstance: FbTokenRegisterService? = null
+    fun getFbTokenRegisterService(): FbTokenRegisterService = fbTokenRegisterInstance ?: synchronized(this) {
+        fbTokenRegisterInstance ?: baseRetrofit.create(FbTokenRegisterService::class.java).apply {
+            fbTokenRegisterInstance = this
+        }
+    }
+
     private var answerInstance: AnswerService? = null
     fun getAnswerService(): AnswerService = answerInstance ?: synchronized(this) {
         answerInstance ?: baseRetrofit.create(AnswerService::class.java).apply {

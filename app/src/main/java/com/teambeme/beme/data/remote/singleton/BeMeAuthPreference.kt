@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 
 object BeMeAuthPreference {
     private const val AUTH_KEY = "AUTH_TOKEN"
+    private const val FB_KEY = "FB_TOKEN"
 
     private lateinit var preferences: SharedPreferences
 
@@ -21,4 +22,8 @@ object BeMeAuthPreference {
     var userToken: String
         get() = preferences.getString(AUTH_KEY, "BeMe") ?: ""
         set(value) = preferences.edit { it.putString(AUTH_KEY, value) }
+
+    var fireBaseToken: String
+        get() = preferences.getString(FB_KEY, "FireBeMe") ?: ""
+        set(value) = preferences.edit { it.putString(FB_KEY, value) }
 }

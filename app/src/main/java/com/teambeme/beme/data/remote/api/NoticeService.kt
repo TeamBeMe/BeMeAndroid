@@ -9,7 +9,6 @@ interface NoticeService {
     @Headers("Content-type: application/json")
     @GET("users/activities")
     fun notice(
-        @Header("token") token: String,
         @Query("page") page: Int?
     ): Call<ResponseNoticeData>
 }
