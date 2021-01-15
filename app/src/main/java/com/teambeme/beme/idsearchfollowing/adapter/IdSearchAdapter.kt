@@ -91,4 +91,3 @@ class IdSearchAdapter : ListAdapter<ResponseIdSearchData.Data, IdSearchAdapter.I
 
     private var idSearchDatas = mutableListOf<ResponseIdSearchData.Data>()
 }
-

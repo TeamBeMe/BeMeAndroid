@@ -43,6 +43,14 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
         _myQuery.value = query
     }
 
+    fun deleteMyQuery() {
+        _myQuery.value = null
+    }
+
+    fun deleteScrapQuery() {
+        _scrapQuery.value = null
+    }
+
     fun initMyAnswer() {
         _mywriteFilter.value?.category = null
         _mywriteFilter.value?.range = null

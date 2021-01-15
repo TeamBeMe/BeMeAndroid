@@ -37,9 +37,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (remoteMessage.data.isNotEmpty()) {
             Log.i("바디: ", remoteMessage.data["body"].toString())
             Log.i("타이틀: ", remoteMessage.data["title"].toString())
-            if(remoteMessage.data["title"].toString() == "오늘의 질문"){
+            if (remoteMessage.data["title"].toString() == "오늘의 질문") {
                 sendMainNotification(remoteMessage)
-            }else{
+            } else {
                 sendNotiNotification(remoteMessage)
             }
         } else {
@@ -53,7 +53,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
 
         val pendingIntent = PendingIntent.getActivities(
             this, uniId, arrayOf(intent), PendingIntent.FLAG_ONE_SHOT
@@ -114,7 +113,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
         notificationManager.notify(uniId, notificationBuilder.build())
     }
-
 
     private fun sendRegistrationToServer(token: String) {
         Log.d(TAG, "sendRegistrationTokenToServer($token)")

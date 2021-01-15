@@ -1,15 +1,17 @@
 package com.teambeme.beme.data.remote.api
 
 import com.teambeme.beme.signup.model.ResponseNickDoubleCheck
-import com.teambeme.beme.signup.model.RequestSignUp
 import com.teambeme.beme.signup.model.ResponseSignUp
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface SignUpService {
-    @Headers("Content-type: application/json")
+    @Multipart
     @POST("users/signup")
     suspend fun signUp(
-        @Body body: RequestSignUp
+        @PartMap body: HashMap<String, RequestBody>,
+        @Part file: MultipartBody.Part?
     ): ResponseSignUp
 
     @Headers("Content-type: application/json")

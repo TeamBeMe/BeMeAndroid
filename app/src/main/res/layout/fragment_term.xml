@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.teambeme.beme.signup.viewmodel.SignUpViewModel" />
@@ -72,7 +73,7 @@
             android:id="@+id/linear_term_essence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="32dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="@+id/txt_term_title"
             app:layout_constraintTop_toBottomOf="@id/txt_term_check">
@@ -112,29 +113,38 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/txt_term_essence"
+        <ScrollView
+            android:id="@+id/scrollview_term_essence"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@color/signup_background_gray"
-            android:maxHeight="140dp"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="16dp"
-            android:scrollbars="vertical"
-            android:text="@string/txt_term_service"
-            android:textColor="@color/signup_content_content"
-            android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@id/linear_term_essence" />
+            android:layout_height="120dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="400dp"
+            android:maxHeight="120dp"
+            app:layout_constraintBottom_toTopOf="@+id/linear_term_service"
+            app:layout_constraintTop_toBottomOf="@+id/linear_term_essence">
+
+            <ImageView
+                android:id="@+id/img_term_essence"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/signup_background_gray"
+                android:maxHeight="140dp"
+                android:paddingHorizontal="28dp"
+                android:paddingVertical="16dp"
+                android:scaleType="fitXY"
+                android:scrollbars="vertical"
+                android:src="@drawable/img_clause_account" />
+
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/linear_term_service"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="18dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="@+id/txt_term_title"
-            app:layout_constraintTop_toBottomOf="@id/txt_term_essence">
+            app:layout_constraintTop_toBottomOf="@id/scrollview_term_essence">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -171,20 +181,21 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/txt_term_service"
+        <ScrollView
+            android:id="@+id/scrollview_term_service"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_height="120dp"
             android:background="@color/signup_background_gray"
-            android:maxHeight="140dp"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="16dp"
-            android:scrollbars="vertical"
-            android:text="@string/txt_term_service"
-            android:textColor="@color/signup_content_content"
-            android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@id/linear_term_service" />
+            app:layout_constraintTop_toBottomOf="@+id/linear_term_service">
+
+            <ImageView
+                android:id="@+id/img_term_service"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="16dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_clause_service" />
+        </ScrollView>
 
         <Button
             android:id="@+id/btn_term_done"
@@ -199,7 +210,7 @@
             android:textColor="@color/white"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_term_service"
+            app:layout_constraintTop_toBottomOf="@+id/scrollview_term_service"
             tools:layout_editor_absoluteX="28dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

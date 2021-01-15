@@ -233,6 +233,7 @@
                 android:textColor="@color/following_btn_show_more_txt_white"
                 android:textSize="16sp"
                 app:cornerRadius="6dp"
+                android:visibility="@{followingViewModel.maxPage == followingViewModel.page ? View.INVISIBLE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

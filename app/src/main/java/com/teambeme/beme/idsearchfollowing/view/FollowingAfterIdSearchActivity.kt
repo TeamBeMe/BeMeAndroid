@@ -1,5 +1,6 @@
 package com.teambeme.beme.idsearchfollowing.view
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -14,7 +15,7 @@ import com.teambeme.beme.idsearchfollowing.adapter.RecentSearchAdapter
 import com.teambeme.beme.idsearchfollowing.repository.IdSearchRepositoryImpl
 import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModel
 import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModelFactory
-import com.teambeme.beme.notification.adapter.NoticeAdapter
+import com.teambeme.beme.util.StatusBarUtil
 
 class FollowingAfterIdSearchActivity :
     BindingActivity<ActivityFollowingAfterIdSearchBinding>(R.layout.activity_following_after_id_search) {
@@ -26,6 +27,7 @@ class FollowingAfterIdSearchActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
+        StatusBarUtil.setStatusBar(this, Color.WHITE)
         initBinding(binding)
         setRecentSearchAdapter(binding)
         idSearchViewModel.requestRecentSearchData()
@@ -36,7 +38,7 @@ class FollowingAfterIdSearchActivity :
         idSearchViewModel.idSearchData.observe(this) { it ->
             it.let { idSearchAdapter.submitList(it) }
         }
-        idSearchViewModel.isEmpty.observe(this) {it ->
+        idSearchViewModel.isEmpty.observe(this) { it ->
             isEmptyListener(it)
         }
         setQueryTextListener()
@@ -45,9 +47,9 @@ class FollowingAfterIdSearchActivity :
 
     private fun isEmptyListener(isEmpty: Boolean) {
         if (isEmpty) {
-            binding.noticeWhenNoSearchData.visibility = View.VISIBLE //이건 엠티뷰 측정해서 띄우기
-            binding.constraintViewFollowingAfterIdsearch.visibility=View.GONE    // 엠티뷰에서 팔로잉이 남은것은 여기서 엠티뷰는 visible했는데 검색결과 리사이클러뷰를 가리지
-            //않아서 발생한것 여기서 gone을 해주니 됐다
+            binding.noticeWhenNoSearchData.visibility = View.VISIBLE // 이건 엠티뷰 측정해서 띄우기
+            binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE // 엠티뷰에서 팔로잉이 남은것은 여기서 엠티뷰는 visible했는데 검색결과 리사이클러뷰를 가리지
+            // 않아서 발생한것 여기서 gone을 해주니 됐다
         } else {
             binding.noticeWhenNoSearchData.visibility = View.GONE
         }

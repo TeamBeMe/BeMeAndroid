@@ -15,5 +15,4 @@ class IdSearchDataSourceImpl(private val service: IdSearchService) :
 
     override fun putFollowAndFollowing(body: RequestFollowAndFollowing): Call<ResponseFollowAndFollowing> =
     service.putFollowAndFollowing(body)
-
 }

@@ -3,7 +3,6 @@ package com.teambeme.beme.notification.adapter
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -47,17 +46,15 @@ class NoticeAdapter :
                     view.context.startActivity(intent)
                 }
                 itemView.setOnClickListener { view ->
-                    if(getItem(position).questionTitle != null){
+                    if (getItem(position).questionTitle != null) {
                         val intent = Intent(view.context, DetailActivity::class.java)
                         intent.putExtra("answerId", getItem(holder.adapterPosition).answerId)
                         view.context.startActivity(intent)
-                    }else{
+                    } else {
                         val intent = Intent(view.context, OtherPageActivity::class.java)
                         intent.putExtra("userId", getItem(holder.adapterPosition).userId)
                         view.context.startActivity(intent)
-
                     }
-
                 }
             }
         }
