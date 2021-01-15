@@ -42,7 +42,7 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         val isChange = intent.getIntExtra(IS_CHANGE, IS_WRITE_VALUE)
         answerViewModel.setIntentAnswerData(intentAnswerData)
         Log.d("answer", intentAnswerData.toString())
-        binding.txtAnswerData.text = intentAnswerData.createdAt.substring(0..9)
+        binding.txtAnswerData.text = intentAnswerData.createdAt
         answerViewModel.checkStored(intentAnswerData.questionId)
         answerViewModel.answerData.observe(this) {
             if (it != null) {
