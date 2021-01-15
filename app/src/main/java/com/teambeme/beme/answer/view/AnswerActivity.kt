@@ -25,6 +25,10 @@ import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityAnswerBinding
 import com.teambeme.beme.util.StatusBarUtil
 import com.teambeme.beme.util.dp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_answer) {
 
@@ -41,6 +45,7 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         val intentAnswerData = intent.getParcelableExtra<IntentAnswerData>("intentAnswerData")!!
         val isChange = intent.getIntExtra(IS_CHANGE, IS_WRITE_VALUE)
         answerViewModel.setIntentAnswerData(intentAnswerData)
+        Log.d("answerIDx",intentAnswerData.categoryIdx.toString())
         Log.d("answer", intentAnswerData.toString())
         binding.txtAnswerData.text = intentAnswerData.createdAt
         answerViewModel.checkStored(intentAnswerData.questionId)
@@ -109,8 +114,11 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
             setResult(RESULT_OK, intent)
             finish()
         } else if (status == IS_CHANGE_VALUE) {
-            answerViewModel.modifyAnswer(requestAnswerData)
-            finish()
+            CoroutineScope(Dispatchers.Main).launch {
+                answerViewModel.modifyAnswer(requestAnswerData)
+                delay(500)
+                finish()
+            }
         }
     }
 
