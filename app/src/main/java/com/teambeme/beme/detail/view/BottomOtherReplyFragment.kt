@@ -35,11 +35,11 @@ class BottomOtherReplyFragment : BottomSheetDialogFragment() {
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("teambeme@naver.com"))
         intent.putExtra(Intent.EXTRA_SUBJECT, "BeMe 유저 신고 ")
         intent.putExtra(
-            Intent.EXTRA_TEXT, "1. 문의 유형 ( 문의, 버그 제보, 탈퇴하기, 기타) : \n" +
-                    "2. 회원 닉네임 (필요시 기입) :\n" +
-                    "3. 문의 내용 :\n" +
+            Intent.EXTRA_TEXT,
+            "1. 신고 유형  사유 (상업적 광고 및 판매, 음란물/불건전한 대화, 욕설 및 비하, 도배, 부적절한 프로필 이미지, 기타 사유) :  \n" +
+                    "2. 신고할 유저의 닉네임 :\n" +
                     "\n" +
-                    "문의하신 사항은 BeMe팀이 신속하게 처리하겠습니다. 감사합니다 :)"
+                    "신고하신 사항은 BeMe팀이 신속하게 처리하겠습니다. 감사합니다 :)"
         )
         intent.type = "message/rfc822"
         startActivity(intent)
