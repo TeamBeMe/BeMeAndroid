@@ -197,11 +197,11 @@ object BindingAdapters {
     fun setFollow(chip: Chip, isFollow: Boolean) {
         if (isFollow) {
             chip.isChecked = false
-            val text = "팔로잉"
+            val text = "       팔로잉       "
             chip.text = text
         } else {
             chip.isChecked = true
-            val text = "팔로우"
+            val text = "       팔로우       "
             chip.text = text
         }
     }
