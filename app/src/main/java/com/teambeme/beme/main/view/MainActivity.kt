@@ -8,18 +8,25 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
+import com.teambeme.beme.data.remote.datasource.FbTokenRegisterDataSourceImpl
+import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityMainBinding
 import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.main.adapter.MainViewPagerAdapter
+import com.teambeme.beme.main.repository.MainRepositoryImpl
 import com.teambeme.beme.main.viewmodel.MainViewModel
+import com.teambeme.beme.main.viewmodel.MainViewModelFactory
 import com.teambeme.beme.util.StatusBarUtil
 
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
-    private val mainViewModel: MainViewModel by viewModels()
+    private val mainViewModelFactory =
+        MainViewModelFactory(MainRepositoryImpl(FbTokenRegisterDataSourceImpl(RetrofitObjects.getFbTokenRegisterService())))
+    private val mainViewModel: MainViewModel by viewModels { mainViewModelFactory }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setViewPagerAdapter(this)
         LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
+        mainViewModel.getFireBaseToken()
+        setViewPagerAdapter(this)
         setBottomNavigationSelectListener(binding.bnvMain)
     }
 

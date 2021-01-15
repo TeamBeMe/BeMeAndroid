@@ -1,5 +1,6 @@
 package com.teambeme.beme.idsearchfollowing.adapter
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemRecentSearchBinding
 import com.teambeme.beme.idsearchfollowing.model.ResponseRecentSearchRecord
 import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModel
+import com.teambeme.beme.otherpage.view.OtherPageActivity
 
 class RecentSearchAdapter(private val idSearchViewModel: IdSearchViewModel) :
     RecyclerView.Adapter<RecentSearchAdapter.RecentSearchViewHolder>() {
@@ -25,8 +27,18 @@ class RecentSearchAdapter(private val idSearchViewModel: IdSearchViewModel) :
 
     override fun onBindViewHolder(holder: RecentSearchViewHolder, position: Int) {
         holder.bind(recentSearchData[position])
-//        holder.bind(recentSearchData[position]).let {
-//        }
+        holder.bind(recentSearchData[position]).let {
+            with(holder) {
+                recentSearchProfilePic.setOnClickListener { view ->
+                    val intent = Intent(view.context, OtherPageActivity::class.java)
+                    intent.putExtra("userId", recentSearchData[position].id)
+                    Log.d("Internt", position.toString())
+                    Log.d("Internt", recentSearchData[position].id.toString())
+                    view.context.startActivity(intent)
+                }
+            }
+        }
+
         holder.btnDeleteRecentRecearch.setOnClickListener {
             idSearchViewModel.setPosition(position)
             recentSearchData.removeAt(position)
@@ -49,5 +61,6 @@ class RecentSearchAdapter(private val idSearchViewModel: IdSearchViewModel) :
             Log.d("Network is success_2", recentSearchData.toString())
         }
         val btnDeleteRecentRecearch = binding.btnDeleteRecentSearch
+        val recentSearchProfilePic = binding.recentSearchProfilePic
     }
 }

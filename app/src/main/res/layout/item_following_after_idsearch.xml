@@ -15,7 +15,7 @@
         android:layout_marginBottom="20dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/recent_search_profile_pic"
+            android:id="@+id/id_search_profile_pic"
             android:layout_width="40dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -25,7 +25,7 @@
             app:setSrcFromUrl="@{idSearch.profileImg}" />
 
         <TextView
-            android:id="@+id/recent_search_uid"
+            android:id="@+id/id_search_uid"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -38,7 +38,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_following_unfollow"
-            app:layout_constraintStart_toEndOf="@id/recent_search_profile_pic"
+            app:layout_constraintStart_toEndOf="@id/id_search_profile_pic"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
