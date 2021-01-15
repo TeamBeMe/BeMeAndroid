@@ -23,6 +23,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:visibility="@{searchFollower.isFollowed() == null ? View.INVISIBLE : View.VISIBLE}"
+            app:civ_border_color="@color/answers_circle"
+            app:civ_border_width="1dp"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -56,8 +58,8 @@
             android:text="삭 제"
             android:textColor="@color/item_show_all_profiles_btn_follower_name_white"
             android:textSize="12dp"
-            app:cornerRadius="3dp"
             android:visibility="@{searchFollower.isFollowed() == null ? View.INVISIBLE : View.VISIBLE}"
+            app:cornerRadius="3dp"
             app:layout_constraintBottom_toBottomOf="@+id/img_following_show_all_profiles"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/img_following_show_all_profiles"

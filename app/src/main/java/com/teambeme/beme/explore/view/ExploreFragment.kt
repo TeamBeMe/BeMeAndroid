@@ -2,7 +2,6 @@ package com.teambeme.beme.explore.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +33,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
     private val exploreViewModel: ExploreViewModel by activityViewModels { exploreViewModelFactory }
 
     override fun onResume() {
+        exploreViewModel.requestOtherMinds()
         super.onResume()
         exploreViewModel.requestOtherQuestionsWithCategorySorting(
             exploreViewModel.categoryNum,
@@ -55,7 +55,6 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         exploreViewModel.requestOtherQuestions()
         setOtherMindsAdapter()
         setOtherQuestionsAdapter()
-        Log.d("abc_exfloreActivity", exploreViewModel.userNickname)
         setOtherMindsObserve()
         setOtherQuestionsObserve()
         setTabSelectedFromExploreListener()
@@ -63,7 +62,44 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         setClickListenerForExploreBtnDoAnswer()
         setClickListenerForIdSearchButton()
         setClickListenerForAlarmButton()
+        setIsMorePageObserve()
+        setIntentAnswerObserve()
         return binding.root
+    }
+
+    private fun setIntentAnswerObserve() {
+        exploreViewModel.questionForFirstAnswer.observe(viewLifecycleOwner) {
+            it?.let {
+                val intentAnswerData = IntentAnswerData(
+                    it.id,
+                    it.questionTitle,
+                    it.questionCategoryName,
+                    it.answerIdx,
+                    it.createdAt
+                )
+                val intent = Intent(context, AnswerActivity::class.java)
+                intent.putExtra("intentAnswerData", intentAnswerData)
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun setClickListenerForExploreBtnDoAnswer() {
+        binding.btnExploreDoAnswer.setOnClickListener {
+            exploreViewModel.requestQuestionForFirstAnswer()
+        }
+    }
+
+    private fun setIsMorePageObserve() {
+        exploreViewModel.isMorePage.observe(viewLifecycleOwner) { morePage ->
+            morePage?.let {
+                if (morePage == true) {
+                    binding.btnExploreShowMore.visibility = View.VISIBLE
+                } else {
+                    binding.btnExploreShowMore.visibility = View.INVISIBLE
+                }
+            }
+        }
     }
 
     private fun setOtherMindsAdapter() {
@@ -132,26 +168,6 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
     private fun setSnapHelper() {
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.rcvExploreOtherMinds)
-    }
-
-    private fun setClickListenerForExploreBtnDoAnswer() {
-        binding.btnExploreDoAnswer.setOnClickListener {
-            exploreViewModel.requestQuestionForFirstAnswer()
-            exploreViewModel.questionForFirstAnswer.observe(viewLifecycleOwner) {
-                it?.let {
-                    val intentAnswerData = IntentAnswerData(
-                        it.id,
-                        it.questionTitle,
-                        it.questionCategoryName,
-                        it.answerIdx,
-                        it.createdAt
-                    )
-                    val intent = Intent(context, AnswerActivity::class.java)
-                    intent.putExtra("intentAnswerData", intentAnswerData)
-                    startActivity(intent)
-                }
-            }
-        }
     }
 
     private fun setClickListenerForIdSearchButton() {

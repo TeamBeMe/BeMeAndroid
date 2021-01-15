@@ -21,6 +21,9 @@ class PermissionInfoFragment : Fragment() {
         binding.btnPermissionCheck.setOnClickListener { view ->
             view.findNavController().navigate(R.id.action_permissionInfoFragment_to_termFragment)
         }
+        binding.btnPermissionBack.setOnClickListener {
+            requireActivity().finish()
+        }
         return binding.root
     }
 }

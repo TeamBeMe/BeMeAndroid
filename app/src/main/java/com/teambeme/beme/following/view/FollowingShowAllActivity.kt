@@ -165,7 +165,6 @@ class FollowingShowAllActivity :
                     submitList(followerSearchList)
                 }
                 if (followerSearchList[0].isFollowed == null) {
-                    binding.searchViewFollowingShowAll.visibility = View.INVISIBLE
                     binding.txtFollowingShowAllNoSearchInformation.visibility = View.VISIBLE
                     binding.imgFollowingShowAllEmptyInformation.visibility = View.VISIBLE
                 } else {
@@ -277,6 +276,7 @@ class FollowingShowAllActivity :
                     }
                     binding.rcvFollowingShowAllProfilesSearchFollower.visibility = View.INVISIBLE
                     binding.rcvFollowingShowAllProfilesSearchFollowing.visibility = View.INVISIBLE
+                    Log.d("search_yjoo", "${followingShowAllViewModel.searchList.value}")
                 }
                 return false
             }
@@ -286,6 +286,7 @@ class FollowingShowAllActivity :
                 if (query != null) {
                     followingShowAllViewModel.setSearchQuery(query)
                     followingShowAllViewModel.requestSearchMyFollowingFollower()
+                    Log.d("search_yjoo", "${followingShowAllViewModel.searchList.value}")
                 }
                 return false
             }

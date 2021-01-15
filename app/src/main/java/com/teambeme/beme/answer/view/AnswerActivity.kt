@@ -39,8 +39,10 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         StatusBarUtil.setStatusBar(this, Color.WHITE)
 
         val intentAnswerData = intent.getParcelableExtra<IntentAnswerData>("intentAnswerData")!!
+        val isChange = intent.getIntExtra(IS_CHANGE, IS_WRITE_VALUE)
         answerViewModel.setIntentAnswerData(intentAnswerData)
         Log.d("answer", intentAnswerData.toString())
+        binding.txtAnswerData.text = intentAnswerData.createdAt.substring(0..9)
         answerViewModel.checkStored(intentAnswerData.questionId)
         answerViewModel.answerData.observe(this) {
             if (it != null) {
@@ -49,6 +51,9 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
             } else {
                 answerViewModel.initAnswerData(intentAnswerData)
             }
+        }
+        binding.txtAnswerComplete.setOnClickListener {
+            submitAnswer(isChange)
         }
         setSwitchListener()
         observePublicSwitch()
@@ -89,19 +94,24 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         super.onBackPressed()
     }
 
-    fun setClickText() {
+    private fun submitAnswer(status: Int) {
         val requestAnswerData = RequestAnswerData(
             answerId = answerViewModel.answerData.value!!.questionId.toInt(),
             content = answerViewModel.answer.value ?: "",
             isPublic = answerViewModel.isPublic.value ?: false,
             isCommentBlocked = getIsCommentBlockedValue(answerViewModel.isPublic.value)
         )
-        answerViewModel.registerAnswer(requestAnswerData)
-        val position = intent.getIntExtra("position", -1)
-        intent.putExtra("posittion", position)
-        intent.putExtra("content", answerViewModel.answer.value)
-        setResult(RESULT_OK, intent)
-        finish()
+        if (status == IS_WRITE_VALUE) {
+            answerViewModel.registerAnswer(requestAnswerData)
+            val position = intent.getIntExtra("position", -1)
+            intent.putExtra("posittion", position)
+            intent.putExtra("content", answerViewModel.answer.value)
+            setResult(RESULT_OK, intent)
+            finish()
+        } else if (status == IS_CHANGE_VALUE) {
+            answerViewModel.modifyAnswer(requestAnswerData)
+            finish()
+        }
     }
 
     private fun getIsCommentBlockedValue(isPublic: Boolean?): Boolean {
@@ -155,5 +165,11 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
     override fun onPause() {
         super.onPause()
         answerViewModel.storeAnswer()
+    }
+
+    companion object {
+        const val IS_CHANGE_VALUE = 100
+        const val IS_WRITE_VALUE = 0
+        const val IS_CHANGE = "isChange"
     }
 }

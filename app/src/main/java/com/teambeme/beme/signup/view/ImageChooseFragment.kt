@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.teambeme.beme.R
@@ -42,11 +43,14 @@ class ImageChooseFragment : Fragment() {
         binding.viewModel = signUpViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        binding.btnBack.setOnClickListener { view ->
+            view.findNavController().popBackStack()
+        }
+
         binding.btnImageChooseDone.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 signUpViewModel.signUp().join()
                 Toast.makeText(requireContext(), "회원가입 성공", Toast.LENGTH_SHORT).show()
-                requireActivity().finish()
             }
         }
 
@@ -59,7 +63,6 @@ class ImageChooseFragment : Fragment() {
         }
 
         binding.imgChooseImagepick.setOnClickListener {
-            Toast.makeText(requireContext(), "토스트", Toast.LENGTH_SHORT).show()
             val permissionListener = object : PermissionListener {
                 override fun onPermissionGranted() {
                     pickImage()
@@ -83,6 +86,7 @@ class ImageChooseFragment : Fragment() {
             if (userInfo != null) {
                 if (userInfo.success) {
                     Toast.makeText(requireContext(), "회원가입 성공", Toast.LENGTH_SHORT).show()
+                    requireActivity().finish()
                 } else {
                     Log.d("SignUp", userInfo.message)
                 }

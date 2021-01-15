@@ -22,6 +22,7 @@ import com.teambeme.beme.detail.viewmodel.DetailViewModel.Companion.MY_OTHER_REP
 import com.teambeme.beme.detail.viewmodel.DetailViewModel.Companion.MY_REPLY
 import com.teambeme.beme.detail.viewmodel.DetailViewModelFactory
 import com.teambeme.beme.explore.view.ExploreDetailActivity
+import com.teambeme.beme.otherpage.view.OtherPageActivity
 import com.teambeme.beme.util.StatusBarUtil
 
 class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_detail) {
@@ -110,7 +111,16 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
             isPublicAnswerListener(it)
         }
         binding.btnScrapBack.setOnClickListener { finish() }
+        profileClickListener()
         detailViewModel.secretButtonClickedFalse()
+    }
+
+    private fun profileClickListener() {
+        binding.imgDetailProfile.setOnClickListener {
+            val intent = Intent(this, OtherPageActivity::class.java)
+            intent.putExtra("userId", detailViewModel.detailData.value!!.userId)
+            startActivity(intent)
+        }
     }
 
     private fun isPublicAnswerListener(canReply: Boolean) {

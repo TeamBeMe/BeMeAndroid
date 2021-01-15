@@ -48,6 +48,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     override fun onResume() {
         super.onResume()
+        homeViewModel.refreshTaskCompleted()
         returnToDefaultPosition()
     }
 
@@ -81,6 +82,9 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
                 homeViewModel.setReadyToReceiveEvent()
             }
         }
+        homeViewModel.successMessage.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setAnswerPager(pagerAdapter: QuestionPagerAdapter) {
@@ -108,6 +112,10 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
                         true -> binding.txtHomeTitle.text = "오늘의 질문"
                         else -> binding.txtHomeTitle.text = "과거의 질문"
                     }
+                } else if (position == homeViewModel.answerList.value?.size?.plus(1)) {
+                    binding.txtHomeTitle.text = "새로운 질문"
+                } else {
+                    binding.txtHomeTitle.text = "과거의 질문 더 보기"
                 }
             }
         })

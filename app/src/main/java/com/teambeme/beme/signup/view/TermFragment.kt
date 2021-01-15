@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentTermBinding
@@ -24,6 +25,9 @@ class TermFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_term, container, false)
         binding.viewModel = signUpViewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.btnTermBack.setOnClickListener { view ->
+            view.findNavController().popBackStack()
+        }
         doneButtonClickListener()
         setObserve()
         setCheckBoxListener()

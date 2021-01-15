@@ -4,6 +4,7 @@
     xmlns:user="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="recentActivities"
             type="com.teambeme.beme.notification.model.ResponseNoticeData.Data.Activity" />
@@ -18,13 +19,13 @@
             android:id="@+id/notification_profile_pic"
             android:layout_width="40dp"
             android:layout_height="0dp"
+            app:civ_border_color="@color/circle_view_gray"
+            app:civ_border_width="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setSrcFromUrl="@{recentActivities.profileImg}"
-            app:civ_border_color="@color/circle_view_gray"
-            app:civ_border_width="1dp"/>
+            app:setSrcFromUrl="@{recentActivities.profileImg}" />
 
         <TextView
             android:id="@+id/notification_message_comment"
@@ -33,14 +34,15 @@
             android:layout_marginStart="52dp"
             android:bufferType="spannable"
             android:lineHeight="18dp"
-            user:setNickName="@{recentActivities.userNickname}"
-            user:setQuestionTitle="@{recentActivities.questionTitle}"
-            user:setType="@{recentActivities.type}"
             android:textColor="#000"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/notification_profile_pic"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            user:setNickName="@{recentActivities.userNickname}"
+            user:setQuestionTitle="@{recentActivities.questionTitle}"
+            user:setType="@{recentActivities.type}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
