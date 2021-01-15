@@ -57,6 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="닉네임"
+                android:singleLine="true"
                 android:text="@={loginViewModel.nickNameText}"
                 android:textColor="@color/black"
                 android:textColorHint="@color/login_text_gray" />
@@ -78,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:hint="비밀번호"
                 android:inputType="textPassword"
+                android:singleLine="true"
                 android:text="@={loginViewModel.passwordText}"
                 android:textColor="@color/black"
                 android:textColorHint="@color/login_text_gray" />
