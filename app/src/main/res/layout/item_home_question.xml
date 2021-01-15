@@ -15,7 +15,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/question_shape_background">
+        android:background="@{answer.today ? @drawable/question_shape_background : @drawable/past_question_shape_background}"
+        home:background="@drawable/question_shape_background">
 
         <ImageButton
             android:id="@+id/img_question_lock"
