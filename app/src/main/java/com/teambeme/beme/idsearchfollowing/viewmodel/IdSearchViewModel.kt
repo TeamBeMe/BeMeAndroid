@@ -119,8 +119,9 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                         if (response.isSuccessful) {
                             Log.d("Network is success", response.body().toString())
                             tempIdSearchList = response.body()!!.data?.let { mutableListOf(it) }
-                            if (tempIdSearchList?.size == 0 || tempIdSearchList == null)
-                                _isEmpty.value = true
+                            if (tempIdSearchList?.size == 0 || tempIdSearchList == null){
+                                _isEmpty.value = true}
+
                             _idSearchData.value = tempIdSearchList?.toMutableList()
                             if (tempIdSearchList == null) {
                                 deleteSearchRecord()
