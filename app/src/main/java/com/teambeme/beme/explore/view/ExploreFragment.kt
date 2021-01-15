@@ -77,6 +77,9 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
                     it.answerIdx,
                     it.createdAt
                 )
+                val intent = Intent(context, AnswerActivity::class.java)
+                intent.putExtra("intentAnswerData", intentAnswerData)
+                startActivity(intent)
             }
         }
     }
@@ -84,9 +87,6 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
     private fun setClickListenerForExploreBtnDoAnswer() {
         binding.btnExploreDoAnswer.setOnClickListener {
             exploreViewModel.requestQuestionForFirstAnswer()
-            val intent = Intent(context, AnswerActivity::class.java)
-            intent.putExtra("intentAnswerData", intentAnswerData)
-            startActivity(intent)
         }
     }
 
