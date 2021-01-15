@@ -18,6 +18,7 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
         tools:context=".detail.view.DetailActivity">
 
 
@@ -43,7 +44,7 @@
                 android:id="@+id/btn_detail_scrap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@{detailViewModel.detailData.scrapped ? @drawable/ic_scrap_on_mypage : @drawable/ic_scrap_off_mypage}"
+                android:src="@{detailViewModel.detailData.scrapped ? @drawable/ic_scrap_on_detail : @drawable/ic_scrap_off_detail}"
                 android:layout_marginEnd="12dp"
                 android:onClick="@{() -> detailViewModel.scrapClicked()}"
                 android:backgroundTint="@android:color/transparent"
@@ -124,6 +125,8 @@
                     android:layout_width="34dp"
                     android:layout_height="34dp"
                     android:layout_marginTop="18dp"
+                    app:civ_border_color="@color/detail_circle"
+                    app:civ_border_width="1dp"
                     mypage:setSrcFromUrl="@{detailViewModel.detailData.userProfile}"
                     mypage:isVisible="@{!detailViewModel.detailData.author}"
                     app:layout_constraintStart_toStartOf="@+id/txt_detail_data"
@@ -233,6 +236,8 @@
             android:id="@+id/constraint_detail_replybar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 

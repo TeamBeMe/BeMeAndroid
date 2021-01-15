@@ -143,10 +143,10 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
 
     private fun scrapListener() {
         if (detailViewModel.isScrapped.value == false) {
-            binding.btnDetailScrap.setImageResource(R.drawable.ic_scrap_on_mypage)
+            binding.btnDetailScrap.setImageResource(R.drawable.ic_scrap_on_detail)
             Toast.makeText(this, "스크랩 되었습니다.", Toast.LENGTH_SHORT).show()
         } else {
-            binding.btnDetailScrap.setImageResource(R.drawable.ic_scrap_off_mypage)
+            binding.btnDetailScrap.setImageResource(R.drawable.ic_scrap_off_detail)
             Toast.makeText(this, "스크랩이 취소되었습니다.", Toast.LENGTH_SHORT).show()
         }
         detailViewModel.putScrap()
@@ -222,10 +222,16 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
         detailViewModel.secretButtonClickedFalse()
         if (isClicked) {
             binding.constraintDetailSnakbar.visibility = View.VISIBLE
+            if (!detailViewModel.getReplyFlag()) {
+                binding.imgDetailSecret.isEnabled = false
+                binding.imgDetailSecret.setImageResource(R.drawable.ic_secret_on)
+            }
             binding.txtDetailMessage.text = "${detailViewModel.getId()} 님에게 답글을 남기는 중"
             binding.btnDetailCancel.setOnClickListener {
                 binding.constraintDetailSnakbar.visibility = View.GONE
                 detailViewModel.addReplyChildclickedFalse()
+                binding.imgDetailSecret.isEnabled = true
+                binding.imgDetailSecret.setImageResource(R.drawable.ic_secret_off)
                 detailViewModel.answerText.value = ""
             }
             focusKeyboard()
@@ -248,7 +254,12 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
 
     private fun changeChildclickListener(isChildChangeClicked: Boolean) {
         detailViewModel.secretButtonClickedFalse()
+
+        Toast.makeText(this, "${detailViewModel.childposition.value}", Toast.LENGTH_SHORT).show()
         if (isChildChangeClicked) {
+            if (!detailViewModel.getReplyChildFlag()) {
+                binding.imgDetailSecret.setImageResource(R.drawable.ic_secret_on)
+            }
             binding.constraintDetailSnakbar.visibility = View.VISIBLE
             binding.imgDetailSecret.isEnabled = false
             binding.txtDetailMessage.text = "댓글을 수정중입니다"
@@ -256,6 +267,7 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
                 binding.constraintDetailSnakbar.visibility = View.GONE
                 detailViewModel.changeChildClickedFalse()
                 binding.imgDetailSecret.isEnabled = true
+                binding.imgDetailSecret.setImageResource(R.drawable.ic_secret_off)
                 detailViewModel.answerText.value = ""
             }
             focusKeyboard()
@@ -265,12 +277,16 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
     private fun changeClickListener(isChangeClicked: Boolean) {
         if (isChangeClicked) {
             detailViewModel.secretButtonClickedFalse()
+            if (!detailViewModel.getReplyParentFlag()) {
+                binding.imgDetailSecret.setImageResource(R.drawable.ic_secret_on)
+            }
             binding.constraintDetailSnakbar.visibility = View.VISIBLE
             binding.txtDetailMessage.text = "댓글을 수정중입니다"
             binding.imgDetailSecret.isEnabled = false
             binding.btnDetailCancel.setOnClickListener {
                 binding.constraintDetailSnakbar.visibility = View.GONE
                 detailViewModel.changeClickedFalse()
+                binding.imgDetailSecret.setImageResource(R.drawable.ic_secret_off)
                 binding.imgDetailSecret.isEnabled = true
                 detailViewModel.answerText.value = ""
             }

@@ -25,6 +25,7 @@ class MyPageFragment : Fragment() {
     private val myViewModelFactory =
         MyPageViewModelFactory(MyPageRepositoryImpl(MyPageDataSourceImpl(RetrofitObjects.getMyPageService())))
     private val mypageViewModel: MyPageViewModel by activityViewModels { myViewModelFactory }
+    private var isChangeProfile: Boolean = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +37,7 @@ class MyPageFragment : Fragment() {
         binding.myPageViewModel = mypageViewModel
         mypageViewModel.profileUri.observe(viewLifecycleOwner) {
             editProfileListener(it)
+            isChangeProfile = true
         }
         binding.btnMypageProfile.setOnClickListener { editProfileClickListener() }
         return binding.root
@@ -43,7 +45,11 @@ class MyPageFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        mypageViewModel.getMyProfile()
+        if (isChangeProfile) {
+            isChangeProfile = false
+        } else {
+            mypageViewModel.getMyProfile()
+        }
     }
 
     private fun setViewPagerAdapter(fragmentManager: FragmentManager) {

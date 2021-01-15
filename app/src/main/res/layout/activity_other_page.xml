@@ -88,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
-                android:text="팔로잉"
+                android:text="       팔로잉       "
                 setFollow="@{otherPageViewModel.isFollow}"
                 android:onClick="@{() -> otherPageViewModel.putFollow()}"
                 android:textColor="@color/explore_chiptext_selector"
