@@ -37,12 +37,13 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
         setBtnVisible(deleteBtnOtherAnswers)
         binding.detailViewModel = detailViewModel
         binding.lifecycleOwner = this
+        setAdapter(answerId)
+        clickListener(answerId)
     }
 
     override fun onResume() {
         super.onResume()
-        setAdapter(answerId)
-        clickListener(answerId)
+        detailViewModel.requestDetail(answerId)
     }
 
     private fun setBtnVisible(deleteBtnOtherAnswer: Boolean) {
@@ -59,7 +60,6 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
             adapter = replyAdapter
             layoutManager = LinearLayoutManager(this@DetailActivity)
         }
-        detailViewModel.requestDetail(answerId)
         detailViewModel.replyParentData.observe(this) { replyParentData ->
             replyParentData.let {
                 replyAdapter.replaceReplyList(replyParentData.toMutableList())
@@ -110,6 +110,7 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
             isPublicAnswerListener(it)
         }
         binding.btnScrapBack.setOnClickListener { finish() }
+        detailViewModel.secretButtonClickedFalse()
     }
 
     private fun isPublicAnswerListener(canReply: Boolean) {
@@ -187,7 +188,7 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
             Toast.makeText(this, "빈 댓글은 달 수 없습니다", Toast.LENGTH_SHORT).show()
         } else if (isAddClicked) {
             binding.imgDetailSecret.isEnabled = true
-            detailViewModel.secretButtonClickedFalse()
+
             when {
                 detailViewModel.isChangeClicked.value == true -> {
                     detailViewModel.changeParentReply()
@@ -213,6 +214,7 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
                     hideKeyboard()
                 }
             }
+            detailViewModel.secretButtonClickedFalse()
         }
     }
 

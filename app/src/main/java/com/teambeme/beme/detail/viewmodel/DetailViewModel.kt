@@ -404,7 +404,7 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
     fun addParentReply() {
         var reply: ResponseDetail.Data.Comment
         detailRepository.postReply(
-            detailData.value!!.id, answerText.value!!, isPublic.value!!, null
+            detailData.value!!.id, answerText.value!!, !isPublic.value!!, null
         )
             .enqueue(object :
                 Callback<ResponsePostReply> {
@@ -445,7 +445,7 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
         detailRepository.postReply(
             detailData.value!!.id,
             answerText.value!!,
-            isPublic.value!!,
+            !isPublic.value!!,
             copyReplyData[replyPosition.value!!].id
         )
             .enqueue(object :

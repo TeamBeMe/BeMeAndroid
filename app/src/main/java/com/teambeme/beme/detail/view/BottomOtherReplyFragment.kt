@@ -22,7 +22,6 @@ class BottomOtherReplyFragment : BottomSheetDialogFragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.item_bottom_other, container, false)
         binding.lifecycleOwner = this
-        binding.detailViewModel = detailViewModel
         binding.tbOtherbottomReport.setOnClickListener {
             dismiss()
             sendEmail()
