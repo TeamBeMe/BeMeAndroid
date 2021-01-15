@@ -52,8 +52,8 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
                             _isMorePage.value = false
                         }
                     }
-                    Log.d("notice_request_copy", "${copyNoticeDataList}")
-                    Log.d("notice_request_data", "${noticeDataList.value}")
+                    Log.d("notice_request_copy", "$copyNoticeDataList")
+                    val d = Log.d("notice_request_data", "${noticeDataList.value}")
                 } else {
                     Log.d("Network Error", responseData.body()?.data.toString())
                     Log.d("Network Error", responseData.body()?.status.toString())
@@ -88,8 +88,8 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
                             _isMorePage.value = false
                         }
                     }
-                    Log.d("notice_plus_copy", "${copyNoticeDataList}")
-                    Log.d("notice_plus_data", "${noticeDataList.value}")
+                    Log.d("notice_plus_copy", "$copyNoticeDataList")
+                    val d = Log.d("notice_plus_data", "${noticeDataList.value}")
                 }
             }
 

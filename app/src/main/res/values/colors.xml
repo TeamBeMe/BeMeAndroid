@@ -130,4 +130,5 @@
     <color name="detail_circle">#F0F0F0</color>
     <color name="mypage_circle">#F0F0F0</color>
     <color name="other_circle">#F0F0F0</color>
+    <color name="signup_dot_black">#48484a</color>
 </resources>
