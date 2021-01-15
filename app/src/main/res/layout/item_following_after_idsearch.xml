@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="idSearch"
             type="com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData.Data" />
@@ -12,7 +13,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="20dp"
+        android:visibility="@{idSearch.isFollowed() == null ? View.INVISIBLE : View.VISIBLE}"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/id_search_profile_pic"

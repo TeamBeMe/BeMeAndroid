@@ -277,6 +277,7 @@ class FollowingShowAllActivity :
                     }
                     binding.rcvFollowingShowAllProfilesSearchFollower.visibility = View.INVISIBLE
                     binding.rcvFollowingShowAllProfilesSearchFollowing.visibility = View.INVISIBLE
+                    Log.d("search_yjoo", "${followingShowAllViewModel.searchList.value}")
                 }
                 return false
             }
@@ -286,6 +287,7 @@ class FollowingShowAllActivity :
                 if (query != null) {
                     followingShowAllViewModel.setSearchQuery(query)
                     followingShowAllViewModel.requestSearchMyFollowingFollower()
+                    Log.d("search_yjoo", "${followingShowAllViewModel.searchList.value}")
                 }
                 return false
             }
