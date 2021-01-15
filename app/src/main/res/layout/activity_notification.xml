@@ -70,20 +70,18 @@
                     tools:listitem="@layout/item_recent_activities" />
 
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_recentActivities_show_more"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="28dp"
                     android:layout_marginBottom="28dp"
-                    android:background="@drawable/btn_notification_to_see_more_background"
-                    android:fontFamily="@font/notosanskr_medium"
                     android:text="더보기"
                     android:textColor="#fff"
                     android:textSize="16sp"
-                    app:backgroundTint="@null"
-                    android:minHeight="0dp"
-                    android:minWidth="0dp"
+                    app:backgroundTint="@color/explore_btn_show_more_background_black"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="16dp"
                     android:visibility="@{noticeViewModel.noticeDataList.size() == 0 ? View.INVISIBLE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
