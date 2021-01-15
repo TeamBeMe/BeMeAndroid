@@ -134,7 +134,7 @@ object BindingAdapters {
                 textView.append(spannableString)
             }
             "cocomment" -> {
-                val activity = id + "님이 " + title + "에 대한 나의 댓글에 답글을 달았습니다."
+                val activity = id + "님이 \"" + title + "\"글에 답글을 달았습니다."
                 val spannableString = SpannableStringBuilder(activity)
                 spannableString.setSpan(
                     StyleSpan(Typeface.BOLD),
