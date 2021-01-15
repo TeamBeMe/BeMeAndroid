@@ -165,7 +165,6 @@ class FollowingShowAllActivity :
                     submitList(followerSearchList)
                 }
                 if (followerSearchList[0].isFollowed == null) {
-                    binding.searchViewFollowingShowAll.visibility = View.INVISIBLE
                     binding.txtFollowingShowAllNoSearchInformation.visibility = View.VISIBLE
                     binding.imgFollowingShowAllEmptyInformation.visibility = View.VISIBLE
                 } else {

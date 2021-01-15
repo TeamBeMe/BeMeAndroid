@@ -39,8 +39,8 @@
             android:text="@{otherQuestions.question}"
             android:textColor="@color/item_other_questions_txt_title_black"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/btn_other_questions_show_other_answers"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -70,11 +70,11 @@
 
         <TextView
             android:id="@+id/txt_other_questions_time"
-            android:text="@{otherQuestions.answerDate}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
+            android:text="@{otherQuestions.answerDate}"
             android:textColor="@color/item_other_questions_txt_time_gray"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@id/txt_other_questions_category"
@@ -95,12 +95,14 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_other_questions_profile"
+            setSrcFromUrl="@{otherQuestions.userProfile}"
             android:layout_width="34dp"
             android:layout_height="34dp"
-            app:layout_constraintDimensionRatio="1"
             android:layout_marginTop="9dp"
-            setSrcFromUrl="@{otherQuestions.userProfile}"
             android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
+            app:civ_border_color="@color/answers_circle"
+            app:civ_border_width="1dp"
+            app:layout_constraintDimensionRatio="1"
             app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"
             app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_content" />
 
@@ -137,10 +139,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:paddingEnd="18dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:paddingStart="18dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="10dp"
             android:src="@{otherQuestions.isScrapped == true ? @drawable/ic_bookmark_checked : @drawable/ic_bookmark}"
             android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/img_other_questions_profile"

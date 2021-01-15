@@ -35,8 +35,8 @@
                     android:id="@+id/btn_explore_id_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:layout_marginEnd="28dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="16dp"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_plus_follower"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,6 @@
                     android:id="@+id/btn_explore_alarm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="22dp"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_alarm"
                     app:layout_constraintBottom_toBottomOf="@id/btn_explore_id_search"
@@ -235,7 +234,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
                             android:paddingStart="28dp"
-                            android:paddingTop="8dp"
+                            android:paddingTop="14dp"
                             app:singleLine="true"
                             app:singleSelection="true">
 
@@ -249,6 +248,7 @@
                                 android:textColor="@color/explore_chiptext_selector"
                                 app:chipBackgroundColor="@color/explore_chip_selector"
                                 app:chipCornerRadius="4dp"
+                                app:chipMinTouchTargetSize="0dp"
                                 app:chipStrokeColor="@color/explore_chipstroke_selector"
                                 app:chipStrokeWidth="1dp" />
 
@@ -262,6 +262,7 @@
                                 android:textColor="@color/explore_chiptext_selector"
                                 app:chipBackgroundColor="@color/explore_chip_selector"
                                 app:chipCornerRadius="4dp"
+                                app:chipMinTouchTargetSize="0dp"
                                 app:chipStrokeColor="@color/explore_chipstroke_selector"
                                 app:chipStrokeWidth="1dp" />
 
@@ -275,6 +276,7 @@
                                 android:textColor="@color/explore_chiptext_selector"
                                 app:chipBackgroundColor="@color/explore_chip_selector"
                                 app:chipCornerRadius="4dp"
+                                app:chipMinTouchTargetSize="0dp"
                                 app:chipStrokeColor="@color/explore_chipstroke_selector"
                                 app:chipStrokeWidth="1dp" />
 
@@ -288,6 +290,7 @@
                                 android:textColor="@color/explore_chiptext_selector"
                                 app:chipBackgroundColor="@color/explore_chip_selector"
                                 app:chipCornerRadius="4dp"
+                                app:chipMinTouchTargetSize="0dp"
                                 app:chipStrokeColor="@color/explore_chipstroke_selector"
                                 app:chipStrokeWidth="1dp" />
 
@@ -301,6 +304,7 @@
                                 android:textColor="@color/explore_chiptext_selector"
                                 app:chipBackgroundColor="@color/explore_chip_selector"
                                 app:chipCornerRadius="4dp"
+                                app:chipMinTouchTargetSize="0dp"
                                 app:chipStrokeColor="@color/explore_chipstroke_selector"
                                 app:chipStrokeWidth="1dp" />
 
@@ -314,6 +318,7 @@
                                 android:textColor="@color/explore_chiptext_selector"
                                 app:chipBackgroundColor="@color/explore_chip_selector"
                                 app:chipCornerRadius="4dp"
+                                app:chipMinTouchTargetSize="0dp"
                                 app:chipStrokeColor="@color/explore_chipstroke_selector"
                                 app:chipStrokeWidth="1dp" />
 
@@ -354,7 +359,7 @@
                     android:text="더보기"
                     android:textColor="@color/explore_btn_show_more_txt_white"
                     android:textSize="16sp"
-                    android:visibility="@{exploreViewModel.otherQuestionsList == null || exploreViewModel.isMaxPage == true ? View.INVISIBLE : View.VISIBLE}"
+                    android:visibility="invisible"
                     app:cornerRadius="6dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

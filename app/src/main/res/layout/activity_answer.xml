@@ -48,7 +48,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="32dp"
                     android:clickable="@{answerViewModel.answer.length() != 0 ? true : false}"
-                    android:onClick="@{()->answerActivity.setClickText()}"
                     android:text="완료"
                     android:textColor="@{answerViewModel.answer.length() != 0 ? @color/home_black : @color/home_title_gray}"
                     android:textSize="16sp"
@@ -87,7 +86,6 @@
             android:id="@+id/txt_answer_data"
             style="@style/answer_info_style"
             android:layout_marginTop="8dp"
-            answer:setDate="@{answerViewModel.intentAnswerData.createdAt}"
             app:layout_constraintStart_toStartOf="@+id/txt_answer_info"
             app:layout_constraintTop_toBottomOf="@+id/txt_answer_info"
             tools:text="2020.12.24" />

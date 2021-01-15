@@ -122,8 +122,6 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
                     when (page < response.body()!!.data.pageLen) {
                         true -> {
                             _isMax.value = true
-                        }
-                        else -> {
                             page++
                         }
                     }
@@ -153,8 +151,6 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
                     when (page < response.body()!!.data.pageLen) {
                         true -> {
                             _isMax.value = true
-                        }
-                        else -> {
                             page++
                         }
                     }
