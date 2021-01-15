@@ -14,6 +14,7 @@ import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.databinding.ItemHomeMoreQuestionBinding
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
 import com.teambeme.beme.home.model.Answer
+import com.teambeme.beme.home.view.AnswerSuggestFragment
 import com.teambeme.beme.home.view.InfoChangeFragment
 import com.teambeme.beme.home.view.InfoChangeFragment.InfoChangeClickListener
 import com.teambeme.beme.home.view.TransitionPublicFragment
@@ -90,12 +91,13 @@ class QuestionPagerAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(supportFragmentManager: FragmentManager) {
             binding.btnHomeMoreQuestion.setOnClickListener {
-//                if(answerList.all { answer -> answer.answerDate != null }) {
-                homeViewModel.getMoreQuestion()
-//                } else {
-//                    val answerSuggestFragment = AnswerSuggestFragment()
-//                    answerSuggestFragment.show(supportFragmentManager, "CustomDialog")
-//                }
+                Log.d("Home", "${answerList.all { answer -> answer.content != null }}")
+                if (answerList.all { answer -> answer.content != null }) {
+                    homeViewModel.getMoreQuestion()
+                } else {
+                    val answerSuggestFragment = AnswerSuggestFragment()
+                    answerSuggestFragment.show(supportFragmentManager, "CustomDialog")
+                }
             }
         }
     }

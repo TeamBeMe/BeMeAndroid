@@ -82,6 +82,9 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
                 homeViewModel.setReadyToReceiveEvent()
             }
         }
+        homeViewModel.successMessage.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setAnswerPager(pagerAdapter: QuestionPagerAdapter) {
