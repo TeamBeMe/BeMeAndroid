@@ -41,9 +41,9 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
     val page: Int
         get() = _page
 
-    private var _maxPage: Int = 0
-    val maxPage: Int
-        get() = _maxPage
+    private var _isMorePage = MutableLiveData(false)
+    val isMorePage: LiveData<Boolean>
+        get() = _isMorePage
 
     private var _scrapData = ResponseExplorationScrap("", 0, true)
     val scrapData: ResponseExplorationScrap
@@ -84,16 +84,18 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                         if (_userNickname.value == null) {
                             _userNickname.value = response.body()!!.data.userNickname
                         }
-                        _maxPage = response.body()!!.data?.pageLen
                         tempFollowingFollowerAnswersList =
                             response.body()!!.data?.answers?.toMutableList()
                         _followingAnswersList.value =
                             tempFollowingFollowerAnswersList?.toMutableList()
 
-                        Log.d("abcabc", "${followingList.value?.size}")
-
-                        if (response.body()!!.data?.pageLen != _page) {
-                            _page++
+                        if(response.body()!!.data.answers?.size != 0){
+                            if (response.body()!!.data?.pageLen > _page) {
+                                _page++
+                                _isMorePage.value = true
+                            } else {
+                                _isMorePage.value = false
+                            }
                         }
                     }
                 }
@@ -122,8 +124,13 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                         }
                         _followingAnswersList.value =
                             tempFollowingFollowerAnswersList?.toMutableList()
-                        if (response.body()!!.data?.pageLen != _page) {
-                            _page++
+                        if(response.body()!!.data.answers?.size != 0){
+                            if (response.body()!!.data?.pageLen > _page) {
+                                _page++
+                                _isMorePage.value = true
+                            } else {
+                                _isMorePage.value = false
+                            }
                         }
                     }
                 }

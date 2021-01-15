@@ -62,7 +62,20 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         setClickListenerForIdSearchButton()
         setClickListenerForAlarmButton()
         setDoAnswerDataObserve()
+        setIsMorePageObserve()
         return binding.root
+    }
+
+    private fun setIsMorePageObserve() {
+        followingViewModel.isMorePage.observe(viewLifecycleOwner) { morePage ->
+            morePage?.let {
+                if (morePage == true) {
+                    binding.btnFollowingShowMore.visibility = View.VISIBLE
+                } else {
+                    binding.btnFollowingShowMore.visibility = View.INVISIBLE
+                }
+            }
+        }
     }
 
     private fun setDoAnswerDataObserve() {
@@ -115,12 +128,8 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                 }
                 if (otherFollowingQuestionsList.size == 0) {
                     binding.rcvFollowingOtherQuestions.visibility = View.INVISIBLE
-                    binding.btnFollowingShowMore.visibility = View.INVISIBLE
                     binding.imgFollowingNoFollowingAnswerInformation.visibility = View.VISIBLE
                     binding.txtFollowingNoFollowingAnswerInformation.visibility = View.VISIBLE
-                }
-                if (followingViewModel.page == followingViewModel.maxPage) {
-                    binding.btnFollowingShowMore.visibility = View.INVISIBLE
                 }
             }
         }

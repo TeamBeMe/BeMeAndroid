@@ -33,6 +33,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
     private val exploreViewModel: ExploreViewModel by activityViewModels { exploreViewModelFactory }
 
     override fun onResume() {
+        exploreViewModel.requestOtherMinds()
         super.onResume()
         exploreViewModel.requestOtherQuestionsWithCategorySorting(
             exploreViewModel.categoryNum,
@@ -62,7 +63,31 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         setClickListenerForIdSearchButton()
         setClickListenerForAlarmButton()
         setIsMorePageObserve()
+        setIntentAnswerObserve()
         return binding.root
+    }
+
+    private fun setIntentAnswerObserve() {
+        exploreViewModel.questionForFirstAnswer.observe(viewLifecycleOwner) {
+            it?.let {
+                val intentAnswerData = IntentAnswerData(
+                    it.id,
+                    it.questionTitle,
+                    it.questionCategoryName,
+                    it.answerIdx,
+                    it.createdAt
+                )
+            }
+        }
+    }
+
+    private fun setClickListenerForExploreBtnDoAnswer() {
+        binding.btnExploreDoAnswer.setOnClickListener {
+            exploreViewModel.requestQuestionForFirstAnswer()
+            val intent = Intent(context, AnswerActivity::class.java)
+            intent.putExtra("intentAnswerData", intentAnswerData)
+            startActivity(intent)
+        }
     }
 
     private fun setIsMorePageObserve() {
@@ -143,26 +168,6 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
     private fun setSnapHelper() {
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.rcvExploreOtherMinds)
-    }
-
-    private fun setClickListenerForExploreBtnDoAnswer() {
-        binding.btnExploreDoAnswer.setOnClickListener {
-            exploreViewModel.requestQuestionForFirstAnswer()
-            exploreViewModel.questionForFirstAnswer.observe(viewLifecycleOwner) {
-                it?.let {
-                    val intentAnswerData = IntentAnswerData(
-                        it.id,
-                        it.questionTitle,
-                        it.questionCategoryName,
-                        it.answerIdx,
-                        it.createdAt
-                    )
-                    val intent = Intent(context, AnswerActivity::class.java)
-                    intent.putExtra("intentAnswerData", intentAnswerData)
-                    startActivity(intent)
-                }
-            }
-        }
     }
 
     private fun setClickListenerForIdSearchButton() {
