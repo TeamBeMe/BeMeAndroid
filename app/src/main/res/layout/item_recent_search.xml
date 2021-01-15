@@ -23,7 +23,9 @@
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setSrcFromUrl="@{recentSearch.profileImg}" />
+            app:setSrcFromUrl="@{recentSearch.profileImg}"
+            app:civ_border_color="@color/circle_view_gray"
+            app:civ_border_width="1dp"/>
 
         <TextView
             android:id="@+id/recent_search_uid"
