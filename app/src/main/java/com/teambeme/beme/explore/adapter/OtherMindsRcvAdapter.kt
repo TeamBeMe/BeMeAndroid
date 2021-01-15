@@ -1,6 +1,7 @@
 package com.teambeme.beme.explore.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemExploreOtherMindsBinding
+import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.explore.model.ResponseExplorationMinds
 import com.teambeme.beme.explore.view.ExploreDetailActivity
 import com.teambeme.beme.util.startActivity
@@ -21,6 +23,7 @@ class OtherMindsRcvAdapter(private val context: Context) :
             binding.otherMinds = otherMindsData
             binding.executePendingBindings()
             setClickListenerForShowOtherAnswers(binding, otherMindsData, context)
+            setClickListenerForGoDetail(binding, otherMindsData, context)
         }
     }
 
@@ -50,6 +53,18 @@ class OtherMindsRcvAdapter(private val context: Context) :
     ) {
         binding.btnOtherMindsShowOtherAnswers.setOnClickListener {
             context.startActivity<ExploreDetailActivity>(otherMindsData.questionTitle, otherMindsData.questionId)
+        }
+    }
+
+    private fun setClickListenerForGoDetail(
+        binding: ItemExploreOtherMindsBinding,
+        otherMindsData: ResponseExplorationMinds.Data,
+        context: Context
+    ) {
+        binding.constraintlayoutOtherMindsContent.setOnClickListener {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("answerId", otherMindsData.id)
+            context.startActivity(intent)
         }
     }
 }
