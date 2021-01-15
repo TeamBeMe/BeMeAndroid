@@ -69,6 +69,8 @@
             mypage:setSrcFromUrl="@{myScrap.userProfile}"
             mypage:isVisible="@{!myScrap.author}"
             android:layout_marginBottom="12dp"
+            app:civ_border_color="@color/mypage_circle"
+            app:civ_border_width="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txt_myscrap_categori"
             app:srcCompat="@drawable/ic_mp_profile" />
