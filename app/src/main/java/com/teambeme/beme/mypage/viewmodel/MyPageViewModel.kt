@@ -181,7 +181,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                         copyMyAnswerList = response.body()!!.data?.answers?.toMutableList()
                         _isAnswerEmpty.value = copyMyAnswerList.size == 0
                         _mypageWriteData.value = copyMyAnswerList.toMutableList()
-                        when (page >= response.body()!!.data.pageLen) {
+                        when (page < response.body()!!.data.pageLen) {
                             true -> {
                                 _isAnswerMax.value = true
                             }
@@ -192,7 +192,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                     } else {
                         copyMyAnswerList.addAll(response.body()!!.data?.answers?.toMutableList())
                         _mypageWriteData.value = copyMyAnswerList.toMutableList()
-                        when (page == response.body()!!.data.pageLen) {
+                        when (page < response.body()!!.data.pageLen) {
                             true -> {
                                 _isAnswerMax.value = true
                             }
@@ -249,7 +249,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                         copyMyScrapList = response.body()!!.data?.answers?.toMutableList()
                         _isScrapEmpty.value = copyMyScrapList.size == 0
                         _mypageScrapData.value = copyMyScrapList.toMutableList()
-                        when (scrapPage >= response.body()!!.data.pageLen) {
+                        when (scrapPage < response.body()!!.data.pageLen) {
                             true -> {
                                 _isScrapMax.value = true
                             }
@@ -260,7 +260,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                     } else {
                         copyMyScrapList.addAll(response.body()!!.data?.answers.toMutableList())
                         _mypageScrapData.value = copyMyScrapList.toMutableList()
-                        when (scrapPage >= response.body()!!.data.pageLen) {
+                        when (scrapPage < response.body()!!.data.pageLen) {
                             true -> {
                                 _isScrapMax.value = true
                             }

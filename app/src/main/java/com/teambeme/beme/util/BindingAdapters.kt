@@ -239,6 +239,16 @@ object BindingAdapters {
         }
     }
 
+    @BindingAdapter("setSecretReplyImage")
+    @JvmStatic
+    fun setSecretReplyImage(imageView: ImageView, isVisible: Boolean?) {
+        if (isVisible == false) {
+            imageView.visibility = View.VISIBLE
+        } else {
+            imageView.visibility = View.GONE
+        }
+    }
+
     @BindingAdapter("mypage:setSrcFromUrl", "mypage:isVisible")
     @JvmStatic
     fun setSrcFromUrlProfile(imageView: ImageView, url: String?, visible: Boolean?) {

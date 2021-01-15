@@ -56,6 +56,7 @@ class ReplyAdapter(private val context: Context, private val viewModel: DetailVi
         val dot: ImageView = binding.imgReplyparentDot3
         val addReply: TextView = binding.txtReplyparentAdd
         val profile: ImageView = binding.imgReplyparentProfile
+        val secret: ImageView = binding.imgReplyparentSecret
     }
 
     override fun getItemCount(): Int = comment.size
@@ -73,6 +74,11 @@ class ReplyAdapter(private val context: Context, private val viewModel: DetailVi
                         child_rcv.visibility = View.GONE
                         open_btn.text = "답글 보기"
                     }
+                }
+                if (comment[position].publicFlag == false) {
+                    secret.visibility = View.VISIBLE
+                } else {
+                    secret.visibility = View.GONE
                 }
                 if (comment[position].children.isEmpty()) {
                     open_btn.visibility = View.GONE

@@ -33,13 +33,17 @@ class MyPageFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
         binding.lifecycleOwner = this
         setViewPagerAdapter(childFragmentManager)
-        mypageViewModel.getMyProfile()
         binding.myPageViewModel = mypageViewModel
         mypageViewModel.profileUri.observe(viewLifecycleOwner) {
             editProfileListener(it)
         }
         binding.btnMypageProfile.setOnClickListener { editProfileClickListener() }
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mypageViewModel.getMyProfile()
     }
 
     private fun setViewPagerAdapter(fragmentManager: FragmentManager) {

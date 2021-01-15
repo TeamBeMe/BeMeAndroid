@@ -95,6 +95,17 @@
             app:layout_constraintStart_toStartOf="@+id/txt_replyparent_time"
             app:layout_constraintTop_toBottomOf="@+id/txt_replyparent_time" />
 
+        <ImageView
+            android:id="@+id/img_replyparent_secret"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            setSecretReplyImage="@{replyParentData.publicFlag}"
+            app:layout_constraintBottom_toBottomOf="@+id/img_replyparent_dot3"
+            app:layout_constraintEnd_toStartOf="@+id/img_replyparent_dot3"
+            app:layout_constraintTop_toTopOf="@+id/img_replyparent_dot3"
+            app:srcCompat="@drawable/ic_reply_secret" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_replyparent_child"
             android:layout_width="match_parent"

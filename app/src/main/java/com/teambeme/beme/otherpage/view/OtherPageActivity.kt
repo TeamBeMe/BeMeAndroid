@@ -74,9 +74,9 @@ class OtherPageActivity : BindingActivity<ActivityOtherPageBinding>(R.layout.act
 
     private fun isMaxListener(isMax: Boolean) {
         if (isMax) {
-            binding.btnOtherShowmore.visibility = View.GONE
-        } else {
             binding.btnOtherShowmore.visibility = View.VISIBLE
+        } else {
+            binding.btnOtherShowmore.visibility = View.GONE
         }
     }
 

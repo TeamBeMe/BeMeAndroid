@@ -105,9 +105,9 @@ class MyWriteFragment : Fragment() {
 
     private fun isMaxListener(isMax: Boolean) {
         if (isMax) {
-            binding.btnWriteShowmore.visibility = View.GONE
-        } else {
             binding.btnWriteShowmore.visibility = View.VISIBLE
+        } else {
+            binding.btnWriteShowmore.visibility = View.GONE
         }
     }
 

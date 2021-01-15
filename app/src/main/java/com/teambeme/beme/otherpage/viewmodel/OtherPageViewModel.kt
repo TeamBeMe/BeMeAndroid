@@ -119,7 +119,7 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
                 if (response.isSuccessful) {
                     copyOtherAnswerList.addAll(response.body()!!.data?.answers?.toMutableList())
                     _otherAnswerList.value = copyOtherAnswerList.toMutableList()
-                    when (page == response.body()!!.data.pageLen) {
+                    when (page < response.body()!!.data.pageLen) {
                         true -> {
                             _isMax.value = true
                         }
@@ -150,7 +150,7 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
                     copyOtherAnswerList = response.body()!!.data?.answers?.toMutableList()
                     _isOtherEmpty.value = copyOtherAnswerList.size == 0
                     _otherAnswerList.value = copyOtherAnswerList.toMutableList()
-                    when (page == response.body()!!.data.pageLen) {
+                    when (page < response.body()!!.data.pageLen) {
                         true -> {
                             _isMax.value = true
                         }
