@@ -66,7 +66,7 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                     ) {
                         if (response.isSuccessful) {
                             Log.d("Network is success", response.body().toString())
-                            copyRecentSearchList = response.body()!!.data!!.toMutableList()
+                            copyRecentSearchList = response.body()!!.data?.toMutableList() ?: mutableListOf()
                             _recentSearchData.value = copyRecentSearchList.toMutableList()
                         } else {
                             Log.d("Network Error", response.body()?.data.toString())
