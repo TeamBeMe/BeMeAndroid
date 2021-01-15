@@ -24,9 +24,22 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
     val idSearchData: LiveData<MutableList<ResponseIdSearchData.Data>>
         get() = _idSearchData
 
+    private var searchQuery: String = ""
+    fun setSearchQuery(query: String) {
+        searchQuery = query
+    }
+
+    fun deleteQuery(){
+        searchQuery = ""
+    }
+
     private val _deletePosition = MutableLiveData<Int>()
     val deletePosition: LiveData<Int>
         get() = _deletePosition
+
+    private val _isEmpty = MutableLiveData<Boolean>()
+    val isEmpty: LiveData<Boolean>
+        get() = _isEmpty
 
     private var _isFollowing: String = ""
     val isFollowing: String
@@ -37,6 +50,10 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
             ResponseIdSearchData.Data(0, null, "", "")
         )
         _idSearchData.value = tempIdSearchList?.toMutableList()
+    }
+
+    fun setInitEmpty(){
+        _isEmpty.value=false
     }
 
     fun requestRecentSearchData() {
@@ -72,7 +89,6 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
 
     fun deleteRecentSearch() {
         idSearchRepository.deleteRecentSearchRecord(
-
             copyRecentSearchList[deletePosition.value!!].id
         ).enqueue(object : Callback<ResponseDeleteRecentSearchRecord> {
             override fun onResponse(
@@ -92,8 +108,7 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
 
     fun requestIdSearchgData() {
         idSearchRepository.idSearch(
-
-            searchingId, "all"
+            searchQuery, "all"
         )
             .enqueue(
                 object : Callback<ResponseIdSearchData> {
@@ -104,6 +119,8 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                         if (response.isSuccessful) {
                             Log.d("Network is success", response.body().toString())
                             tempIdSearchList = response.body()!!.data?.let { mutableListOf(it) }
+                            if(tempIdSearchList?.size==0 ||tempIdSearchList==null)
+                                _isEmpty.value=true
                             _idSearchData.value = tempIdSearchList?.toMutableList()
                             if (tempIdSearchList == null) {
                                 deleteSearchRecord()

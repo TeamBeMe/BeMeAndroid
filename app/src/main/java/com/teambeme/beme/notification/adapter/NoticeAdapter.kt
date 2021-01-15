@@ -28,12 +28,6 @@ class NoticeAdapter :
         val userProfilePic = binding.notificationProfilePic
     }
 
-    interface ItemClick {
-        fun onClick(view: View, position: Int)
-    }
-
-    var itemClick: ItemClick? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemRecentActivitiesBinding =

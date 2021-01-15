@@ -10,16 +10,16 @@ interface IdSearchService {
     @GET("users/search")
     fun idSearch(
         @Query("query") query: String,
-        @Query("range") range: String?
+        @Query("range") range: String
     ): Call<ResponseIdSearchData>
-
-    @GET("users/search/history")
-    fun getRecentSearchRecord(): Call<ResponseRecentSearchRecord>
 
     @DELETE("users/search/{searchedId}")
     fun deleteRecentSearchRecord(
         @Path("searchedId") searchedId: Int
     ): Call<ResponseDeleteRecentSearchRecord>
+
+    @GET("users/search/history")
+    fun getRecentSearchRecord(): Call<ResponseRecentSearchRecord>
 
     @PUT("follow")
     fun putFollowAndFollowing(

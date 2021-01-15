@@ -11,10 +11,6 @@
             name="idSearchViewModel"
             type="com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModel" />
 
-        <variable
-            name="idSearch"
-            type="com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData.Data" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,6 +70,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+                android:id="@+id/constraint_search_rcently"
                 android:layout_height="match_parent">
 
                 <TextView
@@ -112,7 +109,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/search_view_following_idsearch">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -121,46 +118,45 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:overScrollMode="never"
-                android:visibility="invisible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:listitem="@layout/item_following_after_idsearch" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/notice_when_no_search_data"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/notice_when_no_search_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_view_following_idsearch"
+            app:layout_constraintVertical_bias="0.2">
+
+            <ImageView
+                android:id="@+id/ic_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_notice"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.2">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/ic_notice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_notice"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="검색 결과가 없습니다"
+                android:textColor="#48484A"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ic_notice" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:text="검색 결과가 없습니다"
-                    android:textColor="#48484A"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ic_notice" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

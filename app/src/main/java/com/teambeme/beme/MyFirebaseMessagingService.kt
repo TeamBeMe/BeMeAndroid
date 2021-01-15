@@ -13,6 +13,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.teambeme.beme.main.view.MainActivity
 import com.teambeme.beme.notification.view.NotificationActivity
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -36,17 +37,24 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (remoteMessage.data.isNotEmpty()) {
             Log.i("바디: ", remoteMessage.data["body"].toString())
             Log.i("타이틀: ", remoteMessage.data["title"].toString())
-            sendNotification(remoteMessage)
+            if(remoteMessage.data["title"].toString() == "오늘의 질문"){
+                sendMainNotification(remoteMessage)
+            }else{
+                sendNotiNotification(remoteMessage)
+            }
         } else {
             Log.i("수신에러: ", "data가 비어있습니다. 메시지를 수신하지 못했습니다.")
             Log.i("data값: ", remoteMessage.data.toString())
         }
     }
 
-    private fun sendNotification(remoteMessage: RemoteMessage) {
+    private fun sendMainNotification(remoteMessage: RemoteMessage) {
         val uniId = 0
-        val intent = Intent(this, NotificationActivity::class.java)
+
+        val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+
         val pendingIntent = PendingIntent.getActivities(
             this, uniId, arrayOf(intent), PendingIntent.FLAG_ONE_SHOT
         )
@@ -73,6 +81,40 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
         notificationManager.notify(uniId, notificationBuilder.build())
     }
+
+    private fun sendNotiNotification(remoteMessage: RemoteMessage) {
+        val uniId = 0
+
+        val intent = Intent(this, NotificationActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+        val pendingIntent = PendingIntent.getActivities(
+            this, uniId, arrayOf(intent), PendingIntent.FLAG_ONE_SHOT
+        )
+
+        val channelId = "노티피케이션 메시지"
+
+        val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+        val notificationBuilder =
+            NotificationCompat.Builder(this, channelId).setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(remoteMessage.data["body"].toString())
+                .setContentText(remoteMessage.data["title"].toString())
+                .setAutoCancel(true)
+                .setSound(soundUri)
+                .setContentIntent(pendingIntent)
+
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel =
+                NotificationChannel(channelId, "Notice", NotificationManager.IMPORTANCE_DEFAULT)
+            notificationManager.createNotificationChannel(channel)
+        }
+        notificationManager.notify(uniId, notificationBuilder.build())
+    }
+
 
     private fun sendRegistrationToServer(token: String) {
         Log.d(TAG, "sendRegistrationTokenToServer($token)")

@@ -1,6 +1,7 @@
 package com.teambeme.beme.idsearchfollowing.view
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teambeme.beme.R
@@ -8,10 +9,12 @@ import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.data.remote.datasource.IdSearchDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityFollowingAfterIdSearchBinding
+import com.teambeme.beme.idsearchfollowing.adapter.IdSearchAdapter
 import com.teambeme.beme.idsearchfollowing.adapter.RecentSearchAdapter
 import com.teambeme.beme.idsearchfollowing.repository.IdSearchRepositoryImpl
 import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModel
 import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModelFactory
+import com.teambeme.beme.notification.adapter.NoticeAdapter
 
 class FollowingAfterIdSearchActivity :
     BindingActivity<ActivityFollowingAfterIdSearchBinding>(R.layout.activity_following_after_id_search) {
@@ -27,7 +30,27 @@ class FollowingAfterIdSearchActivity :
         setRecentSearchAdapter(binding)
         idSearchViewModel.requestRecentSearchData()
 
+        val idSearchAdapter = IdSearchAdapter()
+        binding.rcvFollowingAfterIdsearch.adapter = idSearchAdapter
+
+        idSearchViewModel.idSearchData.observe(this) { it ->
+            it.let { idSearchAdapter.submitList(it) }
+        }
+        idSearchViewModel.isEmpty.observe(this) {it ->
+            isEmptyListener(it)
+        }
+        setQueryTextListener()
         backBtnWorking()
+    }
+
+    private fun isEmptyListener(isEmpty: Boolean) {
+        if (isEmpty) {
+            binding.noticeWhenNoSearchData.visibility = View.VISIBLE //이건 엠티뷰 측정해서 띄우기
+            binding.constraintViewFollowingAfterIdsearch.visibility=View.GONE    // 엠티뷰에서 팔로잉이 남은것은 여기서 엠티뷰는 visible했는데 검색결과 리사이클러뷰를 가리지
+            //않아서 발생한것 여기서 gone을 해주니 됐다
+        } else {
+            binding.noticeWhenNoSearchData.visibility = View.GONE
+        }
     }
 
     private fun initBinding(binding: ActivityFollowingAfterIdSearchBinding) {
@@ -59,5 +82,34 @@ class FollowingAfterIdSearchActivity :
         binding.btnBackFollowingIdsearch.setOnClickListener {
             onBackPressed()
         }
+    }
+
+    private fun setQueryTextListener() {
+        binding.searchViewFollowingIdsearch.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val queryText = newText ?: ""
+                if (queryText.count() > 0) {
+                    binding.viewRecentSearch.visibility = View.GONE
+                    binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE //   여기가 비지블이라 검색중에 검색결과 남은게 보였던것
+                } else {
+                    binding.viewRecentSearch.visibility = View.VISIBLE
+                    binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE
+                    binding.noticeWhenNoSearchData.visibility = View.GONE
+                    idSearchViewModel.setSearchQuery(queryText)
+                    idSearchViewModel.requestIdSearchgData()
+                }
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
+                    idSearchViewModel.setSearchQuery(query)
+                    idSearchViewModel.requestIdSearchgData()
+                }
+                return false
+            }
+        })
     }
 }
