@@ -15,7 +15,8 @@ import com.teambeme.beme.notification.viewmodel.NoticeViewModel
 import com.teambeme.beme.notification.viewmodel.NoticeViewModelFactory
 import com.teambeme.beme.util.StatusBarUtil
 
-class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layout.activity_notification) {
+class NotificationActivity :
+    BindingActivity<ActivityNotificationBinding>(R.layout.activity_notification) {
     private val noticeViewModelFactory =
         NoticeViewModelFactory(NoticeRepositoryImpl(NoticeDataSourceImpl(RetrofitObjects.getNoticeService())))
 
@@ -36,25 +37,27 @@ class NotificationActivity : BindingActivity<ActivityNotificationBinding>(R.layo
         noticeViewModel.noticeDataList.observe(this) { it ->
             it.let { noticeAdapter.submitList(it) }
         }
-        noticeViewModel.isMax.observe(this) {
-            isMaxListener(it)
-        }
 
+        setIsMoreDataObserve()
         setClickListenerForPlusData(binding)
         binding.btnBackNotice.setOnClickListener { finish() }
+    }
+
+    private fun setIsMoreDataObserve() {
+        noticeViewModel.isMorePage.observe(this) { morePage ->
+            morePage?.let {
+                if (morePage == true) {
+                    binding.btnRecentActivitiesShowMore.visibility = View.VISIBLE
+                } else {
+                    binding.btnRecentActivitiesShowMore.visibility = View.INVISIBLE
+                }
+            }
+        }
     }
 
     private fun initBinding(binding: ActivityNotificationBinding) {
         binding.noticeViewModel = noticeViewModel
         binding.lifecycleOwner = this
-    }
-
-    private fun isMaxListener(isMax: Boolean) {
-        if (isMax) {
-            binding.btnRecentActivitiesShowMore.visibility = View.GONE
-        } else {
-            binding.btnRecentActivitiesShowMore.visibility = View.VISIBLE
-        }
     }
 
     private fun setClickListenerForPlusData(
