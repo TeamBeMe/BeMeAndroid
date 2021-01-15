@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseIdSearchData(
     @SerializedName("data")
-    val `data`: Data?,
+    val data: Data?,
     @SerializedName("message")
     val message: String,
     @SerializedName("status")
@@ -16,7 +16,7 @@ data class ResponseIdSearchData(
         @SerializedName("id")
         val id: Int,
         @SerializedName("is_followed")
-        val isFollowed: Boolean,
+        val isFollowed: Boolean?,
         @SerializedName("nickname")
         val nickname: String,
         @SerializedName("profile_img")

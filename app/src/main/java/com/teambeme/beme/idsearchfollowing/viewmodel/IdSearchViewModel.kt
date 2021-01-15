@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.idsearchfollowing.model.ResponseDeleteRecentSearchRecord
-import com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData
-import com.teambeme.beme.idsearchfollowing.model.ResponseRecentSearchRecord
+import com.teambeme.beme.idsearchfollowing.model.*
 import com.teambeme.beme.idsearchfollowing.repository.IdSearchRepository
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,16 +18,46 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
     val recentSearchData: MutableLiveData<MutableList<ResponseRecentSearchRecord.Data>>
         get() = _recentSearchData
 
+    private var tempIdSearchList: MutableList<ResponseIdSearchData.Data>? = mutableListOf()
+
     private val _idSearchData = MutableLiveData<MutableList<ResponseIdSearchData.Data>>()
     val idSearchData: LiveData<MutableList<ResponseIdSearchData.Data>>
         get() = _idSearchData
+
+    private var searchQuery: String = ""
+    fun setSearchQuery(query: String) {
+        searchQuery = query
+    }
+
+    fun deleteQuery() {
+        searchQuery = ""
+    }
 
     private val _deletePosition = MutableLiveData<Int>()
     val deletePosition: LiveData<Int>
         get() = _deletePosition
 
+    private val _isEmpty = MutableLiveData<Boolean>()
+    val isEmpty: LiveData<Boolean>
+        get() = _isEmpty
+
+    private var _isFollowing: String = ""
+    val isFollowing: String
+        get() = _isFollowing
+
+    fun deleteSearchRecord() {
+        tempIdSearchList = mutableListOf(
+            ResponseIdSearchData.Data(0, null, "", "")
+        )
+        _idSearchData.value = tempIdSearchList?.toMutableList()
+    }
+
+    fun setInitEmpty() {
+        _isEmpty.value = false
+    }
+
     fun requestRecentSearchData() {
-        idSearchRepository.getRecentSearchRecord("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ")
+        idSearchRepository.getRecentSearchRecord()
             .enqueue(
                 object : Callback<ResponseRecentSearchRecord> {
                     override fun onResponse(
@@ -61,7 +89,6 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
 
     fun deleteRecentSearch() {
         idSearchRepository.deleteRecentSearchRecord(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
             copyRecentSearchList[deletePosition.value!!].id
         ).enqueue(object : Callback<ResponseDeleteRecentSearchRecord> {
             override fun onResponse(
@@ -81,8 +108,7 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
 
     fun requestIdSearchgData() {
         idSearchRepository.idSearch(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjEwMDk5MjQwLCJleHAiOjE2MzYwMTkyNDAsImlzcyI6ImJlbWUifQ.JeYfzJsg-kdatqhIOqfJ4oXUvUdsiLUaGHwLl1mJRvQ",
-            searchingId, "all"
+            searchQuery, "all"
         )
             .enqueue(
                 object : Callback<ResponseIdSearchData> {
@@ -92,8 +118,13 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                     ) {
                         if (response.isSuccessful) {
                             Log.d("Network is success", response.body().toString())
-                            _idSearchData.value =
-                                response.body()!!.data?.let { mutableListOf(it) }!!
+                            tempIdSearchList = response.body()!!.data?.let { mutableListOf(it) }
+                            if (tempIdSearchList?.size == 0 || tempIdSearchList == null)
+                                _isEmpty.value = true
+                            _idSearchData.value = tempIdSearchList?.toMutableList()
+                            if (tempIdSearchList == null) {
+                                deleteSearchRecord()
+                            }
                         } else {
                             Log.d("Network Error", response.body()?.data.toString())
                             Log.d("Network Error", response.body()?.status.toString())
@@ -107,5 +138,27 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                     }
                 }
             )
+    }
+
+    fun requestFollowAndFollowing(userId: Int) {
+        idSearchRepository.putFollowAndFollowing(
+            RequestFollowAndFollowing(userId)
+        ).enqueue(
+            object : Callback<ResponseFollowAndFollowing> {
+                override fun onResponse(
+                    call: Call<ResponseFollowAndFollowing>,
+                    response: Response<ResponseFollowAndFollowing>
+                ) {
+                    Log.d("network_requestSearch", "통신성")
+                    if (response.isSuccessful) {
+                        _isFollowing = response.body()!!.message
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseFollowAndFollowing>, t: Throwable) {
+                    Log.d("network_requestSearch", "통신실패")
+                }
+            }
+        )
     }
 }

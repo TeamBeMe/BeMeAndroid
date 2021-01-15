@@ -67,6 +67,7 @@
             android:layout_marginHorizontal="28dp"
             android:layout_marginTop="36dp"
             android:hint="이메일"
+            android:importantForAutofill="no"
             android:text="@={signUpViewModel.userEmail}"
             app:layout_constraintStart_toStartOf="@+id/txt_term_title"
             app:layout_constraintTop_toBottomOf="@+id/txt_term_title" />
@@ -112,6 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="닉네임 *"
+                android:importantForAutofill="no"
                 android:text="@={signUpViewModel.userNickName}" />
 
             <TextView
@@ -161,6 +163,7 @@
             android:layout_marginHorizontal="28dp"
             android:layout_marginTop="16dp"
             android:hint="비밀번호 *"
+            android:importantForAutofill="no"
             android:inputType="textPassword"
             android:text="@={signUpViewModel.userPassWord}"
             app:layout_constraintTop_toBottomOf="@id/linear_personal_nickname_check" />
@@ -200,6 +203,7 @@
             android:layout_marginHorizontal="28dp"
             android:layout_marginTop="16dp"
             android:hint="비밀번호 확인 *"
+            android:importantForAutofill="no"
             android:inputType="textPassword"
             android:text="@={signUpViewModel.userPassWordCheck}"
             app:layout_constraintTop_toBottomOf="@+id/linear_personal_password" />
