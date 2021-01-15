@@ -46,7 +46,6 @@ class ImageChooseFragment : Fragment() {
             CoroutineScope(Dispatchers.Main).launch {
                 signUpViewModel.signUp().join()
                 Toast.makeText(requireContext(), "회원가입 성공", Toast.LENGTH_SHORT).show()
-                requireActivity().finish()
             }
         }
 
@@ -82,6 +81,7 @@ class ImageChooseFragment : Fragment() {
             if (userInfo != null) {
                 if (userInfo.success) {
                     Toast.makeText(requireContext(), "회원가입 성공", Toast.LENGTH_SHORT).show()
+                    requireActivity().finish()
                 } else {
                     Log.d("SignUp", userInfo.message)
                 }
