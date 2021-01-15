@@ -32,7 +32,7 @@ class FollowingAfterIdSearchActivity :
         setRecentSearchAdapter(binding)
         idSearchViewModel.requestRecentSearchData()
 
-        val idSearchAdapter = IdSearchAdapter()
+        val idSearchAdapter = IdSearchAdapter(idSearchViewModel)
         binding.rcvFollowingAfterIdsearch.adapter = idSearchAdapter
 
         idSearchViewModel.idSearchData.observe(this) { it ->
@@ -100,6 +100,7 @@ class FollowingAfterIdSearchActivity :
                     binding.noticeWhenNoSearchData.visibility = View.GONE
                     idSearchViewModel.setSearchQuery(queryText)
                     idSearchViewModel.requestIdSearchgData()
+                    idSearchViewModel.deleteSearchRecord()
                 }
                 return false
             }
@@ -107,6 +108,7 @@ class FollowingAfterIdSearchActivity :
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
                     binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
+
                     idSearchViewModel.setSearchQuery(query)
                     idSearchViewModel.requestIdSearchgData()
                 }

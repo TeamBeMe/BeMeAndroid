@@ -24,6 +24,8 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:civ_border_color="@color/detail_circle"
+            app:civ_border_width="1dp"
             app:srcCompat="@drawable/ic_ellipse" />
 
         <ImageButton
@@ -62,6 +64,17 @@
             app:layout_constraintStart_toStartOf="@+id/txt_replychild_id"
             app:layout_constraintTop_toBottomOf="@+id/txt_replychild_id"
             tools:text="척박하고 각박한 세상에... 새소년의 눈을 들으며... 시험기간 내 마음을 달래주는 당신들의 목도리 이벤트를 참여합니다.." />
+
+        <ImageView
+            android:id="@+id/img_replychild_secret"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            setSecretReplyImage="@{replyData.publicFlag}"
+            app:layout_constraintBottom_toBottomOf="@+id/img_replychild_dot3"
+            app:layout_constraintEnd_toStartOf="@+id/img_replychild_dot3"
+            app:layout_constraintTop_toTopOf="@+id/img_replychild_dot3"
+            app:srcCompat="@drawable/ic_reply_secret" />
 
         <TextView
             android:id="@+id/txt_replychild_time"

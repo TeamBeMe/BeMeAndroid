@@ -23,6 +23,9 @@ class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewMode
     private val _isPublic = MutableLiveData<Boolean>(false)
     val isPublic: LiveData<Boolean>
         get() = _isPublic
+    private val _intentAnswerData = MutableLiveData<IntentAnswerData>()
+    val intentAnswerData: LiveData<IntentAnswerData>
+        get() = _intentAnswerData
 
     fun checkStored(questionId: Int) {
         viewModelScope.launch {
@@ -49,16 +52,20 @@ class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewMode
     }
 
     fun initAnswerData(intentAnswerData: IntentAnswerData) {
-        _answerData.value = AnswerData(
-            questionId = intentAnswerData.questionId.toLong(),
-            answer = "",
-            isCommentBlocked = _isCommentBlocked,
-            isPublic = false,
-            title = intentAnswerData.title,
-            category = intentAnswerData.category,
-            categoryIdx = intentAnswerData.categoryIdx ?: 0,
-            createdAt = intentAnswerData.createdAt
-        )
+        viewModelScope.launch {
+            val answerData = AnswerData(
+                questionId = intentAnswerData.questionId.toLong(),
+                answer = intentAnswerData.content,
+                isCommentBlocked = intentAnswerData.isCommentBlocked,
+                isPublic = intentAnswerData.isCommentBlocked,
+                title = intentAnswerData.title,
+                category = intentAnswerData.category,
+                categoryIdx = intentAnswerData.categoryIdx ?: 0,
+                createdAt = intentAnswerData.createdAt
+            )
+            _answerData.value = answerData
+            answerRepository.insert(answerData)
+        }
     }
 
     fun setPublicStatus(boolean: Boolean) {
@@ -71,6 +78,10 @@ class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewMode
 
     fun initEditText() {
         answer.value = answerData.value?.answer.toString()
+    }
+
+    fun setIntentAnswerData(intentAnswerData: IntentAnswerData) {
+        _intentAnswerData.value = intentAnswerData
     }
 
     fun storeAnswer() {

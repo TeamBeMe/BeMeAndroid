@@ -24,7 +24,7 @@ class InfoChangeFragment(private val infoChangeClickListener: InfoChangeClickLis
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             linearHomeEdit.setOnClickListener {
-                infoChangeClickListener.changeQuestion()
+                infoChangeClickListener.modifyAnswer()
                 dismiss()
             }
             linearHomeDelete.setOnClickListener {
@@ -40,7 +40,7 @@ class InfoChangeFragment(private val infoChangeClickListener: InfoChangeClickLis
     }
 
     interface InfoChangeClickListener {
-        fun changeQuestion()
+        fun modifyAnswer()
         fun deleteAnswer()
     }
 }

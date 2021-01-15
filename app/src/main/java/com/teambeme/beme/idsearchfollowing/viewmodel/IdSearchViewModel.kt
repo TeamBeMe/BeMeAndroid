@@ -41,9 +41,9 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
     val isEmpty: LiveData<Boolean>
         get() = _isEmpty
 
-    private var _isFollowing: String = ""
-    val isFollowing: String
-        get() = _isFollowing
+    private var _isFollowed = MutableLiveData(false)
+    val isFollowed: LiveData<Boolean?>
+        get() = _isFollowed
 
     fun deleteSearchRecord() {
         tempIdSearchList = mutableListOf(
@@ -66,7 +66,7 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                     ) {
                         if (response.isSuccessful) {
                             Log.d("Network is success", response.body().toString())
-                            copyRecentSearchList = response.body()!!.data!!.toMutableList()
+                            copyRecentSearchList = response.body()!!.data?.toMutableList() ?: mutableListOf()
                             _recentSearchData.value = copyRecentSearchList.toMutableList()
                         } else {
                             Log.d("Network Error", response.body()?.data.toString())
@@ -124,6 +124,8 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                             _idSearchData.value = tempIdSearchList?.toMutableList()
                             if (tempIdSearchList == null) {
                                 deleteSearchRecord()
+                            } else{
+                                _isFollowed.value = idSearchData.value?.get(0)?.isFollowed
                             }
                         } else {
                             Log.d("Network Error", response.body()?.data.toString())
@@ -151,7 +153,6 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                 ) {
                     Log.d("network_requestSearch", "통신성")
                     if (response.isSuccessful) {
-                        _isFollowing = response.body()!!.message
                     }
                 }
 

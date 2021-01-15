@@ -22,7 +22,9 @@
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setSrcFromUrl="@{idSearch.profileImg}" />
+            app:setSrcFromUrl="@{idSearch.profileImg}"
+            app:civ_border_color="@color/circle_view_gray"
+            app:civ_border_width="1dp"/>
 
         <TextView
             android:id="@+id/id_search_uid"
@@ -37,12 +39,12 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_following_unfollow"
+            app:layout_constraintEnd_toStartOf="@id/btn_following_following"
             app:layout_constraintStart_toEndOf="@id/id_search_profile_pic"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btn_following_unfollow"
+            android:id="@+id/btn_following_following"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_follow_unfollow"
@@ -53,7 +55,6 @@
             android:textColor="#000"
             android:textSize="12dp"
             app:backgroundTint="@null"
-            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -70,7 +71,6 @@
             android:textColor="#ffffff"
             android:textSize="12dp"
             app:backgroundTint="@null"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

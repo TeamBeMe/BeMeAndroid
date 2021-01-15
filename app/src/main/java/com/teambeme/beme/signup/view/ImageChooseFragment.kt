@@ -59,7 +59,6 @@ class ImageChooseFragment : Fragment() {
         }
 
         binding.imgChooseImagepick.setOnClickListener {
-            Toast.makeText(requireContext(), "토스트", Toast.LENGTH_SHORT).show()
             val permissionListener = object : PermissionListener {
                 override fun onPermissionGranted() {
                     pickImage()
