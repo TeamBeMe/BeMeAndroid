@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@{detailViewModel.detailData.scrapped ? @drawable/ic_scrap_on_detail : @drawable/ic_scrap_off_detail}"
-                android:layout_marginEnd="12dp"
+
                 android:onClick="@{() -> detailViewModel.scrapClicked()}"
                 android:backgroundTint="@android:color/transparent"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_detail_dot"

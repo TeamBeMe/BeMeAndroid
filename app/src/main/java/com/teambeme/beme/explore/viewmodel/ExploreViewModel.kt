@@ -136,6 +136,8 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                                 } else {
                                     _isMorePage.value = false
                                 }
+                            } else {
+                                _isMorePage.value = false
                             }
                         }
                     }
@@ -175,6 +177,8 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                                 } else {
                                     _isMorePage.value = false
                                 }
+                            } else {
+                                _isMorePage.value = false
                             }
                         }
                     }

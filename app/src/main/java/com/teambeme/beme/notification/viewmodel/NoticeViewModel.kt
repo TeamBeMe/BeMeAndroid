@@ -44,13 +44,15 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
                     copyNoticeDataList = responseData.body()!!.data?.activities?.toMutableList()
                     _noticeDataList.value = copyNoticeDataList.toMutableList()
                     Log.d("Network is success", copyNoticeDataList.toString())
-                    if (responseData.body()!!.data?.pageLen > _page) {
+                    if (responseData.body()!!.data != null) {
                         if (responseData.body()!!.data?.pageLen > _page) {
                             _page++
                             _isMorePage.value = true
                         } else {
                             _isMorePage.value = false
                         }
+                    } else {
+                        _isMorePage.value = false
                     }
                     Log.d("notice_request_copy", "$copyNoticeDataList")
                     val d = Log.d("notice_request_data", "${noticeDataList.value}")
@@ -80,13 +82,15 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
                 if (responseData.isSuccessful) {
                     copyNoticeDataList.addAll(responseData.body()!!.data?.activities.toMutableList())
                     _noticeDataList.value = copyNoticeDataList.toMutableList()
-                    if (responseData.body()!!.data?.pageLen > _page) {
+                    if (responseData.body()!!.data != null) {
                         if (responseData.body()!!.data?.pageLen > _page) {
                             _page++
                             _isMorePage.value = true
                         } else {
                             _isMorePage.value = false
                         }
+                    } else {
+                        _isMorePage.value = false
                     }
                     Log.d("notice_plus_copy", "$copyNoticeDataList")
                     val d = Log.d("notice_plus_data", "${noticeDataList.value}")
