@@ -120,6 +120,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
             }
         }
     }
+
     private fun setOtherFollowingQuestionsObserve() {
         followingViewModel.followingAnswersList.observe(viewLifecycleOwner) { otherFollowingQuestionsList ->
             otherFollowingQuestionsList?.let {
@@ -127,9 +128,13 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                     submitList(otherFollowingQuestionsList)
                 }
                 if (otherFollowingQuestionsList.size == 0) {
-                    binding.rcvFollowingOtherQuestions.visibility = View.INVISIBLE
+                    binding.rcvFollowingOtherQuestions.visibility = View.GONE
                     binding.imgFollowingNoFollowingAnswerInformation.visibility = View.VISIBLE
                     binding.txtFollowingNoFollowingAnswerInformation.visibility = View.VISIBLE
+                } else {
+                    binding.rcvFollowingOtherQuestions.visibility = View.VISIBLE
+                    binding.imgFollowingNoFollowingAnswerInformation.visibility = View.GONE
+                    binding.txtFollowingNoFollowingAnswerInformation.visibility = View.GONE
                 }
             }
         }
