@@ -71,7 +71,7 @@ class IdSearchAdapter(
             oldItem: ResponseIdSearchData.Data,
             newItem: ResponseIdSearchData.Data
         ) =
-            (oldItem.id == newItem.id)
+            (oldItem.isFollowed == newItem.isFollowed)
 
         override fun areContentsTheSame(
             oldItem: ResponseIdSearchData.Data,
@@ -118,6 +118,4 @@ class IdSearchAdapter(
             binding.btnFollowingFollow.visibility = View.VISIBLE
         }
     }
-
 }
-

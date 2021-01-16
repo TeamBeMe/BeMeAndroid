@@ -17,16 +17,22 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
     val noticeDataList: MutableLiveData<MutableList<ResponseNoticeData.Data.Activity>>
         get() = _noticeDataList
 
-    var page: Int = 1
+    private var _page: Int = 1
+    val page: Int
+        get() = _page
 
     private val _isMax = MutableLiveData<Boolean>()
     val isMax: LiveData<Boolean>
         get() = _isMax
 
+    private var _isMorePage = MutableLiveData(false)
+    val isMorePage: LiveData<Boolean>
+        get() = _isMorePage
+
     fun requestNoticeItem() {
         Log.d("Network ViewModel", "start")
         noticeRepository.notice(
-            page
+            _page
         ).enqueue(object :
             Callback<ResponseNoticeData> {
             override fun onResponse(
@@ -38,10 +44,16 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
                     copyNoticeDataList = responseData.body()!!.data?.activities?.toMutableList()
                     _noticeDataList.value = copyNoticeDataList.toMutableList()
                     Log.d("Network is success", copyNoticeDataList.toString())
-                    when (page == responseData.body()!!.data.pageLen) {
-                        true -> _isMax.value = true
-                        else -> page++
+                    if (responseData.body()!!.data?.pageLen > _page) {
+                        if (responseData.body()!!.data?.pageLen > _page) {
+                            _page++
+                            _isMorePage.value = true
+                        } else {
+                            _isMorePage.value = false
+                        }
                     }
+                    Log.d("notice_request_copy", "$copyNoticeDataList")
+                    val d = Log.d("notice_request_data", "${noticeDataList.value}")
                 } else {
                     Log.d("Network Error", responseData.body()?.data.toString())
                     Log.d("Network Error", responseData.body()?.status.toString())
@@ -49,6 +61,7 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
                     Log.d("Network Error", responseData.message())
                 }
             }
+
             override fun onFailure(call: Call<ResponseNoticeData>, t: Throwable) {
                 Log.d("Network Fail", t.message.toString())
             }
@@ -57,7 +70,7 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
 
     fun requestAddNoticeItem() {
         noticeRepository.notice(
-            page
+            _page
         ).enqueue(object :
             Callback<ResponseNoticeData> {
             override fun onResponse(
@@ -67,10 +80,16 @@ class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewMode
                 if (responseData.isSuccessful) {
                     copyNoticeDataList.addAll(responseData.body()!!.data?.activities.toMutableList())
                     _noticeDataList.value = copyNoticeDataList.toMutableList()
-                    when (page == responseData.body()!!.data?.pageLen) {
-                        true -> _isMax.value = true
-                        else -> page++
+                    if (responseData.body()!!.data?.pageLen > _page) {
+                        if (responseData.body()!!.data?.pageLen > _page) {
+                            _page++
+                            _isMorePage.value = true
+                        } else {
+                            _isMorePage.value = false
+                        }
                     }
+                    Log.d("notice_plus_copy", "$copyNoticeDataList")
+                    val d = Log.d("notice_plus_data", "${noticeDataList.value}")
                 }
             }
 

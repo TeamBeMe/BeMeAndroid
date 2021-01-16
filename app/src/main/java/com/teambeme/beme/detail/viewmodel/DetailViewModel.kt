@@ -92,6 +92,7 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
             detailData.value!!.publicFlag,
             detailData.value!!.commentBlockedFlag
         )
+        Log.d("answer value : ",detailData.value!!.answerIdx.toString())
         _intentData.value = data
     }
 

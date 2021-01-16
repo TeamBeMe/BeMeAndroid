@@ -15,9 +15,12 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     private val _answerList = MutableLiveData<MutableList<Answer>>()
     val answerList: LiveData<MutableList<Answer>>
         get() = _answerList
-    private var _currentQuestionPage = 0
+    private var _currentQuestionPage = 1
     private var canAdd = true
 
+    private val _successMessage = MutableLiveData<String>()
+    val successMessage: LiveData<String>
+        get() = _successMessage
     private val _errorMessage = MutableLiveData("")
     val errorMessage: LiveData<String>
         get() = _errorMessage
@@ -61,12 +64,14 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
     fun refreshTaskCompleted() {
         viewModelScope.launch {
+            Log.d("Home", "Refresh")
             val list = mutableListOf<Answer>()
-            for (i in 1.._currentQuestionPage) {
+            for (i in 1 until _currentQuestionPage) {
                 val moreAnswers = homeRepository.getAnswers(i).answers.toMutableList()
                 moreAnswers.reverse()
                 list.addAll(0, moreAnswers)
             }
+            _answerList.value = mutableListOf()
             _answerList.value = list.toMutableList()
         }
     }
@@ -77,9 +82,11 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
     fun setInitAnswer() {
         viewModelScope.launch {
+            Log.d("Home", "Init")
             try {
                 val currentList =
                     homeRepository.getAnswers(_currentQuestionPage++).answers.toMutableList()
+                _answerList.value = mutableListOf()
                 _answerList.value = currentList.reversed().toMutableList()
                 startEvent()
                 delay(1000)
@@ -154,7 +161,9 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
             try {
                 val moreQuestion = homeRepository.getNewAnswer()
                 currentList.add(moreQuestion.answer)
+                _answerList.value = mutableListOf()
                 _answerList.value = currentList
+                _successMessage.value = "질문이 추가되었습니다"
             } catch (e: HttpException) {
                 _errorMessage.value = "새로운 질문이 없습니다"
             }

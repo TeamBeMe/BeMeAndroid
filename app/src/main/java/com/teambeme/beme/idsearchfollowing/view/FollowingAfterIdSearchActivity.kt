@@ -2,6 +2,7 @@ package com.teambeme.beme.idsearchfollowing.view
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,9 +36,8 @@ class FollowingAfterIdSearchActivity :
         val idSearchAdapter = IdSearchAdapter(idSearchViewModel)
         binding.rcvFollowingAfterIdsearch.adapter = idSearchAdapter
 
-        idSearchViewModel.idSearchData.observe(this) { it ->
-            it.let { idSearchAdapter.submitList(it) }
-        }
+        setIdSearchListObserve()
+
         idSearchViewModel.isEmpty.observe(this) { it ->
             isEmptyListener(it)
         }
@@ -45,10 +45,21 @@ class FollowingAfterIdSearchActivity :
         backBtnWorking()
     }
 
+    private fun setIdSearchListObserve() {
+        idSearchViewModel.idSearchData.observe(this) { idSearchData ->
+            idSearchData?.let {
+                if (binding.rcvFollowingAfterIdsearch.adapter != null) with(binding.rcvFollowingAfterIdsearch.adapter as IdSearchAdapter) {
+                    submitList(idSearchData)
+                }
+            }
+        }
+    }
+
     private fun isEmptyListener(isEmpty: Boolean) {
         if (isEmpty) {
             binding.noticeWhenNoSearchData.visibility = View.VISIBLE // 이건 엠티뷰 측정해서 띄우기
-            binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE // 엠티뷰에서 팔로잉이 남은것은 여기서 엠티뷰는 visible했는데 검색결과 리사이클러뷰를 가리지
+            binding.constraintViewFollowingAfterIdsearch.visibility =
+                View.GONE // 엠티뷰에서 팔로잉이 남은것은 여기서 엠티뷰는 visible했는데 검색결과 리사이클러뷰를 가리지
             // 않아서 발생한것 여기서 gone을 해주니 됐다
         } else {
             binding.noticeWhenNoSearchData.visibility = View.GONE
@@ -93,7 +104,9 @@ class FollowingAfterIdSearchActivity :
                 val queryText = newText ?: ""
                 if (queryText.count() > 0) {
                     binding.viewRecentSearch.visibility = View.GONE
-                    binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE //   여기가 비지블이라 검색중에 검색결과 남은게 보였던것
+                    binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE
+                    idSearchViewModel.deleteSearchRecord()
+                    // 여기가 비지블이라 검색중에 검색결과 남은게 보였던것
                 } else {
                     binding.viewRecentSearch.visibility = View.VISIBLE
                     binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE
@@ -101,6 +114,7 @@ class FollowingAfterIdSearchActivity :
                     idSearchViewModel.setSearchQuery(queryText)
                     idSearchViewModel.requestIdSearchgData()
                     idSearchViewModel.deleteSearchRecord()
+                    Log.d("search_semin", "${idSearchViewModel.idSearchData.value}")
                 }
                 return false
             }
@@ -110,6 +124,7 @@ class FollowingAfterIdSearchActivity :
                     binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
                     idSearchViewModel.setSearchQuery(query)
                     idSearchViewModel.requestIdSearchgData()
+                    Log.d("search_semin", "${idSearchViewModel.idSearchData.value}")
                 }
                 return false
             }
