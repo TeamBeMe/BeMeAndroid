@@ -29,7 +29,7 @@ class IdSearchAdapter(
                 Log.d("Network is success_2", idSearchData.toString())
                 setBtnFollowClickListener(binding, idSearchData, viewModel)
                 setBtnUnfollowClickListener(binding, idSearchData, viewModel)
-                setFollowingFollowBtn(binding, viewModel)
+                setFollowingFollowBtn(binding, idSearchData)
             }
         }
 
@@ -86,7 +86,6 @@ class IdSearchAdapter(
         viewModel: IdSearchViewModel
     ) {
         binding.btnFollowingFollowing.setOnClickListener {
-            Log.d("btn", "팔로우")
             viewModel.requestFollowAndFollowing(data.id)
             binding.btnFollowingFollow.visibility = View.VISIBLE
             binding.btnFollowingFollowing.visibility = View.INVISIBLE
@@ -99,7 +98,6 @@ class IdSearchAdapter(
         viewModel: IdSearchViewModel
     ) {
         binding.btnFollowingFollow.setOnClickListener {
-            Log.d("btn", "팔로잉")
             viewModel.requestFollowAndFollowing(data.id)
             binding.btnFollowingFollow.visibility = View.INVISIBLE
             binding.btnFollowingFollowing.visibility = View.VISIBLE
@@ -108,9 +106,9 @@ class IdSearchAdapter(
 
     private fun setFollowingFollowBtn(
         binding: ItemFollowingAfterIdsearchBinding,
-        viewModel: IdSearchViewModel
+        data: ResponseIdSearchData.Data
     ) {
-        if (viewModel.isFollowed.value == true) {
+        if (data.isFollowed == true) {
             binding.btnFollowingFollowing.visibility = View.VISIBLE
             binding.btnFollowingFollow.visibility = View.INVISIBLE
         } else {

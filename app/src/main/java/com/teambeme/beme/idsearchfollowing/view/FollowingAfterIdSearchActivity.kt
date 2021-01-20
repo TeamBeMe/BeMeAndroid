@@ -37,10 +37,6 @@ class FollowingAfterIdSearchActivity :
         binding.rcvFollowingAfterIdsearch.adapter = idSearchAdapter
 
         setIdSearchListObserve()
-
-        idSearchViewModel.isEmpty.observe(this) { it ->
-            isEmptyListener(it)
-        }
         setQueryTextListener()
         backBtnWorking()
     }
@@ -51,18 +47,14 @@ class FollowingAfterIdSearchActivity :
                 if (binding.rcvFollowingAfterIdsearch.adapter != null) with(binding.rcvFollowingAfterIdsearch.adapter as IdSearchAdapter) {
                     submitList(idSearchData)
                 }
+                if (idSearchData[0].isFollowed == null) {
+                    binding.noticeWhenNoSearchData.visibility = View.VISIBLE
+                    binding.constraintViewFollowingAfterIdsearch.visibility = View.INVISIBLE
+                } else {
+                    binding.noticeWhenNoSearchData.visibility = View.INVISIBLE
+                    binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
+                }
             }
-        }
-    }
-
-    private fun isEmptyListener(isEmpty: Boolean) {
-        if (isEmpty) {
-            binding.noticeWhenNoSearchData.visibility = View.VISIBLE // 이건 엠티뷰 측정해서 띄우기
-            binding.constraintViewFollowingAfterIdsearch.visibility =
-                View.GONE // 엠티뷰에서 팔로잉이 남은것은 여기서 엠티뷰는 visible했는데 검색결과 리사이클러뷰를 가리지
-            // 않아서 발생한것 여기서 gone을 해주니 됐다
-        } else {
-            binding.noticeWhenNoSearchData.visibility = View.GONE
         }
     }
 
@@ -104,24 +96,18 @@ class FollowingAfterIdSearchActivity :
                 val queryText = newText ?: ""
                 if (queryText.count() > 0) {
                     binding.viewRecentSearch.visibility = View.GONE
-                    binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE
-                    idSearchViewModel.deleteSearchRecord()
-                    // 여기가 비지블이라 검색중에 검색결과 남은게 보였던것
+                    binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
                 } else {
+                    idSearchViewModel.deleteSearchRecord()
                     binding.viewRecentSearch.visibility = View.VISIBLE
                     binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE
                     binding.noticeWhenNoSearchData.visibility = View.GONE
-                    idSearchViewModel.setSearchQuery(queryText)
-                    idSearchViewModel.requestIdSearchgData()
-                    idSearchViewModel.deleteSearchRecord()
-                    Log.d("search_semin", "${idSearchViewModel.idSearchData.value}")
                 }
                 return false
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
-                    binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
                     idSearchViewModel.setSearchQuery(query)
                     idSearchViewModel.requestIdSearchgData()
                     Log.d("search_semin", "${idSearchViewModel.idSearchData.value}")
