@@ -188,7 +188,6 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
 
     private fun openClickListener(isOpenClicked: Boolean) {
         if (isOpenClicked) {
-            Toast.makeText(this, "cc", Toast.LENGTH_SHORT).show()
             detailViewModel.replyOpenClickedFalse()
         }
     }
@@ -264,8 +263,6 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
 
     private fun changeChildclickListener(isChildChangeClicked: Boolean) {
         detailViewModel.secretButtonClickedFalse()
-
-        Toast.makeText(this, "${detailViewModel.childposition.value}", Toast.LENGTH_SHORT).show()
         if (isChildChangeClicked) {
             if (!detailViewModel.getReplyChildFlag()) {
                 binding.imgDetailSecret.setImageResource(R.drawable.ic_secret_on)
