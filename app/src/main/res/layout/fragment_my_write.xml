@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="myPageViewModel"
             type="com.teambeme.beme.mypage.viewmodel.MyPageViewModel" />
@@ -12,107 +13,105 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:overScrollMode="never"
         android:touchscreenBlocksFocus="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:overScrollMode="never"
-        android:fillViewport="true"
         tools:context=".mypage.view.MyScrapFragment">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".mypage.view.MyWriteFragment">
-
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_view_write_search"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="34dp"
-            android:background="@drawable/searchview_background"
-            app:iconifiedByDefault="false"
-            app:layout_constraintEnd_toStartOf="@+id/img_write_filter"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:queryBackground="@android:color/transparent"
-            app:queryHint="검색" />
-
-        <ImageButton
-            android:id="@+id/img_write_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="28dp"
-            android:backgroundTint="@android:color/transparent"
-            android:onClick="@{() -> myPageViewModel.writeFilterOnClick()}"
-            app:layout_constraintBottom_toBottomOf="@+id/search_view_write_search"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/search_view_write_search"
-            app:srcCompat="@drawable/ic_filter_write" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/constraint_write_empty"
-            app:layout_constraintTop_toBottomOf="@+id/search_view_write_search"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_height="match_parent"
+            tools:context=".mypage.view.MyWriteFragment">
 
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view_write_search"
+                style="@style/search_view"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="34dp"
+                android:background="@drawable/searchview_background"
+                app:layout_constraintEnd_toStartOf="@+id/img_write_filter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView"
+            <ImageButton
+                android:id="@+id/img_write_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="72dp"
+                android:layout_marginEnd="28dp"
+                android:backgroundTint="@android:color/transparent"
+                android:onClick="@{() -> myPageViewModel.writeFilterOnClick()}"
+                app:layout_constraintBottom_toBottomOf="@+id/search_view_write_search"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/search_view_write_search"
+                app:srcCompat="@drawable/ic_filter_write" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_write_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_info_mypage" />
+                app:layout_constraintTop_toBottomOf="@+id/search_view_write_search">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="72dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_info_mypage" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:gravity="center"
+                    android:text="하루에 한 번씩 쓰다보면\n 어느샌가 나에대해 잘 알게 될거에요"
+                    android:textColor="@color/mypage_gray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_mywrite"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="18dp"
-                android:textColor="@color/mypage_gray"
-                android:text="하루에 한 번씩 쓰다보면\n 어느샌가 나에대해 잘 알게 될거에요"
-                app:layout_constraintTop_toBottomOf="@id/imageView"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="28dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintBottom_toTopOf="@+id/btn_write_showmore"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_view_write_search" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_write_showmore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="28dp"
+                android:backgroundTint="@color/mypage_black"
+                android:paddingTop="12dp"
+                android:paddingBottom="16dp"
+                android:text="더보기"
+                android:textColor="@color/mypage_white"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:cornerRadius="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rcv_mywrite" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_mywrite"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="28dp"
-            android:layout_marginStart="28dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_write_showmore"
-            android:nestedScrollingEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search_view_write_search" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_write_showmore"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/mypage_black"
-            android:paddingTop="12dp"
-            android:paddingBottom="16dp"
-            android:text="더보기"
-            android:textColor="@color/mypage_white"
-            android:textSize="16sp"
-            app:cornerRadius="6dp"
-            android:visibility="gone"
-            android:layout_marginEnd="28dp"
-            android:layout_marginStart="28dp"
-            app:layout_constraintTop_toBottomOf="@+id/rcv_mywrite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

@@ -56,7 +56,7 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="following_show_all_search_view" parent="Widget.AppCompat.SearchView">
+    <style name="search_view" parent="Widget.AppCompat.SearchView">
         <item name="searchIcon">@drawable/ic_mypage_search</item>
         <item name="iconifiedByDefault">false</item>
         <item name="queryHint">"검색"</item>
