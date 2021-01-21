@@ -93,7 +93,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             adapter = pagerAdapter
             clipToPadding = false
             clipChildren = false
-            offscreenPageLimit = 4
+            offscreenPageLimit = 1
             setPageTransformer(compositePageTransformer)
             setPadding(120, 0, 120, 0)
             getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
@@ -132,12 +132,12 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     fun returnToDefaultPosition() {
-        binding.vpHomeQuestionSlider.post {
+        binding.vpHomeQuestionSlider.postDelayed({
             homeViewModel.answerList
                 .value
                 ?.size
                 ?.let { binding.vpHomeQuestionSlider.setCurrentItem(it, true) }
-        }
+        }, 100)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
