@@ -117,9 +117,10 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
         viewModelScope.launch {
             try {
                 val currentList = _answerList.value!!.toMutableList()
-                val response = homeRepository.changeQuestion(currentList[position].id)
+                val response = homeRepository.changeQuestion(currentList[position - 1].id)
                 if (response.success) {
-                    currentList[position] = response.answer
+                    currentList[position - 1] = response.answer
+                    _answerList.value = mutableListOf()
                     _answerList.value = currentList
                     startEvent()
                 }

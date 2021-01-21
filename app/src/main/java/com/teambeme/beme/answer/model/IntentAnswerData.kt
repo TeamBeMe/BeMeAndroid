@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class IntentAnswerData(
     val questionId: Int,
+    val answerId: Int,
     val title: String,
     val category: String,
     val categoryIdx: Int?,

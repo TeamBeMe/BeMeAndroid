@@ -8,6 +8,8 @@ import androidx.room.PrimaryKey
 data class AnswerData(
     @PrimaryKey
     var questionId: Long,
+    @ColumnInfo(name = "answerId")
+    var answerId: Long,
     @ColumnInfo(name = "answer")
     var answer: String = "",
     @ColumnInfo(name = "isCommentBlocked")

@@ -84,6 +84,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                 val intent = Intent(context, AnswerActivity::class.java)
                 Log.d("answer", "fragment " + "${followingViewModel.answerData.value}")
                 var intentAnswerData: IntentAnswerData = IntentAnswerData(
+                    it.questionId,
                     it.id,
                     it.question,
                     it.category,

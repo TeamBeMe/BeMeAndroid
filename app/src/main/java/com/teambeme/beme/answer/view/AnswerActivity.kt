@@ -45,7 +45,7 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         val intentAnswerData = intent.getParcelableExtra<IntentAnswerData>("intentAnswerData")!!
         val isChange = intent.getIntExtra(IS_CHANGE, IS_WRITE_VALUE)
         answerViewModel.setIntentAnswerData(intentAnswerData)
-        Log.d("answerIDx",intentAnswerData.categoryIdx.toString())
+        Log.d("answerIDx", intentAnswerData.categoryIdx.toString())
         Log.d("answer", intentAnswerData.toString())
         binding.txtAnswerData.text = intentAnswerData.createdAt
         answerViewModel.checkStored(intentAnswerData.questionId)

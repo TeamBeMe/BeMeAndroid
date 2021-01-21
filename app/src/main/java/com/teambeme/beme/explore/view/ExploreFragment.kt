@@ -71,6 +71,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         exploreViewModel.questionForFirstAnswer.observe(viewLifecycleOwner) {
             it?.let {
                 val intentAnswerData = IntentAnswerData(
+                    it.questionId,
                     it.id,
                     it.questionTitle,
                     it.questionCategoryName,

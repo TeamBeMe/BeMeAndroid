@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.teambeme.beme.data.local.dao.AnswerDao
 import com.teambeme.beme.data.local.entity.AnswerData
 
-@Database(entities = [AnswerData::class], version = 1, exportSchema = false)
+@Database(entities = [AnswerData::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract val answerDao: AnswerDao
 

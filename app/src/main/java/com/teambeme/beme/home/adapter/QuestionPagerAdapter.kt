@@ -55,7 +55,8 @@ class QuestionPagerAdapter(
                     override fun modifyAnswer() {
                         val currentAnswer = answerList[position - 1]
                         val intentAnswerData = IntentAnswerData(
-                            questionId = currentAnswer.id,
+                            questionId = currentAnswer.questionId,
+                            answerId = currentAnswer.id,
                             title = currentAnswer.questionTitle,
                             category = currentAnswer.questionCategoryName,
                             categoryIdx = currentAnswer.answerIdx?.toInt(),
