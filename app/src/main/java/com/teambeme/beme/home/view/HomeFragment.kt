@@ -57,10 +57,11 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             override fun onAnswerButtonClick(answer: Answer, position: Int) {
                 val intent = Intent(context, AnswerActivity::class.java)
                 val intentData = IntentAnswerData(
-                    questionId = answer.id,
+                    questionId = answer.questionId,
+                    answerId = answer.id,
                     title = answer.questionTitle,
                     category = answer.questionCategoryName,
-                    categoryIdx = answer.questionCategoryId,
+                    categoryIdx = answer.answerIdx?.toInt(),
                     createdAt = answer.createdAt
                 )
                 intent.putExtra("intentAnswerData", intentData)

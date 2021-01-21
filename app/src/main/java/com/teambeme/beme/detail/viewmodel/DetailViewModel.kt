@@ -83,6 +83,7 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
 
     fun setIntentData() {
         val data: IntentAnswerData = IntentAnswerData(
+            detailData.value!!.questionId,
             detailData.value!!.id,
             detailData.value!!.question,
             detailData.value!!.category,
@@ -92,7 +93,7 @@ class DetailViewModel(private val detailRepository: DetailRepository) : ViewMode
             detailData.value!!.publicFlag,
             detailData.value!!.commentBlockedFlag
         )
-        Log.d("answer value : ",detailData.value!!.answerIdx.toString())
+        Log.d("answer value : ", detailData.value!!.answerIdx.toString())
         _intentData.value = data
     }
 
