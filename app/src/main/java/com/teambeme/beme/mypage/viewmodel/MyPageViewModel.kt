@@ -55,24 +55,20 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
         _mywriteFilter.value?.category = null
         _mywriteFilter.value?.range = null
         page = 1
-        _isAnswerMax.value = false
         _myQuery.value = null
     }
 
     fun initPage() {
         page = 1
-        _isAnswerMax.value = false
     }
 
     fun initScrap() {
         scrapPage = 1
-        _isScrapMax.value = false
         _scrapQuery.value = null
     }
 
     fun initScrapPage() {
         scrapPage = 1
-        _isScrapMax.value = false
     }
 
     fun setScrapFilter(range: String?, category: Int?) {
