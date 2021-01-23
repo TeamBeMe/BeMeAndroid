@@ -18,6 +18,7 @@
         android:theme="@style/Theme.BeMe"
         android:usesCleartextTraffic="true">
         <activity android:name=".splash.SplashActivity"
+            android:theme="@style/SplashTheme"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
