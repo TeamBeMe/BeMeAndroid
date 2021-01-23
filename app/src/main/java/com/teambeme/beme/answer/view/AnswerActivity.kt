@@ -101,7 +101,7 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
 
     private fun submitAnswer(status: Int) {
         val requestAnswerData = RequestAnswerData(
-            answerId = answerViewModel.answerData.value!!.questionId.toInt(),
+            answerId = answerViewModel.answerData.value!!.answerId.toInt(),
             content = answerViewModel.answer.value ?: "",
             isPublic = answerViewModel.isPublic.value ?: false,
             isCommentBlocked = getIsCommentBlockedValue(answerViewModel.isPublic.value)
@@ -139,9 +139,16 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
                 binding.linearAnswerPublic.layoutParams!! as ConstraintLayout.LayoutParams
             if (isPublic) {
                 val animator = setValueChangeAnimator(20.dp, 64.dp)
+                val alphaAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+                    duration = 400
+                    start()
+                }
                 animator.addUpdateListener { updatedAnimation ->
                     layoutParams.setMargins(0, 0, 0, updatedAnimation.animatedValue as Int)
                     binding.linearAnswerPublic.layoutParams = layoutParams
+                }
+                alphaAnimator.addUpdateListener {
+                    binding.linearAnswerBlockComment.alpha = it.animatedValue as Float
                 }
             } else {
                 val animator = setValueChangeAnimator(64.dp, 20.dp)

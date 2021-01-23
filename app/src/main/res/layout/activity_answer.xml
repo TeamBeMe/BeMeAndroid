@@ -99,22 +99,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_answer_data" />
 
-        <EditText
-            android:id="@+id/txt_answer_answer"
+        <ScrollView
+            android:id="@+id/scrollview_answer_answer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="128dp"
-            android:background="@null"
-            android:gravity="top"
-            android:hint="답변을 써주세요"
-            android:text="@={answerViewModel.answer}"
-            android:textColor="@color/answer_text_black"
-            android:textColorHint="@color/answer_text_gray"
-            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider_answer_top" />
+            app:layout_constraintTop_toBottomOf="@id/divider_answer_top">
+            <EditText
+                android:id="@+id/txt_answer_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="top"
+                android:hint="답변을 써주세요"
+                android:text="@={answerViewModel.answer}"
+                android:textColor="@color/answer_text_black"
+                android:textColorHint="@color/answer_text_gray"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_answer_top" />
+        </ScrollView>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linear_answer_public"
