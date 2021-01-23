@@ -107,7 +107,7 @@ class QuestionPagerAdapter(
         private val binding: ItemHomeMoreQuestionBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun onBind() {
-            binding.txtHomeMoreQuestion.text = "나를 돌아보기 위한 과거의 질문들이 준비되어 있어요"
+            binding.txtHomeMoreQuestion.text = "나를 돌아보기 위한 과거의\n질문들이 준비되어 있어요"
             binding.btnHomeMoreQuestion.text = "과거의 질문 보기"
             binding.btnHomeMoreQuestion.setOnClickListener {
                 homeViewModel.getMoreAnswers()

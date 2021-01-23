@@ -62,7 +62,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
                     title = answer.questionTitle,
                     category = answer.questionCategoryName,
                     categoryIdx = answer.answerIdx?.toInt(),
-                    createdAt = answer.createdAt
+                    createdAt = transformDateFormat(answer.createdAt)
                 )
                 intent.putExtra("intentAnswerData", intentData)
                 intent.putExtra("position", position)
@@ -153,7 +153,15 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         }
     }
 
+    private fun transformDateFormat(date: String): String {
+        return if (date.length > DATE_LENGTH)
+            date.substring(0, DATE_LENGTH)
+        else
+            date
+    }
+
     companion object {
         const val ANSWER_ACTIVITY = 1000
+        const val DATE_LENGTH = 10
     }
 }
