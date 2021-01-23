@@ -48,6 +48,7 @@ class PersonalInfoFragment : Fragment() {
                     binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_red)
                 }
             }
+            checkButtonEnable()
         }
     }
 
