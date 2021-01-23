@@ -79,6 +79,7 @@
             app:boxStrokeColor="@color/login_box_gray"
             app:endIconMode="password_toggle"
             app:endIconDrawable="@drawable/ic_show_password"
+            app:endIconTint="@color/login_end_icon_gray"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText

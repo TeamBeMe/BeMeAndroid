@@ -99,6 +99,7 @@
     <color name="answer_switch_off">#c4c4c4</color>
     <color name="login_text_gray">#c9c9c9</color>
     <color name="login_box_gray">#1C1C1E</color>
+    <color name="login_end_icon_gray">#636366</color>
     <color name="mypage_white">#ffffff</color>
     <color name="mypage_black">#000000</color>
     <color name="mypage_gray">#636363</color>
