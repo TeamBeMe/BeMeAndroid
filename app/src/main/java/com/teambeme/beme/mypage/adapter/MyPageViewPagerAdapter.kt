@@ -2,22 +2,18 @@ package com.teambeme.beme.mypage.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.teambeme.beme.mypage.view.MyScrapFragment
+import com.teambeme.beme.mypage.view.MyWriteFragment
 
 class MyPageViewPagerAdapter(fragment: Fragment) :
     FragmentStateAdapter(fragment) {
 
-    var fragments: ArrayList<Fragment> = ArrayList()
-
-    override fun getItemCount(): Int {
-        return fragments.size
-    }
+    override fun getItemCount() = 2
 
     override fun createFragment(position: Int): Fragment {
-        return fragments[position]
-    }
-
-    fun addFragment(fragment: Fragment) {
-        fragments.add(fragment)
-        notifyItemInserted(fragments.size - 1)
+        return when (position) {
+            0 -> MyWriteFragment()
+            else -> MyScrapFragment()
+        }
     }
 }

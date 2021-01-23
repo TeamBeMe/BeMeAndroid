@@ -54,8 +54,10 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
             } catch (e: HttpException) {
                 if (e.code() == 400) {
                     _errorMessage.value = "더 이상 페이지가 없습니다"
+                    _currentQuestionPage--
                     canAdd = false
                 } else {
+                    _currentQuestionPage--
                     _errorMessage.value = "서버 통신에 문제가 발생했습니다"
                 }
             }
@@ -66,10 +68,16 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
         viewModelScope.launch {
             Log.d("Home", "Refresh")
             val list = mutableListOf<Answer>()
-            for (i in 1 until _currentQuestionPage) {
-                val moreAnswers = homeRepository.getAnswers(i).answers.toMutableList()
+            if (_currentQuestionPage == 1) {
+                val moreAnswers = homeRepository.getAnswers(1).answers.toMutableList()
                 moreAnswers.reverse()
                 list.addAll(0, moreAnswers)
+            } else {
+                for (i in 1 until _currentQuestionPage) {
+                    val moreAnswers = homeRepository.getAnswers(i).answers.toMutableList()
+                    moreAnswers.reverse()
+                    list.addAll(0, moreAnswers)
+                }
             }
             _answerList.value = mutableListOf()
             _answerList.value = list.toMutableList()
@@ -85,7 +93,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
             Log.d("Home", "Init")
             try {
                 val currentList =
-                    homeRepository.getAnswers(_currentQuestionPage++).answers.toMutableList()
+                    homeRepository.getAnswers(_currentQuestionPage).answers.toMutableList()
                 _answerList.value = mutableListOf()
                 _answerList.value = currentList.reversed().toMutableList()
                 startEvent()
