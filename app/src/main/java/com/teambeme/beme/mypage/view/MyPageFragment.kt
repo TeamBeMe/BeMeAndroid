@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import com.google.android.material.tabs.TabLayoutMediator
@@ -35,7 +34,7 @@ class MyPageFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
         binding.lifecycleOwner = this
-        setViewPagerAdapter(childFragmentManager)
+        setViewPagerAdapter()
         binding.myPageViewModel = mypageViewModel
         mypageViewModel.profileUri.observe(viewLifecycleOwner) {
             editProfileListener(it)
@@ -62,10 +61,8 @@ class MyPageFragment : Fragment() {
         }
     }
 
-    private fun setViewPagerAdapter(fragmentManager: FragmentManager) {
+    private fun setViewPagerAdapter() {
         val pagerAdapter = MyPageViewPagerAdapter(this)
-        pagerAdapter.addFragment(MyWriteFragment())
-        pagerAdapter.addFragment(MyScrapFragment())
         val viewPager = binding.vpMypage
         viewPager.adapter = pagerAdapter
         val tabText = arrayListOf("내 글", "스크랩")
