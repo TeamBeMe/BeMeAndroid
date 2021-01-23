@@ -73,7 +73,7 @@ class QuestionPagerAdapter(
                     }
 
                     override fun deleteAnswer() {
-                        homeViewModel.deleteAnswer(position)
+                        homeViewModel.deleteAnswer(position - 1)
                     }
                 }).show(
                     fragmentManager,
