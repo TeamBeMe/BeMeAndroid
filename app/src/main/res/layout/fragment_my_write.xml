@@ -32,6 +32,7 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="34dp"
                 android:background="@drawable/searchview_background"
+                android:theme="@style/search_view"
                 app:layout_constraintEnd_toStartOf="@+id/img_write_filter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
