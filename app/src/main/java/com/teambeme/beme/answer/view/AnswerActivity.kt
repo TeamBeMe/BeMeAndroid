@@ -101,7 +101,7 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
 
     private fun submitAnswer(status: Int) {
         val requestAnswerData = RequestAnswerData(
-            answerId = answerViewModel.answerData.value!!.questionId.toInt(),
+            answerId = answerViewModel.answerData.value!!.answerId.toInt(),
             content = answerViewModel.answer.value ?: "",
             isPublic = answerViewModel.isPublic.value ?: false,
             isCommentBlocked = getIsCommentBlockedValue(answerViewModel.isPublic.value)
