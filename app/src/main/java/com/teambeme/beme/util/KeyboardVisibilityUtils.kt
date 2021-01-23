@@ -10,7 +10,7 @@ class KeyboardVisibilityUtils(
     private val onHideKeyboard: (() -> Unit)? = null
 ) {
 
-    private val MIN_KEYBOARD_HEIGHT_PX = 150
+    private val MIN_KEYBOARD_HEIGHT_PX = 150.dp
 
     private val windowVisibleDisplayFrame = Rect()
     private var lastVisibleDecorViewHeight: Int = 0

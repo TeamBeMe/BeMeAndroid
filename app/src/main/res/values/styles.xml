@@ -106,4 +106,9 @@
         <item name="android:paddingVertical">16dp</item>
         <item name="android:textSize">16sp</item>
     </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
 </resources>
