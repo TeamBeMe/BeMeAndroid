@@ -25,6 +25,14 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     val errorMessage: LiveData<String>
         get() = _errorMessage
 
+    private val _showPassword = MutableLiveData(false)
+    val showPassword: LiveData<Boolean>
+        get() = _showPassword
+
+    fun setShowPassword(){
+        _showPassword.value = showPassword.value != true
+    }
+
     fun requestLogin() {
         loginRepository.login(nickNameText.value ?: "", passwordText.value ?: "").enqueue(object :
             Callback<ResponseLogin> {
