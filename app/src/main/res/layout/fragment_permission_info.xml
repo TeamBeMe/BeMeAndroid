@@ -77,6 +77,7 @@
         android:paddingVertical="16dp"
         android:paddingStart="28dp"
         android:text="필수 접근 권한 없음"
+        android:textColor="@color/signup_content_content"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@+id/txt_permission_essence_access" />
 

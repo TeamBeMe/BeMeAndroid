@@ -3,6 +3,8 @@ package com.teambeme.beme.login.view
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -74,6 +76,8 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             }
         }
         signUpButtonClickListener()
+        setChangeEndIconFromPassword()
+        setEndIconModeObserve()
     }
 
     private fun signUpButtonClickListener() {
@@ -97,6 +101,28 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             0,
             valueAnimator.animatedValue as Int
         )
+    }
+
+    private fun setChangeEndIconFromPassword() {
+        binding.txtlayoutLoginPassword.setEndIconOnClickListener {
+            loginViewModel.setShowPassword()
+        }
+    }
+
+    private fun setEndIconModeObserve() {
+        loginViewModel.showPassword.observe(this) { showPassword ->
+            showPassword?.let {
+                if (showPassword) {
+                    binding.txtlayoutLoginPassword.setEndIconDrawable(R.drawable.ic_hide_password)
+                    binding.editxtLoginPassword.transformationMethod =
+                        HideReturnsTransformationMethod.getInstance()
+                } else {
+                    binding.txtlayoutLoginPassword.setEndIconDrawable(R.drawable.ic_show_password)
+                    binding.editxtLoginPassword.transformationMethod =
+                        PasswordTransformationMethod.getInstance()
+                }
+            }
+        }
     }
 
     override fun onDestroy() {

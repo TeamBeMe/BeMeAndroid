@@ -86,6 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:paddingEnd="36dp"
             android:text="@{otherQuestions.content}"
             android:textColor="@color/item_other_questions_txt_content_black"
             android:textSize="14sp"
