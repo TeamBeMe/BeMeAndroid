@@ -63,10 +63,9 @@ class MyPageFragment : Fragment() {
 
     private fun setViewPagerAdapter() {
         val pagerAdapter = MyPageViewPagerAdapter(this)
-        val viewPager = binding.vpMypage
-        viewPager.adapter = pagerAdapter
+        binding.vpMypage.adapter = pagerAdapter
         val tabText = arrayListOf("내 글", "스크랩")
-        TabLayoutMediator(binding.tabMypage, viewPager) { tab, position ->
+        TabLayoutMediator(binding.tabMypage, binding.vpMypage) { tab, position ->
             tab.text = tabText[position]
         }.attach()
     }
