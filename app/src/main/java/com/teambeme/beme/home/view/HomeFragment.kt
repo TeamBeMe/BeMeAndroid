@@ -41,7 +41,6 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         val questionPagerAdapter =
             QuestionPagerAdapter(childFragmentManager, homeViewModel, getHomeButtonClickListener())
         setAnswerPager(questionPagerAdapter)
-        homeViewModel.setInitAnswer()
         setObserve()
         return binding.root
     }
