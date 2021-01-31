@@ -98,7 +98,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
                 if (morePage == true) {
                     binding.btnExploreShowMore.visibility = View.VISIBLE
                 } else {
-                    binding.btnExploreShowMore.visibility = View.INVISIBLE
+                    binding.btnExploreShowMore.visibility = View.GONE
                 }
             }
         }
