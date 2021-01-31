@@ -72,7 +72,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                 if (morePage == true) {
                     binding.btnFollowingShowMore.visibility = View.VISIBLE
                 } else {
-                    binding.btnFollowingShowMore.visibility = View.INVISIBLE
+                    binding.btnFollowingShowMore.visibility = View.GONE
                 }
             }
         }

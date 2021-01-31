@@ -21,6 +21,7 @@ import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
 import com.teambeme.beme.explore.repository.ExploreRepositoryImpl
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
 import com.teambeme.beme.explore.viewmodel.ExploreViewModelFactory
+import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
 import com.teambeme.beme.notification.view.NotificationActivity
 
@@ -76,7 +77,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
                     it.questionTitle,
                     it.questionCategoryName,
                     it.answerIdx,
-                    it.createdAt
+                    transformDateFormat(it.createdAt)
                 )
                 val intent = Intent(context, AnswerActivity::class.java)
                 intent.putExtra("intentAnswerData", intentAnswerData)
@@ -97,7 +98,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
                 if (morePage == true) {
                     binding.btnExploreShowMore.visibility = View.VISIBLE
                 } else {
-                    binding.btnExploreShowMore.visibility = View.INVISIBLE
+                    binding.btnExploreShowMore.visibility = View.GONE
                 }
             }
         }
@@ -183,5 +184,12 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
             val intent = Intent(activity, NotificationActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun transformDateFormat(date: String): String {
+        return if (date.length > HomeFragment.DATE_LENGTH)
+            date.substring(0, HomeFragment.DATE_LENGTH)
+        else
+            date
     }
 }

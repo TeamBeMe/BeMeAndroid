@@ -29,7 +29,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     val showPassword: LiveData<Boolean>
         get() = _showPassword
 
-    fun setShowPassword(){
+    fun setShowPassword() {
         _showPassword.value = showPassword.value != true
     }
 

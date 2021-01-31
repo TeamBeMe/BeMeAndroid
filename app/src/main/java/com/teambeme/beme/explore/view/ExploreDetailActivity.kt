@@ -49,7 +49,7 @@ class ExploreDetailActivity :
                 if (morePage == true) {
                     binding.btnExploreDetailShowMore.visibility = View.VISIBLE
                 } else {
-                    binding.btnExploreDetailShowMore.visibility = View.INVISIBLE
+                    binding.btnExploreDetailShowMore.visibility = View.GONE
                 }
             }
         }

@@ -30,32 +30,31 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
     fun getMoreAnswers() {
         viewModelScope.launch {
+            Log.d("OkHome", "getMoreAnswer")
             try {
                 if (canAdd) {
                     val moreAnswers =
-                        homeRepository.getAnswers(_currentQuestionPage++).answers.toMutableList()
+                        homeRepository.getAnswers(++_currentQuestionPage).answers.toMutableList()
                     moreAnswers.reverse()
                     val currentList = _answerList.value?.toMutableList()
                     if (currentList != null) {
                         moreAnswers.addAll(currentList)
                     }
                     _answerList.value = moreAnswers.toMutableList()
+                    Log.d("OkHome", "getMoreAnswerCanAddSuccess")
                 } else {
-                    val moreAnswers =
-                        homeRepository.getAnswers(_currentQuestionPage).answers.toMutableList()
-                    moreAnswers.reverse()
-                    val currentList = _answerList.value?.toMutableList()
-                    if (currentList != null) {
-                        moreAnswers.addAll(currentList)
-                    }
-                    _answerList.value = moreAnswers.toMutableList()
-                    canAdd = true
+                    _errorMessage.value = "더 이상 페이지가 없습니다"
                 }
+                Log.d("OkHome", "getMoreAnswerSuccess")
             } catch (e: HttpException) {
                 if (e.code() == 400) {
                     _errorMessage.value = "더 이상 페이지가 없습니다"
+                    _currentQuestionPage--
+                    Log.d("OkHome", "$_currentQuestionPage")
                     canAdd = false
+                    Log.d("OkHome", "getMoreAnswerFailure")
                 } else {
+                    _currentQuestionPage--
                     _errorMessage.value = "서버 통신에 문제가 발생했습니다"
                 }
             }
@@ -64,36 +63,41 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
     fun refreshTaskCompleted() {
         viewModelScope.launch {
-            Log.d("Home", "Refresh")
+            Log.d("OkHome", "refreshTaskCompleted")
             val list = mutableListOf<Answer>()
-            for (i in 1 until _currentQuestionPage) {
-                val moreAnswers = homeRepository.getAnswers(i).answers.toMutableList()
-                moreAnswers.reverse()
-                list.addAll(0, moreAnswers)
+            try {
+                if (_currentQuestionPage == 1) {
+                    val moreAnswers = homeRepository.getAnswers(1).answers.toMutableList()
+                    moreAnswers.reverse()
+                    list.addAll(0, moreAnswers)
+                } else {
+                    Log.d("OkHome", "$_currentQuestionPage")
+                    for (i in 1.._currentQuestionPage) {
+                        val moreAnswers = homeRepository.getAnswers(i).answers.toMutableList()
+                        moreAnswers.reverse()
+                        list.addAll(0, moreAnswers)
+                    }
+                }
+                _answerList.value = mutableListOf()
+                _answerList.value = list.toMutableList()
+                Log.d("OkHome", "refreshTaskCompletedSuccess")
+            } catch (e: HttpException) {
+                if (e.code() == 400) {
+                    _currentQuestionPage--
+                    Log.d("OkHome", "$_currentQuestionPage")
+                    canAdd = false
+                    Log.d("OkHome", "refreshTaskCompletedFailure")
+                } else {
+                    _currentQuestionPage--
+                    _errorMessage.value = "서버 통신에 문제가 발생했습니다"
+                }
             }
-            _answerList.value = mutableListOf()
-            _answerList.value = list.toMutableList()
+
         }
     }
 
     fun refreshList(list: MutableList<Answer>) {
         _answerList.value = list
-    }
-
-    fun setInitAnswer() {
-        viewModelScope.launch {
-            Log.d("Home", "Init")
-            try {
-                val currentList =
-                    homeRepository.getAnswers(_currentQuestionPage++).answers.toMutableList()
-                _answerList.value = mutableListOf()
-                _answerList.value = currentList.reversed().toMutableList()
-                startEvent()
-                delay(1000)
-            } catch (e: HttpException) {
-                Log.d("Home", e.message())
-            }
-        }
     }
 
     fun changePublic(position: Int) {
@@ -108,8 +112,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     currentList[position].publicFlag = isPublic(currentList[position].publicFlag)
                     _answerList.value = currentList
                 }
-            } catch (e: HttpException) {
-            }
+            } catch (e: HttpException) { }
         }
     }
 
@@ -144,8 +147,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     _answerList.value = currentList
                     startEvent()
                 }
-            } catch (e: HttpException) {
-            }
+            } catch (e: HttpException) { }
         }
     }
 
