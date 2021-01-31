@@ -47,7 +47,11 @@ class ReplyAdapter(private val context: Context, private val viewModel: DetailVi
                 replyAdapter.setListItems(comment.children)
                 Log.d("test", "${comment.children.size}")
             } else {
-                binding.rcvReplyparentChild.visibility = View.GONE
+                if (binding.txtReplyparentOpen.text == "답글 접기") {
+                    binding.rcvReplyparentChild.visibility = View.VISIBLE
+                } else {
+                    binding.rcvReplyparentChild.visibility = View.GONE
+                }
             }
         }
 
