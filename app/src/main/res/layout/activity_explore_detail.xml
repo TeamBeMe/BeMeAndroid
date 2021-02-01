@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="28dp"
                     android:layout_marginEnd="28dp"
-                    android:layout_marginBottom="50dp"
+                    android:layout_marginBottom="150dp"
                     android:backgroundTint="@color/explore_detail_btn_show_more_background_black"
                     android:onClick="@{()->exploreDetailViewModel.requestPlusSameQuestionOtherAnswers()}"
                     android:paddingTop="12dp"
