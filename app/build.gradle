@@ -96,4 +96,7 @@ dependencies {
 
     // Dot Indicator
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+
+    // AndroidX Security: EncryptedSharedPreference
+    implementation "androidx.security:security-crypto:1.0.0-rc03"
 }
