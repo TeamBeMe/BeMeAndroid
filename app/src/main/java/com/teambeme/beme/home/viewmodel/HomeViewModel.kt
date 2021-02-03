@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teambeme.beme.home.model.Answer
 import com.teambeme.beme.home.repository.HomeRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
@@ -92,7 +91,6 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     _errorMessage.value = "서버 통신에 문제가 발생했습니다"
                 }
             }
-
         }
     }
 
@@ -103,16 +101,17 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     fun changePublic(position: Int) {
         viewModelScope.launch {
             try {
-                val currentList = _answerList.value!!
+                val currentList = _answerList.value!!.toMutableList()
                 val response = homeRepository.modifyPublic(
                     currentList[position].id,
-                    currentList[position].publicFlag
+                    transitPublicFlag(currentList[position].publicFlag)
                 )
                 if (response.success) {
-                    currentList[position].publicFlag = isPublic(currentList[position].publicFlag)
+                    currentList[position].publicFlag = transitPublicFlag(currentList[position].publicFlag)
                     _answerList.value = currentList
                 }
-            } catch (e: HttpException) { }
+            } catch (e: HttpException) {
+            }
         }
     }
 
@@ -147,11 +146,12 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     _answerList.value = currentList
                     startEvent()
                 }
-            } catch (e: HttpException) { }
+            } catch (e: HttpException) {
+            }
         }
     }
 
-    private fun isPublic(publicFlag: Int): Int {
+    private fun transitPublicFlag(publicFlag: Int): Int {
         return when (publicFlag) {
             0 -> 1
             else -> 0

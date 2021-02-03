@@ -11,6 +11,7 @@ import android.text.style.UnderlineSpan
 import android.util.Log
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.model.RequestAnswerData
@@ -107,12 +108,15 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
             isCommentBlocked = getIsCommentBlockedValue(answerViewModel.isPublic.value)
         )
         if (status == IS_WRITE_VALUE) {
-            answerViewModel.registerAnswer(requestAnswerData)
-            val position = intent.getIntExtra("position", -1)
-            intent.putExtra("posittion", position)
-            intent.putExtra("content", answerViewModel.answer.value)
-            setResult(RESULT_OK, intent)
-            finish()
+            lifecycleScope.launch {
+                answerViewModel.registerAnswer(requestAnswerData)
+                delay(500)
+                val position = intent.getIntExtra("position", -1)
+                intent.putExtra("posittion", position)
+                intent.putExtra("content", answerViewModel.answer.value)
+                setResult(RESULT_OK, intent)
+                finish()
+            }
         } else if (status == IS_CHANGE_VALUE) {
             CoroutineScope(Dispatchers.Main).launch {
                 answerViewModel.modifyAnswer(requestAnswerData)
