@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
+        android:background="@color/background_white"
         tools:context=".following.view.FollowingShowAllActivity">
 
         <ImageButton
@@ -65,15 +65,15 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_view_following_show_all"
-            style="@style/following_show_all_search_view"
+            style="@style/search_view"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_marginStart="28dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="28dp"
-            android:visibility="invisible"
             android:background="@drawable/following_show_all_search_view_shape"
-            android:imeOptions="actionSearch"
+            android:theme="@style/search_view"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tab_layout_following_show_all_sort" />

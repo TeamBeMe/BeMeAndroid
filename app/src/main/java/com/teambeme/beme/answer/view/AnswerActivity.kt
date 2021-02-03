@@ -11,6 +11,7 @@ import android.text.style.UnderlineSpan
 import android.util.Log
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.model.RequestAnswerData
@@ -45,7 +46,7 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         val intentAnswerData = intent.getParcelableExtra<IntentAnswerData>("intentAnswerData")!!
         val isChange = intent.getIntExtra(IS_CHANGE, IS_WRITE_VALUE)
         answerViewModel.setIntentAnswerData(intentAnswerData)
-        Log.d("answerIDx",intentAnswerData.categoryIdx.toString())
+        Log.d("answerIDx", intentAnswerData.categoryIdx.toString())
         Log.d("answer", intentAnswerData.toString())
         binding.txtAnswerData.text = intentAnswerData.createdAt
         answerViewModel.checkStored(intentAnswerData.questionId)
@@ -101,18 +102,21 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
 
     private fun submitAnswer(status: Int) {
         val requestAnswerData = RequestAnswerData(
-            answerId = answerViewModel.answerData.value!!.questionId.toInt(),
+            answerId = answerViewModel.answerData.value!!.answerId.toInt(),
             content = answerViewModel.answer.value ?: "",
             isPublic = answerViewModel.isPublic.value ?: false,
             isCommentBlocked = getIsCommentBlockedValue(answerViewModel.isPublic.value)
         )
         if (status == IS_WRITE_VALUE) {
-            answerViewModel.registerAnswer(requestAnswerData)
-            val position = intent.getIntExtra("position", -1)
-            intent.putExtra("posittion", position)
-            intent.putExtra("content", answerViewModel.answer.value)
-            setResult(RESULT_OK, intent)
-            finish()
+            lifecycleScope.launch {
+                answerViewModel.registerAnswer(requestAnswerData)
+                delay(500)
+                val position = intent.getIntExtra("position", -1)
+                intent.putExtra("posittion", position)
+                intent.putExtra("content", answerViewModel.answer.value)
+                setResult(RESULT_OK, intent)
+                finish()
+            }
         } else if (status == IS_CHANGE_VALUE) {
             CoroutineScope(Dispatchers.Main).launch {
                 answerViewModel.modifyAnswer(requestAnswerData)
@@ -139,9 +143,16 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
                 binding.linearAnswerPublic.layoutParams!! as ConstraintLayout.LayoutParams
             if (isPublic) {
                 val animator = setValueChangeAnimator(20.dp, 64.dp)
+                val alphaAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+                    duration = 400
+                    start()
+                }
                 animator.addUpdateListener { updatedAnimation ->
                     layoutParams.setMargins(0, 0, 0, updatedAnimation.animatedValue as Int)
                     binding.linearAnswerPublic.layoutParams = layoutParams
+                }
+                alphaAnimator.addUpdateListener {
+                    binding.linearAnswerBlockComment.alpha = it.animatedValue as Float
                 }
             } else {
                 val animator = setValueChangeAnimator(64.dp, 20.dp)

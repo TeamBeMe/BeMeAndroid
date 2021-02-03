@@ -55,6 +55,7 @@ class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewMode
         viewModelScope.launch {
             val answerData = AnswerData(
                 questionId = intentAnswerData.questionId.toLong(),
+                answerId = intentAnswerData.answerId.toLong(),
                 answer = intentAnswerData.content,
                 isCommentBlocked = intentAnswerData.isCommentBlocked,
                 isPublic = intentAnswerData.isCommentBlocked,
@@ -90,6 +91,7 @@ class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewMode
             answerRepository.insert(
                 AnswerData(
                     questionId = answerData.value!!.questionId,
+                    answerId = answerData.value!!.answerId,
                     answer = answer.value!!,
                     isCommentBlocked = _isCommentBlocked,
                     isPublic = isPublic.value ?: true,

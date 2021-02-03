@@ -72,7 +72,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                 if (morePage == true) {
                     binding.btnFollowingShowMore.visibility = View.VISIBLE
                 } else {
-                    binding.btnFollowingShowMore.visibility = View.INVISIBLE
+                    binding.btnFollowingShowMore.visibility = View.GONE
                 }
             }
         }
@@ -84,6 +84,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                 val intent = Intent(context, AnswerActivity::class.java)
                 Log.d("answer", "fragment " + "${followingViewModel.answerData.value}")
                 var intentAnswerData: IntentAnswerData = IntentAnswerData(
+                    it.questionId,
                     it.id,
                     it.question,
                     it.category,

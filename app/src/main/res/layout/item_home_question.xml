@@ -63,16 +63,26 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_question_date"
             home:text="이번 주말을 후회 없이\n보내는 방법은 무엇인가요?" />
 
+
         <TextView
             android:id="@+id/txt_question_content"
-            style="@style/question_content_style"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="36dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="100dp"
             android:text="@{answer.content != null ? answer.content : ` `}"
+            android:textAlignment="center"
+            android:textColor="@color/home_white"
             android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="normal"
+            android:maxLines="8"
+            android:ellipsize="end"
+            android:visibility="@{answer.content == null ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_question_title"
             home:text="저는 몇일 전 퇴사를 했어요. 그래서 웅앵웅웅앵 수많은 고민 끝에 저질렀답니다. 엄청난 실수이었지만 저는 해낼 수가 있었고 없었고 웅웅웅" />
+
 
         <Button
             android:id="@+id/btn_home_answer"

@@ -2,7 +2,6 @@ package com.teambeme.beme.following.view
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import com.google.android.material.tabs.TabLayout
@@ -43,7 +42,6 @@ class FollowingShowAllActivity :
         setFollowingSearchProfilesObserve()
         setFollowerSearchProfilesObserve()
         setClickListenerForGoback()
-        setShowAllListFromTabLayoutAtFirst()
         setTabSelectedFromFollowingShowAllListener()
         setQueryTextListener()
     }
@@ -181,12 +179,6 @@ class FollowingShowAllActivity :
         }
     }
 
-    private fun setShowAllListFromTabLayoutAtFirst() {
-        if (binding.tabLayoutFollowingShowAllSort.selectedTabPosition == 0) {
-            //
-        }
-    }
-
     private fun setTabSelectedFromFollowingShowAllListener() {
         binding.tabLayoutFollowingShowAllSort.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
@@ -244,7 +236,6 @@ class FollowingShowAllActivity :
                     }
                 }
             }
-
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         }
@@ -276,17 +267,14 @@ class FollowingShowAllActivity :
                     }
                     binding.rcvFollowingShowAllProfilesSearchFollower.visibility = View.INVISIBLE
                     binding.rcvFollowingShowAllProfilesSearchFollowing.visibility = View.INVISIBLE
-                    Log.d("search_yjoo", "${followingShowAllViewModel.searchList.value}")
                 }
                 return false
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.d("text", query.toString())
                 if (query != null) {
                     followingShowAllViewModel.setSearchQuery(query)
                     followingShowAllViewModel.requestSearchMyFollowingFollower()
-                    Log.d("search_yjoo", "${followingShowAllViewModel.searchList.value}")
                 }
                 return false
             }

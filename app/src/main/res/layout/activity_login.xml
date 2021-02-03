@@ -14,6 +14,7 @@
         android:id="@+id/constraint_login_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background_white"
         tools:context=".login.view.LoginActivity">
 
         <TextView
@@ -38,6 +39,7 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:text="매일 질문에 대한 답을 하며\n나를 알아가는 질문 다이어리 BeMe"
+            android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,6 +52,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="28dp"
             android:layout_marginBottom="360dp"
+            android:textColorHint="@color/login_text_gray"
+            app:hintTextColor="@color/login_box_gray"
+            app:boxStrokeColor="@color/login_box_gray"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -59,8 +64,7 @@
                 android:hint="닉네임"
                 android:singleLine="true"
                 android:text="@={loginViewModel.nickNameText}"
-                android:textColor="@color/black"
-                android:textColorHint="@color/login_text_gray" />
+                android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -70,7 +74,12 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="28dp"
             android:layout_marginBottom="300dp"
+            android:textColorHint="@color/login_text_gray"
+            app:hintTextColor="@color/login_box_gray"
+            app:boxStrokeColor="@color/login_box_gray"
             app:endIconMode="password_toggle"
+            app:endIconDrawable="@drawable/ic_show_password"
+            app:endIconTint="@color/login_end_icon_gray"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -81,8 +90,7 @@
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:text="@={loginViewModel.passwordText}"
-                android:textColor="@color/black"
-                android:textColorHint="@color/login_text_gray" />
+                android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout

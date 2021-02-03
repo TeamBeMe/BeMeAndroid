@@ -56,10 +56,13 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="following_show_all_search_view" parent="Widget.AppCompat.SearchView">
+    <style name="search_view" parent="Widget.AppCompat.SearchView">
         <item name="searchIcon">@drawable/ic_mypage_search</item>
+        <item name="closeIcon">@drawable/ic_search_close</item>
         <item name="iconifiedByDefault">false</item>
         <item name="queryHint">"검색"</item>
+        <item name="editTextColor">@color/following_show_all_search_view_hint_gray</item>
+        <item name="android:textColorPrimary">@color/following_show_all_search_view_hint_gray</item>
         <item name="queryBackground">@android:color/transparent</item>
         <item name="android:textColorHint">@color/following_show_all_search_view_hint_gray</item>
         <item name="android:textColor">@color/following_show_all_search_view_hint_gray</item>
@@ -105,5 +108,10 @@
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingVertical">16dp</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:scaleType">fitXY</item>
     </style>
 </resources>

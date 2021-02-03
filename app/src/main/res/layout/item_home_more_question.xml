@@ -13,13 +13,14 @@
 
         <TextView
             android:id="@+id/txt_home_more_question"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="120dp"
+            android:layout_marginHorizontal="30dp"
             android:gravity="center"
             android:text="나를 더 알아보기 위한\n다른 질문이 준비되어 있어요"
             android:textColor="@color/home_white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

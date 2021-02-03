@@ -15,6 +15,7 @@ import com.teambeme.beme.databinding.ItemHomeMoreQuestionBinding
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
 import com.teambeme.beme.home.model.Answer
 import com.teambeme.beme.home.view.AnswerSuggestFragment
+import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.home.view.InfoChangeFragment
 import com.teambeme.beme.home.view.InfoChangeFragment.InfoChangeClickListener
 import com.teambeme.beme.home.view.TransitionPublicFragment
@@ -55,16 +56,16 @@ class QuestionPagerAdapter(
                     override fun modifyAnswer() {
                         val currentAnswer = answerList[position - 1]
                         val intentAnswerData = IntentAnswerData(
-                            questionId = currentAnswer.id,
+                            questionId = currentAnswer.questionId,
+                            answerId = currentAnswer.id,
                             title = currentAnswer.questionTitle,
                             category = currentAnswer.questionCategoryName,
                             categoryIdx = currentAnswer.answerIdx?.toInt(),
-                            createdAt = currentAnswer.createdAt,
+                            createdAt = transformDateFormat(currentAnswer.createdAt),
                             content = currentAnswer.content ?: "",
                             isPublic = transformIntToBoolean(currentAnswer.publicFlag),
                             isCommentBlocked = transformIntToBoolean(currentAnswer.commentBlockedFlag)
                         )
-                        val isModify = 100
                         val intent = Intent(context, AnswerActivity::class.java)
                         intent.putExtra("intentAnswerData", intentAnswerData)
                         intent.putExtra("isChange", 100)
@@ -72,7 +73,7 @@ class QuestionPagerAdapter(
                     }
 
                     override fun deleteAnswer() {
-                        homeViewModel.deleteAnswer(position)
+                        homeViewModel.deleteAnswer(position - 1)
                     }
                 }).show(
                     fragmentManager,
@@ -106,7 +107,7 @@ class QuestionPagerAdapter(
         private val binding: ItemHomeMoreQuestionBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun onBind() {
-            binding.txtHomeMoreQuestion.text = "나를 돌아보기 위한 과거의 질문들이 준비되어 있어요"
+            binding.txtHomeMoreQuestion.text = "나를 돌아보기 위한 과거의\n질문들이 준비되어 있어요"
             binding.btnHomeMoreQuestion.text = "과거의 질문 보기"
             binding.btnHomeMoreQuestion.setOnClickListener {
                 homeViewModel.getMoreAnswers()
@@ -196,6 +197,13 @@ class QuestionPagerAdapter(
             0 -> false
             else -> true
         }
+    }
+
+    private fun transformDateFormat(date: String): String {
+        return if (date.length > HomeFragment.DATE_LENGTH)
+            date.substring(0, HomeFragment.DATE_LENGTH)
+        else
+            date
     }
 
     companion object {

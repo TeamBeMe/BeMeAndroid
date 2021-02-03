@@ -14,8 +14,8 @@ android {
         applicationId "com.teambeme.beme"
         minSdkVersion 26
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -96,4 +96,7 @@ dependencies {
 
     // Dot Indicator
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+
+    // AndroidX Security: EncryptedSharedPreference
+    implementation "androidx.security:security-crypto:1.0.0-rc03"
 }

@@ -205,9 +205,11 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         context: Context
     ) {
         binding.constraintLayoutOtherQuestions.setOnClickListener {
-            val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra("answerId", data.id)
-            context.startActivity(intent)
+            if (data.isAnswered) {
+                val intent = Intent(context, DetailActivity::class.java)
+                intent.putExtra("answerId", data.id)
+                context.startActivity(intent)
+            }
         }
     }
 

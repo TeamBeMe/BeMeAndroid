@@ -55,24 +55,20 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
         _mywriteFilter.value?.category = null
         _mywriteFilter.value?.range = null
         page = 1
-        _isAnswerMax.value = false
         _myQuery.value = null
     }
 
     fun initPage() {
         page = 1
-        _isAnswerMax.value = false
     }
 
     fun initScrap() {
         scrapPage = 1
-        _isScrapMax.value = false
         _scrapQuery.value = null
     }
 
     fun initScrapPage() {
         scrapPage = 1
-        _isScrapMax.value = false
     }
 
     fun setScrapFilter(range: String?, category: Int?) {
@@ -183,8 +179,11 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                         _mypageWriteData.value = copyMyAnswerList.toMutableList()
                         when (page < response.body()!!.data.pageLen) {
                             true -> {
-                                _isAnswerMax.value = true
+                                _isAnswerMax.value = false
                                 page++
+                            }
+                            else -> {
+                                _isAnswerMax.value = true
                             }
                         }
                     } else {
@@ -192,8 +191,11 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                         _mypageWriteData.value = copyMyAnswerList.toMutableList()
                         when (page < response.body()!!.data.pageLen) {
                             true -> {
-                                _isAnswerMax.value = true
+                                _isAnswerMax.value = false
                                 page++
+                            }
+                            else -> {
+                                _isAnswerMax.value = true
                             }
                         }
                     }
@@ -247,8 +249,11 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                         _mypageScrapData.value = copyMyScrapList.toMutableList()
                         when (scrapPage < response.body()!!.data.pageLen) {
                             true -> {
-                                _isScrapMax.value = true
+                                _isScrapMax.value = false
                                 scrapPage++
+                            }
+                            false -> {
+                                _isScrapMax.value = true
                             }
                         }
                     } else {
@@ -256,8 +261,11 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                         _mypageScrapData.value = copyMyScrapList.toMutableList()
                         when (scrapPage < response.body()!!.data.pageLen) {
                             true -> {
-                                _isScrapMax.value = true
+                                _isScrapMax.value = false
                                 scrapPage++
+                            }
+                            false -> {
+                                _isScrapMax.value = true
                             }
                         }
                     }

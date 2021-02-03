@@ -27,10 +27,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:paddingEnd="20dp"
+            android:background="@android:color/transparent"
             android:paddingStart="20dp"
             android:paddingTop="18dp"
-            android:background="@android:color/transparent"
+            android:paddingEnd="20dp"
             android:src="@drawable/ic_arrow_back_black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -88,7 +88,7 @@
             android:layout_height="0dp"
             android:overScrollMode="never"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_layout_explore_detail_sort">
+            app:layout_constraintTop_toBottomOf="@id/view_explore_detail_divide_line">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -101,8 +101,10 @@
                     android:layout_marginStart="28dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="28dp"
+                    android:layout_marginBottom="40dp"
                     android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toTopOf="@id/btn_explore_detail_show_more"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -113,9 +115,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="28dp"
-                    android:layout_marginTop="28dp"
                     android:layout_marginEnd="28dp"
-                    android:layout_marginBottom="152dp"
+                    android:layout_marginBottom="150dp"
                     android:backgroundTint="@color/explore_detail_btn_show_more_background_black"
                     android:onClick="@{()->exploreDetailViewModel.requestPlusSameQuestionOtherAnswers()}"
                     android:paddingTop="12dp"
@@ -123,7 +124,7 @@
                     android:text="더보기"
                     android:textColor="@color/explore_detail_btn_show_more_txt_white"
                     android:textSize="16sp"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     app:cornerRadius="6dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -138,11 +139,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            app:layout_constraintVertical_bias="0.4"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tab_layout_explore_detail_sort"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout_explore_detail_sort"
+            app:layout_constraintVertical_bias="0.4">
 
             <ImageView
                 android:id="@+id/img_following_show_all_empty_information"

@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="background_white">#ffffff</color>
     <color name="home_black">#000000</color>
     <color name="home_white">#ffffff</color>
     <color name="home_title_gray">#8e8e93</color>
@@ -97,6 +98,8 @@
     <color name="answer_text_info_black">#1c1c1e</color>
     <color name="answer_switch_off">#c4c4c4</color>
     <color name="login_text_gray">#c9c9c9</color>
+    <color name="login_box_gray">#1C1C1E</color>
+    <color name="login_end_icon_gray">#636366</color>
     <color name="mypage_white">#ffffff</color>
     <color name="mypage_black">#000000</color>
     <color name="mypage_gray">#636363</color>

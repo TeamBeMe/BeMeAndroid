@@ -12,14 +12,12 @@ import retrofit2.Response
 
 class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : ViewModel() {
     private var copyRecentSearchList: MutableList<ResponseRecentSearchRecord.Data> = mutableListOf()
-    var searchingId: String = ""
 
     private val _recentSearchData = MutableLiveData<MutableList<ResponseRecentSearchRecord.Data>>()
     val recentSearchData: MutableLiveData<MutableList<ResponseRecentSearchRecord.Data>>
         get() = _recentSearchData
 
     private var tempIdSearchList: MutableList<ResponseIdSearchData.Data>? = mutableListOf()
-    private var tempIdMessage: MutableList<ResponseIdSearchData> = mutableListOf()
 
     private val _idSearchData = MutableLiveData<MutableList<ResponseIdSearchData.Data>>()
     val idSearchData: LiveData<MutableList<ResponseIdSearchData.Data>>
@@ -30,17 +28,9 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
         searchQuery = query
     }
 
-    fun deleteQuery() {
-        searchQuery = ""
-    }
-
     private val _deletePosition = MutableLiveData<Int>()
     val deletePosition: LiveData<Int>
         get() = _deletePosition
-
-    private val _isEmpty = MutableLiveData<Boolean>()
-    val isEmpty: LiveData<Boolean>
-        get() = _isEmpty
 
     private var _isFollowed = MutableLiveData(false)
     val isFollowed: LiveData<Boolean?>
@@ -50,12 +40,7 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
         tempIdSearchList = mutableListOf(
             ResponseIdSearchData.Data(0, null, "", "")
         )
-//        tempIdSearchList = null
         _idSearchData.value = tempIdSearchList?.toMutableList()
-    }
-
-    fun setInitEmpty() {
-        _isEmpty.value = false
     }
 
     fun requestRecentSearchData() {
@@ -122,16 +107,9 @@ class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : Vi
                         if (response.isSuccessful) {
                             Log.d("Network is success", response.body().toString())
                             tempIdSearchList = response.body()!!.data?.let { mutableListOf(it) }
-
-                            if (tempIdSearchList?.size == 0 || tempIdSearchList == null) {
-                                _isEmpty.value = true
-                            }
-
                             _idSearchData.value = tempIdSearchList?.toMutableList()
-                            if (tempIdSearchList == null) {
+                            if (tempIdSearchList == null || tempIdSearchList?.size == 0) {
                                 deleteSearchRecord()
-                            } else {
-                                _isFollowed.value = idSearchData.value?.get(0)?.isFollowed
                             }
                         } else {
                             Log.d("Network Error", response.body()?.data.toString())

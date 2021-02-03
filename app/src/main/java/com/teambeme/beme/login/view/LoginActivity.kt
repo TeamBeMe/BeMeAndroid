@@ -3,6 +3,8 @@ package com.teambeme.beme.login.view
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -20,21 +22,37 @@ import com.teambeme.beme.main.view.MainActivity
 import com.teambeme.beme.signup.view.SignUpActivity
 import com.teambeme.beme.util.KeyboardVisibilityUtils
 import com.teambeme.beme.util.StatusBarUtil
-import kotlin.properties.Delegates
 
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private lateinit var keyboardVisibilityUtils: KeyboardVisibilityUtils
-    private var visibleDisplayFrameHeight by Delegates.notNull<Int>()
-    private var keyboardHeight by Delegates.notNull<Int>()
+    private var visibleDisplayFrameHeight = 0
+    private var keyboardHeight = 0
     private val loginViewModelFactory =
         LoginViewModelFactory(LoginRepositoryImpl(LoginDataSourceImpl(RetrofitObjects.getLoginService())))
     private val loginViewModel: LoginViewModel by viewModels { loginViewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        keyboardVisibilityUtils = KeyboardVisibilityUtils(window,
+            onShowKeyboard = { keyboardHeight, visibleDisplayFrameHeight ->
+                this.keyboardHeight = keyboardHeight
+                this.visibleDisplayFrameHeight = visibleDisplayFrameHeight
+                val animator = setValueChangeAnimator(0, visibleDisplayFrameHeight - keyboardHeight)
+                animator.addUpdateListener { updatedAnimation ->
+                    binding.constraintLoginView
+                        .setPaddingBottomAnimator(updatedAnimation)
+                }
+            },
+            onHideKeyboard = {
+                val animator = setValueChangeAnimator(visibleDisplayFrameHeight - keyboardHeight, 0)
+                animator.addUpdateListener { updatedAnimation ->
+                    binding.constraintLoginView
+                        .setPaddingBottomAnimator(updatedAnimation)
+                }
+            }
+        )
         binding.loginViewModel = loginViewModel
         binding.lifecycleOwner = this
-        setKeyboardVisibilityListener()
         StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
         loginViewModel.responseValue.observe(this) { data ->
             if (data != null) {
@@ -58,6 +76,8 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             }
         }
         signUpButtonClickListener()
+        setChangeEndIconFromPassword()
+        setEndIconModeObserve()
     }
 
     private fun signUpButtonClickListener() {
@@ -65,27 +85,6 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    private fun setKeyboardVisibilityListener() {
-        keyboardVisibilityUtils = KeyboardVisibilityUtils(window,
-            onShowKeyboard = { keyboardHeight, visibleDisplayFrameHeight ->
-                this.keyboardHeight = keyboardHeight
-                this.visibleDisplayFrameHeight = visibleDisplayFrameHeight
-                val animator = setValueChangeAnimator(0, visibleDisplayFrameHeight - keyboardHeight)
-                animator.addUpdateListener { updatedAnimation ->
-                    binding.constraintLoginView
-                        .setPaddingBottomAnimator(updatedAnimation)
-                }
-            },
-            onHideKeyboard = {
-                val animator = setValueChangeAnimator(visibleDisplayFrameHeight - keyboardHeight, 0)
-                animator.addUpdateListener { updatedAnimation ->
-                    binding.constraintLoginView
-                        .setPaddingBottomAnimator(updatedAnimation)
-                }
-            }
-        )
     }
 
     private fun setValueChangeAnimator(from: Int, to: Int): ValueAnimator {
@@ -102,6 +101,28 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             0,
             valueAnimator.animatedValue as Int
         )
+    }
+
+    private fun setChangeEndIconFromPassword() {
+        binding.txtlayoutLoginPassword.setEndIconOnClickListener {
+            loginViewModel.setShowPassword()
+        }
+    }
+
+    private fun setEndIconModeObserve() {
+        loginViewModel.showPassword.observe(this) { showPassword ->
+            showPassword?.let {
+                if (showPassword) {
+                    binding.txtlayoutLoginPassword.setEndIconDrawable(R.drawable.ic_hide_password)
+                    binding.editxtLoginPassword.transformationMethod =
+                        HideReturnsTransformationMethod.getInstance()
+                } else {
+                    binding.txtlayoutLoginPassword.setEndIconDrawable(R.drawable.ic_show_password)
+                    binding.editxtLoginPassword.transformationMethod =
+                        PasswordTransformationMethod.getInstance()
+                }
+            }
+        }
     }
 
     override fun onDestroy() {

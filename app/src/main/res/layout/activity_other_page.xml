@@ -14,6 +14,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background_white"
         android:overScrollMode="never"
         tools:context=".otherpage.view.OtherPageActivity">
 
@@ -21,7 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/other_white">
-
 
             <FrameLayout
                 android:id="@+id/frame_otherpage"
@@ -157,7 +157,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_marginTop="18dp"
-                    android:text="아직 등록된 글이 없습니다."
+                    android:textColor="@color/other_gray"
+                    android:text="아직 공개된 글이 없습니다."
                     app:layout_constraintTop_toBottomOf="@id/imageView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

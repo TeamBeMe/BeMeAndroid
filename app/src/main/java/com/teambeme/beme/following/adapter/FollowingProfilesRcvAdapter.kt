@@ -57,8 +57,6 @@ class FollowingProfilesRcvAdapter<B : ViewDataBinding>(
                     }
                 }
             }
-//            //프로필 사진 누르면 타인 프로필 페이지로 이동
-//            setClickListenerForGoProfilePage(binding, followingProfilesData, context)
         }
     }
 
