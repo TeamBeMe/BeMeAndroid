@@ -99,4 +99,7 @@ dependencies {
 
     // AndroidX Security: EncryptedSharedPreference
     implementation "androidx.security:security-crypto:1.0.0-rc03"
+
+    // PullRefreshLayout
+    implementation 'com.baoyz.pullrefreshlayout:library:1.2.0'
 }

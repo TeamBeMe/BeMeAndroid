@@ -1,7 +1,9 @@
 package com.teambeme.beme.explore.view
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,13 +36,13 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
     private val exploreViewModel: ExploreViewModel by activityViewModels { exploreViewModelFactory }
 
     override fun onResume() {
-        exploreViewModel.requestOtherMinds()
         super.onResume()
-        exploreViewModel.requestOtherQuestionsWithCategorySorting(
-            exploreViewModel.categoryNum,
-            exploreViewModel.sortingText,
-            1
+        // exploreViewModel.requestOtherMinds()
+        Log.d(
+            "scrapConnection_onresume_isScrapped",
+            "${exploreViewModel.otherQuestionsList.value?.get(exploreViewModel.getItemPosition())?.isScrapped}"
         )
+        // exploreViewModel.setDoRequestTrue()
     }
 
     override fun onCreateView(
@@ -65,6 +67,9 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         setClickListenerForAlarmButton()
         setIsMorePageObserve()
         setIntentAnswerObserve()
+        setListenerForPullRefreshLayout()
+        // setIsDoneRequestObserve()
+        setIsClickBookmarkObserve()
         return binding.root
     }
 
@@ -116,7 +121,8 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
                 R.layout.item_explore_other_questions,
                 exploreViewModel.userNickname,
                 exploreViewModel,
-                null
+                null,
+                setChangeIsClickBookmark()
             )
         binding.rcvExploreOtherQuestions.adapter = otherQuestionsAdapter
     }
@@ -136,6 +142,11 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
             otherQuestionsList?.let {
                 if (binding.rcvExploreOtherQuestions.adapter != null) with(binding.rcvExploreOtherQuestions.adapter as OtherQuestionsRcvAdapter<*>) {
                     submitList(otherQuestionsList)
+                    Log.d(
+                        "scrapConnection_submitList_isScrapped2",
+                        "${otherQuestionsList[exploreViewModel.getItemPosition()]?.isScrapped}"
+                    )
+                    Log.d("scrapConnection_observe_isScrapped", "1")
                 }
             }
         }
@@ -191,5 +202,56 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
             date.substring(0, HomeFragment.DATE_LENGTH)
         else
             date
+    }
+
+    private fun setListenerForPullRefreshLayout() {
+        binding.pullRefreshLayoutExplore.setOnRefreshListener {
+            exploreViewModel.requestOtherQuestionsWithCategorySorting(
+                exploreViewModel.categoryNum,
+                exploreViewModel.sortingText,
+                1
+            )
+            exploreViewModel.requestOtherMinds()
+            binding.pullRefreshLayoutExplore.setRefreshing(false)
+        }
+    }
+
+    private fun setChangeIsClickBookmark(): OtherQuestionsRcvAdapter.IsClickBookmarkChangeListener {
+        return object : OtherQuestionsRcvAdapter.IsClickBookmarkChangeListener {
+            override fun isClickBookmarkChangeListener(intent: Intent) {
+                startActivityForResult(intent, 1)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                1 -> {
+                    if (data!!.getBooleanExtra("isClickBookmark", false)) {
+                        exploreViewModel.setIsClickBookmarkTrue()
+                        Log.d(
+                            "scrapConnection_explorefragment_onactivityResult",
+                            "${exploreViewModel.isClickBookmark.value}"
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setIsClickBookmarkObserve() {
+        exploreViewModel.isClickBookmark.observe(viewLifecycleOwner) { isClickBookmark ->
+            isClickBookmark?.let {
+                if (isClickBookmark == true) {
+                    exploreViewModel.setChangeBookmark()
+                    Log.d(
+                        "scrapConnection_explorefragment_fun",
+                        "${exploreViewModel.isClickBookmark.value}"
+                    )
+                }
+            }
+        }
     }
 }

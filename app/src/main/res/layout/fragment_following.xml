@@ -48,7 +48,7 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout_following_sort"
-                android:layout_width="wrap_content"
+                android:layout_width="154dp"
                 android:layout_height="28dp"
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="94dp"

@@ -77,8 +77,8 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="tab_text_size" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">16sp</item>
+    <style name="tab_text_size">
+        <item name="android:textSize">16dp</item>
     </style>
 
     <style name="signup_progressbar_style" parent="Widget.AppCompat.ProgressBar.Horizontal">

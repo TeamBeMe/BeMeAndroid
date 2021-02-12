@@ -115,7 +115,8 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                         R.layout.item_explore_other_questions,
                         it,
                         followingViewModel,
-                        getOtherButtonClickListener()
+                        getOtherButtonClickListener(),
+                        null
                     )
                 binding.rcvFollowingOtherQuestions.adapter = otherFollowingQuestionsAdapter
             }

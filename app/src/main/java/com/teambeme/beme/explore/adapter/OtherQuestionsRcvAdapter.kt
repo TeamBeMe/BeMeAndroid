@@ -28,14 +28,15 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private val layout: Int,
     private val userNickname: String,
     private val viewModel: ViewModel,
-    private val otherQuestionButtonClickListener: OtherQuestionButtonClickListener?
+    private val otherQuestionButtonClickListener: OtherQuestionButtonClickListener?,
+    private val isClickBookmarkChangeListener: IsClickBookmarkChangeListener?
 ) :
     ListAdapter<ResponseExplorationQuestions.Data.Answer, OtherQuestionsRcvAdapter<B>.OtherQuestionsRcvViewHolder<B>>(
         OtherQuestionsDiffUtil()
     ) {
     inner class OtherQuestionsRcvViewHolder<B : ViewDataBinding>(private val binding: B) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(otherQuestionsData: ResponseExplorationQuestions.Data.Answer) {
+        fun bind(otherQuestionsData: ResponseExplorationQuestions.Data.Answer, position: Int) {
             when (binding) {
                 is ItemExploreOtherQuestionsBinding -> {
                     with(binding as ItemExploreOtherQuestionsBinding) {
@@ -52,7 +53,8 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                         setClickListenerForGoDetailFromFragment(
                             binding,
                             otherQuestionsData,
-                            context
+                            context,
+                            position
                         )
                         setClickListenerForBtnDoAnswer(binding, otherQuestionsData)
                     }
@@ -94,7 +96,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     }
 
     override fun onBindViewHolder(holder: OtherQuestionsRcvViewHolder<B>, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 
     private class OtherQuestionsDiffUtil :
@@ -108,8 +110,13 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         override fun areContentsTheSame(
             oldItem: ResponseExplorationQuestions.Data.Answer,
             newItem: ResponseExplorationQuestions.Data.Answer
-        ) =
-            (oldItem == newItem)
+        ): Boolean {
+            Log.d(
+                "scrapConnection_item_isScrapped",
+                "position : " + "${oldItem.id}" + "old : " + "${oldItem.isScrapped} / " + "new : " + "${newItem.isScrapped}"
+            )
+            return (oldItem.isScrapped == newItem.isScrapped)
+        }
     }
 
     private fun setClickListenerForShowOtherAnswers(
@@ -202,13 +209,20 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private fun setClickListenerForGoDetailFromFragment(
         binding: ItemExploreOtherQuestionsBinding,
         data: ResponseExplorationQuestions.Data.Answer,
-        context: Context
+        context: Context,
+        position: Int
     ) {
         binding.constraintLayoutOtherQuestions.setOnClickListener {
             if (data.isAnswered) {
+                when (viewModel) {
+                    is ExploreViewModel -> {
+                        viewModel.setClickedItemPosition(position)
+                    }
+                }
                 val intent = Intent(context, DetailActivity::class.java)
                 intent.putExtra("answerId", data.id)
-                context.startActivity(intent)
+                isClickBookmarkChangeListener?.isClickBookmarkChangeListener(intent)
+                // context.startActivity(intent)
             }
         }
     }
@@ -228,5 +242,9 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
 
     interface OtherQuestionButtonClickListener {
         fun otherQuestionAnswerClickListener(questionId: Int)
+    }
+
+    interface IsClickBookmarkChangeListener {
+        fun isClickBookmarkChangeListener(intent: Intent)
     }
 }
