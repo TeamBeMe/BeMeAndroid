@@ -9,6 +9,7 @@ import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
 import com.teambeme.beme.explore.repository.ExploreRepository
+import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -57,7 +58,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val sortingText: String
         get() = _sortingText
 
-    private var _page: Int = 1
+    private var _page: Int = 2
     val page: Int
         get() = _page
 
@@ -67,8 +68,13 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     private var otherAnswersQuestionsID: Int = 0
 
+    private var _tempPage: Int = 1
+    val tempPage: Int
+        get() = _tempPage
+
     fun setCategoryNum(category: Int) {
-        _page = 1
+        clearTempOtherQuestionsList()
+        _page = 2
         chipChecked[category - 1] = !chipChecked[category - 1]
         if (chipChecked == listOf(false, false, false, false, false, false)) {
             _categoryNum = null
@@ -77,19 +83,24 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
             chipChecked[category - 1] = !chipChecked[category - 1]
             _categoryNum = category
         }
-        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText)
+        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText, tempPage)
     }
 
     fun setSortingTextFromExplore(sorting: String) {
-        _page = 1
+        clearTempOtherQuestionsList()
+        _page = 2
         _sortingText = sorting
-        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText)
+        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText, tempPage)
     }
 
     fun setSortingTextFromExploreDetail(questionId: Int, sorting: String) {
         _page = 1
         _sortingText = sorting
         requestSameQuestionsOtherAnswers(questionId, sorting)
+    }
+
+    fun clearTempOtherQuestionsList(){
+        tempOtherQuestionsList?.clear()
     }
 
     fun requestOtherMinds() {
@@ -112,6 +123,8 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     }
 
     fun requestOtherQuestions() {
+        var a = 1
+        Log.d("DeleteList", "${a++}" + "번 original")
         exploreRepository.getExplorationOtherQuestions(
             _page,
             null,
@@ -166,20 +179,38 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         response: Response<ResponseExplorationQuestions>
                     ) {
                         if (response.isSuccessful) {
-                            _page = pageNum
-                            tempOtherQuestionsList =
-                                response.body()!!.data?.answers?.toMutableList()
-                            _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
-                            if (response.body()!!.data != null) {
-                                if (response.body()!!.data?.pageLen > _page) {
-                                    _page++
+                            Log.d(
+                                "recursion",
+                                "pageNum : " + pageNum + " page : " + page + " tempPage : " + tempPage
+                            )
+                            if (pageNum != page) {
+                                if (tempPage == 1) {
+                                    clearTempOtherQuestionsList()
+                                }
+                                response.body()!!.data?.answers?.toMutableList()?.let {
+                                    tempOtherQuestionsList?.addAll(
+                                        it
+                                    )
+                                }
+                                if (response.body()!!.data?.pageLen > tempPage) {
+                                    _tempPage++
                                     _isMorePage.value = true
                                 } else {
                                     _isMorePage.value = false
                                 }
+                                requestOtherQuestionsWithCategorySorting(
+                                    categoryNum,
+                                    sortingText,
+                                    tempPage
+                                )
                             } else {
-                                _isMorePage.value = false
+                                _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
+                                _tempPage = 1
                             }
+                            Log.d(
+                                "recursion",
+                                " tempPage : " + tempPage
+                            )
                         }
                     }
 
@@ -318,7 +349,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         )
     }
 
-    fun requestScrap(answerId: Int, answerData: ResponseExplorationQuestions.Data.Answer) {
+    fun requestScrap(answerId: Int) {
         exploreRepository.putScrap(
             answerId
         ).enqueue(

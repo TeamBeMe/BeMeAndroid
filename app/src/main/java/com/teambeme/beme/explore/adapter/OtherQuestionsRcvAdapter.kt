@@ -108,8 +108,13 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         override fun areContentsTheSame(
             oldItem: ResponseExplorationQuestions.Data.Answer,
             newItem: ResponseExplorationQuestions.Data.Answer
-        ) =
-            (oldItem == newItem)
+        ): Boolean {
+            Log.d(
+                "scrapConnection_item_isScrapped",
+                "position : " + "${oldItem.id}" + "old : " + "${oldItem.isScrapped} / " + "new : " + "${newItem.isScrapped}"
+            )
+            return (oldItem.isScrapped == newItem.isScrapped)
+        }
     }
 
     private fun setClickListenerForShowOtherAnswers(
@@ -131,7 +136,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         binding.btnOtherQuestionsBookmark.setOnClickListener {
             when (viewModel) {
                 is ExploreViewModel -> {
-                    viewModel.requestScrap(otherQuestionsData.id, otherQuestionsData)
+                    viewModel.requestScrap(otherQuestionsData.id)
                 }
                 is FollowingViewModel -> {
                     viewModel.requestScrap(otherQuestionsData.id, otherQuestionsData)
@@ -153,7 +158,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         binding.btnOtherAnswersBookmark.setOnClickListener {
             when (viewModel) {
                 is ExploreViewModel -> {
-                    viewModel.requestScrap(otherAnswersData.id, otherAnswersData)
+                    viewModel.requestScrap(otherAnswersData.id)
                     otherAnswersData.isScrapped = !otherAnswersData.isScrapped
                     if (otherAnswersData.isScrapped) {
                         binding.btnOtherAnswersBookmark.setImageResource(R.drawable.ic_bookmark_checked)

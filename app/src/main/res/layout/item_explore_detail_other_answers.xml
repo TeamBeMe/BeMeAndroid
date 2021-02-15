@@ -17,7 +17,8 @@
         android:background="@drawable/explore_other_questions_shape"
         android:paddingStart="18dp"
         android:paddingTop="18dp"
-        android:paddingBottom="18dp">
+        android:paddingBottom="18dp"
+        android:paddingEnd="18dp">
 
         <TextView
             android:id="@+id/txt_other_answers_category"

@@ -85,6 +85,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             adapter = viewPagerAdapter
             registerOnPageChangeCallback(PageChangeCallBack())
             requestDisallowInterceptTouchEvent(false)
+            isUserInputEnabled = false
         }
     }
 
