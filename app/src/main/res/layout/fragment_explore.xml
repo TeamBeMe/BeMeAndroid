@@ -375,18 +375,18 @@
                         app:layout_constraintTop_toBottomOf="@id/rcv_explore_other_questions" />
 
                     <ImageView
-                        android:id="@+id/img_following_no_following_answer_information"
+                        android:id="@+id/img_explore_no_answer_information"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="46dp"
                         android:src="@drawable/ic_information"
-                        android:visibility="@{exploreViewModel.otherQuestionsList == null ? View.VISIBLE : View.INVISIBLE}"
+                        android:visibility="invisible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/constraint_layout_explore_for_tab" />
 
                     <TextView
-                        android:id="@+id/txt_following_no_following_answer_information"
+                        android:id="@+id/txt_explore_no_answer_information"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="18dp"
@@ -394,10 +394,10 @@
                         android:text="아이쿠..! 아직 답변을 안 하셨군요\n질문에 답을 하고\n답한 질문에 대한 다른 사람들의 글을 둘러보세요"
                         android:textColor="@color/explore_txt_other_questions_un_answer_gray"
                         android:textSize="14sp"
-                        android:visibility="@{exploreViewModel.otherQuestionsList == null ? View.VISIBLE : View.INVISIBLE}"
+                        android:visibility="invisible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/img_following_no_following_answer_information" />
+                        app:layout_constraintTop_toBottomOf="@id/img_explore_no_answer_information" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

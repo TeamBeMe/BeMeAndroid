@@ -35,7 +35,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
 
     override fun onResume() {
         super.onResume()
-        followingViewModel.requestFollowingFollowerAnswers(1)
+        followingViewModel.requestFollowingFollowerAnswers(followingViewModel.tempPage)
         followingViewModel.requestFollowerFollowingList()
     }
 
@@ -48,7 +48,6 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         LifeCycleEventLogger(javaClass.name).registerLogger(viewLifecycleOwner.lifecycle)
         binding.followingViewModel = followingViewModel
         binding.lifecycleOwner = this
-        followingViewModel.requestFollowingFollowerAnswers()
         followingViewModel.requestFollowerFollowingList()
         setOtherFollowingQuestionsAdapter()
         setOtherFollowingQuestionsObserve()
@@ -63,6 +62,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         setClickListenerForAlarmButton()
         setDoAnswerDataObserve()
         setIsMorePageObserve()
+        setListenerForPullRefreshLayout()
         return binding.root
     }
 
@@ -115,8 +115,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                         R.layout.item_explore_other_questions,
                         it,
                         followingViewModel,
-                        getOtherButtonClickListener(),
-                        null
+                        getOtherButtonClickListener()
                     )
                 binding.rcvFollowingOtherQuestions.adapter = otherFollowingQuestionsAdapter
             }
@@ -283,6 +282,14 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         binding.btnFollowingAlarm.setOnClickListener {
             val intent = Intent(activity, NotificationActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun setListenerForPullRefreshLayout() {
+        binding.pullRefreshLayoutFollowing.setOnRefreshListener {
+            followingViewModel.requestFollowingFollowerAnswers(1)
+            followingViewModel.requestFollowerFollowingList()
+            binding.pullRefreshLayoutFollowing.setRefreshing(false)
         }
     }
 }

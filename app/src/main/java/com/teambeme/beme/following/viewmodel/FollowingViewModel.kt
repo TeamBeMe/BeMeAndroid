@@ -37,9 +37,13 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
     val answerData: LiveData<ResponseFollowingAnswer.Data>
         get() = _answerData
 
-    private var _page: Int = 1
+    private var _page: Int = 2
     val page: Int
         get() = _page
+
+    private var _tempPage: Int = 1
+    val tempPage: Int
+        get() = _tempPage
 
     private var _isMorePage = MutableLiveData(false)
     val isMorePage: LiveData<Boolean>
@@ -70,6 +74,10 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
         _searchList.value = tempSearchList?.toMutableList()
     }
 
+    fun clearTempFollowingFollowerAnswerList() {
+        tempFollowingFollowerAnswersList?.clear()
+    }
+
     fun requestFollowingFollowerAnswers(pageNum: Int = _page) {
         followingRepository.getFollowingAnswers(
             pageNum
@@ -80,23 +88,42 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                     response: Response<ResponseExplorationQuestions>
                 ) {
                     if (response.isSuccessful) {
-                        _page = pageNum
-                        if (_userNickname.value == null) {
-                            _userNickname.value = response.body()!!.data.userNickname
-                        }
-                        tempFollowingFollowerAnswersList =
-                            response.body()!!.data?.answers?.toMutableList()
-                        _followingAnswersList.value =
-                            tempFollowingFollowerAnswersList?.toMutableList()
-
-                        if (response.body()!!.data.answers?.size != 0) {
-                            if (response.body()!!.data?.pageLen > _page) {
-                                _page++
-                                _isMorePage.value = true
-                            } else {
-                                _isMorePage.value = false
+                        Log.d(
+                            "recursion_following",
+                            "pageNum : " + pageNum + " page : " + page + " tempPage : " + tempPage
+                        )
+                        if (pageNum != page) {
+                            if (tempPage == 1) {
+                                clearTempFollowingFollowerAnswerList()
                             }
+                            if (_userNickname.value == null) {
+                                _userNickname.value = response.body()!!.data.userNickname
+                            }
+                            response.body()!!.data?.answers?.toMutableList()?.let {
+                                tempFollowingFollowerAnswersList?.addAll(
+                                    it
+                                )
+                            }
+                            if (response.body()!!.data.answers?.size != 0) {
+                                if (response.body()!!.data?.pageLen > tempPage) {
+                                    _tempPage++
+                                    _isMorePage.value = true
+                                } else {
+                                    _isMorePage.value = false
+                                }
+                            }
+                            requestFollowingFollowerAnswers(
+                                tempPage
+                            )
+                        } else {
+                            _followingAnswersList.value =
+                                tempFollowingFollowerAnswersList?.toMutableList()
+                            _tempPage = 1
                         }
+                        Log.d(
+                            "recursion_following",
+                            " tempPage : " + tempPage
+                        )
                     }
                 }
 

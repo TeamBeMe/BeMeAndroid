@@ -28,15 +28,14 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private val layout: Int,
     private val userNickname: String,
     private val viewModel: ViewModel,
-    private val otherQuestionButtonClickListener: OtherQuestionButtonClickListener?,
-    private val isClickBookmarkChangeListener: IsClickBookmarkChangeListener?
+    private val otherQuestionButtonClickListener: OtherQuestionButtonClickListener?
 ) :
     ListAdapter<ResponseExplorationQuestions.Data.Answer, OtherQuestionsRcvAdapter<B>.OtherQuestionsRcvViewHolder<B>>(
         OtherQuestionsDiffUtil()
     ) {
     inner class OtherQuestionsRcvViewHolder<B : ViewDataBinding>(private val binding: B) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(otherQuestionsData: ResponseExplorationQuestions.Data.Answer, position: Int) {
+        fun bind(otherQuestionsData: ResponseExplorationQuestions.Data.Answer) {
             when (binding) {
                 is ItemExploreOtherQuestionsBinding -> {
                     with(binding as ItemExploreOtherQuestionsBinding) {
@@ -53,8 +52,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                         setClickListenerForGoDetailFromFragment(
                             binding,
                             otherQuestionsData,
-                            context,
-                            position
+                            context
                         )
                         setClickListenerForBtnDoAnswer(binding, otherQuestionsData)
                     }
@@ -96,7 +94,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     }
 
     override fun onBindViewHolder(holder: OtherQuestionsRcvViewHolder<B>, position: Int) {
-        holder.bind(getItem(position), position)
+        holder.bind(getItem(position))
     }
 
     private class OtherQuestionsDiffUtil :
@@ -138,7 +136,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         binding.btnOtherQuestionsBookmark.setOnClickListener {
             when (viewModel) {
                 is ExploreViewModel -> {
-                    viewModel.requestScrap(otherQuestionsData.id, otherQuestionsData)
+                    viewModel.requestScrap(otherQuestionsData.id)
                 }
                 is FollowingViewModel -> {
                     viewModel.requestScrap(otherQuestionsData.id, otherQuestionsData)
@@ -160,7 +158,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         binding.btnOtherAnswersBookmark.setOnClickListener {
             when (viewModel) {
                 is ExploreViewModel -> {
-                    viewModel.requestScrap(otherAnswersData.id, otherAnswersData)
+                    viewModel.requestScrap(otherAnswersData.id)
                     otherAnswersData.isScrapped = !otherAnswersData.isScrapped
                     if (otherAnswersData.isScrapped) {
                         binding.btnOtherAnswersBookmark.setImageResource(R.drawable.ic_bookmark_checked)
@@ -209,20 +207,13 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private fun setClickListenerForGoDetailFromFragment(
         binding: ItemExploreOtherQuestionsBinding,
         data: ResponseExplorationQuestions.Data.Answer,
-        context: Context,
-        position: Int
+        context: Context
     ) {
         binding.constraintLayoutOtherQuestions.setOnClickListener {
             if (data.isAnswered) {
-                when (viewModel) {
-                    is ExploreViewModel -> {
-                        viewModel.setClickedItemPosition(position)
-                    }
-                }
                 val intent = Intent(context, DetailActivity::class.java)
                 intent.putExtra("answerId", data.id)
-                isClickBookmarkChangeListener?.isClickBookmarkChangeListener(intent)
-                // context.startActivity(intent)
+                context.startActivity(intent)
             }
         }
     }
@@ -242,9 +233,5 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
 
     interface OtherQuestionButtonClickListener {
         fun otherQuestionAnswerClickListener(questionId: Int)
-    }
-
-    interface IsClickBookmarkChangeListener {
-        fun isClickBookmarkChangeListener(intent: Intent)
     }
 }

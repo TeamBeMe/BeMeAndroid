@@ -1,9 +1,7 @@
 package com.teambeme.beme.explore.view
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,12 +35,12 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
 
     override fun onResume() {
         super.onResume()
-        // exploreViewModel.requestOtherMinds()
-        Log.d(
-            "scrapConnection_onresume_isScrapped",
-            "${exploreViewModel.otherQuestionsList.value?.get(exploreViewModel.getItemPosition())?.isScrapped}"
+        exploreViewModel.requestOtherMinds()
+        exploreViewModel.requestOtherQuestionsWithCategorySorting(
+            exploreViewModel.categoryNum,
+            exploreViewModel.sortingText,
+            exploreViewModel.tempPage
         )
-        // exploreViewModel.setDoRequestTrue()
     }
 
     override fun onCreateView(
@@ -55,7 +53,6 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         binding.exploreViewModel = exploreViewModel
         binding.lifecycleOwner = this
         exploreViewModel.requestOtherMinds()
-        exploreViewModel.requestOtherQuestions()
         setOtherMindsAdapter()
         setOtherQuestionsAdapter()
         setOtherMindsObserve()
@@ -68,8 +65,6 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         setIsMorePageObserve()
         setIntentAnswerObserve()
         setListenerForPullRefreshLayout()
-        // setIsDoneRequestObserve()
-        setIsClickBookmarkObserve()
         return binding.root
     }
 
@@ -121,8 +116,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
                 R.layout.item_explore_other_questions,
                 exploreViewModel.userNickname,
                 exploreViewModel,
-                null,
-                setChangeIsClickBookmark()
+                null
             )
         binding.rcvExploreOtherQuestions.adapter = otherQuestionsAdapter
     }
@@ -142,11 +136,15 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
             otherQuestionsList?.let {
                 if (binding.rcvExploreOtherQuestions.adapter != null) with(binding.rcvExploreOtherQuestions.adapter as OtherQuestionsRcvAdapter<*>) {
                     submitList(otherQuestionsList)
-                    Log.d(
-                        "scrapConnection_submitList_isScrapped2",
-                        "${otherQuestionsList[exploreViewModel.getItemPosition()]?.isScrapped}"
-                    )
-                    Log.d("scrapConnection_observe_isScrapped", "1")
+                }
+                if (otherQuestionsList.size == 0) {
+                    binding.rcvExploreOtherQuestions.visibility = View.GONE
+                    binding.imgExploreNoAnswerInformation.visibility = View.VISIBLE
+                    binding.txtExploreNoAnswerInformation.visibility = View.VISIBLE
+                } else {
+                    binding.rcvExploreOtherQuestions.visibility = View.VISIBLE
+                    binding.imgExploreNoAnswerInformation.visibility = View.GONE
+                    binding.txtExploreNoAnswerInformation.visibility = View.GONE
                 }
             }
         }
@@ -209,49 +207,10 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
             exploreViewModel.requestOtherQuestionsWithCategorySorting(
                 exploreViewModel.categoryNum,
                 exploreViewModel.sortingText,
-                1
+                exploreViewModel.tempPage
             )
             exploreViewModel.requestOtherMinds()
             binding.pullRefreshLayoutExplore.setRefreshing(false)
-        }
-    }
-
-    private fun setChangeIsClickBookmark(): OtherQuestionsRcvAdapter.IsClickBookmarkChangeListener {
-        return object : OtherQuestionsRcvAdapter.IsClickBookmarkChangeListener {
-            override fun isClickBookmarkChangeListener(intent: Intent) {
-                startActivityForResult(intent, 1)
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                1 -> {
-                    if (data!!.getBooleanExtra("isClickBookmark", false)) {
-                        exploreViewModel.setIsClickBookmarkTrue()
-                        Log.d(
-                            "scrapConnection_explorefragment_onactivityResult",
-                            "${exploreViewModel.isClickBookmark.value}"
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    private fun setIsClickBookmarkObserve() {
-        exploreViewModel.isClickBookmark.observe(viewLifecycleOwner) { isClickBookmark ->
-            isClickBookmark?.let {
-                if (isClickBookmark == true) {
-                    exploreViewModel.setChangeBookmark()
-                    Log.d(
-                        "scrapConnection_explorefragment_fun",
-                        "${exploreViewModel.isClickBookmark.value}"
-                    )
-                }
-            }
         }
     }
 }

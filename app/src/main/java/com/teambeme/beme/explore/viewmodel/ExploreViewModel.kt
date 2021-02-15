@@ -9,6 +9,7 @@ import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
 import com.teambeme.beme.explore.repository.ExploreRepository
+import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,8 +23,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val userNickname: String
         get() = _userNickname
 
-    private var tempList: MutableList<ResponseExplorationQuestions.Data.Answer?>? =
-        mutableListOf()
     private var tempOtherQuestionsList: MutableList<ResponseExplorationQuestions.Data.Answer?>? =
         mutableListOf()
     private val _otherQuestionsList =
@@ -59,13 +58,9 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val sortingText: String
         get() = _sortingText
 
-    private var _page: Int = 1
+    private var _page: Int = 2
     val page: Int
         get() = _page
-
-    private var _againPage: Int = 1
-    val againPage: Int
-        get() = _againPage
 
     private var _isMorePage = MutableLiveData(false)
     val isMorePage: LiveData<Boolean>
@@ -73,67 +68,13 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     private var otherAnswersQuestionsID: Int = 0
 
-    private var _doRequest = MutableLiveData<Boolean>()
-    val doRequest: LiveData<Boolean>
-        get() = _doRequest
-
-    private var clickedItemPosition = 0
-
-    private var _isClickBookmark = MutableLiveData(false)
-    val isClickBookmark: LiveData<Boolean>
-        get() = _isClickBookmark
-
-    fun getItemPosition() = clickedItemPosition
-
-    fun setIsClickBookmarkTrue() {
-        _isClickBookmark.value = true
-    }
-
-    fun setClickedItemPosition(position: Int) {
-        clickedItemPosition = position
-        Log.d(
-            "scrapConnection_viewmodel_position_isScrapped",
-            "${otherQuestionsList.value?.get(clickedItemPosition)?.isScrapped}"
-        )
-    }
-
-    fun setChangeBookmark() {
-        //tempList = tempOtherQuestionsList?.toMutableList()
-        tempList?.get(clickedItemPosition)?.isScrapped =
-            !(tempList?.get(clickedItemPosition)?.isScrapped)!!
-//        val isScrap = tempOtherQuestionsList?.get(clickedItemPosition)?.isScrapped
-//        tempOtherQuestionsList?.get(clickedItemPosition)?.isScrapped = !isScrap!!
-
-        //_otherQuestionsList.value[clickedItemPosition].isScrapped
-        Log.d("scrapConnection_주소값_1", "${otherQuestionsList === tempOtherQuestionsList}")
-        Log.d("scrapConnection_주소값_2", "${otherQuestionsList === tempList}")
-        Log.d(
-            "scrapConnection_viewmodel_setChange_isScrapped1",
-            "${otherQuestionsList.value?.get(clickedItemPosition)?.isScrapped}"
-        )
-        //setOtherList()
-
-        Log.d(
-            "scrapConnection_viewmodel_setChange_isScrapped2",
-            "${otherQuestionsList.value?.get(clickedItemPosition)?.isScrapped}"
-        )
-        _isClickBookmark.value = false
-    }
-
-    fun setOtherList() {
-        _otherQuestionsList.value = tempList?.toMutableList()
-        Log.d(
-            "scrapConnection_viewmodel_setOtherList_isScrapped",
-            "${otherQuestionsList.value?.get(clickedItemPosition)?.isScrapped}"
-        )
-    }
-
-    fun setDoRequestTrue() {
-        _doRequest.value = true
-    }
+    private var _tempPage: Int = 1
+    val tempPage: Int
+        get() = _tempPage
 
     fun setCategoryNum(category: Int) {
-        _page = 1
+        clearTempOtherQuestionsList()
+        _page = 2
         chipChecked[category - 1] = !chipChecked[category - 1]
         if (chipChecked == listOf(false, false, false, false, false, false)) {
             _categoryNum = null
@@ -142,19 +83,24 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
             chipChecked[category - 1] = !chipChecked[category - 1]
             _categoryNum = category
         }
-        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText)
+        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText, tempPage)
     }
 
     fun setSortingTextFromExplore(sorting: String) {
-        _page = 1
+        clearTempOtherQuestionsList()
+        _page = 2
         _sortingText = sorting
-        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText)
+        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText, tempPage)
     }
 
     fun setSortingTextFromExploreDetail(questionId: Int, sorting: String) {
         _page = 1
         _sortingText = sorting
         requestSameQuestionsOtherAnswers(questionId, sorting)
+    }
+
+    fun clearTempOtherQuestionsList(){
+        tempOtherQuestionsList?.clear()
     }
 
     fun requestOtherMinds() {
@@ -192,7 +138,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                     ) {
                         Log.d("abc", "통신 성공")
                         if (response.isSuccessful) {
-                            tempList = response.body()!!.data.answers?.toMutableList()
                             tempOtherQuestionsList =
                                 response.body()!!.data?.answers?.toMutableList()
                             _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
@@ -234,20 +179,38 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         response: Response<ResponseExplorationQuestions>
                     ) {
                         if (response.isSuccessful) {
-                            _page = pageNum
-                            tempOtherQuestionsList =
-                                response.body()!!.data?.answers?.toMutableList()
-                            _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
-                            if (response.body()!!.data != null) {
-                                if (response.body()!!.data?.pageLen > _page) {
-                                    _page++
+                            Log.d(
+                                "recursion",
+                                "pageNum : " + pageNum + " page : " + page + " tempPage : " + tempPage
+                            )
+                            if (pageNum != page) {
+                                if (tempPage == 1) {
+                                    clearTempOtherQuestionsList()
+                                }
+                                response.body()!!.data?.answers?.toMutableList()?.let {
+                                    tempOtherQuestionsList?.addAll(
+                                        it
+                                    )
+                                }
+                                if (response.body()!!.data?.pageLen > tempPage) {
+                                    _tempPage++
                                     _isMorePage.value = true
                                 } else {
                                     _isMorePage.value = false
                                 }
+                                requestOtherQuestionsWithCategorySorting(
+                                    categoryNum,
+                                    sortingText,
+                                    tempPage
+                                )
                             } else {
-                                _isMorePage.value = false
+                                _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
+                                _tempPage = 1
                             }
+                            Log.d(
+                                "recursion",
+                                " tempPage : " + tempPage
+                            )
                         }
                     }
 
@@ -256,68 +219,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                     }
                 }
             )
-    }
-
-    fun requestAgainOtherQuestions(
-        category: Int?,
-        sorting: String,
-        pageNum: Int
-    ) {
-        if (pageNum == 1) {
-            tempOtherQuestionsList?.clear()
-            Log.d("DeleteList", "$tempOtherQuestionsList")
-        }
-        exploreRepository.getExplorationOtherQuestions(
-            pageNum,
-            category,
-            sorting
-        )
-            .enqueue(
-                object : Callback<ResponseExplorationQuestions> {
-                    override fun onResponse(
-                        call: Call<ResponseExplorationQuestions>,
-                        response: Response<ResponseExplorationQuestions>
-                    ) {
-                        if (response.isSuccessful) {
-                            Log.d("DeleteList", "$pageNum")
-                            response.body()!!.data?.answers?.toMutableList()?.let {
-                                tempOtherQuestionsList?.addAll(
-                                    it
-                                )
-                            }
-//                            _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
-
-                            if (response.body()!!.data != null) {
-                                if (response.body()!!.data?.pageLen > againPage) {
-                                    _againPage++
-                                    _isMorePage.value = true
-                                    if (againPage == page) {
-                                        _doRequest.value = false
-                                        _againPage = 1
-                                    } else {
-                                        _doRequest.value = true
-                                    }
-                                } else {
-                                    _isMorePage.value = false
-                                }
-                            } else {
-                                _isMorePage.value = false
-                            }
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
-                        Log.d("network_requestPlusOtherQuestions", "통신실패")
-                    }
-                }
-            )
-        Log.d("DeleteList", "againPage : " + "$againPage")
-        Log.d("DeleteList", "page : " + "$page")
-        Log.d("DeleteList", "통신 가능 : " + "${doRequest.value}")
-    }
-
-    fun setList() {
-        _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
     }
 
     fun requestPlusOtherQuestions() {
@@ -448,7 +349,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         )
     }
 
-    fun requestScrap(answerId: Int, answerData: ResponseExplorationQuestions.Data.Answer) {
+    fun requestScrap(answerId: Int) {
         exploreRepository.putScrap(
             answerId
         ).enqueue(
