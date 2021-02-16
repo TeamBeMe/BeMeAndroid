@@ -287,6 +287,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
 
     private fun setListenerForPullRefreshLayout() {
         binding.pullRefreshLayoutFollowing.setOnRefreshListener {
+            followingViewModel.setPageAtRefresh()
             followingViewModel.requestFollowingFollowerAnswers(1)
             followingViewModel.requestFollowerFollowingList()
             binding.pullRefreshLayoutFollowing.setRefreshing(false)

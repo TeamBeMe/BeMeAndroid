@@ -20,7 +20,7 @@ class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewMode
     private var _isCommentBlocked = false
     val isCommentBlocked: Boolean
         get() = _isCommentBlocked
-    private val _isPublic = MutableLiveData<Boolean>(false)
+    private val _isPublic = MutableLiveData<Boolean>(true)
     val isPublic: LiveData<Boolean>
         get() = _isPublic
     private val _intentAnswerData = MutableLiveData<IntentAnswerData>()

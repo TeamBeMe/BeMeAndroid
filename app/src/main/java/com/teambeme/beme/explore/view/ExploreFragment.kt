@@ -204,6 +204,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
 
     private fun setListenerForPullRefreshLayout() {
         binding.pullRefreshLayoutExplore.setOnRefreshListener {
+            exploreViewModel.setPageAtRefresh()
             exploreViewModel.requestOtherQuestionsWithCategorySorting(
                 exploreViewModel.categoryNum,
                 exploreViewModel.sortingText,
