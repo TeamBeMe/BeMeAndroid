@@ -72,6 +72,10 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val tempPage: Int
         get() = _tempPage
 
+    fun setPageAtRefresh(){
+        _page = 2
+    }
+
     fun setCategoryNum(category: Int) {
         clearTempOtherQuestionsList()
         _page = 2
@@ -94,13 +98,17 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     }
 
     fun setSortingTextFromExploreDetail(questionId: Int, sorting: String) {
-        _page = 1
+        _page = 2
         _sortingText = sorting
-        requestSameQuestionsOtherAnswers(questionId, sorting)
+        requestSameQuestionsOtherAnswers(questionId, tempPage, sorting)
     }
 
     fun clearTempOtherQuestionsList(){
         tempOtherQuestionsList?.clear()
+    }
+
+    fun clearTempSameQuestionOtherAnswersList(){
+        tempSameQuestionOtherAnswersList?.clear()
     }
 
     fun requestOtherMinds() {
@@ -165,7 +173,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     fun requestOtherQuestionsWithCategorySorting(
         category: Int?,
         sorting: String,
-        pageNum: Int = _page
+        pageNum: Int
     ) {
         exploreRepository.getExplorationOtherQuestions(
             pageNum,
@@ -192,15 +200,11 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                                         it
                                     )
                                 }
-                                if (response.body()!!.data?.pageLen > tempPage) {
-                                    _tempPage++
-                                    _isMorePage.value = true
-                                } else {
-                                    _isMorePage.value = false
-                                }
+                                _tempPage++
+                                _isMorePage.value = response.body()!!.data?.pageLen > tempPage
                                 requestOtherQuestionsWithCategorySorting(
-                                    categoryNum,
-                                    sortingText,
+                                    category,
+                                    sorting,
                                     tempPage
                                 )
                             } else {
@@ -257,12 +261,11 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
             )
     }
 
-    fun requestSameQuestionsOtherAnswers(questionId: Int, sorting: String = "최신") {
-        _page = 1
+    fun requestSameQuestionsOtherAnswers(questionId: Int, pageNum: Int, sorting: String = "최신") {
         otherAnswersQuestionsID = questionId
         exploreRepository.getExplorationSameQuestionOtherAnswers(
             otherAnswersQuestionsID,
-            _page,
+            pageNum,
             sorting
         ).enqueue(
             object : Callback<ResponseExplorationQuestions> {
@@ -271,16 +274,35 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                     response: Response<ResponseExplorationQuestions>
                 ) {
                     if (response.isSuccessful) {
-                        tempSameQuestionOtherAnswersList =
-                            response.body()!!.data?.answers?.toMutableList()
-                        _sameQuestionOtherAnswersList.value =
-                            tempSameQuestionOtherAnswersList?.toMutableList()
-                        if (response.body()!!.data?.pageLen > _page) {
-                            _page++
-                            _isMorePage.value = true
+                        Log.d(
+                            "recursion_detail",
+                            "pageNum : " + pageNum + " page : " + page + " tempPage : " + tempPage
+                        )
+                        if (pageNum != page) {
+                            if (tempPage == 1) {
+                                clearTempSameQuestionOtherAnswersList()
+                            }
+                            response.body()!!.data?.answers?.toMutableList()?.let {
+                                tempSameQuestionOtherAnswersList?.addAll(
+                                    it
+                                )
+                            }
+                            _tempPage++
+                            _isMorePage.value = response.body()!!.data?.pageLen > tempPage
+                            requestSameQuestionsOtherAnswers(
+                                otherAnswersQuestionsID,
+                                tempPage,
+                                sorting
+                            )
                         } else {
-                            _isMorePage.value = false
+                            _sameQuestionOtherAnswersList.value =
+                                tempSameQuestionOtherAnswersList?.toMutableList()
+                            _tempPage = 1
                         }
+                        Log.d(
+                            "recursion_detail",
+                            " tempPage : " + tempPage
+                        )
                     }
                 }
 

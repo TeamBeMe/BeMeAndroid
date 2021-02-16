@@ -74,6 +74,10 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
         _searchList.value = tempSearchList?.toMutableList()
     }
 
+    fun setPageAtRefresh(){
+        _page = 2
+    }
+
     fun clearTempFollowingFollowerAnswerList() {
         tempFollowingFollowerAnswersList?.clear()
     }
@@ -104,13 +108,9 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                                     it
                                 )
                             }
+                            _tempPage++
                             if (response.body()!!.data.answers?.size != 0) {
-                                if (response.body()!!.data?.pageLen > tempPage) {
-                                    _tempPage++
-                                    _isMorePage.value = true
-                                } else {
-                                    _isMorePage.value = false
-                                }
+                                _isMorePage.value = response.body()!!.data?.pageLen > tempPage
                             }
                             requestFollowingFollowerAnswers(
                                 tempPage
