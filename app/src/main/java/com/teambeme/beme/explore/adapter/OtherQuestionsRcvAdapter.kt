@@ -26,7 +26,7 @@ import com.teambeme.beme.util.startActivity
 class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private val context: Context,
     private val layout: Int,
-    private val userNickname: String,
+    private val myNickname: String,
     private val viewModel: ViewModel,
     private val otherQuestionButtonClickListener: OtherQuestionButtonClickListener?
 ) :
@@ -39,7 +39,8 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
             when (binding) {
                 is ItemExploreOtherQuestionsBinding -> {
                     with(binding as ItemExploreOtherQuestionsBinding) {
-                        setVariable(BR.txtUserNickname, userNickname)
+                        setVariable(BR.myNickName, myNickname)
+                        setVariable(BR.userNickName, otherQuestionsData.userNickname)
                         setVariable(BR.otherQuestions, otherQuestionsData)
                         executePendingBindings()
                         setClickListenerForQuestionsBookmark(binding, otherQuestionsData)

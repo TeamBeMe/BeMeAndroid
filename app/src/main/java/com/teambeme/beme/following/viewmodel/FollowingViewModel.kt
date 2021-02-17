@@ -53,9 +53,9 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
     val scrapData: ResponseExplorationScrap
         get() = _scrapData
 
-    private val _userNickname = MutableLiveData<String>()
-    val userNickname: LiveData<String>
-        get() = _userNickname
+    private val _myNickname = MutableLiveData<String>()
+    val myNickname: LiveData<String>
+        get() = _myNickname
 
     private var searchQuery: String = ""
     fun setSearchQuery(query: String) {
@@ -100,8 +100,8 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                             if (tempPage == 1) {
                                 clearTempFollowingFollowerAnswerList()
                             }
-                            if (_userNickname.value == null) {
-                                _userNickname.value = response.body()!!.data.userNickname
+                            if (_myNickname.value == null) {
+                                _myNickname.value = response.body()!!.data.userNickname
                             }
                             response.body()!!.data?.answers?.toMutableList()?.let {
                                 tempFollowingFollowerAnswersList?.addAll(
