@@ -12,7 +12,11 @@
             type="com.teambeme.beme.explore.model.ResponseExplorationQuestions.Data.Answer" />
 
         <variable
-            name="txtUserNickname"
+            name="myNickName"
+            type="String" />
+
+        <variable
+            name="userNickName"
             type="String" />
 
         <variable
@@ -160,13 +164,14 @@
             android:visibility="@{otherQuestions.isAnswered == true ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"
             app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_category"
-            following:setTextForUnAnswered="@{txtUserNickname}" />
+            following:myNickName="@{myNickName}"
+            following:userNickName="@{userNickName}"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_other_questions_do_answer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginTop="26dp"
             android:backgroundTint="@color/item_following_unanswered_questions_btn_background_black"
             android:minWidth="0dp"
             android:minHeight="0dp"

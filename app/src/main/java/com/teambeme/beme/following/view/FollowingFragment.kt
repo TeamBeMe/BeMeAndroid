@@ -107,7 +107,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
     }
 
     private fun setOtherFollowingQuestionsAdapter() {
-        followingViewModel.userNickname.observe(viewLifecycleOwner) {
+        followingViewModel.myNickname.observe(viewLifecycleOwner) {
             it?.let {
                 val otherFollowingQuestionsAdapter =
                     OtherQuestionsRcvAdapter<ItemExploreOtherQuestionsBinding>(
