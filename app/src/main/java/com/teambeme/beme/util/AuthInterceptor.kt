@@ -1,6 +1,6 @@
 package com.teambeme.beme.util
 
-import com.teambeme.beme.data.remote.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
 import okhttp3.Interceptor
 import okhttp3.Response
 

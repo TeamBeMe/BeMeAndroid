@@ -134,4 +134,7 @@
     <color name="mypage_circle">#F0F0F0</color>
     <color name="other_circle">#F0F0F0</color>
     <color name="signup_dot_black">#48484a</color>
+    <color name="onboarding_dots_color">#ededed</color>
+    <color name="onboarding_selected_dots_color">#48484A</color>
+    <color name="onboarding_txt_contents">#48484a</color>
 </resources>

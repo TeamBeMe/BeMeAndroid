@@ -2,7 +2,7 @@ package com.teambeme.beme.main.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.data.remote.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
 import com.teambeme.beme.main.model.ResponseFbTokenRegister
 import com.teambeme.beme.main.repository.MainRepository
 import retrofit2.Call

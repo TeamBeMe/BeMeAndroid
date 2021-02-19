@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
+import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
 import com.teambeme.beme.databinding.ActivitySettingBinding
 import com.teambeme.beme.login.view.LoginActivity
 import com.teambeme.beme.util.StatusBarUtil
@@ -20,10 +21,15 @@ class SettingActivity : BindingActivity<ActivitySettingBinding>(R.layout.activit
 
     private fun logout() {
         binding.txtSettingLogout.setOnClickListener {
+            with(BeMeAuthPreference) {
+                userId = ""
+                userPassword = ""
+                userToken = ""
+            }
             val intent = Intent(this, LoginActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivityForResult(intent, 2)
+            startActivity(intent)
             Toast.makeText(this, "로그아웃되었습니다.", Toast.LENGTH_LONG).show()
             finish()
         }

@@ -9,7 +9,6 @@ import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
 import com.teambeme.beme.explore.repository.ExploreRepository
-import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -72,7 +71,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val tempPage: Int
         get() = _tempPage
 
-    fun setPageAtRefresh(){
+    fun setPageAtRefresh() {
         _page = 2
     }
 
@@ -103,11 +102,11 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         requestSameQuestionsOtherAnswers(questionId, tempPage, sorting)
     }
 
-    fun clearTempOtherQuestionsList(){
+    fun clearTempOtherQuestionsList() {
         tempOtherQuestionsList?.clear()
     }
 
-    fun clearTempSameQuestionOtherAnswersList(){
+    fun clearTempSameQuestionOtherAnswersList() {
         tempSameQuestionOtherAnswersList?.clear()
     }
 

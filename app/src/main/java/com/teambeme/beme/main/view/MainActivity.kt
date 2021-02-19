@@ -12,7 +12,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.data.remote.datasource.FbTokenRegisterDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityMainBinding
 import com.teambeme.beme.home.view.HomeFragment
