@@ -74,7 +74,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
         _searchList.value = tempSearchList?.toMutableList()
     }
 
-    fun setPageAtRefresh(){
+    fun setPageAtRefresh() {
         _page = 2
     }
 
