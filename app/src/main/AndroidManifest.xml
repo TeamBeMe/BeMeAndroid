@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeMe"
         android:usesCleartextTraffic="true">
-        <activity android:name=".onboarding.OnBoardingActivity"></activity>
+        <activity android:name=".onboarding.view.OnBoardingActivity"></activity>
         <activity
             android:name=".splash.SplashActivity"
             android:screenOrientation="portrait"

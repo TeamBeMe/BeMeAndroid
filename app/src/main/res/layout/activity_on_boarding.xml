@@ -10,13 +10,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".onboarding.OnBoardingActivity">
+        tools:context=".onboarding.view.OnBoardingActivity">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_onboarding_explain"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="80dp"
             android:layout_marginBottom="220dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -54,15 +54,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:layout_marginBottom="40dp"
-            android:backgroundTint="@drawable/onboarding_button_background"
+            android:background="@drawable/onboarding_button_background"
             android:fontFamily="@font/notosanskr_regular"
             android:includeFontPadding="false"
-            android:insetStart="0dp"
             android:insetTop="0dp"
-            android:insetEnd="0dp"
             android:insetBottom="0dp"
             android:text="BeMe 시작하기"
             android:textSize="16sp"
+            app:backgroundTint="@null"
             app:layout_constraintBottom_toTopOf="@+id/dots_onboarding_indicator" />
 
 
