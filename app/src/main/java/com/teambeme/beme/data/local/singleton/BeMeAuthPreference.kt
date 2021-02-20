@@ -1,4 +1,4 @@
-package com.teambeme.beme.data.remote.singleton
+package com.teambeme.beme.data.local.singleton
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -11,6 +11,7 @@ object BeMeAuthPreference {
     private const val PREF_KEY = "haskhey"
     private const val ID_KEY = "ID_KEY"
     private const val PASSWORD_KEY = "PASSWORD_KEY"
+    private const val IS_FIRST_KEY = "ONBOARDING_KEY"
 
     private lateinit var preferences: SharedPreferences
     private lateinit var authPreferences: SharedPreferences
@@ -49,4 +50,8 @@ object BeMeAuthPreference {
     var userPassword: String
         get() = authPreferences.getString(PASSWORD_KEY, "") ?: ""
         set(value) = authPreferences.edit { it.putString(PASSWORD_KEY, value) }
+
+    var isFirst: Boolean
+        get() = authPreferences.getBoolean(IS_FIRST_KEY, true)
+        set(value) = authPreferences.edit { it.putBoolean(IS_FIRST_KEY, value) }
 }

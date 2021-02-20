@@ -27,13 +27,18 @@ class ExploreDetailActivity :
     private val exploreDetailViewModel: ExploreViewModel by viewModels { exploreDetailViewModelFactory }
     private var questionId: Int = 0
 
+    override fun onRestart() {
+        super.onRestart()
+        exploreDetailViewModel.requestSameQuestionsOtherAnswers(questionId, exploreDetailViewModel.tempPage)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
         StatusBarUtil.setStatusBar(this, Color.WHITE)
         binding.exploreDetailViewModel = exploreDetailViewModel
         questionId = intent.getIntExtra("questionId", 0)
-        exploreDetailViewModel.requestSameQuestionsOtherAnswers(questionId)
+        exploreDetailViewModel.requestSameQuestionsOtherAnswers(questionId, exploreDetailViewModel.tempPage)
         binding.lifecycleOwner = this
         binding.otherMindsTitle = intent.getStringExtra("otherMindsTitle")
         setOtherAnswersAdapter()

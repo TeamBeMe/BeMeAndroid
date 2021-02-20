@@ -1,7 +1,7 @@
 package com.teambeme.beme
 
 import android.app.Application
-import com.teambeme.beme.data.remote.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
 import com.teambeme.beme.util.PixelRatio
 
 class BeMeApplication : Application() {

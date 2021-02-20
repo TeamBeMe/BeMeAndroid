@@ -12,7 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.data.remote.datasource.LoginDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityLoginBinding
 import com.teambeme.beme.login.repository.LoginRepositoryImpl
@@ -57,7 +57,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         loginViewModel.responseValue.observe(this) { data ->
             if (data != null) {
                 if (data.success) {
-                    BeMeAuthPreference.userToken = data.data!!.token!!
+                    BeMeAuthPreference.userToken = data.data!!.token
                     val intent = Intent(this, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

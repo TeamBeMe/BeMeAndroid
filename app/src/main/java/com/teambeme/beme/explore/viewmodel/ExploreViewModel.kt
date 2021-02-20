@@ -57,7 +57,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val sortingText: String
         get() = _sortingText
 
-    private var _page: Int = 1
+    private var _page: Int = 2
     val page: Int
         get() = _page
 
@@ -67,8 +67,17 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     private var otherAnswersQuestionsID: Int = 0
 
+    private var _tempPage: Int = 1
+    val tempPage: Int
+        get() = _tempPage
+
+    fun setPageAtRefresh() {
+        _page = 2
+    }
+
     fun setCategoryNum(category: Int) {
-        _page = 1
+        clearTempOtherQuestionsList()
+        _page = 2
         chipChecked[category - 1] = !chipChecked[category - 1]
         if (chipChecked == listOf(false, false, false, false, false, false)) {
             _categoryNum = null
@@ -77,19 +86,28 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
             chipChecked[category - 1] = !chipChecked[category - 1]
             _categoryNum = category
         }
-        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText)
+        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText, tempPage)
     }
 
     fun setSortingTextFromExplore(sorting: String) {
-        _page = 1
+        clearTempOtherQuestionsList()
+        _page = 2
         _sortingText = sorting
-        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText)
+        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText, tempPage)
     }
 
     fun setSortingTextFromExploreDetail(questionId: Int, sorting: String) {
-        _page = 1
+        _page = 2
         _sortingText = sorting
-        requestSameQuestionsOtherAnswers(questionId, sorting)
+        requestSameQuestionsOtherAnswers(questionId, tempPage, sorting)
+    }
+
+    fun clearTempOtherQuestionsList() {
+        tempOtherQuestionsList?.clear()
+    }
+
+    fun clearTempSameQuestionOtherAnswersList() {
+        tempSameQuestionOtherAnswersList?.clear()
     }
 
     fun requestOtherMinds() {
@@ -112,6 +130,8 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     }
 
     fun requestOtherQuestions() {
+        var a = 1
+        Log.d("DeleteList", "${a++}" + "번 original")
         exploreRepository.getExplorationOtherQuestions(
             _page,
             null,
@@ -152,7 +172,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     fun requestOtherQuestionsWithCategorySorting(
         category: Int?,
         sorting: String,
-        pageNum: Int = _page
+        pageNum: Int
     ) {
         exploreRepository.getExplorationOtherQuestions(
             pageNum,
@@ -166,20 +186,34 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         response: Response<ResponseExplorationQuestions>
                     ) {
                         if (response.isSuccessful) {
-                            _page = pageNum
-                            tempOtherQuestionsList =
-                                response.body()!!.data?.answers?.toMutableList()
-                            _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
-                            if (response.body()!!.data != null) {
-                                if (response.body()!!.data?.pageLen > _page) {
-                                    _page++
-                                    _isMorePage.value = true
-                                } else {
-                                    _isMorePage.value = false
+                            Log.d(
+                                "recursion",
+                                "pageNum : " + pageNum + " page : " + page + " tempPage : " + tempPage
+                            )
+                            if (pageNum != page) {
+                                if (tempPage == 1) {
+                                    clearTempOtherQuestionsList()
                                 }
+                                response.body()!!.data?.answers?.toMutableList()?.let {
+                                    tempOtherQuestionsList?.addAll(
+                                        it
+                                    )
+                                }
+                                _tempPage++
+                                _isMorePage.value = response.body()!!.data?.pageLen > tempPage
+                                requestOtherQuestionsWithCategorySorting(
+                                    category,
+                                    sorting,
+                                    tempPage
+                                )
                             } else {
-                                _isMorePage.value = false
+                                _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
+                                _tempPage = 1
                             }
+                            Log.d(
+                                "recursion",
+                                " tempPage : " + tempPage
+                            )
                         }
                     }
 
@@ -226,12 +260,11 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
             )
     }
 
-    fun requestSameQuestionsOtherAnswers(questionId: Int, sorting: String = "최신") {
-        _page = 1
+    fun requestSameQuestionsOtherAnswers(questionId: Int, pageNum: Int, sorting: String = "최신") {
         otherAnswersQuestionsID = questionId
         exploreRepository.getExplorationSameQuestionOtherAnswers(
             otherAnswersQuestionsID,
-            _page,
+            pageNum,
             sorting
         ).enqueue(
             object : Callback<ResponseExplorationQuestions> {
@@ -240,16 +273,35 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                     response: Response<ResponseExplorationQuestions>
                 ) {
                     if (response.isSuccessful) {
-                        tempSameQuestionOtherAnswersList =
-                            response.body()!!.data?.answers?.toMutableList()
-                        _sameQuestionOtherAnswersList.value =
-                            tempSameQuestionOtherAnswersList?.toMutableList()
-                        if (response.body()!!.data?.pageLen > _page) {
-                            _page++
-                            _isMorePage.value = true
+                        Log.d(
+                            "recursion_detail",
+                            "pageNum : " + pageNum + " page : " + page + " tempPage : " + tempPage
+                        )
+                        if (pageNum != page) {
+                            if (tempPage == 1) {
+                                clearTempSameQuestionOtherAnswersList()
+                            }
+                            response.body()!!.data?.answers?.toMutableList()?.let {
+                                tempSameQuestionOtherAnswersList?.addAll(
+                                    it
+                                )
+                            }
+                            _tempPage++
+                            _isMorePage.value = response.body()!!.data?.pageLen > tempPage
+                            requestSameQuestionsOtherAnswers(
+                                otherAnswersQuestionsID,
+                                tempPage,
+                                sorting
+                            )
                         } else {
-                            _isMorePage.value = false
+                            _sameQuestionOtherAnswersList.value =
+                                tempSameQuestionOtherAnswersList?.toMutableList()
+                            _tempPage = 1
                         }
+                        Log.d(
+                            "recursion_detail",
+                            " tempPage : " + tempPage
+                        )
                     }
                 }
 
@@ -318,7 +370,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         )
     }
 
-    fun requestScrap(answerId: Int, answerData: ResponseExplorationQuestions.Data.Answer) {
+    fun requestScrap(answerId: Int) {
         exploreRepository.putScrap(
             answerId
         ).enqueue(

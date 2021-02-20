@@ -34,12 +34,12 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
     private val exploreViewModel: ExploreViewModel by activityViewModels { exploreViewModelFactory }
 
     override fun onResume() {
-        exploreViewModel.requestOtherMinds()
         super.onResume()
+        exploreViewModel.requestOtherMinds()
         exploreViewModel.requestOtherQuestionsWithCategorySorting(
             exploreViewModel.categoryNum,
             exploreViewModel.sortingText,
-            1
+            exploreViewModel.tempPage
         )
     }
 
@@ -53,7 +53,6 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         binding.exploreViewModel = exploreViewModel
         binding.lifecycleOwner = this
         exploreViewModel.requestOtherMinds()
-        exploreViewModel.requestOtherQuestions()
         setOtherMindsAdapter()
         setOtherQuestionsAdapter()
         setOtherMindsObserve()
@@ -65,6 +64,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         setClickListenerForAlarmButton()
         setIsMorePageObserve()
         setIntentAnswerObserve()
+        setListenerForPullRefreshLayout()
         return binding.root
     }
 
@@ -137,6 +137,15 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
                 if (binding.rcvExploreOtherQuestions.adapter != null) with(binding.rcvExploreOtherQuestions.adapter as OtherQuestionsRcvAdapter<*>) {
                     submitList(otherQuestionsList)
                 }
+                if (otherQuestionsList.size == 0) {
+                    binding.rcvExploreOtherQuestions.visibility = View.GONE
+                    binding.imgExploreNoAnswerInformation.visibility = View.VISIBLE
+                    binding.txtExploreNoAnswerInformation.visibility = View.VISIBLE
+                } else {
+                    binding.rcvExploreOtherQuestions.visibility = View.VISIBLE
+                    binding.imgExploreNoAnswerInformation.visibility = View.GONE
+                    binding.txtExploreNoAnswerInformation.visibility = View.GONE
+                }
             }
         }
     }
@@ -191,5 +200,18 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
             date.substring(0, HomeFragment.DATE_LENGTH)
         else
             date
+    }
+
+    private fun setListenerForPullRefreshLayout() {
+        binding.pullRefreshLayoutExplore.setOnRefreshListener {
+            exploreViewModel.setPageAtRefresh()
+            exploreViewModel.requestOtherQuestionsWithCategorySorting(
+                exploreViewModel.categoryNum,
+                exploreViewModel.sortingText,
+                exploreViewModel.tempPage
+            )
+            exploreViewModel.requestOtherMinds()
+            binding.pullRefreshLayoutExplore.setRefreshing(false)
+        }
     }
 }
