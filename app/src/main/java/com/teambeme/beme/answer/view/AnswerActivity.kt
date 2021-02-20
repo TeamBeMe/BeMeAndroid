@@ -40,7 +40,6 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         binding.lifecycleOwner = this
         binding.answerActivity = this
         binding.answerViewModel = answerViewModel
-
         StatusBarUtil.setStatusBar(this, Color.WHITE)
 
         val intentAnswerData = intent.getParcelableExtra<IntentAnswerData>("intentAnswerData")!!
