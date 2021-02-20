@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.teambeme.beme.setting.model.OpenSourceData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt_opensource_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosankr_bold"
+            android:includeFontPadding="false"
+            android:text="@{data.openSource}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="힘내라 " />
+
+        <TextView
+            android:id="@+id/txt_opensource_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:text="@{data.link}"
+            android:textColorLink="#0066c5"
+            app:layout_constraintStart_toStartOf="@id/txt_opensource_name"
+            app:layout_constraintTop_toBottomOf="@id/txt_opensource_name"
+            tools:text="www.naver.com" />
+
+        <TextView
+            android:id="@+id/txt_opensource_copyright"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosanskr_regular"
+            android:includeFontPadding="false"
+            android:text="@{data.copyright}"
+            android:textColor="#898a8d"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/txt_opensource_link"
+            app:layout_constraintTop_toBottomOf="@id/txt_opensource_link"
+            tools:text="2015" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
