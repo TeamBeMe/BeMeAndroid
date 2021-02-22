@@ -26,8 +26,6 @@ import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityAnswerBinding
 import com.teambeme.beme.util.StatusBarUtil
 import com.teambeme.beme.util.dp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -45,15 +43,21 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         val intentAnswerData = intent.getParcelableExtra<IntentAnswerData>("intentAnswerData")!!
         val isChange = intent.getIntExtra(IS_CHANGE, IS_WRITE_VALUE)
         answerViewModel.setIntentAnswerData(intentAnswerData)
-        Log.d("answerIDx", intentAnswerData.categoryIdx.toString())
         Log.d("answer", intentAnswerData.toString())
+        Log.d("answer", "isChange == IS_CHANGE_VALUE is ${isChange == IS_CHANGE_VALUE}")
         binding.txtAnswerData.text = intentAnswerData.createdAt
-        answerViewModel.checkStored(intentAnswerData.questionId)
+        if (isChange != IS_CHANGE_VALUE) {
+            answerViewModel.checkStored(intentAnswerData.questionId)
+        } else {
+            answerViewModel.initAnswerData(intentAnswerData)
+        }
         answerViewModel.answerData.observe(this) {
             if (it != null) {
+                Log.d("answer", "it is not null")
                 answerViewModel.initEditText()
                 setTitleText(it)
             } else {
+                Log.d("answer", "it is null")
                 answerViewModel.initAnswerData(intentAnswerData)
             }
         }
@@ -117,7 +121,7 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
                 finish()
             }
         } else if (status == IS_CHANGE_VALUE) {
-            CoroutineScope(Dispatchers.Main).launch {
+            lifecycleScope.launch {
                 answerViewModel.modifyAnswer(requestAnswerData)
                 delay(500)
                 finish()
@@ -160,6 +164,7 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
                     binding.linearAnswerPublic.layoutParams = layoutParams
                 }
             }
+            binding.switchAnswerPublic.isChecked = isPublic
         }
     }
 
