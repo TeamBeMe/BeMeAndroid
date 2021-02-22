@@ -48,7 +48,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
     private fun setUIListener() {
         with(binding) {
             btnLoginSignup.setOnClickListener { startActivity(Intent(this@LoginActivity, SignUpActivity::class.java)) }
-            txtlayoutLoginPassword.setEndIconOnClickListener { loginViewModel.setShowPassword() }
+            txtlayoutLoginPassword.setEndIconOnClickListener { loginViewModel?.setShowPassword() }
         }
         keyboardVisibilityUtils = KeyboardVisibilityUtils(window,
             onShowKeyboard = { keyboardHeight, visibleDisplayFrameHeight ->
