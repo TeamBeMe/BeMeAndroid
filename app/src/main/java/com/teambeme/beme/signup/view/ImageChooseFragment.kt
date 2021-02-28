@@ -2,6 +2,7 @@ package com.teambeme.beme.signup.view
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -15,6 +16,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.teambeme.beme.R
@@ -33,6 +38,14 @@ import java.io.File
 class ImageChooseFragment : Fragment() {
     private lateinit var binding: FragmentImageChooseBinding
     private val signUpViewModel: SignUpViewModel by activityViewModels()
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "SignUpActivity")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "PROFILE_SIGN")
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,6 +57,10 @@ class ImageChooseFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.btnBack.setOnClickListener { view ->
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT_TYPE, "BACK_PRESS")
+                param(FirebaseAnalytics.Param.ITEM_ID, "OUT_INF_SIGN")
+            }
             view.findNavController().popBackStack()
         }
 

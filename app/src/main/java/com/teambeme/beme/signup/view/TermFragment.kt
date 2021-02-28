@@ -1,5 +1,6 @@
 package com.teambeme.beme.signup.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentTermBinding
 import com.teambeme.beme.signup.viewmodel.SignUpViewModel
@@ -16,6 +21,13 @@ import com.teambeme.beme.signup.viewmodel.SignUpViewModel
 class TermFragment : Fragment() {
     private lateinit var binding: FragmentTermBinding
     private val signUpViewModel: SignUpViewModel by activityViewModels()
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "SignUpActivity")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "TERMS_SIGN")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +38,10 @@ class TermFragment : Fragment() {
         binding.viewModel = signUpViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.btnTermBack.setOnClickListener { view ->
+            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                param(FirebaseAnalytics.Param.CONTENT_TYPE, "BACK_PRESS")
+                param(FirebaseAnalytics.Param.ITEM_ID, "OUT_TERM_SIGN")
+            }
             view.findNavController().popBackStack()
         }
         doneButtonClickListener()
