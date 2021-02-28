@@ -59,10 +59,8 @@ class FollowingAfterIdSearchActivity :
     }
 
     private fun initBinding(binding: ActivityFollowingAfterIdSearchBinding) {
-        binding.apply {
-            idSearchViewModel = idSearchViewModel
-            lifecycleOwner = this@FollowingAfterIdSearchActivity
-        }
+        binding.idSearchViewModel = idSearchViewModel
+        binding.lifecycleOwner = this@FollowingAfterIdSearchActivity
     }
 
     private fun setRecentSearchAdapter(binding: ActivityFollowingAfterIdSearchBinding) {

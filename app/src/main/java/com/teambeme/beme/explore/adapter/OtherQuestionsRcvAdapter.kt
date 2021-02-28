@@ -21,6 +21,7 @@ import com.teambeme.beme.explore.view.ExploreDetailActivity
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
 import com.teambeme.beme.following.viewmodel.FollowingViewModel
 import com.teambeme.beme.otherpage.view.OtherPageActivity
+import com.teambeme.beme.util.recordClickEvent
 import com.teambeme.beme.util.startActivity
 
 class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
@@ -177,6 +178,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     ) {
         binding.btnOtherQuestionsDoAnswer.setOnClickListener {
             Log.d("answer", "adapter")
+            recordClickEvent("BUTTON", "CLICK_ANSWERCHECK_FOLLOWING")
             otherQuestionButtonClickListener?.otherQuestionAnswerClickListener(otherQuestionsData.questionId)
         }
     }
