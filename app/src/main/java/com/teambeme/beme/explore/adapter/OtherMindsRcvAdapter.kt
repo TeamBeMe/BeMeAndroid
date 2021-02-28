@@ -13,6 +13,7 @@ import com.teambeme.beme.databinding.ItemExploreOtherMindsBinding
 import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.explore.model.ResponseExplorationMinds
 import com.teambeme.beme.explore.view.ExploreDetailActivity
+import com.teambeme.beme.util.recordClickEvent
 import com.teambeme.beme.util.startActivity
 
 class OtherMindsRcvAdapter(private val context: Context) :
@@ -52,6 +53,7 @@ class OtherMindsRcvAdapter(private val context: Context) :
         context: Context
     ) {
         binding.btnOtherMindsShowOtherAnswers.setOnClickListener {
+            recordClickEvent("BUTTON", "CLICK_SAME")
             context.startActivity<ExploreDetailActivity>(otherMindsData.questionTitle, otherMindsData.questionId)
         }
     }

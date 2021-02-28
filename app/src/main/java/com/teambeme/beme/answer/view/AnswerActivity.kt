@@ -26,6 +26,7 @@ import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityAnswerBinding
 import com.teambeme.beme.util.StatusBarUtil
 import com.teambeme.beme.util.dp
+import com.teambeme.beme.util.recordClickEvent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -145,6 +146,7 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
             val layoutParams =
                 binding.linearAnswerPublic.layoutParams!! as ConstraintLayout.LayoutParams
             if (isPublic) {
+                recordClickEvent("SWITCH", "OPEN_ANSWER_ANSWERVIEW")
                 val animator = setValueChangeAnimator(20.dp, 64.dp)
                 val alphaAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
                     duration = 400
@@ -158,6 +160,7 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
                     binding.linearAnswerBlockComment.alpha = it.animatedValue as Float
                 }
             } else {
+                recordClickEvent("SWITCH", "PRIVATE_ANSWER_ANSWERVIEW")
                 val animator = setValueChangeAnimator(64.dp, 20.dp)
                 animator.addUpdateListener { updatedAnimation ->
                     layoutParams.setMargins(0, 0, 0, updatedAnimation.animatedValue as Int)
@@ -174,6 +177,8 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         }
 
         binding.switchAnswerReplyCancel.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) recordClickEvent("SWITCH", "OPEN_COMMENT_ANSWERVIEW")
+            else recordClickEvent("SWITCH", "PRIVATE_COMMENT_ANSWERVIEW")
             answerViewModel.setCommentBlockedStatus(isChecked)
         }
     }
