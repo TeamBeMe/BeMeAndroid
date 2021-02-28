@@ -13,6 +13,7 @@ import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentPermissionInfoBinding
+import com.teambeme.beme.util.recordClickEvent
 
 class PermissionInfoFragment : Fragment() {
     private var _binding: FragmentPermissionInfoBinding? = null
@@ -34,10 +35,7 @@ class PermissionInfoFragment : Fragment() {
             view.findNavController().navigate(R.id.action_permissionInfoFragment_to_termFragment)
         }
         binding.btnPermissionBack.setOnClickListener {
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                param(FirebaseAnalytics.Param.CONTENT_TYPE, "BACK_PRESS")
-                param(FirebaseAnalytics.Param.ITEM_ID, "OUT_GUIDANCE_SIGN")
-            }
+            recordClickEvent("BACK_PRESS", "OUT_GUIDANCE_SIGN")
             requireActivity().finish()
         }
         return binding.root

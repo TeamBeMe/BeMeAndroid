@@ -17,6 +17,7 @@ import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentTermBinding
 import com.teambeme.beme.signup.viewmodel.SignUpViewModel
+import com.teambeme.beme.util.recordClickEvent
 
 class TermFragment : Fragment() {
     private lateinit var binding: FragmentTermBinding
@@ -38,10 +39,7 @@ class TermFragment : Fragment() {
         binding.viewModel = signUpViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.btnTermBack.setOnClickListener { view ->
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                param(FirebaseAnalytics.Param.CONTENT_TYPE, "BACK_PRESS")
-                param(FirebaseAnalytics.Param.ITEM_ID, "OUT_TERM_SIGN")
-            }
+            recordClickEvent("BACK_PRESS", "OUT_TERM_SIGN")
             view.findNavController().popBackStack()
         }
         doneButtonClickListener()

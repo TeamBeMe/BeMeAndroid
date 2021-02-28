@@ -17,6 +17,7 @@ import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentPersonalInfoBinding
 import com.teambeme.beme.signup.viewmodel.SignUpViewModel
+import com.teambeme.beme.util.recordClickEvent
 
 class PersonalInfoFragment : Fragment() {
     private lateinit var binding: FragmentPersonalInfoBinding
@@ -39,10 +40,7 @@ class PersonalInfoFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.signUpViewModel = signUpViewModel
         binding.btnPersonalBack.setOnClickListener { view ->
-            Firebase.analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                param(FirebaseAnalytics.Param.CONTENT_TYPE, "BACK_PRESS")
-                param(FirebaseAnalytics.Param.ITEM_ID, "OUT_INF_SIGN")
-            }
+            recordClickEvent("BACK_PRESS", "OUT_INF_SIGN")
             view.findNavController().popBackStack()
         }
         setDoubleCheckListener()
