@@ -20,6 +20,7 @@ import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.view.BottomWriteFragment.Companion.WRITE_FILTER
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
+import com.teambeme.beme.util.recordClickEvent
 
 class MyWriteFragment : Fragment() {
     private lateinit var binding: FragmentMyWriteBinding
@@ -55,6 +56,10 @@ class MyWriteFragment : Fragment() {
         }
         mypageViewModel.isAnswerEmpty.observe(viewLifecycleOwner) {
             isEmptyListener(it)
+        }
+        binding.imgWriteFilter.setOnClickListener {
+            recordClickEvent("BUTTON", "CLICK_FILTER_MYPAGE")
+            mypageViewModel.writeFilterOnClick()
         }
         setSearchView()
         return binding.root

@@ -23,6 +23,7 @@ import com.teambeme.beme.main.view.MainActivity
 import com.teambeme.beme.signup.view.SignUpActivity
 import com.teambeme.beme.util.KeyboardVisibilityUtils
 import com.teambeme.beme.util.StatusBarUtil
+import com.teambeme.beme.util.recordClickEvent
 
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private lateinit var keyboardVisibilityUtils: KeyboardVisibilityUtils
@@ -47,7 +48,12 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
 
     private fun setUIListener() {
         with(binding) {
-            btnLoginSignup.setOnClickListener { startActivity(Intent(this@LoginActivity, SignUpActivity::class.java)) }
+            btnLoginSignup.setOnClickListener {
+                recordClickEvent("BUTTON", "CLICK_SIGN_SIGN")
+                startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
+            }
+            btnRegisterFindId.setOnClickListener { recordClickEvent("BUTTON", "CLICK_SEARCHID_LOGIN") }
+            btnRegisterFindPassword.setOnClickListener { recordClickEvent("BUTTON", "CLICK_FINDPWD_LOGIN") }
             txtlayoutLoginPassword.setEndIconOnClickListener { loginViewModel?.setShowPassword() }
         }
         keyboardVisibilityUtils = KeyboardVisibilityUtils(window,

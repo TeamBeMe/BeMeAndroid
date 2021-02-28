@@ -13,6 +13,7 @@ import com.teambeme.beme.databinding.ItemRecentActivitiesBinding
 import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.notification.model.ResponseNoticeData
 import com.teambeme.beme.otherpage.view.OtherPageActivity
+import com.teambeme.beme.util.recordClickEvent
 
 class NoticeAdapter :
     ListAdapter<ResponseNoticeData.Data.Activity, NoticeAdapter.NoticeViewHolder>(NoticeDiffUtil()) {
@@ -46,6 +47,7 @@ class NoticeAdapter :
                     view.context.startActivity(intent)
                 }
                 itemView.setOnClickListener { view ->
+                    recordClickEvent("BUTTON", "CLCIK_ALARM")
                     if (getItem(position).questionTitle != null) {
                         val intent = Intent(view.context, DetailActivity::class.java)
                         intent.putExtra("answerId", getItem(holder.adapterPosition).answerId)

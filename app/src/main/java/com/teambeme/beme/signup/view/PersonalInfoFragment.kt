@@ -1,5 +1,6 @@
 package com.teambeme.beme.signup.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +10,26 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentPersonalInfoBinding
 import com.teambeme.beme.signup.viewmodel.SignUpViewModel
+import com.teambeme.beme.util.recordClickEvent
 
 class PersonalInfoFragment : Fragment() {
     private lateinit var binding: FragmentPersonalInfoBinding
     private val signUpViewModel: SignUpViewModel by activityViewModels()
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "SignUpActivity")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "INF_SIGN")
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,6 +40,7 @@ class PersonalInfoFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.signUpViewModel = signUpViewModel
         binding.btnPersonalBack.setOnClickListener { view ->
+            recordClickEvent("BACK_PRESS", "OUT_INF_SIGN")
             view.findNavController().popBackStack()
         }
         setDoubleCheckListener()
