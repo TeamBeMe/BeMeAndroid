@@ -390,6 +390,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="18dp"
+                        android:layout_marginBottom="46dp"
                         android:gravity="center_horizontal"
                         android:text="아이쿠..! 아직 답변을 안 하셨군요\n질문에 답을 하고\n답한 질문에 대한 다른 사람들의 글을 둘러보세요"
                         android:textColor="@color/explore_txt_other_questions_un_answer_gray"
@@ -397,7 +398,8 @@
                         android:visibility="invisible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/img_explore_no_answer_information" />
+                        app:layout_constraintTop_toBottomOf="@id/img_explore_no_answer_information"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
