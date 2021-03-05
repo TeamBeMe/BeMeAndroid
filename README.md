@@ -1,6 +1,24 @@
-# BeMe
+<h1 align="center"> BeMe </h1>
 
-## BeMeRoid
+<p align="center">
+  <img src="https://img.shields.io/badge/Kotlin-1.4.30-yellowgreen?logo=kotlin"/>
+  <img src="https://img.shields.io/badge/Android-4.1.2-blue?logo=Android+Studio"/>
+  <img src="https://img.shields.io/badge/targetSdk-30-green?logo=Android"/>
+  <img src="https://img.shields.io/badge/minSdk-26-green?logo=Android"/>
+</p>
+
+<p align="center">
+  <h2 align="center">나를 알아가는 질문, 나를 돌아보는 시간 BeMe</h2>
+  <p align="center">
+  나는 어떻게 살고 싶은 지, 무엇을 중요하게 생각하는 지 <br />
+  어떤 사람과 함께하고 싶고, 삶을 어떻게 마무리하고 싶은 지 <br />
+  "나"답게 살고 싶다는 생각을 하지만 정작 '나'를 알아간다는 건 쉽지 않습니다. <br />
+  그러나, BeMe를 사용하는 여러분들은 매일 제공되는 질문들로 자신을 성찰하고 알아가게 되는 경험을 느낄 수 있을 것입니다. <br />
+  </p>
+</p>
+<br/>
+
+<h1 align="center"> BeMeRoid </h1>
 
 <table align="center">
   <th align="center">이현우</th>
@@ -27,77 +45,41 @@
   </tr>
   <tr>
   	<td>
-      <p>
-        ♥️ SOPT 26기 앱잼 OUNCE 팀 안드로이드 개발자
+  	  <p>
+        BeMe 안드로이드 리드 개발자
       </p>
       <p>
-        🧡 사이드 프로젝트 MARU 안드로이드 리드 개발자
+        OUNCE 안드로이드 리드 개발자
       </p>
       <p>
-        💛 SOPT 27기 앱잼 BeMe 팀 안드로이드 리드 개발자
+        MARU 안드로이드 리드 개발자
       </p>
       <p>
-        💚 건국대학교 컴퓨터공학과 2학년 (휴학해쓰요~)
-      </p>
-      <p>
-        💙 코딩이 안되면 누누코딩스쿨!
-      </p>
-      <p>
-        💜 #INFP  #인싸중의아싸아싸중의인싸
+        건국대학교 컴퓨터공학과 2학년
       </p>
     </td>
     <td>
       <p>
-        ♥️ SOPT 27기 안드로이드 파트 YB
+        BeMe 안드로이드 개발자
       </p>
       <p>
-        🧡 서울여자대학교 디지털미디어학과 3학년
-      </p>
-      <p>
-        💛 소프트웨어융합학과 복수전공
-      </p>
-      <p>
-        💚 #ESFJ #170 #열정
-      </p>
-      <p>
-        💙 BeMe하면 악기라구요..? 저도 피아노 연주해요🎹🎶
-      </p>
-      <p>
-        💜 보라색 처돌이에요~!
+        서울여자대학교 디지털미디어학과 소프트웨어융합학과 (복수전공) 3학년
       </p>
     </td>
     <td>
       <p>
-        ♥️ SOPT 27기 안드로이드파트 YB
+        BeMe 안드로이드 개발자
       </p>
       <p>
-        🧡 상명대학교 컴퓨터과학과
-      </p>
-      <p>
-        💛 #ESTP #3절 장인 #과묵한편
-      </p>
-      <p>
-        💙 한잔허쉴?
+        상명대학교 컴퓨터과학과
       </p>
     </td>
     <td>
       <p>
-        ♥️ SOPT 27기 안드 파트 YB
+        BeMe 안드로이드 개발자
       </p>
       <p>
-        🧡 SOPT 27기 이기상 스터디 참여
-      </p>
-      <p>
-        💛 한양대학교 산업공학과 3학년
-      </p>
-      <p>
-        💚 다중전공 - 창업융합전공
-      </p>
-      <p>
-        💙 #밖에서ENFJ #집에서INTP #기본형ENTP #라잌카멜레온 #성장조아 #함께조아 #파티조아
-      </p>
-      <p>
-        💜 자연 동물 미스테리 아트 조아
+        한양대학교 산업공학과(창업융합전공 다중전공) 3학년
       </p>
     </td>
   </tr>
@@ -113,10 +95,10 @@
     </td>
     <td>
       <ul>
-        <li> 탐색탭 Fragment </li>
-        <li> 팔로잉탭 Fragment </li>
-        <li> 같은 질문에 대한 다른 답변들 Fragment </li>
-        <li> 팔로잉탭 모두보기 Fragment </li>
+        <li> 탐색탭 </li>
+        <li> 팔로잉탭 </li>
+        <li> 같은 질문에 대한 다른 답변들 </li>
+        <li> 팔로잉탭 모두보기 </li>
       </ul>
     </td>
     <td>
@@ -130,30 +112,12 @@
     <td>
       <ul>
         <li> 알림 뷰 </li>
-        <li> 푸시 알림 구현 </li>
-        <li> 아이디 검색 후 팔로잉 구현 </li>
+        <li> 푸시 알림 </li>
+        <li> 아이디 검색 후 팔로잉 </li>
       </ul>
     </td>
   </tr>
 </table>
-
-## BeMe
-
-<p align="center">
-  <img src = "https://user-images.githubusercontent.com/54518925/103659994-6c046d80-4fb0-11eb-9ce6-7d9b708e0696.png" width = "70%" />
-</p>
-
-<h3 align="center"> 나를 알아가는 질문, 나를 돌아보는 시간 BeMe </h3></br>
-
-
-> 나는 어떻게 살고 싶은 지, 무엇을 중요하게 생각하는 지
->
-> 어떤 사람과 함께하고 싶고, 삶을 어떻게 마무리하고 싶은 지
->
-> "나"답게 살고 싶다는 생각을 하지만 정작 '나'를 알아간다는 건 쉽지 않습니다.
->
->
-> But, BeMe를 사용하는 여러분들은 매일 제공되는 질문들로 자신을 성찰하고 알아가게 되는 경험을 느낄 수 있을 것입니다.
 
 ## BeMe's Coding Convention
 ### Kotlin Style Guide
@@ -275,9 +239,6 @@ footer(optional)
 <img src = "https://user-images.githubusercontent.com/54518925/103665503-d6b8a780-4fb6-11eb-9786-9b97bc83ceda.png" />
 <img src = "https://user-images.githubusercontent.com/54518925/103665534-dd471f00-4fb6-11eb-9246-7fe89cf2aff0.png" />
 
-## BeMe Package Structure
-<img src = "https://user-images.githubusercontent.com/54518925/104716200-ed0af400-576a-11eb-8d47-a1c5affbe11f.png" />
-
 ## Tech Spec
 
 - App Architecture based on MVVM Architecture
@@ -285,41 +246,37 @@ footer(optional)
   <img src="https://user-images.githubusercontent.com/54518925/104303381-5db4d500-550d-11eb-86b7-b8bda29a1987.png" style="zoom:50%;" />
 </p>
 
+
 - Android Jetpack
-  - MVVM 패턴 구성을 위한
-    - ViewModel
-    - LiveData
-    - Room
-    - DataBinding
-  - 유동적인 Fragment Paging을 위한 ViewPager2
-  - 비동기 작업을 위한 Coroutine
-  - 생명주기를 관찰하여 정확한 문제 파악을 위한 AndroidX LifeCycle
-  - 쉽고 깔끔한 코딩을 위한 안드로이드 코틀린 확장함수 Android KTX
-  - 쉬운 화면전환을 위한 Navigation Component
+  - LifeCycle(ViewModel, LiveData, LifeCycleObserver)
+  - Room
+  - DataBinding
+  - Navigation Component
+  - ViewPager2
+  - Android KTX
+  - Hilt
 
-- 코틀린 공식 가이드메 맞춘 클린 코드를 작성하기 위한 ktlint
+- ktlint
 
-- URL로 ImageView에 사진을 넣기 위한 Glide
+- Glide
 
-- 네트워크 송/수신 데이터 상태 파악과 Auth Token 저장을 위한 OkHttp
+- OkHttp/Retrofit2
 
-- 간결한 비동기 서버 통신을 위한 Kotlin Coroutine
+- Kotlin Coroutine
 
-- 서버통신을 위한
-  - Retrofit
-  - Gson
+- Gson
 
-- 쉬운 이미지 처리를 위한
-    - CircleImageView
-    - ImageCrop
+- CircleImageView
 
-- 애니메이션 재생을 위한 Lottie
+- ImageCrop
 
-- 쉬운 권한 획득을 위한 TedPermission
+- Lottie
 
-- 푸시 알람 구현을 위한 Firebase/Firebase Cloud Messaging
+- TedPermission
 
-- 헤더 고정 스크롤 뷰를 위한 StickyNestedScrollView
+- Firebase/Firebase Cloud Messaging
+
+- StickyNestedScrollView
 
 ## 구현 기술
 - [Room을 이용한 글 임시저장 구현](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/RoomDataConnection.md)
@@ -334,39 +291,4 @@ footer(optional)
 - [이미지를 원하는 비율로 잘라봅시다, Image Cropper를 이용해서](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/ImageCropper.md)
 - [MultiPart 서버통신으로 Image 서버로 날려버리기](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/Multipart.md)
 - [이메일 양식받아서 문의 이메일 보내기](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/IntentEmail.md)
-
-## [BeMeetingLog](https://www.notion.so/fun-beMeAndroid-6a0ac949cb294ca8b619d8736ffcc477)
-- 회의록 노션에 기록
-
-## CollapsingToolbarLayout : 툴바를 상단에 고정시키고 이미지를 사라지게 하기 위해
-```
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".mypage.view.MyPageFragment">
-```
-
-우선 layout을 지정해준다
-
-```
-<com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-```
-
-이 후 하단 layout으로 AppBarLayout을 지정해준다 ->Coordinatorlayout으로 인해 변화하는 영역을 지정할 수 있다.
-
-```
-<com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/toolbar_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fitsSystemWindows="true"
-                app:contentScrim="@color/mypage_white"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
-```
-
-이 후 하단으로 스크롤을 하게되면 사라지는 영역을 지정하는 CollapsingToolbarLayout을 지정해준다.
-즉 AppBarLayout에 포함이 되면서 CollapsingToolbarLayout에 포함이 된다면 하단으로 스크롤 할떄 사라지지않고 상단에 고정이 된다.
-이 후에는 각각영역에 속하는 레이아웃을 지정하면 된다.
 
