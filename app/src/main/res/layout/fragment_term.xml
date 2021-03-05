@@ -121,19 +121,20 @@
             android:layout_marginBottom="400dp"
             android:maxHeight="120dp"
             app:layout_constraintBottom_toTopOf="@+id/linear_term_service"
-            app:layout_constraintTop_toBottomOf="@+id/linear_term_essence">
+            app:layout_constraintTop_toBottomOf="@+id/linear_term_essence"
+            tools:layout_editor_absoluteX="0dp">
 
-            <ImageView
+            <TextView
                 android:id="@+id/img_term_essence"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:background="@color/signup_background_gray"
-                android:maxHeight="140dp"
                 android:paddingHorizontal="28dp"
                 android:paddingVertical="16dp"
                 android:scaleType="fitXY"
                 android:scrollbars="vertical"
-                android:src="@drawable/img_clause_account" />
+                android:textColor="@color/detail_text_gray"
+                android:text="@string/txt_term_personal_info" />
 
         </ScrollView>
 
@@ -188,13 +189,15 @@
             android:background="@color/signup_background_gray"
             app:layout_constraintTop_toBottomOf="@+id/linear_term_service">
 
-            <ImageView
+            <TextView
                 android:id="@+id/img_term_service"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="28dp"
                 android:paddingVertical="16dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/img_clause_service" />
+                android:textColor="@color/detail_text_gray"
+                android:text="@string/txt_term_service" />
         </ScrollView>
 
         <Button
