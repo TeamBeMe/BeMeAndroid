@@ -24,6 +24,7 @@ import com.teambeme.beme.explore.viewmodel.ExploreViewModelFactory
 import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
 import com.teambeme.beme.notification.view.NotificationActivity
+import com.teambeme.beme.util.recordClickEvent
 
 class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragment_explore) {
     private val exploreViewModelFactory = ExploreViewModelFactory(
@@ -65,7 +66,19 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         setIsMorePageObserve()
         setIntentAnswerObserve()
         setListenerForPullRefreshLayout()
+        setChipListener()
         return binding.root
+    }
+
+    private fun setChipListener() {
+        with(binding) {
+            chipExploreThink.setOnClickListener { recordClickEvent("BUTTON", "CLICK_VALUES_SEARCH") }
+            chipExploreRelationship.setOnClickListener { recordClickEvent("BUTTON", "CLICK_RELATIONSHIP_SEARCH") }
+            chipExploreLove.setOnClickListener { recordClickEvent("BUTTON", "CLICK_LOVE_SEARCH") }
+            chipExploreDaily.setOnClickListener { recordClickEvent("BUTTON", "CLICK_DAILYLIFE_SEARCH") }
+            chipExploreMe.setOnClickListener { recordClickEvent("BUTTON", "CLICK_ABOUTME_SEARCH") }
+            chipExploreStory.setOnClickListener { recordClickEvent("BUTTON", "CLICK_STORY_SEARCH") }
+        }
     }
 
     private fun setIntentAnswerObserve() {
@@ -183,6 +196,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
 
     private fun setClickListenerForIdSearchButton() {
         binding.btnExploreIdSearch.setOnClickListener {
+            recordClickEvent("BUTTON", "CLICK_SEARCHID_SEARCH")
             val intent = Intent(activity, FollowingAfterIdSearchActivity::class.java)
             startActivity(intent)
         }

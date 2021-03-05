@@ -20,7 +20,7 @@ class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewMode
     private var _isCommentBlocked = false
     val isCommentBlocked: Boolean
         get() = _isCommentBlocked
-    private val _isPublic = MutableLiveData<Boolean>(true)
+    private val _isPublic = MutableLiveData<Boolean>()
     val isPublic: LiveData<Boolean>
         get() = _isPublic
     private val _intentAnswerData = MutableLiveData<IntentAnswerData>()
@@ -32,6 +32,7 @@ class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewMode
             val data = answerRepository.get(questionId.toLong())
             Log.d("AnswerViewModel", data.toString())
             _answerData.value = data
+            _isPublic.value = data?.isPublic ?: true
         }
     }
 
@@ -58,13 +59,14 @@ class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewMode
                 answerId = intentAnswerData.answerId.toLong(),
                 answer = intentAnswerData.content,
                 isCommentBlocked = intentAnswerData.isCommentBlocked,
-                isPublic = intentAnswerData.isCommentBlocked,
+                isPublic = intentAnswerData.isPublic,
                 title = intentAnswerData.title,
                 category = intentAnswerData.category,
                 categoryIdx = intentAnswerData.categoryIdx ?: 0,
                 createdAt = intentAnswerData.createdAt
             )
             _answerData.value = answerData
+            _isPublic.value = intentAnswerData.isPublic
             answerRepository.insert(answerData)
         }
     }

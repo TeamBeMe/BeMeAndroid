@@ -11,10 +11,11 @@ import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
-import com.teambeme.beme.data.remote.datasource.LoginDataSourceImpl
 import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.remote.datasource.LoginDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityLoginBinding
+import com.teambeme.beme.login.model.ResponseLogin
 import com.teambeme.beme.login.repository.LoginRepositoryImpl
 import com.teambeme.beme.login.viewmodel.LoginViewModel
 import com.teambeme.beme.login.viewmodel.LoginViewModelFactory
@@ -22,6 +23,7 @@ import com.teambeme.beme.main.view.MainActivity
 import com.teambeme.beme.signup.view.SignUpActivity
 import com.teambeme.beme.util.KeyboardVisibilityUtils
 import com.teambeme.beme.util.StatusBarUtil
+import com.teambeme.beme.util.recordClickEvent
 
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private lateinit var keyboardVisibilityUtils: KeyboardVisibilityUtils
@@ -33,6 +35,27 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.loginViewModel = loginViewModel
+        binding.lifecycleOwner = this
+        initView()
+    }
+
+    private fun initView() {
+        StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
+        setUIListener()
+        subscribeData()
+    }
+
+    private fun setUIListener() {
+        with(binding) {
+            btnLoginSignup.setOnClickListener {
+                recordClickEvent("BUTTON", "CLICK_SIGN_SIGN")
+                startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
+            }
+            btnRegisterFindId.setOnClickListener { recordClickEvent("BUTTON", "CLICK_SEARCHID_LOGIN") }
+            btnRegisterFindPassword.setOnClickListener { recordClickEvent("BUTTON", "CLICK_FINDPWD_LOGIN") }
+            txtlayoutLoginPassword.setEndIconOnClickListener { loginViewModel?.setShowPassword() }
+        }
         keyboardVisibilityUtils = KeyboardVisibilityUtils(window,
             onShowKeyboard = { keyboardHeight, visibleDisplayFrameHeight ->
                 this.keyboardHeight = keyboardHeight
@@ -51,40 +74,41 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
                 }
             }
         )
-        binding.loginViewModel = loginViewModel
-        binding.lifecycleOwner = this
-        StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
+    }
+
+    private fun subscribeData() {
         loginViewModel.responseValue.observe(this) { data ->
-            if (data != null) {
-                if (data.success) {
-                    BeMeAuthPreference.userToken = data.data!!.token
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+            runCatching { requireNotNull(data) { "로그인에 실패하였습니다. 다시 입력해주세요" } }
+                .onSuccess {
+                    if (it.success) loginBy(it)
+                    else "로그인 실패 ${it.message}".toast()
+                }.onFailure { it.message!!.toast() }
+        }
+        loginViewModel.showPassword.observe(this) { showPassword ->
+            showPassword?.let {
+                if (showPassword) {
+                    binding.txtlayoutLoginPassword.setEndIconDrawable(R.drawable.ic_hide_password)
+                    binding.editxtLoginPassword.transformationMethod =
+                        HideReturnsTransformationMethod.getInstance()
                 } else {
-                    Toast.makeText(this, "로그인 실패 ${data.message}", Toast.LENGTH_SHORT).show()
+                    binding.txtlayoutLoginPassword.setEndIconDrawable(R.drawable.ic_show_password)
+                    binding.editxtLoginPassword.transformationMethod =
+                        PasswordTransformationMethod.getInstance()
                 }
-            } else {
-                Toast.makeText(this, "로그인에 실패하였습니다. 다시 입력해주세요", Toast.LENGTH_SHORT).show()
             }
         }
         loginViewModel.errorMessage.observe(this) { errorMessage ->
-            if (!errorMessage.isNullOrBlank()) {
-                binding.linearLoginError.visibility = View.VISIBLE
-            }
+            if (!errorMessage.isNullOrBlank()) { binding.linearLoginError.visibility = View.VISIBLE }
         }
-        signUpButtonClickListener()
-        setChangeEndIconFromPassword()
-        setEndIconModeObserve()
     }
 
-    private fun signUpButtonClickListener() {
-        binding.btnLoginSignup.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
-        }
+    private fun loginBy(it: ResponseLogin) {
+        BeMeAuthPreference.userToken = it.data!!.token
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        "로그인 성공".toast()
     }
 
     private fun setValueChangeAnimator(from: Int, to: Int): ValueAnimator {
@@ -103,26 +127,8 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         )
     }
 
-    private fun setChangeEndIconFromPassword() {
-        binding.txtlayoutLoginPassword.setEndIconOnClickListener {
-            loginViewModel.setShowPassword()
-        }
-    }
-
-    private fun setEndIconModeObserve() {
-        loginViewModel.showPassword.observe(this) { showPassword ->
-            showPassword?.let {
-                if (showPassword) {
-                    binding.txtlayoutLoginPassword.setEndIconDrawable(R.drawable.ic_hide_password)
-                    binding.editxtLoginPassword.transformationMethod =
-                        HideReturnsTransformationMethod.getInstance()
-                } else {
-                    binding.txtlayoutLoginPassword.setEndIconDrawable(R.drawable.ic_show_password)
-                    binding.editxtLoginPassword.transformationMethod =
-                        PasswordTransformationMethod.getInstance()
-                }
-            }
-        }
+    private fun String.toast() {
+        Toast.makeText(this@LoginActivity, this, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

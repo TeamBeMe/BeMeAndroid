@@ -6,6 +6,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
@@ -79,6 +83,10 @@ class OnBoardingActivity :
     private fun providePageChangeCallback(): ViewPager2.OnPageChangeCallback {
         return object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+                    param(FirebaseAnalytics.Param.SCREEN_CLASS, "OnBoardingActivity")
+                    param(FirebaseAnalytics.Param.SCREEN_NAME, getScreenName(position))
+                }
                 when (position) {
                     3 -> {
                         with(binding) {
@@ -94,6 +102,15 @@ class OnBoardingActivity :
                     }
                 }
             }
+        }
+    }
+
+    private fun getScreenName(position: Int): String {
+        return when (position) {
+            0 -> "ONBOARDING_1"
+            1 -> "ONBOARDING_2"
+            2 -> "ONBOARDING_3"
+            else -> "ONBOARDING_4"
         }
     }
 
