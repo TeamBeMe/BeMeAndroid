@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.explore.model.ResponseExplorationMinds
 import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
@@ -14,10 +13,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewModel() {
-    private val _otherMindsList = MutableLiveData<List<ResponseExplorationMinds.Data>>()
-    val otherMindsList: LiveData<List<ResponseExplorationMinds.Data>>
-        get() = _otherMindsList
-
     private var _userNickname: String = ""
     val userNickname: String
         get() = _userNickname
@@ -89,13 +84,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText, tempPage)
     }
 
-    fun setSortingTextFromExplore(sorting: String) {
-        clearTempOtherQuestionsList()
-        _page = 2
-        _sortingText = sorting
-        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText, tempPage)
-    }
-
     fun setSortingTextFromExploreDetail(questionId: Int, sorting: String) {
         _page = 2
         _sortingText = sorting
@@ -108,25 +96,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     fun clearTempSameQuestionOtherAnswersList() {
         tempSameQuestionOtherAnswersList?.clear()
-    }
-
-    fun requestOtherMinds() {
-        exploreRepository.getExplorationAnother()
-            .enqueue(
-                object : Callback<ResponseExplorationMinds> {
-                    override fun onResponse(
-                        call: Call<ResponseExplorationMinds>,
-                        response: Response<ResponseExplorationMinds>
-                    ) {
-                        if (response.isSuccessful)
-                            _otherMindsList.value = response.body()!!.data?.toList()
-                    }
-
-                    override fun onFailure(call: Call<ResponseExplorationMinds>, t: Throwable) {
-                        Log.d("network_requestOtherMinds", "통신실패")
-                    }
-                }
-            )
     }
 
     fun requestOtherQuestions() {

@@ -173,7 +173,6 @@
                     android:layout_marginBottom="40dp"
                     android:nestedScrollingEnabled="false"
                     android:orientation="vertical"
-                    android:visibility="@{exploreViewModel.otherQuestionsList == null ? View.GONE : View.VISIBLE}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toTopOf="@id/btn_explore_show_more"
                     app:layout_constraintEnd_toEndOf="parent"
