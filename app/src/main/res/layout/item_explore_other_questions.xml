@@ -154,39 +154,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/img_other_questions_profile" />
 
-        <TextView
-            android:id="@+id/txt_other_questions_un_answered"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/item_other_questions_txt_content_black"
-            android:textSize="14sp"
-            android:visibility="@{otherQuestions.isAnswered == true ? View.INVISIBLE : View.VISIBLE}"
-            app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"
-            app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_category"
-            following:myNickName="@{myNickName}"
-            following:userNickName="@{userNickName}"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_other_questions_do_answer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:backgroundTint="@color/item_following_unanswered_questions_btn_background_black"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:paddingStart="28dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="28dp"
-            android:paddingBottom="8dp"
-            android:text="답변하고 확인하기"
-            android:textColor="@color/item_following_unanswered_questions_btn_txt_white"
-            android:textSize="16sp"
-            android:visibility="@{otherQuestions.isAnswered == true ? View.GONE : View.VISIBLE}"
-            app:cornerRadius="6dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_other_questions_un_answered" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
