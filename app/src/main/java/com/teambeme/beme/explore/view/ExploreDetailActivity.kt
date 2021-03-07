@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import com.google.android.material.tabs.TabLayout
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.data.remote.datasource.ExploreDataSourceImpl
@@ -44,7 +43,6 @@ class ExploreDetailActivity :
         setOtherAnswersAdapter()
         setOtherAnswersObserve()
         setClickListenerForGoback()
-        setTabSelectedFromExploreDetailListener()
         setIsMorePageObserve()
     }
 
@@ -90,27 +88,5 @@ class ExploreDetailActivity :
         binding.btnExploreDetailGoBack.setOnClickListener {
             onBackPressed()
         }
-    }
-
-    private fun setTabSelectedFromExploreDetailListener() {
-        binding.tabLayoutExploreDetailSort.addOnTabSelectedListener(object :
-            TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.position?.let {
-                    when (tab.position) {
-                        0 -> {
-                            exploreDetailViewModel.setSortingTextFromExploreDetail(questionId, "최신")
-                        }
-                        1 -> {
-                            exploreDetailViewModel.setSortingTextFromExploreDetail(questionId, "흥미")
-                        }
-                    }
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        }
-        )
     }
 }

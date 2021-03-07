@@ -49,46 +49,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_explore_detail_go_back" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout_explore_detail_sort"
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:layout_marginTop="18dp"
-            android:backgroundTint="@android:color/transparent"
-            app:layout_constraintStart_toStartOf="@id/txt_explore_detail_question"
-            app:layout_constraintTop_toBottomOf="@id/txt_explore_detail_question"
-            app:tabIndicatorColor="@color/explore_detail_tab_indicator_black"
-            app:tabSelectedTextColor="@color/explore_detail_tab_selected_txt_black"
-            app:tabTextAppearance="@style/tab_text_size"
-            app:tabTextColor="@color/explore_detail_tab_txt_gray">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/transparent"
-                android:text="최신" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/transparent"
-                android:text="흥미" />
-
-        </com.google.android.material.tabs.TabLayout>
-
-        <View
-            android:id="@+id/view_explore_detail_divide_line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/explore_detail_divide_line_gray"
-            app:layout_constraintTop_toBottomOf="@+id/tab_layout_explore_detail_sort" />
-
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:overScrollMode="never"
+            android:layout_marginTop="22dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_explore_detail_divide_line">
+            app:layout_constraintTop_toBottomOf="@id/txt_explore_detail_question">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -99,7 +66,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="28dp"
-                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="28dp"
                     android:layout_marginBottom="40dp"
                     android:nestedScrollingEnabled="false"

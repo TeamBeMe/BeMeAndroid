@@ -84,12 +84,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText, tempPage)
     }
 
-    fun setSortingTextFromExploreDetail(questionId: Int, sorting: String) {
-        _page = 2
-        _sortingText = sorting
-        requestSameQuestionsOtherAnswers(questionId, tempPage, sorting)
-    }
-
     fun clearTempOtherQuestionsList() {
         tempOtherQuestionsList?.clear()
     }
