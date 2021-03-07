@@ -81,8 +81,7 @@ class ExploreDetailActivity :
                 this,
                 R.layout.item_explore_detail_other_answers,
                 exploreDetailViewModel.userNickname,
-                exploreDetailViewModel,
-                null
+                exploreDetailViewModel
             )
         binding.rcvExploreDetailOtherAnswers.adapter = sameQuestionsOtherAnswersAdapter
     }

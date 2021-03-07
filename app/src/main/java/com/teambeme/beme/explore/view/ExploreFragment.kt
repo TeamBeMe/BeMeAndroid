@@ -94,8 +94,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
                 requireContext(),
                 R.layout.item_explore_other_questions,
                 exploreViewModel.userNickname,
-                exploreViewModel,
-                null
+                exploreViewModel
             )
         binding.rcvExploreOtherQuestions.adapter = otherQuestionsAdapter
     }

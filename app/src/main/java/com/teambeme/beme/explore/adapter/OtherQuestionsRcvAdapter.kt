@@ -27,8 +27,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private val context: Context,
     private val layout: Int,
     private val myNickname: String,
-    private val viewModel: ViewModel,
-    private val otherQuestionButtonClickListener: OtherQuestionButtonClickListener?
+    private val viewModel: ViewModel
 ) :
     ListAdapter<ResponseExplorationQuestions.Data.Answer, OtherQuestionsRcvAdapter<B>.OtherQuestionsRcvViewHolder<B>>(
         OtherQuestionsDiffUtil()
@@ -55,7 +54,6 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                             otherQuestionsData,
                             context
                         )
-                        setClickListenerForBtnDoAnswer(binding, otherQuestionsData)
                     }
                 }
                 else -> {
@@ -171,16 +169,6 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         }
     }
 
-    private fun setClickListenerForBtnDoAnswer(
-        binding: ItemExploreOtherQuestionsBinding,
-        otherQuestionsData: ResponseExplorationQuestions.Data.Answer
-    ) {
-        binding.btnOtherQuestionsDoAnswer.setOnClickListener {
-            Log.d("answer", "adapter")
-            otherQuestionButtonClickListener?.otherQuestionAnswerClickListener(otherQuestionsData.questionId)
-        }
-    }
-
     private fun setClickListenerForGoProfilePageFromFragment(
         binding: ItemExploreOtherQuestionsBinding,
         data: ResponseExplorationQuestions.Data.Answer,
@@ -230,9 +218,5 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
             intent.putExtra("deleteBtnOtherAnswers", true)
             context.startActivity(intent)
         }
-    }
-
-    interface OtherQuestionButtonClickListener {
-        fun otherQuestionAnswerClickListener(questionId: Int)
     }
 }
