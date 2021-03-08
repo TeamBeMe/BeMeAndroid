@@ -59,9 +59,13 @@
 
                 <HorizontalScrollView
                     android:id="@+id/scrollview_explore_chip"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="44dp"
+                    android:background="@color/background_white"
+                    android:clipToPadding="false"
+                    android:paddingStart="28dp"
+                    android:paddingEnd="28dp"
                     android:scrollbars="none"
                     android:tag="sticky"
                     app:layout_constraintEnd_toEndOf="parent"

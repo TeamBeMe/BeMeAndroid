@@ -109,16 +109,12 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         Log.d("abc", "통신 성공")
                         if (response.isSuccessful) {
                             tempOtherQuestionsList =
-                                response.body()!!.data?.answers?.toMutableList()
+                                response.body()!!.data.answers.toMutableList()
                             _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
 
-                            if (response.body()!!.data != null) {
-                                if (response.body()!!.data?.pageLen > _page) {
-                                    _page++
-                                    _isMorePage.value = true
-                                } else {
-                                    _isMorePage.value = false
-                                }
+                            if (response.body()!!.data.answers.size == 10) {
+                                _page++
+                                _isMorePage.value = true
                             } else {
                                 _isMorePage.value = false
                             }
@@ -157,14 +153,14 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                                 if (tempPage == 1) {
                                     clearTempOtherQuestionsList()
                                 }
-                                response.body()!!.data?.answers?.toMutableList()?.let {
+                                response.body()!!.data.answers.toMutableList().let {
                                     tempOtherQuestionsList?.addAll(
                                         it
                                     )
                                 }
                                 _tempPage++
-                                if (response.body()!!.data.answers?.size != 0) {
-                                    _isMorePage.value = response.body()!!.data?.pageLen > tempPage
+                                if (response.body()!!.data.answers.isNotEmpty()) {
+                                    _isMorePage.value = response.body()!!.data.answers.size == 10
                                 }
                                 requestOtherQuestionsWithCategorySorting(
                                     category,
@@ -202,14 +198,10 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         response: Response<ResponseExplorationQuestions>
                     ) {
                         if (response.isSuccessful) {
-                            response.body()!!.data?.answers?.toMutableList()?.let {
-                                tempOtherQuestionsList?.addAll(
-                                    it
-                                )
-                            }
+                            tempOtherQuestionsList?.addAll(response.body()!!.data.answers.toMutableList())
                             _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
 
-                            if (response.body()!!.data?.pageLen > _page) {
+                            if (response.body()!!.data.answers.size == 10) {
                                 _page++
                                 _isMorePage.value = true
                             } else {
@@ -246,13 +238,9 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                             if (tempPage == 1) {
                                 clearTempSameQuestionOtherAnswersList()
                             }
-                            response.body()!!.data?.answers?.toMutableList()?.let {
-                                tempSameQuestionOtherAnswersList?.addAll(
-                                    it
-                                )
-                            }
+                            tempSameQuestionOtherAnswersList?.addAll(response.body()!!.data.answers.toMutableList())
                             _tempPage++
-                            _isMorePage.value = response.body()!!.data?.pageLen > tempPage
+                            _isMorePage.value = response.body()!!.data.answers.size == 10
                             requestSameQuestionsOtherAnswers(
                                 otherAnswersQuestionsID,
                                 tempPage,
@@ -289,15 +277,11 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                     response: Response<ResponseExplorationQuestions>
                 ) {
                     if (response.isSuccessful) {
-                        response.body()!!.data?.answers?.toMutableList()?.let {
-                            tempSameQuestionOtherAnswersList?.addAll(
-                                it
-                            )
-                        }
+                        tempSameQuestionOtherAnswersList?.addAll(response.body()!!.data.answers.toMutableList())
                         _sameQuestionOtherAnswersList.value =
                             tempSameQuestionOtherAnswersList?.toMutableList()
 
-                        if (response.body()!!.data?.pageLen > _page) {
+                        if (response.body()!!.data.answers.size == 10) {
                             _page++
                             _isMorePage.value = true
                         } else {

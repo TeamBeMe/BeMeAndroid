@@ -20,7 +20,7 @@ data class ResponseExplorationQuestions(
         @SerializedName("user_nickname")
         val userNickname: String,
         @SerializedName("answers")
-        val answers: List<Answer>?,
+        val answers: List<Answer>,
         @SerializedName("page_len")
         val pageLen: Int
     ) : Parcelable {
