@@ -11,9 +11,12 @@ import com.teambeme.beme.R
 import com.teambeme.beme.data.remote.datasource.MyPageDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ItemBottomWriteBinding
+import com.teambeme.beme.mypage.model.CategoryFilter
+import com.teambeme.beme.mypage.model.PublicRange
 import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
+import com.teambeme.beme.util.recordClickEvent
 
 class BottomWriteFragment(private val filter: Boolean) : BottomSheetDialogFragment() {
     private lateinit var binding: ItemBottomWriteBinding
@@ -39,12 +42,13 @@ class BottomWriteFragment(private val filter: Boolean) : BottomSheetDialogFragme
             dismiss()
         }
         binding.chipGroupRange.setOnCheckedChangeListener { group, checkedId ->
+            recordClickEvent("BUTTON", PublicRange.asItemId(checkedId))
             setRangeOnCheckedListner(checkedId)
         }
         binding.chipGroupWriteCategori.setOnCheckedChangeListener { group, checkedId ->
+            recordClickEvent("BUTTON", CategoryFilter.asItemId(checkedId))
             setWriteOnCheckedListener(checkedId)
         }
-
         return binding.root
     }
 

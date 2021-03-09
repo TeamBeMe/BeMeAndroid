@@ -15,14 +15,15 @@ import androidx.lifecycle.OnLifecycleEvent
 
 abstract class BindingFragment<T : ViewDataBinding>(@LayoutRes private val layoutResId: Int) :
     Fragment() {
-    protected lateinit var binding: T
+    private var _binding: T? = null
+    protected val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
+        _binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         return binding.root
     }
 
@@ -35,5 +36,10 @@ abstract class BindingFragment<T : ViewDataBinding>(@LayoutRes private val layou
         fun log() {
             Log.d("${className}LifeCycleEvent", "${lifecycle.currentState}")
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

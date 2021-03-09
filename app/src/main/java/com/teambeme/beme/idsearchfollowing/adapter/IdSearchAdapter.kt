@@ -14,6 +14,7 @@ import com.teambeme.beme.databinding.ItemFollowingAfterIdsearchBinding
 import com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData
 import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModel
 import com.teambeme.beme.otherpage.view.OtherPageActivity
+import com.teambeme.beme.util.recordClickEvent
 
 class IdSearchAdapter(
     private val viewModel: IdSearchViewModel
@@ -87,6 +88,7 @@ class IdSearchAdapter(
     ) {
         binding.btnFollowingFollowing.setOnClickListener {
             viewModel.requestFollowAndFollowing(data.id)
+            recordClickEvent("BUTTON", "FOLLOW_SEARCHID_FALSE")
             binding.btnFollowingFollow.visibility = View.VISIBLE
             binding.btnFollowingFollowing.visibility = View.INVISIBLE
         }
@@ -99,6 +101,7 @@ class IdSearchAdapter(
     ) {
         binding.btnFollowingFollow.setOnClickListener {
             viewModel.requestFollowAndFollowing(data.id)
+            recordClickEvent("BUTTON", "FOLLOW_SEARCHID_TRUE")
             binding.btnFollowingFollow.visibility = View.INVISIBLE
             binding.btnFollowingFollowing.visibility = View.VISIBLE
         }

@@ -23,6 +23,7 @@ import com.teambeme.beme.following.viewmodel.FollowingViewModel
 import com.teambeme.beme.following.viewmodel.FollowingViewModelFactory
 import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
 import com.teambeme.beme.notification.view.NotificationActivity
+import com.teambeme.beme.util.recordClickEvent
 
 class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fragment_following) {
     private val followingViewModelFactory = FollowingViewModelFactory(
@@ -262,6 +263,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
 
     private fun setClickListenerForIdSearchButton() {
         binding.btnFollowingIdSearch.setOnClickListener {
+            recordClickEvent("BUTTON", "CLICK_SEARCHID_FOLLOWING")
             val intent = Intent(activity, FollowingAfterIdSearchActivity::class.java)
             startActivity(intent)
         }

@@ -148,6 +148,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
+                android:id="@+id/btn_register_find_id"
                 style="@style/login_register_text"
                 android:layout_marginEnd="16dp"
                 android:text="아이디 찾기" />
@@ -158,6 +159,7 @@
                 android:text="|" />
 
             <TextView
+                android:id="@+id/btn_register_find_password"
                 style="@style/login_register_text"
                 android:layout_marginEnd="16dp"
                 android:text="비밀번호 찾기" />

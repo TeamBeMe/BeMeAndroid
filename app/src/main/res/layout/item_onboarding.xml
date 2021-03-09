@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.teambeme.beme.onboarding.model.OnBoardingData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/img_onboarding_explain"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@id/txt_onboarding_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setImgFrom="@{data.imgOnBoarding}"
+            tools:src="@drawable/ic_onboarding_01" />
+
+        <TextView
+            android:id="@+id/txt_onboarding_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:fontFamily="@font/notosanskr_regular"
+            android:includeFontPadding="false"
+            android:text="@{data.txtOnBoardingTitle}"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_onboarding_explain"
+            tools:text="달라진 나를 발견해보세요" />
+
+        <TextView
+            android:id="@+id/txt_onboarding_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:fontFamily="@font/notosanskr_regular"
+            android:includeFontPadding="false"
+            android:text="@{data.txtOnBoardingContents}"
+            android:textColor="@color/onboarding_txt_contents"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/txt_onboarding_title"
+            app:layout_constraintTop_toBottomOf="@+id/txt_onboarding_title"
+            app:layout_constraintVertical_bias="0"
+            tools:text="1년 후 같은 질문에 답을 해보세요 과거의 나는 어떻게 생각했는지, 내 생각이 어떻게 변했는지 알아보세요" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

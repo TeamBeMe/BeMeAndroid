@@ -331,4 +331,10 @@ object BindingAdapters {
             imageView.visibility = View.VISIBLE
         }
     }
+
+    @BindingAdapter("setImgFrom")
+    @JvmStatic
+    fun setImageFromDrawable(imageView: ImageView, drawable: Int) {
+        imageView.setImageResource(drawable)
+    }
 }
