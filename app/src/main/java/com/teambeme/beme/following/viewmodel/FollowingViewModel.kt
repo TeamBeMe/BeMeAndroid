@@ -107,6 +107,8 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                             _tempPage++
                             if (response.body()!!.data.answers.isNotEmpty()) {
                                 _isMorePage.value = response.body()!!.data.answers.size == 10
+                            } else {
+                                _isMorePage.value = false
                             }
                             requestFollowingFollowerAnswers(
                                 tempPage

@@ -161,6 +161,8 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                                 _tempPage++
                                 if (response.body()!!.data.answers.isNotEmpty()) {
                                     _isMorePage.value = response.body()!!.data.answers.size == 10
+                                } else {
+                                    _isMorePage.value = false
                                 }
                                 requestOtherQuestionsWithCategorySorting(
                                     category,
