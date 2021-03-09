@@ -1,13 +1,11 @@
 package com.teambeme.beme.explore.repository
 
-import com.teambeme.beme.explore.model.ResponseExplorationMinds
 import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
 import retrofit2.Call
 
 interface ExploreRepository {
-    fun getExplorationAnother(): Call<ResponseExplorationMinds>
 
     fun getExplorationOtherQuestions(
         page: Int,

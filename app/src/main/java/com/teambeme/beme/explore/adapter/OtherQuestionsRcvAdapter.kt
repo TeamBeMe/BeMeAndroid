@@ -21,15 +21,13 @@ import com.teambeme.beme.explore.view.ExploreDetailActivity
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
 import com.teambeme.beme.following.viewmodel.FollowingViewModel
 import com.teambeme.beme.otherpage.view.OtherPageActivity
-import com.teambeme.beme.util.recordClickEvent
 import com.teambeme.beme.util.startActivity
 
 class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private val context: Context,
     private val layout: Int,
     private val myNickname: String,
-    private val viewModel: ViewModel,
-    private val otherQuestionButtonClickListener: OtherQuestionButtonClickListener?
+    private val viewModel: ViewModel
 ) :
     ListAdapter<ResponseExplorationQuestions.Data.Answer, OtherQuestionsRcvAdapter<B>.OtherQuestionsRcvViewHolder<B>>(
         OtherQuestionsDiffUtil()
@@ -56,7 +54,6 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                             otherQuestionsData,
                             context
                         )
-                        setClickListenerForBtnDoAnswer(binding, otherQuestionsData)
                     }
                 }
                 else -> {
@@ -141,7 +138,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                     viewModel.requestScrap(otherQuestionsData.id)
                 }
                 is FollowingViewModel -> {
-                    viewModel.requestScrap(otherQuestionsData.id, otherQuestionsData)
+                    viewModel.requestScrap(otherQuestionsData.id)
                 }
             }
             otherQuestionsData.isScrapped = !otherQuestionsData.isScrapped
@@ -169,17 +166,6 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                     }
                 }
             }
-        }
-    }
-
-    private fun setClickListenerForBtnDoAnswer(
-        binding: ItemExploreOtherQuestionsBinding,
-        otherQuestionsData: ResponseExplorationQuestions.Data.Answer
-    ) {
-        binding.btnOtherQuestionsDoAnswer.setOnClickListener {
-            Log.d("answer", "adapter")
-            recordClickEvent("BUTTON", "CLICK_ANSWERCHECK_FOLLOWING")
-            otherQuestionButtonClickListener?.otherQuestionAnswerClickListener(otherQuestionsData.questionId)
         }
     }
 
@@ -232,9 +218,5 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
             intent.putExtra("deleteBtnOtherAnswers", true)
             context.startActivity(intent)
         }
-    }
-
-    interface OtherQuestionButtonClickListener {
-        fun otherQuestionAnswerClickListener(questionId: Int)
     }
 }

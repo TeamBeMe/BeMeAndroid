@@ -103,14 +103,10 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                             if (_myNickname.value == null) {
                                 _myNickname.value = response.body()!!.data.userNickname
                             }
-                            response.body()!!.data?.answers?.toMutableList()?.let {
-                                tempFollowingFollowerAnswersList?.addAll(
-                                    it
-                                )
-                            }
+                            tempFollowingFollowerAnswersList?.addAll(response.body()!!.data.answers.toMutableList())
                             _tempPage++
-                            if (response.body()!!.data.answers?.size != 0) {
-                                _isMorePage.value = response.body()!!.data?.pageLen > tempPage
+                            if (response.body()!!.data.answers.isNotEmpty()) {
+                                _isMorePage.value = response.body()!!.data.answers.size == 10
                             }
                             requestFollowingFollowerAnswers(
                                 tempPage
@@ -144,20 +140,14 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                     response: Response<ResponseExplorationQuestions>
                 ) {
                     if (response.isSuccessful) {
-                        response.body()!!.data?.answers?.toMutableList()?.let {
-                            tempFollowingFollowerAnswersList?.addAll(
-                                it
-                            )
-                        }
+                        tempFollowingFollowerAnswersList?.addAll(response.body()!!.data.answers.toMutableList())
                         _followingAnswersList.value =
                             tempFollowingFollowerAnswersList?.toMutableList()
-                        if (response.body()!!.data.answers?.size != 0) {
-                            if (response.body()!!.data?.pageLen > _page) {
-                                _page++
-                                _isMorePage.value = true
-                            } else {
-                                _isMorePage.value = false
-                            }
+                        if (response.body()!!.data.answers.size == 10) {
+                            _page++
+                            _isMorePage.value = true
+                        } else {
+                            _isMorePage.value = false
                         }
                     }
                 }
@@ -177,8 +167,8 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
                     response: Response<ResponseFollowingList>
                 ) {
                     if (response.isSuccessful) {
-                        _followerList.value = response.body()!!.data?.followers?.toMutableList()
-                        _followingList.value = response.body()!!.data?.followees?.toMutableList()
+                        _followerList.value = response.body()!!.data.followers.toMutableList()
+                        _followingList.value = response.body()!!.data.followees.toMutableList()
                     }
                 }
 
@@ -250,7 +240,7 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
         )
     }
 
-    fun requestScrap(answerId: Int, answerData: ResponseExplorationQuestions.Data.Answer) {
+    fun requestScrap(answerId: Int) {
         followingRepository.putScrap(
             answerId
         ).enqueue(
