@@ -138,7 +138,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                     viewModel.requestScrap(otherQuestionsData.id)
                 }
                 is FollowingViewModel -> {
-                    viewModel.requestScrap(otherQuestionsData.id, otherQuestionsData)
+                    viewModel.requestScrap(otherQuestionsData.id)
                 }
             }
             otherQuestionsData.isScrapped = !otherQuestionsData.isScrapped
