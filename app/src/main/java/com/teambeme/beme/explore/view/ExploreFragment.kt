@@ -155,4 +155,8 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
             binding.pullRefreshLayoutExplore.setRefreshing(false)
         }
     }
+
+    fun setScrollToTop() {
+        view?.let { binding.stickyScrollViewExplore.smoothScrollTo(0, it.top) }
+    }
 }

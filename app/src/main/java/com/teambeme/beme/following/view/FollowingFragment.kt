@@ -284,4 +284,8 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
             binding.pullRefreshLayoutFollowing.setRefreshing(false)
         }
     }
+
+    fun setScrollToTop() {
+        view?.let { binding.nestedScrollViewFollowing.smoothScrollTo(0, it.top) }
+    }
 }
