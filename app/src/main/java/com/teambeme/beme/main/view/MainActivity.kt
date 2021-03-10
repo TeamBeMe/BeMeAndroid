@@ -22,6 +22,7 @@ import com.teambeme.beme.main.adapter.MainViewPagerAdapter
 import com.teambeme.beme.main.repository.MainRepositoryImpl
 import com.teambeme.beme.main.viewmodel.MainViewModel
 import com.teambeme.beme.main.viewmodel.MainViewModelFactory
+import com.teambeme.beme.mypage.view.MyPageFragment
 import com.teambeme.beme.util.StatusBarUtil
 
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
@@ -91,6 +92,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 R.id.menu_main_following -> {
                     setFollowingFragmentScrollToTop()
                 }
+                R.id.menu_main_mypage -> {
+                    setMyPageFragmentScrollToTop()
+                }
             }
         }
     }
@@ -118,6 +122,11 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun setFollowingFragmentScrollToTop() {
         val followingFragment = supportFragmentManager.findFragmentByTag("f2") as FollowingFragment
         followingFragment.setScrollToTop()
+    }
+
+    private fun setMyPageFragmentScrollToTop() {
+        val mypageFragment = supportFragmentManager.findFragmentByTag("f3") as MyPageFragment
+        mypageFragment.setScrollToTop()
     }
 
     private inner class PageChangeCallBack : ViewPager2.OnPageChangeCallback() {

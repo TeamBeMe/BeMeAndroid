@@ -12,11 +12,13 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout_mypage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".mypage.view.MyPageFragment">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout_mypage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -167,9 +169,11 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view_mypage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
+            android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout

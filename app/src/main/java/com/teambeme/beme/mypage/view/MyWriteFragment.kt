@@ -149,4 +149,8 @@ class MyWriteFragment : Fragment() {
             writeAdapter.submitList(mypageViewModel.mypageWriteData.value?.toMutableList())
         }
     }
+
+    fun setScrollToTop() {
+        view?.let { binding.nestedScrollViewMywrite.smoothScrollTo(0, it.top) }
+    }
 }

@@ -134,4 +134,8 @@ class MyScrapFragment : Fragment() {
             scrapAdapter.submitList(mypageViewModel.mypageScrapData.value?.toMutableList())
         }
     }
+
+    fun setScrollToTop() {
+        view?.let { binding.nestedScrollViewMyscrap.smoothScrollTo(0, it.top) }
+    }
 }
