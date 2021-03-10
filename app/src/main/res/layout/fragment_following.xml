@@ -21,6 +21,7 @@
         app:refreshColor="@color/black">
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view_following"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background_white"

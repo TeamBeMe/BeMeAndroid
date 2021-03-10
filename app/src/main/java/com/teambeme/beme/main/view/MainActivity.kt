@@ -15,11 +15,14 @@ import com.teambeme.beme.data.remote.datasource.FbTokenRegisterDataSourceImpl
 import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityMainBinding
+import com.teambeme.beme.explore.view.ExploreFragment
+import com.teambeme.beme.following.view.FollowingFragment
 import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.main.adapter.MainViewPagerAdapter
 import com.teambeme.beme.main.repository.MainRepositoryImpl
 import com.teambeme.beme.main.viewmodel.MainViewModel
 import com.teambeme.beme.main.viewmodel.MainViewModelFactory
+import com.teambeme.beme.mypage.view.MyPageFragment
 import com.teambeme.beme.util.StatusBarUtil
 
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
@@ -49,6 +52,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         mainViewModel.getFireBaseToken()
         setViewPagerAdapter(this)
         setBottomNavigationSelectListener(binding.bnvMain)
+        setBottomNavigationReSelectListener(binding.bnvMain)
     }
 
     private fun setBottomNavigationSelectListener(bottomNavigationView: BottomNavigationView) {
@@ -79,6 +83,22 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         }
     }
 
+    private fun setBottomNavigationReSelectListener(bottomNavigationView: BottomNavigationView) {
+        bottomNavigationView.setOnNavigationItemReselectedListener { item ->
+            when (item.itemId) {
+                R.id.menu_main_explore -> {
+                    setExploreFragmentScrollToTop()
+                }
+                R.id.menu_main_following -> {
+                    setFollowingFragmentScrollToTop()
+                }
+                R.id.menu_main_mypage -> {
+                    setMyPageFragmentScrollToTop()
+                }
+            }
+        }
+    }
+
     private fun setViewPagerAdapter(fragmentActivity: FragmentActivity) {
         val viewPagerAdapter = MainViewPagerAdapter(fragmentActivity)
         binding.vpMain.apply {
@@ -92,6 +112,21 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun setViewPagerDefaultPosition() {
         val homeFragment = supportFragmentManager.findFragmentByTag("f0") as HomeFragment
         homeFragment.returnToDefaultPosition()
+    }
+
+    private fun setExploreFragmentScrollToTop() {
+        val exploreFragment = supportFragmentManager.findFragmentByTag("f1") as ExploreFragment
+        exploreFragment.setScrollToTop()
+    }
+
+    private fun setFollowingFragmentScrollToTop() {
+        val followingFragment = supportFragmentManager.findFragmentByTag("f2") as FollowingFragment
+        followingFragment.setScrollToTop()
+    }
+
+    private fun setMyPageFragmentScrollToTop() {
+        val mypageFragment = supportFragmentManager.findFragmentByTag("f3") as MyPageFragment
+        mypageFragment.setScrollToTop()
     }
 
     private inner class PageChangeCallBack : ViewPager2.OnPageChangeCallback() {
