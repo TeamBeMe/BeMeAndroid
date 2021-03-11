@@ -4,26 +4,27 @@
     xmlns:mypage="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="myScrap"
             type="com.teambeme.beme.mypage.model.ResponseMyScrap.Data.Answer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:padding="4dp"
-        android:background="@drawable/tag_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/tag_layout"
+        android:padding="4dp">
 
         <TextView
             android:id="@+id/txt_myscrap_question"
-            android:textColor="@color/mypage_black"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="40dp"
             android:text="@{myScrap.question}"
+            android:textColor="@color/mypage_black"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,9 +34,6 @@
 
         <TextView
             android:id="@+id/txt_myscrap_categori"
-            mypage:answerIdx="@{myScrap.answerIdx}"
-            mypage:category="@{myScrap.category}"
-            mypage:isAuthor="@{myScrap.author}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -43,9 +41,12 @@
             android:text="@{`[  `+myScrap.category+`에 관한 질문  ]  · `}"
             android:textColor="@color/mypage_gray"
             android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/img_myscrap_profile"
             app:layout_constraintStart_toStartOf="@+id/txt_myscrap_question"
             app:layout_constraintTop_toBottomOf="@+id/txt_myscrap_question"
-            app:layout_constraintBottom_toTopOf="@+id/img_myscrap_profile"
+            mypage:answerIdx="@{myScrap.answerIdx}"
+            mypage:category="@{myScrap.category}"
+            mypage:isAuthor="@{myScrap.author}"
             mypage:text="[  미래에 관한 질문  ]  · " />
 
         <TextView
@@ -53,8 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:textColor="@color/mypage_gray"
             android:text="@{`  ·  `+myScrap.answerDate}"
+            android:textColor="@color/mypage_gray"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/txt_myscrap_categori"
             app:layout_constraintTop_toTopOf="@+id/txt_myscrap_categori"
@@ -66,28 +67,28 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="8dp"
-            mypage:setSrcFromUrl="@{myScrap.userProfile}"
-            mypage:isVisible="@{!myScrap.author}"
             android:layout_marginBottom="12dp"
             app:civ_border_color="@color/mypage_circle"
             app:civ_border_width="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txt_myscrap_categori"
-            app:srcCompat="@drawable/ic_mp_profile" />
+            app:srcCompat="@drawable/ic_mp_profile"
+            mypage:isVisible="@{!myScrap.author}"
+            mypage:setSrcFromUrl="@{myScrap.userProfile}" />
 
         <TextView
             android:id="@+id/txt_myscrap_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/mypage_black"
             android:layout_marginStart="8dp"
-            mypage:nickname="@{myScrap.userNickname}"
-            mypage:isAuthor="@{myScrap.author}"
             android:text="@{myScrap.userNickname}"
+            android:textColor="@color/mypage_black"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/img_myscrap_profile"
             app:layout_constraintStart_toEndOf="@+id/img_myscrap_profile"
-            app:layout_constraintTop_toTopOf="@+id/img_myscrap_profile" />
+            app:layout_constraintTop_toTopOf="@+id/img_myscrap_profile"
+            mypage:isAuthor="@{myScrap.author}"
+            mypage:nickname="@{myScrap.userNickname}" />
 
         <ImageView
             android:id="@+id/img_myscrap_scrap"
@@ -102,10 +103,10 @@
 
         <ImageView
             android:id="@+id/img_myscrap_public"
+            setSecretImage="@{myScrap.author}"
             android:layout_width="10dp"
             android:layout_height="14dp"
             android:layout_marginEnd="16dp"
-            setSecretImage="@{myScrap.author}"
             android:src="@{myScrap.publicFlag ? @drawable/ic_secret_off_mypage : @drawable/ic_secret_on_mypage}"
             app:layout_constraintBottom_toBottomOf="@+id/img_myscrap_scrap"
             app:layout_constraintEnd_toStartOf="@+id/img_myscrap_scrap"
