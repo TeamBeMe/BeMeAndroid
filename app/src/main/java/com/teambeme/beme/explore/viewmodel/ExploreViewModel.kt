@@ -41,7 +41,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         get() = _scrapData
 
     private var _chipChecked = mutableListOf(false, false, false, false, false, false)
-    val chipChecked: MutableList<Boolean>
+    private val chipChecked: MutableList<Boolean>
         get() = _chipChecked
 
     private var _categoryNum: Int? = null
@@ -105,7 +105,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         if (response.isSuccessful) {
                             Log.d(
                                 "recursion",
-                                "pageNum : " + pageNum + " page : " + page + " tempPage : " + tempPage
+                                "pageNum : $pageNum, page : $page, tempPage : $tempPage"
                             )
                             if (pageNum != page) {
                                 if (tempPage == 1) {
@@ -132,7 +132,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                             }
                             Log.d(
                                 "recursion",
-                                " tempPage : " + tempPage
+                                " tempPage : $tempPage"
                             )
                         }
                     }
@@ -189,7 +189,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                     if (response.isSuccessful) {
                         Log.d(
                             "recursion_detail",
-                            "pageNum : " + pageNum + " page : " + page + " tempPage : " + tempPage
+                            "pageNum : $pageNum, page : $page, tempPage : $tempPage"
                         )
                         if (pageNum != page) {
                             if (tempPage == 1) {
@@ -209,7 +209,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                         }
                         Log.d(
                             "recursion_detail",
-                            " tempPage : " + tempPage
+                            " tempPage : $tempPage"
                         )
                     }
                 }
