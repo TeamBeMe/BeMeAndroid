@@ -9,10 +9,9 @@ import retrofit2.Call
 class ExploreRepositoryImpl(private val exploreDataSource: ExploreDataSource) : ExploreRepository {
     override fun getExplorationOtherQuestions(
         page: Int,
-        category: Int?,
-        sorting: String
+        category: Int?
     ): Call<ResponseExplorationQuestions> {
-        return exploreDataSource.getExplorationOtherQuestions(page, category, sorting)
+        return exploreDataSource.getExplorationOtherQuestions(page, category)
     }
 
     override fun getExplorationSameQuestionOtherAnswers(

@@ -8,11 +8,10 @@ import retrofit2.http.*
 
 interface ExploreService {
     @Headers("Content-Type:application/json")
-    @GET("exploration")
+    @GET("exploration/all")
     fun getExplorationOtherQuestions(
         @Query("page") page: Int,
-        @Query("category") category: Int?,
-        @Query("sorting") sorting: String
+        @Query("category") category: Int?
     ): Call<ResponseExplorationQuestions>
 
     @GET("exploration/{questionId}")

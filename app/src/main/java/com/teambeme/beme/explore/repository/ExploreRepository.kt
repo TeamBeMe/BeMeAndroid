@@ -9,8 +9,7 @@ interface ExploreRepository {
 
     fun getExplorationOtherQuestions(
         page: Int,
-        category: Int?,
-        sorting: String
+        category: Int?
     ): Call<ResponseExplorationQuestions>
 
     fun getExplorationSameQuestionOtherAnswers(
