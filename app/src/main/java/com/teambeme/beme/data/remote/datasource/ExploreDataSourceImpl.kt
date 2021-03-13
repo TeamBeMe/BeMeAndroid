@@ -16,10 +16,9 @@ class ExploreDataSourceImpl(private val service: ExploreService) : ExploreDataSo
 
     override fun getExplorationSameQuestionOtherAnswers(
         questionId: Int,
-        page: Int,
-        sorting: String
+        page: Int
     ): Call<ResponseExplorationQuestions> {
-        return service.getExplorationSameQuestionOtherAnswers(questionId, page, sorting)
+        return service.getExplorationSameQuestionOtherAnswers(questionId, page)
     }
 
     override fun getQuestionForFirstAnswer(): Call<ResponseExplorationQuestionForFirstAnswer> {

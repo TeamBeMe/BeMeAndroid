@@ -13,8 +13,7 @@ interface ExploreDataSource {
 
     fun getExplorationSameQuestionOtherAnswers(
         questionId: Int,
-        page: Int,
-        sorting: String
+        page: Int
     ): Call<ResponseExplorationQuestions>
 
     fun getQuestionForFirstAnswer(): Call<ResponseExplorationQuestionForFirstAnswer>

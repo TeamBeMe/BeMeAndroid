@@ -16,13 +16,11 @@ class ExploreRepositoryImpl(private val exploreDataSource: ExploreDataSource) : 
 
     override fun getExplorationSameQuestionOtherAnswers(
         questionId: Int,
-        page: Int,
-        sorting: String
+        page: Int
     ): Call<ResponseExplorationQuestions> {
         return exploreDataSource.getExplorationSameQuestionOtherAnswers(
             questionId,
-            page,
-            sorting
+            page
         )
     }
 

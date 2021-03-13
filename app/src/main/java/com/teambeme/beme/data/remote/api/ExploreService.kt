@@ -17,8 +17,7 @@ interface ExploreService {
     @GET("exploration/{questionId}")
     fun getExplorationSameQuestionOtherAnswers(
         @Path("questionId") questionId: Int,
-        @Query("page") page: Int,
-        @Query("sorting") sorting: String
+        @Query("page") page: Int
     ): Call<ResponseExplorationQuestions>
 
     @GET("exploration/answer")
