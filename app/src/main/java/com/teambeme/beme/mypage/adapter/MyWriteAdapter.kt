@@ -16,7 +16,6 @@ import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 
 class MyWriteAdapter(private val myViewModel: MyPageViewModel) :
     ListAdapter<ResponseMyAnswer.Data.Answer, MyWriteAdapter.MyWriteViewHolder>(MyWriteDiffUtil()) {
-    private var writeList = mutableListOf<ResponseMyAnswer.Data.Answer>()
 
     class MyWriteViewHolder(private val binding: ItemMywriteBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -66,10 +65,5 @@ class MyWriteAdapter(private val myViewModel: MyPageViewModel) :
             newItem: ResponseMyAnswer.Data.Answer
         ) =
             (oldItem == newItem)
-    }
-
-    fun replaceWriteList(list: List<ResponseMyAnswer.Data.Answer>) {
-        writeList = list.toMutableList()
-        submitList(writeList)
     }
 }
