@@ -88,41 +88,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         tempSameQuestionOtherAnswersList?.clear()
     }
 
-    fun requestOtherQuestions() {
-        var a = 1
-        Log.d("DeleteList", "${a++}" + "번 original")
-        exploreRepository.getExplorationOtherQuestions(
-            _page,
-            null
-        )
-            .enqueue(
-                object : Callback<ResponseExplorationQuestions> {
-                    override fun onResponse(
-                        call: Call<ResponseExplorationQuestions>,
-                        response: Response<ResponseExplorationQuestions>
-                    ) {
-                        Log.d("abc", "통신 성공")
-                        if (response.isSuccessful) {
-                            tempOtherQuestionsList =
-                                response.body()!!.data.answers.toMutableList()
-                            _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
-
-                            if (response.body()!!.data.answers.size == 10) {
-                                _page++
-                                _isMorePage.value = true
-                            } else {
-                                _isMorePage.value = false
-                            }
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseExplorationQuestions>, t: Throwable) {
-                        Log.d("network_requestOtherQuestions", "통신실패")
-                    }
-                }
-            )
-    }
-
     fun requestOtherQuestionsWithCategorySorting(
         category: Int?,
         pageNum: Int

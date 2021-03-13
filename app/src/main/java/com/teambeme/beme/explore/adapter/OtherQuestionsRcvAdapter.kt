@@ -199,11 +199,12 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         context: Context
     ) {
         binding.constraintLayoutOtherQuestions.setOnClickListener {
-            if (data.isAnswered) {
-                val intent = Intent(context, DetailActivity::class.java)
-                intent.putExtra("answerId", data.id)
-                context.startActivity(intent)
-            }
+//            if (data.isAnswered) {
+//                // 답변하고 확인하기 적용 시 밑에 3줄 여기로
+//            }
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("answerId", data.id)
+            context.startActivity(intent)
         }
     }
 
