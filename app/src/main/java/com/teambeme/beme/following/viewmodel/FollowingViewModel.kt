@@ -53,6 +53,8 @@ class FollowingViewModel(private val followingRepository: FollowingRepository) :
     val scrapData: ResponseExplorationScrap
         get() = _scrapData
 
+    // myNickname LiveData 사용한 이유 : 답변하고 확인하기 버튼 때문!
+    // 답변하고 돌아오면 item layout 바뀌어야 하므로
     private val _myNickname = MutableLiveData<String>()
     val myNickname: LiveData<String>
         get() = _myNickname

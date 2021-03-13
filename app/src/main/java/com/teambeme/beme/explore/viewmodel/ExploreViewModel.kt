@@ -48,10 +48,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     val categoryNum: Int?
         get() = _categoryNum
 
-    private var _sortingText: String = "최신"
-    val sortingText: String
-        get() = _sortingText
-
     private var _page: Int = 2
     val page: Int
         get() = _page
@@ -214,12 +210,11 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
             )
     }
 
-    fun requestSameQuestionsOtherAnswers(questionId: Int, pageNum: Int, sorting: String = "최신") {
+    fun requestSameQuestionsOtherAnswers(questionId: Int, pageNum: Int) {
         otherAnswersQuestionsID = questionId
         exploreRepository.getExplorationSameQuestionOtherAnswers(
             otherAnswersQuestionsID,
-            pageNum,
-            sorting
+            pageNum
         ).enqueue(
             object : Callback<ResponseExplorationQuestions> {
                 override fun onResponse(
@@ -240,8 +235,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                             _isMorePage.value = response.body()!!.data.answers.size == 10
                             requestSameQuestionsOtherAnswers(
                                 otherAnswersQuestionsID,
-                                tempPage,
-                                sorting
+                                tempPage
                             )
                         } else {
                             _sameQuestionOtherAnswersList.value =
@@ -265,8 +259,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     fun requestPlusSameQuestionOtherAnswers() {
         exploreRepository.getExplorationSameQuestionOtherAnswers(
             otherAnswersQuestionsID,
-            _page,
-            _sortingText
+            _page
         ).enqueue(
             object : Callback<ResponseExplorationQuestions> {
                 override fun onResponse(
