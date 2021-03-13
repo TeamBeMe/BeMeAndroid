@@ -50,7 +50,7 @@ class MyWriteFragment : Fragment() {
         mypageViewModel.isAnswerMax.observe(viewLifecycleOwner) {
             isMaxListener(it)
         }
-        setClickListenerForPlusData(binding, writeAdapter)
+        setClickListenerForPlusData(binding)
         mypageViewModel.publicPosition.observe(viewLifecycleOwner) {
             isPublicListener()
         }
@@ -140,13 +140,10 @@ class MyWriteFragment : Fragment() {
     }
 
     private fun setClickListenerForPlusData(
-        binding: FragmentMyWriteBinding,
-        writeAdapter: MyWriteAdapter
+        binding: FragmentMyWriteBinding
     ) {
         binding.btnWriteShowmore.setOnClickListener {
-            binding.btnWriteShowmore.visibility = View.GONE
             mypageViewModel.getMyAnswer()
-            writeAdapter.submitList(mypageViewModel.mypageWriteData.value?.toMutableList())
         }
     }
 

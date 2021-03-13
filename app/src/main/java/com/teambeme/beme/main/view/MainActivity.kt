@@ -65,10 +65,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 }
                 R.id.menu_main_explore -> {
                     binding.vpMain.currentItem = 1
-                    StatusBarUtil.setStatusBar(
-                        this,
-                        resources.getColor(R.color.explore_background_gray, null)
-                    )
+                    StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
                 }
                 R.id.menu_main_following -> {
                     binding.vpMain.currentItem = 2

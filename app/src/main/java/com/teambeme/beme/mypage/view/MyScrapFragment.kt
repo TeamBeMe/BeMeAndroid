@@ -44,7 +44,7 @@ class MyScrapFragment : Fragment() {
         mypageViewModel.scrapFilter.observe(viewLifecycleOwner) {
             getSheetDataListener()
         }
-        setClickListenerForPlusData(binding, scrapAdapter)
+        setClickListenerForPlusData(binding)
         mypageViewModel.isScrapMax.observe(viewLifecycleOwner) {
             isMaxListener(it)
         }
@@ -125,13 +125,10 @@ class MyScrapFragment : Fragment() {
     }
 
     private fun setClickListenerForPlusData(
-        binding: FragmentMyScrapBinding,
-        scrapAdapter: MyScrapAdapter
+        binding: FragmentMyScrapBinding
     ) {
         binding.btnScrapShowmore.setOnClickListener {
-            binding.btnScrapShowmore.visibility = View.GONE
             mypageViewModel.getMyScrap()
-            scrapAdapter.submitList(mypageViewModel.mypageScrapData.value?.toMutableList())
         }
     }
 
