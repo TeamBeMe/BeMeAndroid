@@ -45,7 +45,7 @@ data class ResponseExplorationQuestions(
             @SerializedName("is_routine_question")
             val isRoutineQuestion: Int,
             @SerializedName("is_scrapped")
-            val isScrapped: Boolean,
+            var isScrapped: Boolean,
             @SerializedName("public_flag")
             val publicFlag: Boolean,
             @SerializedName("question")
