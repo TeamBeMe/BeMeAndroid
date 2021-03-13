@@ -81,7 +81,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
             chipChecked[category - 1] = !chipChecked[category - 1]
             _categoryNum = category
         }
-        requestOtherQuestionsWithCategorySorting(_categoryNum, _sortingText, tempPage)
+        requestOtherQuestionsWithCategorySorting(_categoryNum, tempPage)
     }
 
     fun clearTempOtherQuestionsList() {
@@ -97,8 +97,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
         Log.d("DeleteList", "${a++}" + "번 original")
         exploreRepository.getExplorationOtherQuestions(
             _page,
-            null,
-            "최신"
+            null
         )
             .enqueue(
                 object : Callback<ResponseExplorationQuestions> {
@@ -130,13 +129,11 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
 
     fun requestOtherQuestionsWithCategorySorting(
         category: Int?,
-        sorting: String,
         pageNum: Int
     ) {
         exploreRepository.getExplorationOtherQuestions(
             pageNum,
-            category,
-            sorting
+            category
         )
             .enqueue(
                 object : Callback<ResponseExplorationQuestions> {
@@ -166,7 +163,6 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
                                 }
                                 requestOtherQuestionsWithCategorySorting(
                                     category,
-                                    sorting,
                                     tempPage
                                 )
                             } else {
@@ -190,8 +186,7 @@ class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewM
     fun requestPlusOtherQuestions() {
         exploreRepository.getExplorationOtherQuestions(
             _page,
-            _categoryNum,
-            _sortingText
+            _categoryNum
         )
             .enqueue(
                 object : Callback<ResponseExplorationQuestions> {
