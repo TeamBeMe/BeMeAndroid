@@ -9,14 +9,12 @@ interface ExploreRepository {
 
     fun getExplorationOtherQuestions(
         page: Int,
-        category: Int?,
-        sorting: String
+        category: Int?
     ): Call<ResponseExplorationQuestions>
 
     fun getExplorationSameQuestionOtherAnswers(
         questionId: Int,
-        page: Int,
-        sorting: String
+        page: Int
     ): Call<ResponseExplorationQuestions>
 
     fun getQuestionForFirstAnswer(): Call<ResponseExplorationQuestionForFirstAnswer>

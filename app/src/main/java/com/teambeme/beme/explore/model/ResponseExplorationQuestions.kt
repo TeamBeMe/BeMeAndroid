@@ -20,9 +20,7 @@ data class ResponseExplorationQuestions(
         @SerializedName("user_nickname")
         val userNickname: String,
         @SerializedName("answers")
-        val answers: List<Answer>,
-        @SerializedName("page_len")
-        val pageLen: Int
+        val answers: List<Answer>
     ) : Parcelable {
         @Parcelize
         data class Answer(
@@ -44,6 +42,8 @@ data class ResponseExplorationQuestions(
             val isAnswered: Boolean,
             @SerializedName("is_author")
             val isAuthor: Boolean,
+            @SerializedName("is_routine_question")
+            val isRoutineQuestion: Int,
             @SerializedName("is_scrapped")
             var isScrapped: Boolean,
             @SerializedName("public_flag")

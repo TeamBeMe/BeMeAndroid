@@ -9,18 +9,16 @@ import retrofit2.Call
 class ExploreDataSourceImpl(private val service: ExploreService) : ExploreDataSource {
     override fun getExplorationOtherQuestions(
         page: Int,
-        category: Int?,
-        sorting: String
+        category: Int?
     ): Call<ResponseExplorationQuestions> {
-        return service.getExplorationOtherQuestions(page, category, sorting)
+        return service.getExplorationOtherQuestions(page, category)
     }
 
     override fun getExplorationSameQuestionOtherAnswers(
         questionId: Int,
-        page: Int,
-        sorting: String
+        page: Int
     ): Call<ResponseExplorationQuestions> {
-        return service.getExplorationSameQuestionOtherAnswers(questionId, page, sorting)
+        return service.getExplorationSameQuestionOtherAnswers(questionId, page)
     }
 
     override fun getQuestionForFirstAnswer(): Call<ResponseExplorationQuestionForFirstAnswer> {

@@ -35,7 +35,6 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         super.onResume()
         exploreViewModel.requestOtherQuestionsWithCategorySorting(
             exploreViewModel.categoryNum,
-            exploreViewModel.sortingText,
             exploreViewModel.tempPage
         )
     }
@@ -149,7 +148,6 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
             exploreViewModel.setPageAtRefresh()
             exploreViewModel.requestOtherQuestionsWithCategorySorting(
                 exploreViewModel.categoryNum,
-                exploreViewModel.sortingText,
                 exploreViewModel.tempPage
             )
             binding.pullRefreshLayoutExplore.setRefreshing(false)
