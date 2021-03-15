@@ -115,7 +115,8 @@
     <color name="detail_black">#000000</color>
     <color name="detail_gray">#636363</color>
     <color name="detail_background_gray">#8E8E93</color>
-    <color name="detail_view_gray">#DFDFDF</color>
+    <color name="detail_view_gray">#c9c9c9</color>
+    <color name="detail_reply_view_gray">#DADADA</color>
     <color name="detail_blue">#0A84FF</color>
     <color name="detail_btnbackground">#F2F2F2</color>
     <color name="detail_text_gray">#5A5A5A</color>
