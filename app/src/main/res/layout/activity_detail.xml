@@ -1,8 +1,8 @@
 <?xml version="1.1" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:mypage="http://schemas.android.com/tools">
+    xmlns:mypage="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -16,9 +16,9 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:focusable="true"
         tools:context=".detail.view.DetailActivity">
 
@@ -34,7 +34,7 @@
                 android:id="@+id/btn_scrap_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="20dp"
                 android:backgroundTint="@android:color/transparent"
                 android:src="@drawable/ic_x_detail"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -45,10 +45,10 @@
                 android:id="@+id/btn_detail_scrap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@{detailViewModel.detailData.scrapped ? @drawable/ic_scrap_on_detail : @drawable/ic_scrap_off_detail}"
+                android:backgroundTint="@android:color/transparent"
 
                 android:onClick="@{() -> detailViewModel.scrapClicked()}"
-                android:backgroundTint="@android:color/transparent"
+                android:src="@{detailViewModel.detailData.scrapped ? @drawable/ic_scrap_on_detail : @drawable/ic_scrap_off_detail}"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_detail_dot"
                 app:layout_constraintEnd_toStartOf="@+id/txt_detail_dot"
                 app:layout_constraintTop_toTopOf="@+id/txt_detail_dot"
@@ -60,10 +60,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="@android:color/transparent"
-                app:srcCompat="@drawable/ic_dot3_detail"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_dot3_detail" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -86,40 +86,40 @@
                     android:id="@+id/txt_detail_question"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="28dp"
                     android:text="@{detailViewModel.detailData.question}"
-                    tools:text="이번 주말을 후회 없이\n 보낼 수 있는 방법은 무엇인가요?"
                     android:textColor="@color/detail_black"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="이번 주말을 후회 없이\n 보낼 수 있는 방법은 무엇인가요?" />
 
                 <TextView
                     android:id="@+id/txt_detail_info"
                     style="@style/answer_info_style"
+                    android:layout_marginTop="22dp"
+                    android:text="@{`[  `+detailViewModel.detailData.category+`에 관한 질문  ]  · `}"
                     android:textColor="@color/detail_gray"
-                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="@+id/txt_detail_question"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_detail_question"
+                    mypage:answerIdx="@{detailViewModel.detailData.answerIdx}"
                     mypage:category="@{String.valueOf(detailViewModel.detailData.category)}"
                     mypage:isAuthor="@{detailViewModel.detailData.author}"
-                    mypage:answerIdx="@{detailViewModel.detailData.answerIdx}"
-                    android:text="@{`[  `+detailViewModel.detailData.category+`에 관한 질문  ]  · `}"
-                    tools:text="[ 미래에 관한 2번째 질문 ]"
-                    app:layout_constraintStart_toStartOf="@+id/txt_detail_question"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_detail_question" />
+                    tools:text="[ 미래에 관한 2번째 질문 ]" />
 
                 <TextView
                     android:id="@+id/txt_detail_data"
                     style="@style/answer_info_style"
-                    android:textColor="@color/detail_gray"
                     android:layout_marginTop="8dp"
                     android:text="@{detailViewModel.detailData.answerDate}"
-                    tools:text="2020.12.24"
+                    android:textColor="@color/detail_gray"
                     app:layout_constraintStart_toStartOf="@+id/txt_detail_info"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_detail_info" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_detail_info"
+                    tools:text="2020.12.24" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_detail_profile"
@@ -128,32 +128,32 @@
                     android:layout_marginTop="18dp"
                     app:civ_border_color="@color/detail_circle"
                     app:civ_border_width="1dp"
-                    mypage:setSrcFromUrl="@{detailViewModel.detailData.userProfile}"
-                    mypage:isVisible="@{!detailViewModel.detailData.author}"
                     app:layout_constraintStart_toStartOf="@+id/txt_detail_data"
                     app:layout_constraintTop_toBottomOf="@+id/txt_detail_data"
-                    app:srcCompat="@drawable/img_profile_sample_following_show_all" />
+                    app:srcCompat="@drawable/img_profile_sample_following_show_all"
+                    mypage:isVisible="@{!detailViewModel.detailData.author}"
+                    mypage:setSrcFromUrl="@{detailViewModel.detailData.userProfile}" />
 
                 <TextView
                     android:id="@+id/txt_detail_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="nickname"
-                    mypage:nickname="@{String.valueOf(detailViewModel.detailData.userNickname)}"
-                    mypage:isAuthor="@{detailViewModel.detailData.author}"
                     android:layout_marginStart="12dp"
-                    android:textSize="14sp"
+                    android:text="nickname"
                     android:textColor="@color/detail_black"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/img_detail_profile"
                     app:layout_constraintStart_toEndOf="@+id/img_detail_profile"
-                    app:layout_constraintTop_toTopOf="@+id/img_detail_profile" />
+                    app:layout_constraintTop_toTopOf="@+id/img_detail_profile"
+                    mypage:isAuthor="@{detailViewModel.detailData.author}"
+                    mypage:nickname="@{String.valueOf(detailViewModel.detailData.userNickname)}" />
 
                 <View
                     android:id="@+id/divider_detail_top"
                     style="@style/answer_divider"
                     android:layout_marginTop="22dp"
-                    android:background="@color/detail_gray"
+                    android:background="@color/detail_view_gray"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/img_detail_profile" />
@@ -162,24 +162,24 @@
                     android:id="@+id/txt_detail_answer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginHorizontal="28dp"
                     android:layout_marginTop="30dp"
                     android:background="@null"
                     android:gravity="top"
                     android:text="@{detailViewModel.detailData.content}"
-                    tools:text="저는 몇일 전 퇴사를 했어요. 수많은 고민 끝에 결국 저질렀습니다. 몇 년간 원해 왔던 일이라 꿈만 같아요. 제가 스스로의 힘으로 하고 싶은 걸 해볼 수있는 시간적 여유를 가지게 된게 정말 만족스러워요. 저는 몇일 전 퇴사를 했어요. 수많은 고민 끝에 결국 저질렀습니다. 몇 년간 원해 왔던 일이라 꿈만 같아요. 제가 스스로의 힘으로 하고 싶은 걸 해볼 수있는 시간적 여유를 가지게 된게 정말 만족스러워요. 저는 몇일 전 퇴사를 했어요. 수많은 고민 끝에 결국 저질렀습니다. 몇 년간 원해 왔던 일이라 꿈만 같아요. 제가 스스로의 힘으로 하고 싶은 걸 해볼 수있는 시간적 여유를 가지게 된게 정말 만족스러워요."
                     android:textColor="@color/detail_black"
                     android:textColorHint="@color/detail_gray"
                     android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@+id/divider_detail_top" />
+                    app:layout_constraintTop_toBottomOf="@+id/divider_detail_top"
+                    tools:text="저는 몇일 전 퇴사를 했어요. 수많은 고민 끝에 결국 저질렀습니다. 몇 년간 원해 왔던 일이라 꿈만 같아요. 제가 스스로의 힘으로 하고 싶은 걸 해볼 수있는 시간적 여유를 가지게 된게 정말 만족스러워요. 저는 몇일 전 퇴사를 했어요. 수많은 고민 끝에 결국 저질렀습니다. 몇 년간 원해 왔던 일이라 꿈만 같아요. 제가 스스로의 힘으로 하고 싶은 걸 해볼 수있는 시간적 여유를 가지게 된게 정말 만족스러워요. 저는 몇일 전 퇴사를 했어요. 수많은 고민 끝에 결국 저질렀습니다. 몇 년간 원해 왔던 일이라 꿈만 같아요. 제가 스스로의 힘으로 하고 싶은 걸 해볼 수있는 시간적 여유를 가지게 된게 정말 만족스러워요." />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_detail_showmore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
+                    android:layout_marginStart="28dp"
                     android:layout_marginTop="60dp"
-                    android:layout_marginEnd="30dp"
+                    android:layout_marginEnd="28dp"
                     android:backgroundTint="@color/detail_black"
                     android:paddingTop="12dp"
                     android:paddingBottom="16dp"
@@ -196,15 +196,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="40dp"
-                    android:background="@color/detail_gray"
+                    android:background="@color/detail_view_gray"
                     app:layout_constraintTop_toBottomOf="@id/btn_detail_showmore" />
 
                 <TextView
                     android:id="@+id/txt_detail_reply"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="28dp"
                     android:text="댓글"
                     android:textColor="@color/detail_black"
                     android:textSize="20sp"
@@ -215,12 +215,12 @@
                     android:id="@+id/rcv_detail_parent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="32dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginEnd="28dp"
                     android:layout_marginBottom="60dp"
-                    android:overScrollMode="never"
                     android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -236,7 +236,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_detail_replybar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -246,47 +246,45 @@
                 android:id="@+id/edttext_detail_content"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="28dp"
                 android:layout_marginEnd="6dp"
                 android:layout_marginBottom="14dp"
                 android:background="@drawable/border_layout"
-                android:scrollHorizontally="false"
-                android:maxLines="5"
-                android:singleLine="false"
-                android:text="@={detailViewModel.answerText}"
                 android:ems="10"
                 android:hint="댓글 작성"
-                android:textColorHint="@color/detail_background_gray"
-                android:textColor="@color/detail_black"
                 android:inputType="none"
+                android:maxLines="5"
+                android:paddingVertical="10dp"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                app:layout_constraintTop_toTopOf="parent"
+                android:scrollHorizontally="false"
+                android:singleLine="false"
+                android:text="@={detailViewModel.answerText}"
+                android:textColor="@color/detail_black"
+                android:textColorHint="@color/detail_background_gray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/txt_detail_add"
-                app:layout_constraintStart_toStartOf="parent"
-                />
+                app:layout_constraintStart_toStartOf="parent" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint_detail_snakbar"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/detail_btnbackground"
                 android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@id/view"
-                android:layout_height="wrap_content">
+                app:layout_constraintBottom_toTopOf="@id/view">
 
 
                 <TextView
                     android:id="@+id/txt_detail_message"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
                     android:layout_marginLeft="32dp"
-                    android:textColor="@color/detail_text_gray"
-                    android:text="댓글을 수정중입니다"
                     android:paddingVertical="4dp"
+                    android:text="댓글을 수정중입니다"
+                    android:textColor="@color/detail_text_gray"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toStartOf="@+id/btn_detail_cancel"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -308,8 +306,8 @@
                 android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="14dp"
-                android:background="@color/detail_view_gray"
+                android:layout_marginBottom="16dp"
+                android:background="@color/detail_reply_view_gray"
                 app:layout_constraintBottom_toTopOf="@+id/edttext_detail_content" />
 
             <TextView
@@ -318,22 +316,21 @@
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> detailViewModel.addReplyClicked()}"
                 android:padding="8dp"
-                android:textColor="@color/answer_text_info_gray"
                 android:text="완료"
+                android:textColor="@color/answer_text_info_gray"
                 android:textSize="15sp"
                 app:layout_constraintBaseline_toBaselineOf="@id/edttext_detail_content"
                 app:layout_constraintBottom_toBottomOf="@+id/edttext_detail_content"
                 app:layout_constraintEnd_toStartOf="@+id/img_detail_secret"
-                app:layout_constraintTop_toTopOf="@+id/edttext_detail_content"
-                app:layout_constraintVertical_bias="0.49" />
+                app:layout_constraintTop_toTopOf="@+id/edttext_detail_content" />
 
             <ImageButton
                 android:id="@+id/img_detail_secret"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:onClick="@{() -> detailViewModel.secretButtonClicked()}"
                 android:backgroundTint="@android:color/transparent"
+                android:onClick="@{() -> detailViewModel.secretButtonClicked()}"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_detail_add"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txt_detail_add"
