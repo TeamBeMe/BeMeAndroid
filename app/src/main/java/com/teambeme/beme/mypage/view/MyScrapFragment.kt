@@ -48,7 +48,7 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
     }
 
     private fun setMyScrapAdapter() {
-        val scrapAdapter = MyScrapAdapter()
+        val scrapAdapter = MyScrapAdapter(requireContext())
         binding.rcvMyscrap.adapter = scrapAdapter
     }
 

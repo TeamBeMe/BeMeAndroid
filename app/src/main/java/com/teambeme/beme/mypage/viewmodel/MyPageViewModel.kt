@@ -108,14 +108,6 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
     val isAnswerMax: LiveData<Boolean>
         get() = _isAnswerMax
 
-    private val _publicPosition = MutableLiveData<Int>()
-    val publicPosition: LiveData<Int>
-        get() = _publicPosition
-
-    fun setPublicPosition(position: Int) {
-        _publicPosition.value = position
-    }
-
     private val _isScrapMax = MutableLiveData<Boolean>()
     val isScrapMax: LiveData<Boolean>
         get() = _isScrapMax
@@ -130,10 +122,10 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
         _isPublic.value = _isPublic.value != true
     }
 
-    fun putPublic() {
+    fun putPublic(id: Int, flag: Boolean) {
         myPageRepository.putPublic(
-            copyMyAnswerList[publicPosition.value!!].id,
-            copyMyAnswerList[publicPosition.value!!].publicFlag.toInt()
+            id,
+            flag.toInt()
         ).enqueue(object :
             Callback<ResponsePublic> {
             override fun onResponse(
@@ -141,9 +133,6 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                 response: Response<ResponsePublic>
             ) {
                 if (response.isSuccessful) {
-                    setPublic()
-                    copyMyAnswerList[publicPosition.value!!].publicFlag = isPublic.value!!
-                    _mypageWriteData.value = copyMyAnswerList.toMutableList()
                 }
             }
 

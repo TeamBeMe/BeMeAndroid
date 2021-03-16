@@ -38,7 +38,6 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
         setIsWriteFilterClickedObserve()
         setMyWriteFilterObserve()
         setIsAnswerMaxObserve()
-        setPublicPositionObserve()
         setIsAnswerEmptyObserve()
         setImgWriteFilterClickListener()
         setSearchView()
@@ -52,7 +51,7 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
     }
 
     private fun setMyWriteAdapter() {
-        val writeAdapter = MyWriteAdapter(mypageViewModel)
+        val writeAdapter = MyWriteAdapter(mypageViewModel, requireContext())
         binding.rcvMywrite.adapter = writeAdapter
     }
 
@@ -98,14 +97,6 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
                 } else {
                     binding.btnWriteShowmore.visibility = View.VISIBLE
                 }
-            }
-        }
-    }
-
-    private fun setPublicPositionObserve() {
-        mypageViewModel.publicPosition.observe(viewLifecycleOwner) { publicPosition ->
-            publicPosition.let {
-                mypageViewModel.putPublic()
             }
         }
     }

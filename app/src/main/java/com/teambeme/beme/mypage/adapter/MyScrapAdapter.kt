@@ -1,5 +1,6 @@
 package com.teambeme.beme.mypage.adapter
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,17 +14,15 @@ import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.mypage.model.ResponseMyScrap
 import com.teambeme.beme.otherpage.view.OtherPageActivity
 
-class MyScrapAdapter :
+class MyScrapAdapter(private val context: Context) :
     ListAdapter<ResponseMyScrap.Data.Answer, MyScrapAdapter.MyScrapViewHolder>(MyScrapDiffUtil()) {
-    private var scrapList = mutableListOf<ResponseMyScrap.Data.Answer>()
-
-    class MyScrapViewHolder(private val binding: ItemMyscrapBinding) :
+    inner class MyScrapViewHolder(private val binding: ItemMyscrapBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(scrap: ResponseMyScrap.Data.Answer) {
             binding.myScrap = scrap
+            setClickListenerForGoDetail(binding, scrap, context)
+            setClickListenerForGoProfilePage(binding, scrap, context)
         }
-        val public = binding.imgMyscrapPublic
-        val profile = binding.imgMyscrapProfile
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyScrapViewHolder {
@@ -35,20 +34,6 @@ class MyScrapAdapter :
 
     override fun onBindViewHolder(holder: MyScrapViewHolder, position: Int) {
         holder.bind(getItem(position))
-        holder.bind(getItem(position)).let {
-            with(holder) {
-                profile.setOnClickListener { view ->
-                    val intent = Intent(view.context, OtherPageActivity::class.java)
-                    intent.putExtra("userId", getItem(holder.adapterPosition).userId)
-                    view.context.startActivity(intent)
-                }
-                itemView.setOnClickListener { view ->
-                    val intent = Intent(view.context, DetailActivity::class.java)
-                    intent.putExtra("answerId", getItem(holder.adapterPosition).id)
-                    view.context.startActivity(intent)
-                }
-            }
-        }
     }
 
     private class MyScrapDiffUtil : DiffUtil.ItemCallback<ResponseMyScrap.Data.Answer>() {
@@ -65,8 +50,27 @@ class MyScrapAdapter :
             (oldItem == newItem)
     }
 
-    fun replaceScrapList(list: List<ResponseMyScrap.Data.Answer>) {
-        scrapList = list.toMutableList()
-        submitList(scrapList)
+    private fun setClickListenerForGoDetail(
+        binding: ItemMyscrapBinding,
+        myScrapData: ResponseMyScrap.Data.Answer,
+        context: Context
+    ) {
+        binding.constraintMyscrap.setOnClickListener {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("answerId", myScrapData.id)
+            context.startActivity(intent)
+        }
+    }
+
+    private fun setClickListenerForGoProfilePage(
+        binding: ItemMyscrapBinding,
+        myScrapData: ResponseMyScrap.Data.Answer,
+        context: Context
+    ) {
+        binding.imgMyscrapProfile.setOnClickListener {
+            val intent = Intent(context, OtherPageActivity::class.java)
+            intent.putExtra("userId", myScrapData.userId)
+            context.startActivity(intent)
+        }
     }
 }
