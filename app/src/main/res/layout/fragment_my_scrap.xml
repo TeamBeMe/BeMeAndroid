@@ -93,16 +93,12 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="28dp"
-                android:layout_marginBottom="36dp"
                 android:nestedScrollingEnabled="false"
-                app:layout_constraintBottom_toTopOf="@+id/btn_scrap_showmore"
+                android:paddingBottom="36dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/search_view_scrap_search"
-                app:layout_constraintVertical_bias="0.0">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                app:layout_constraintTop_toBottomOf="@+id/search_view_scrap_search" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_scrap_showmore"
@@ -112,6 +108,7 @@
                 android:layout_marginEnd="28dp"
                 android:layout_marginBottom="150dp"
                 android:backgroundTint="@color/mypage_black"
+                android:onClick="@{()->myPageViewModel.getMyScrap()}"
                 android:paddingTop="12dp"
                 android:paddingBottom="16dp"
                 android:text="더보기"
