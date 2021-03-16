@@ -154,14 +154,6 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
         })
     }
 
-    private fun setClickListenerForPlusData(
-        binding: FragmentMyWriteBinding
-    ) {
-        binding.btnWriteShowmore.setOnClickListener {
-            mypageViewModel.getMyAnswer()
-        }
-    }
-
     fun setScrollToTop() {
         view?.let { binding.nestedScrollViewMywrite.smoothScrollTo(0, it.top) }
     }
