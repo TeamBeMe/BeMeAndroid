@@ -2,7 +2,6 @@ package com.teambeme.beme.explore.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -107,13 +106,8 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         override fun areContentsTheSame(
             oldItem: ResponseExplorationQuestions.Data.Answer,
             newItem: ResponseExplorationQuestions.Data.Answer
-        ): Boolean {
-            Log.d(
-                "scrapConnection_item_isScrapped",
-                "position : " + "${oldItem.id}" + "old : " + "${oldItem.isScrapped} / " + "new : " + "${newItem.isScrapped}"
-            )
-            return (oldItem.isScrapped == newItem.isScrapped)
-        }
+        ) =
+            (oldItem == newItem)
     }
 
     private fun setClickListenerForShowOtherAnswers(
