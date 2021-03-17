@@ -48,14 +48,6 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
         StatusBarUtil.setStatusBar(this, R.color.black)
         initInAppUpdate(true)
         setFullScreen()
-        lifecycleScope.launchWhenCreated {
-            delay(1000L)
-            if (BeMeAuthPreference.isFirst) {
-                navigateToOnBoarding()
-            } else {
-                setNextActivity()
-            }
-        }
     }
 
     override fun onResume() {
@@ -139,7 +131,6 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
             }
 
             override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
-                Log.d("Network Fail", t.message.toString())
                 for (element in t.stackTrace) {
                     Log.d("Network element", element.toString())
                     Log.d("Network className", element.className)
@@ -162,6 +153,7 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
                         }
                         InstallStatus.INSTALLED -> {
                             appUpdateManager.unregisterListener(this)
+                            navigateNextScreen()
                         }
                         else -> {
                         }
@@ -176,10 +168,12 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
                         requestUpdate(appUpdateInfo)
                     }
                     else -> {
-                        Log.d("TAG", "Init UPDATE_AVAILABLE else")
+                        navigateNextScreen()
                     }
                 }
             }
+        } else {
+            navigateNextScreen()
         }
     }
 
@@ -190,7 +184,7 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
             Snackbar.LENGTH_INDEFINITE
         ).apply {
             setAction("RESTART") { appUpdateManager.completeUpdate() }
-            setActionTextColor(resources.getColor(Color.WHITE, null))
+            setActionTextColor(Color.WHITE)
             show()
         }
     }
@@ -199,7 +193,7 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
         runCatching {
             appUpdateManager.startUpdateFlowForResult(
                 appUpdateInfo,
-                AppUpdateType.IMMEDIATE, // or AppUpdateType.IMMEDIATE
+                AppUpdateType.IMMEDIATE,
                 this,
                 REQUEST_CODE_UPDATE
             )
@@ -218,6 +212,17 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
                 }
             }
             else -> {
+            }
+        }
+    }
+
+    private fun navigateNextScreen() {
+        lifecycleScope.launchWhenCreated {
+            delay(1000L)
+            if (BeMeAuthPreference.isFirst) {
+                navigateToOnBoarding()
+            } else {
+                setNextActivity()
             }
         }
     }
