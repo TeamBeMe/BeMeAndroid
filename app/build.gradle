@@ -106,5 +106,8 @@ dependencies {
 
     // Android Dagger-Hilt
     implementation "com.google.dagger:hilt-android:2.32-alpha"
-    kapt "com.google.dagger:hilt-android-compiler:2.32-alpha"\
+    kapt "com.google.dagger:hilt-android-compiler:2.32-alpha"
+
+    // Google Play Store API
+    implementation 'com.google.android.play:core:1.10.0'
 }
