@@ -10,6 +10,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_otheritem"
         android:padding="4dp"
         android:background="@drawable/tag_layout"
         android:layout_width="match_parent"

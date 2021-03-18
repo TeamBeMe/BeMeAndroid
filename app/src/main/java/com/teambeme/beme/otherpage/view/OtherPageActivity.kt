@@ -30,7 +30,7 @@ class OtherPageActivity : BindingActivity<ActivityOtherPageBinding>(R.layout.act
         userId = intent.getIntExtra("userId", 0)
         val isAuthor = intent.getBooleanExtra("isAuthor", false)
         myProfileListener(isAuthor)
-        val otherAdapter = OtherPageAdapter(otherViewModel)
+        val otherAdapter = OtherPageAdapter(otherViewModel, this)
         setAdapter(otherAdapter)
         otherViewModel.requestUser(userId)
         otherViewModel.requestItem(userId)
@@ -43,9 +43,6 @@ class OtherPageActivity : BindingActivity<ActivityOtherPageBinding>(R.layout.act
         setClickListenerForPlusData(binding, otherAdapter)
         binding.btnOtherpageBack.setOnClickListener { finish() }
         binding.btnOtherpageDot3.setOnClickListener { dotClickListener() }
-        otherViewModel.scrapPosition.observe(this) {
-            scrapListener()
-        }
         otherViewModel.isOtherEmpty.observe(this) {
             isEmptyListener(it)
         }
@@ -57,11 +54,6 @@ class OtherPageActivity : BindingActivity<ActivityOtherPageBinding>(R.layout.act
             binding.chipFollow.visibility = View.GONE
         }
     }
-
-    private fun scrapListener() {
-        otherViewModel.putScrap()
-    }
-
     private fun isEmptyListener(isEmpty: Boolean) {
         if (isEmpty) {
             binding.rcvOtherdata.visibility = View.GONE
