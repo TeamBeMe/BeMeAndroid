@@ -30,21 +30,13 @@ class OtherPageViewModel(private val otherRepository: OtherPageRepository) : Vie
     val isMax: LiveData<Boolean>
         get() = _isMax
 
-    private val _scrapPosition = MutableLiveData<Int>()
-    val scrapPosition: LiveData<Int>
-        get() = _scrapPosition
-
-    fun setPosition(position: Int) {
-        _scrapPosition.value = position
-    }
-
     private val _isOtherEmpty = MutableLiveData<Boolean>()
     val isOtherEmpty: LiveData<Boolean>
         get() = _isOtherEmpty
 
-    fun putScrap() {
+    fun putScrap(id: Int) {
         otherRepository.putScrap(
-            copyOtherAnswerList[scrapPosition.value!!].id
+            id
         ).enqueue(object : Callback<ResponseScrap> {
             override fun onResponse(
                 call: Call<ResponseScrap>,
