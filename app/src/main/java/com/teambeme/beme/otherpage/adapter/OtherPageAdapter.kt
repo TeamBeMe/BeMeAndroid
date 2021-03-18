@@ -1,10 +1,9 @@
 package com.teambeme.beme.otherpage.adapter
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -15,14 +14,18 @@ import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.otherpage.model.ResponseOtherData.Data.Answer
 import com.teambeme.beme.otherpage.viewmodel.OtherPageViewModel
 
-class OtherPageAdapter(private val otherViewModel: OtherPageViewModel) :
+class OtherPageAdapter(
+    private val otherViewModel: OtherPageViewModel,
+    private val context: Context
+) :
     ListAdapter<Answer, OtherPageAdapter.OtherPageViewHolder>(OtherPageDiffUtil()) {
 
-    class OtherPageViewHolder(private val binding: ItemOtherPageBinding) :
+    inner class OtherPageViewHolder(private val binding: ItemOtherPageBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val scrap: ImageButton = binding.imgOtheritemScrap
         fun bind(answer: Answer) {
             binding.answer = answer
+            setOnClickListenerGoDetail(binding, answer, context)
+            setOnClickListenerBtnScrap(binding, answer)
         }
     }
 
@@ -35,38 +38,6 @@ class OtherPageAdapter(private val otherViewModel: OtherPageViewModel) :
 
     override fun onBindViewHolder(holder: OtherPageViewHolder, position: Int) {
         holder.bind(getItem(position))
-        holder.itemView.setOnClickListener { view ->
-            if (getItem(position).isAnswered) {
-                val intent = Intent(view.context, DetailActivity::class.java)
-                intent.putExtra("answerId", getItem(position).id)
-                view.context.startActivity(intent)
-            } else {
-                Toast.makeText(view.context, "팔로잉 탭에서 질문에 답변을 하면 볼 수 있어요", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-        holder.bind(getItem(position)).let {
-            with(holder) {
-                scrap.setOnClickListener { view ->
-                    if (getItem(position).isAnswered) {
-                        otherViewModel.setPosition(position)
-                        if (getItem(position).isScrapped) {
-                            getItem(position).isScrapped = false
-                            scrap.setImageResource(R.drawable.ic_scrap_off_mypage)
-                        } else {
-                            getItem(position).isScrapped = true
-                            scrap.setImageResource(R.drawable.ic_scrap_on_mypage)
-                        }
-                    } else {
-                        Toast.makeText(
-                            view.context,
-                            "팔로잉 탭에서 질문에 답변을 하면 스크랩 할 수 있어요",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
-        }
     }
 
     private class OtherPageDiffUtil : DiffUtil.ItemCallback<Answer>() {
@@ -75,5 +46,32 @@ class OtherPageAdapter(private val otherViewModel: OtherPageViewModel) :
 
         override fun areContentsTheSame(oldItem: Answer, newItem: Answer) =
             (oldItem == newItem)
+    }
+
+    private fun setOnClickListenerGoDetail(
+        binding: ItemOtherPageBinding,
+        answer: Answer,
+        context: Context
+    ) {
+        binding.constraintOtheritem.setOnClickListener {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("answerId", answer.id)
+            context.startActivity(intent)
+        }
+    }
+
+    private fun setOnClickListenerBtnScrap(
+        binding: ItemOtherPageBinding,
+        answer: Answer
+    ) {
+        binding.imgOtheritemScrap.setOnClickListener {
+            otherViewModel.putScrap(answer.id)
+            answer.isScrapped = !answer.isScrapped
+            if (answer.isScrapped) {
+                binding.imgOtheritemScrap.setImageResource(R.drawable.ic_scrap_on_mypage)
+            } else {
+                binding.imgOtheritemScrap.setImageResource(R.drawable.ic_scrap_off_mypage)
+            }
+        }
     }
 }

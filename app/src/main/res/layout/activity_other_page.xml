@@ -33,10 +33,10 @@
 
                 <ImageView
                     android:id="@+id/img_otherpage_profile"
+                    setSrcFromUrl="@{otherPageViewModel.otherUserInfo.profileImg}"
                     android:layout_width="match_parent"
                     android:layout_height="158dp"
                     android:layout_gravity="fill"
-                    setSrcFromUrl="@{otherPageViewModel.otherUserInfo.profileImg}"
                     android:scaleType="centerCrop"
                     tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -45,27 +45,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="158dp"
                     android:layout_gravity="fill"
-                    android:scaleType="centerCrop"
-                    android:background="@drawable/rectangle_25" />
+                    android:background="@drawable/rectangle_25"
+                    android:scaleType="centerCrop" />
 
-                <ImageButton
-                    android:id="@+id/btn_otherpage_dot3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="30dp"
-                    android:backgroundTint="@android:color/transparent"
-                    android:src="@drawable/ic_dot3_white" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <ImageButton
-                    android:id="@+id/btn_otherpage_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="16dp"
-                    android:backgroundTint="@android:color/transparent"
-                    app:srcCompat="@drawable/ic_arrow_back_white" />
+                    <ImageButton
+                        android:id="@+id/btn_otherpage_dot3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginEnd="12dp"
+                        android:background="@android:color/transparent"
+                        android:padding="16dp"
+                        android:src="@drawable/ic_dot3_white"
+                        app:layout_constraintBottom_toBottomOf="@id/btn_otherpage_back"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/btn_otherpage_back" />
+
+                    <ImageButton
+                        android:id="@+id/btn_otherpage_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:background="@android:color/transparent"
+                        android:padding="18dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_arrow_back_white" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </FrameLayout>
 
             <TextView
@@ -76,7 +87,7 @@
                 android:layout_marginTop="24dp"
                 android:text="@{otherPageViewModel.otherUserInfo.nickname}"
                 android:textColor="@color/other_black"
-                android:textSize="24sp"
+                android:textSize="22dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/frame_otherpage"
@@ -85,67 +96,71 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_follow"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
+                setFollow="@{otherPageViewModel.isFollow}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:text="       팔로잉       "
-                setFollow="@{otherPageViewModel.isFollow}"
+                android:layout_marginEnd="28dp"
                 android:onClick="@{() -> otherPageViewModel.putFollow()}"
+                android:text="       팔로잉       "
                 android:textColor="@color/explore_chiptext_selector"
                 app:chipBackgroundColor="@color/explore_chip_selector"
                 app:chipCornerRadius="4dp"
                 app:chipStrokeColor="@color/explore_chipstroke_selector"
                 app:chipStrokeWidth="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txt_otherpage_name" />
+                app:layout_constraintTop_toTopOf="@+id/txt_otherpage_name"
+                app:layout_constraintBottom_toBottomOf="@id/txt_otherpage_name"/>
 
 
             <TextView
                 android:id="@+id/txt_otherpage_attend"
+                attendCount="@{otherPageViewModel.otherUserInfo.continuedVisit}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginStart="12dp"
                 android:backgroundTint="@color/other_background_gray"
-                attendCount="@{otherPageViewModel.otherUserInfo.continuedVisit}"
                 android:paddingVertical="4dp"
+                android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:text="연속 출석 11"
                 android:textColor="@color/other_gray"
-                app:layout_constraintStart_toStartOf="@+id/txt_otherpage_name"
-                app:layout_constraintTop_toBottomOf="@+id/txt_otherpage_name"
+                android:textSize="12dp"
+                app:layout_constraintStart_toEndOf="@+id/txt_otherpage_ans"
+                app:layout_constraintTop_toTopOf="@+id/txt_otherpage_ans"
                 tools:text="연속 출석 11" />
 
             <TextView
                 android:id="@+id/txt_otherpage_ans"
+                allAnswerCount="@{otherPageViewModel.otherUserInfo.answerCount}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="16dp"
                 android:paddingVertical="4dp"
-                android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                allAnswerCount="@{otherPageViewModel.otherUserInfo.answerCount}"
                 android:text="답한 질문 202"
                 android:textColor="@color/other_gray"
-                app:layout_constraintStart_toEndOf="@+id/txt_otherpage_attend"
-                app:layout_constraintTop_toTopOf="@+id/txt_otherpage_attend"
+                android:textSize="12dp"
+                app:layout_constraintStart_toStartOf="@+id/txt_otherpage_name"
+                app:layout_constraintTop_toBottomOf="@+id/txt_otherpage_name"
                 tools:text="답한 질문 202" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_other_empty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/constraint_other_empty"
-                app:layout_constraintTop_toBottomOf="@+id/txt_otherpage_attend"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_otherpage_attend">
 
 
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginTop="72dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -155,22 +170,22 @@
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginTop="18dp"
-                    android:textColor="@color/other_gray"
+                    android:gravity="center"
                     android:text="아직 공개된 글이 없습니다."
-                    app:layout_constraintTop_toBottomOf="@id/imageView"
+                    android:textColor="@color/other_gray"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_otherdata"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginEnd="28dp"
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintBottom_toTopOf="@+id/btn_other_showmore"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -191,9 +206,9 @@
                 android:paddingTop="12dp"
                 android:paddingBottom="16dp"
                 android:text="더보기"
-                android:visibility="gone"
                 android:textColor="@color/other_white"
                 android:textSize="16sp"
+                android:visibility="gone"
                 app:cornerRadius="6dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
