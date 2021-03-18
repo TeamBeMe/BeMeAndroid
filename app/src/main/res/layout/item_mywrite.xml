@@ -30,7 +30,6 @@
             android:text="@{myWrite.question}"
             android:textColor="@color/mypage_black"
             android:textSize="14dp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/img_mywrite_secret"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
