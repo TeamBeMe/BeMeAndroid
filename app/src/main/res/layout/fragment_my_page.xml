@@ -12,13 +12,16 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout_mypage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".mypage.view.MyPageFragment">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout_mypage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/background_white">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
@@ -31,7 +34,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/mypage_white">
+                    android:background="@color/mypage_white"
+                    android:layout_marginBottom="20dp">
 
                     <FrameLayout
                         android:id="@+id/frame_mypage"
@@ -44,11 +48,11 @@
 
                         <ImageView
                             android:id="@+id/img_mypage_profile"
+                            setSrcFromUrl="@{myPageViewModel.myProfileInfo.profileImg}"
                             android:layout_width="match_parent"
                             android:layout_height="158dp"
                             android:layout_gravity="fill"
                             android:scaleType="centerCrop"
-                            setSrcFromUrl="@{myPageViewModel.myProfileInfo.profileImg}"
                             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
                         <ImageView
@@ -56,8 +60,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="158dp"
                             android:layout_gravity="fill"
-                            android:scaleType="centerCrop"
-                            android:background="@drawable/rectangle_25" />
+                            android:background="@drawable/rectangle_25"
+                            android:scaleType="centerCrop" />
 
                         <ImageButton
                             android:id="@+id/img_mypage_setting"
@@ -101,33 +105,28 @@
 
                     <TextView
                         android:id="@+id/txt_mypage_attend"
+                        attendCount="@{myPageViewModel.myProfileInfo.continuedVisit}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        attendCount="@{myPageViewModel.myProfileInfo.continuedVisit}"
+                        android:layout_marginStart="20dp"
                         android:backgroundTint="#8E8E93"
-                        android:paddingVertical="4dp"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp"
                         android:text="연속 출석 11"
                         android:textColor="@color/mypage_gray"
-                        app:layout_constraintStart_toStartOf="@+id/txt_mypage_name"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_mypage_name"
+                        app:layout_constraintStart_toEndOf="@+id/txt_mypage_ans"
+                        app:layout_constraintTop_toTopOf="@+id/txt_mypage_ans"
                         tools:text="연속 출석 11" />
 
                     <TextView
                         android:id="@+id/txt_mypage_ans"
+                        allAnswerCount="@{myPageViewModel.myProfileInfo.answerCount}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:paddingVertical="4dp"
-                        android:paddingStart="8dp"
-                        allAnswerCount="@{myPageViewModel.myProfileInfo.answerCount}"
-                        android:paddingEnd="8dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="20dp"
                         android:text="답한 질문 202"
                         android:textColor="@color/mypage_gray"
-                        app:layout_constraintStart_toEndOf="@+id/txt_mypage_attend"
-                        app:layout_constraintTop_toTopOf="@+id/txt_mypage_attend"
+                        app:layout_constraintStart_toStartOf="@+id/txt_mypage_name"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_mypage_name"
                         tools:text="답한 질문 202" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -167,9 +166,11 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view_mypage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
+            android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout

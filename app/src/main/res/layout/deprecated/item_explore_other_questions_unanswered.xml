@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:following="http://schemas.android.com/tools">
 
     <data>
 
@@ -93,6 +94,7 @@
             android:text="@{otherQuestions.content}"
             android:textColor="@color/item_other_questions_txt_content_black"
             android:textSize="14sp"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"
             app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_category" />
 
@@ -102,6 +104,7 @@
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:layout_marginTop="9dp"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
             app:civ_border_color="@color/answers_circle"
             app:civ_border_width="1dp"
             app:layout_constraintDimensionRatio="1"
@@ -116,6 +119,7 @@
             android:text="@{otherQuestions.userNickname}"
             android:textColor="@color/item_other_questions_txt_userid_black"
             android:textSize="14sp"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/img_other_questions_profile"
             app:layout_constraintStart_toEndOf="@+id/img_other_questions_profile"
             app:layout_constraintTop_toTopOf="@+id/img_other_questions_profile" />
@@ -131,6 +135,7 @@
             android:paddingEnd="18dp"
             android:paddingBottom="4dp"
             android:src="@drawable/ic_showdetail_black"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/txt_other_questions_title"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -144,9 +149,44 @@
             android:paddingEnd="18dp"
             android:paddingBottom="10dp"
             android:src="@{otherQuestions.isScrapped == true ? @drawable/ic_bookmark_checked : @drawable/ic_bookmark}"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/img_other_questions_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/img_other_questions_profile" />
+
+        <TextView
+            android:id="@+id/txt_other_questions_un_answered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/item_other_questions_txt_content_black"
+            android:textSize="14sp"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"
+            app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_category"
+            following:myNickName="@{myNickName}"
+            following:userNickName="@{userNickName}"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_other_questions_do_answer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:backgroundTint="@color/item_following_unanswered_questions_btn_background_black"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingStart="28dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="28dp"
+            android:paddingBottom="8dp"
+            android:text="답변하고 확인하기"
+            android:textColor="@color/item_following_unanswered_questions_btn_txt_white"
+            android:textSize="16sp"
+            android:visibility="@{otherQuestions.isAnswered == true ? View.GONE : View.VISIBLE}"
+            app:cornerRadius="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_other_questions_un_answered" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

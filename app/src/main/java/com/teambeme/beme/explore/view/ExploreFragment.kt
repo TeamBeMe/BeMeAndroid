@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.PagerSnapHelper
-import com.google.android.material.tabs.TabLayout
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
@@ -16,7 +14,6 @@ import com.teambeme.beme.data.remote.datasource.ExploreDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentExploreBinding
 import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
-import com.teambeme.beme.explore.adapter.OtherMindsRcvAdapter
 import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
 import com.teambeme.beme.explore.repository.ExploreRepositoryImpl
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
@@ -36,10 +33,8 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
 
     override fun onResume() {
         super.onResume()
-        exploreViewModel.requestOtherMinds()
         exploreViewModel.requestOtherQuestionsWithCategorySorting(
             exploreViewModel.categoryNum,
-            exploreViewModel.sortingText,
             exploreViewModel.tempPage
         )
     }
@@ -53,14 +48,8 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         LifeCycleEventLogger(javaClass.name).registerLogger(viewLifecycleOwner.lifecycle)
         binding.exploreViewModel = exploreViewModel
         binding.lifecycleOwner = this
-        exploreViewModel.requestOtherMinds()
-        setOtherMindsAdapter()
         setOtherQuestionsAdapter()
-        setOtherMindsObserve()
         setOtherQuestionsObserve()
-        setTabSelectedFromExploreListener()
-        setSnapHelper()
-        setClickListenerForExploreBtnDoAnswer()
         setClickListenerForIdSearchButton()
         setClickListenerForAlarmButton()
         setIsMorePageObserve()
@@ -99,12 +88,6 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         }
     }
 
-    private fun setClickListenerForExploreBtnDoAnswer() {
-        binding.btnExploreDoAnswer.setOnClickListener {
-            exploreViewModel.requestQuestionForFirstAnswer()
-        }
-    }
-
     private fun setIsMorePageObserve() {
         exploreViewModel.isMorePage.observe(viewLifecycleOwner) { morePage ->
             morePage?.let {
@@ -117,31 +100,15 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         }
     }
 
-    private fun setOtherMindsAdapter() {
-        val otherMindsAdapter = OtherMindsRcvAdapter(requireContext())
-        binding.rcvExploreOtherMinds.adapter = otherMindsAdapter
-    }
-
     private fun setOtherQuestionsAdapter() {
         val otherQuestionsAdapter =
             OtherQuestionsRcvAdapter<ItemExploreOtherQuestionsBinding>(
                 requireContext(),
                 R.layout.item_explore_other_questions,
                 exploreViewModel.userNickname,
-                exploreViewModel,
-                null
+                exploreViewModel
             )
         binding.rcvExploreOtherQuestions.adapter = otherQuestionsAdapter
-    }
-
-    private fun setOtherMindsObserve() {
-        exploreViewModel.otherMindsList.observe(viewLifecycleOwner) { otherMindsList ->
-            otherMindsList?.let {
-                if (binding.rcvExploreOtherMinds.adapter != null) with(binding.rcvExploreOtherMinds.adapter as OtherMindsRcvAdapter) {
-                    submitList(otherMindsList)
-                }
-            }
-        }
     }
 
     private fun setOtherQuestionsObserve() {
@@ -150,48 +117,8 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
                 if (binding.rcvExploreOtherQuestions.adapter != null) with(binding.rcvExploreOtherQuestions.adapter as OtherQuestionsRcvAdapter<*>) {
                     submitList(otherQuestionsList)
                 }
-                if (otherQuestionsList.size == 0) {
-                    binding.rcvExploreOtherQuestions.visibility = View.GONE
-                    binding.imgExploreNoAnswerInformation.visibility = View.VISIBLE
-                    binding.txtExploreNoAnswerInformation.visibility = View.VISIBLE
-                } else {
-                    binding.rcvExploreOtherQuestions.visibility = View.VISIBLE
-                    binding.imgExploreNoAnswerInformation.visibility = View.GONE
-                    binding.txtExploreNoAnswerInformation.visibility = View.GONE
-                }
             }
         }
-    }
-
-    private fun setTabSelectedFromExploreListener() {
-        binding.tabLayoutExploreSort.addOnTabSelectedListener(object :
-            TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.position?.let {
-                    when (tab.position) {
-                        0 -> {
-                            exploreViewModel.setSortingTextFromExplore("최신")
-                            binding.txtExploreDescOfRecent.visibility = View.VISIBLE
-                            binding.txtExploreDescOfExciting.visibility = View.INVISIBLE
-                        }
-                        1 -> {
-                            exploreViewModel.setSortingTextFromExplore("흥미")
-                            binding.txtExploreDescOfRecent.visibility = View.INVISIBLE
-                            binding.txtExploreDescOfExciting.visibility = View.VISIBLE
-                        }
-                    }
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        }
-        )
-    }
-
-    private fun setSnapHelper() {
-        val snapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(binding.rcvExploreOtherMinds)
     }
 
     private fun setClickListenerForIdSearchButton() {
@@ -221,11 +148,13 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
             exploreViewModel.setPageAtRefresh()
             exploreViewModel.requestOtherQuestionsWithCategorySorting(
                 exploreViewModel.categoryNum,
-                exploreViewModel.sortingText,
                 exploreViewModel.tempPage
             )
-            exploreViewModel.requestOtherMinds()
             binding.pullRefreshLayoutExplore.setRefreshing(false)
         }
+    }
+
+    fun setScrollToTop() {
+        view?.let { binding.stickyScrollViewExplore.smoothScrollTo(0, it.top) }
     }
 }

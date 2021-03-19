@@ -2,7 +2,6 @@ package com.teambeme.beme.explore.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -21,15 +20,13 @@ import com.teambeme.beme.explore.view.ExploreDetailActivity
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
 import com.teambeme.beme.following.viewmodel.FollowingViewModel
 import com.teambeme.beme.otherpage.view.OtherPageActivity
-import com.teambeme.beme.util.recordClickEvent
 import com.teambeme.beme.util.startActivity
 
 class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private val context: Context,
     private val layout: Int,
     private val myNickname: String,
-    private val viewModel: ViewModel,
-    private val otherQuestionButtonClickListener: OtherQuestionButtonClickListener?
+    private val viewModel: ViewModel
 ) :
     ListAdapter<ResponseExplorationQuestions.Data.Answer, OtherQuestionsRcvAdapter<B>.OtherQuestionsRcvViewHolder<B>>(
         OtherQuestionsDiffUtil()
@@ -56,7 +53,6 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                             otherQuestionsData,
                             context
                         )
-                        setClickListenerForBtnDoAnswer(binding, otherQuestionsData)
                     }
                 }
                 else -> {
@@ -110,13 +106,8 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         override fun areContentsTheSame(
             oldItem: ResponseExplorationQuestions.Data.Answer,
             newItem: ResponseExplorationQuestions.Data.Answer
-        ): Boolean {
-            Log.d(
-                "scrapConnection_item_isScrapped",
-                "position : " + "${oldItem.id}" + "old : " + "${oldItem.isScrapped} / " + "new : " + "${newItem.isScrapped}"
-            )
-            return (oldItem.isScrapped == newItem.isScrapped)
-        }
+        ) =
+            (oldItem == newItem)
     }
 
     private fun setClickListenerForShowOtherAnswers(
@@ -141,7 +132,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                     viewModel.requestScrap(otherQuestionsData.id)
                 }
                 is FollowingViewModel -> {
-                    viewModel.requestScrap(otherQuestionsData.id, otherQuestionsData)
+                    viewModel.requestScrap(otherQuestionsData.id)
                 }
             }
             otherQuestionsData.isScrapped = !otherQuestionsData.isScrapped
@@ -169,17 +160,6 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
                     }
                 }
             }
-        }
-    }
-
-    private fun setClickListenerForBtnDoAnswer(
-        binding: ItemExploreOtherQuestionsBinding,
-        otherQuestionsData: ResponseExplorationQuestions.Data.Answer
-    ) {
-        binding.btnOtherQuestionsDoAnswer.setOnClickListener {
-            Log.d("answer", "adapter")
-            recordClickEvent("BUTTON", "CLICK_ANSWERCHECK_FOLLOWING")
-            otherQuestionButtonClickListener?.otherQuestionAnswerClickListener(otherQuestionsData.questionId)
         }
     }
 
@@ -213,11 +193,12 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         context: Context
     ) {
         binding.constraintLayoutOtherQuestions.setOnClickListener {
-            if (data.isAnswered) {
-                val intent = Intent(context, DetailActivity::class.java)
-                intent.putExtra("answerId", data.id)
-                context.startActivity(intent)
-            }
+//            if (data.isAnswered) {
+//                // 답변하고 확인하기 적용 시 밑에 3줄 여기로
+//            }
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("answerId", data.id)
+            context.startActivity(intent)
         }
     }
 
@@ -232,9 +213,5 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
             intent.putExtra("deleteBtnOtherAnswers", true)
             context.startActivity(intent)
         }
-    }
-
-    interface OtherQuestionButtonClickListener {
-        fun otherQuestionAnswerClickListener(questionId: Int)
     }
 }

@@ -108,14 +108,6 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
     val isAnswerMax: LiveData<Boolean>
         get() = _isAnswerMax
 
-    private val _publicPosition = MutableLiveData<Int>()
-    val publicPosition: LiveData<Int>
-        get() = _publicPosition
-
-    fun setPublicPosition(position: Int) {
-        _publicPosition.value = position
-    }
-
     private val _isScrapMax = MutableLiveData<Boolean>()
     val isScrapMax: LiveData<Boolean>
         get() = _isScrapMax
@@ -130,10 +122,10 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
         _isPublic.value = _isPublic.value != true
     }
 
-    fun putPublic() {
+    fun putPublic(id: Int, flag: Boolean) {
         myPageRepository.putPublic(
-            copyMyAnswerList[publicPosition.value!!].id,
-            copyMyAnswerList[publicPosition.value!!].publicFlag.toInt()
+            id,
+            flag.toInt()
         ).enqueue(object :
             Callback<ResponsePublic> {
             override fun onResponse(
@@ -141,9 +133,6 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                 response: Response<ResponsePublic>
             ) {
                 if (response.isSuccessful) {
-                    setPublic()
-                    copyMyAnswerList[publicPosition.value!!].publicFlag = isPublic.value!!
-                    _mypageWriteData.value = copyMyAnswerList.toMutableList()
                 }
             }
 
@@ -177,26 +166,20 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                         copyMyAnswerList = response.body()!!.data?.answers?.toMutableList()
                         _isAnswerEmpty.value = copyMyAnswerList.size == 0
                         _mypageWriteData.value = copyMyAnswerList.toMutableList()
-                        when (page < response.body()!!.data.pageLen) {
-                            true -> {
-                                _isAnswerMax.value = false
-                                page++
-                            }
-                            else -> {
-                                _isAnswerMax.value = true
-                            }
+                        if (response.body()!!.data.answers.size == 10) {
+                            _isAnswerMax.value = false
+                            page++
+                        } else {
+                            _isAnswerMax.value = true
                         }
                     } else {
                         copyMyAnswerList.addAll(response.body()!!.data?.answers?.toMutableList())
                         _mypageWriteData.value = copyMyAnswerList.toMutableList()
-                        when (page < response.body()!!.data.pageLen) {
-                            true -> {
-                                _isAnswerMax.value = false
-                                page++
-                            }
-                            else -> {
-                                _isAnswerMax.value = true
-                            }
+                        if (response.body()!!.data.answers.size == 10) {
+                            _isAnswerMax.value = false
+                            page++
+                        } else {
+                            _isAnswerMax.value = true
                         }
                     }
                 }
@@ -247,26 +230,21 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
                         copyMyScrapList = response.body()!!.data?.answers?.toMutableList()
                         _isScrapEmpty.value = copyMyScrapList.size == 0
                         _mypageScrapData.value = copyMyScrapList.toMutableList()
-                        when (scrapPage < response.body()!!.data.pageLen) {
-                            true -> {
-                                _isScrapMax.value = false
-                                scrapPage++
-                            }
-                            false -> {
-                                _isScrapMax.value = true
-                            }
+
+                        if (response.body()!!.data.answers.size == 10) {
+                            _isScrapMax.value = false
+                            scrapPage++
+                        } else {
+                            _isScrapMax.value = true
                         }
                     } else {
                         copyMyScrapList.addAll(response.body()!!.data?.answers.toMutableList())
                         _mypageScrapData.value = copyMyScrapList.toMutableList()
-                        when (scrapPage < response.body()!!.data.pageLen) {
-                            true -> {
-                                _isScrapMax.value = false
-                                scrapPage++
-                            }
-                            false -> {
-                                _isScrapMax.value = true
-                            }
+                        if (response.body()!!.data.answers.size == 10) {
+                            _isScrapMax.value = false
+                            scrapPage++
+                        } else {
+                            _isScrapMax.value = true
                         }
                     }
                 }

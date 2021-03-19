@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.teambeme.beme.R
+import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.data.remote.datasource.MyPageDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentMyScrapBinding
@@ -19,38 +17,26 @@ import com.teambeme.beme.mypage.view.BottomWriteFragment.Companion.SCRAP_FILTER
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
 
-class MyScrapFragment : Fragment() {
-    private lateinit var binding: FragmentMyScrapBinding
+class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragment_my_scrap) {
     private val myViewModelFactory =
         MyPageViewModelFactory(MyPageRepositoryImpl(MyPageDataSourceImpl(RetrofitObjects.getMyPageService())))
     private val mypageViewModel: MyPageViewModel by activityViewModels { myViewModelFactory }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_scrap, container, false)
+    ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
         binding.lifecycleOwner = this
         binding.myPageViewModel = mypageViewModel
-        val scrapAdapter = MyScrapAdapter()
-        setAdapter(scrapAdapter)
         mypageViewModel.initScrap()
-        mypageViewModel.mypageScrapData.observe(viewLifecycleOwner) { it ->
-            it.let { scrapAdapter.submitList(it) }
-        }
-        mypageViewModel.isScrapFilterClicked.observe(viewLifecycleOwner) {
-            filterClickListener(it)
-        }
-        mypageViewModel.scrapFilter.observe(viewLifecycleOwner) {
-            getSheetDataListener()
-        }
-        setClickListenerForPlusData(binding, scrapAdapter)
-        mypageViewModel.isScrapMax.observe(viewLifecycleOwner) {
-            isMaxListener(it)
-        }
-        mypageViewModel.isScrapEmpty.observe(viewLifecycleOwner) {
-            isEmptyListener(it)
-        }
+        setMyScrapAdapter()
+        setMyPageScrapDataObserve()
+        setIsScrapFilterClickedObserve()
+        setScrapFilterObserve()
+        setIsScrapMaxObserve()
+        setIsScrapEmptyObserve()
         setSearchView()
         return binding.root
     }
@@ -59,6 +45,71 @@ class MyScrapFragment : Fragment() {
         super.onResume()
         mypageViewModel.initScrapPage()
         mypageViewModel.getMyScrap()
+    }
+
+    private fun setMyScrapAdapter() {
+        val scrapAdapter = MyScrapAdapter(requireContext())
+        binding.rcvMyscrap.adapter = scrapAdapter
+    }
+
+    private fun setMyPageScrapDataObserve() {
+        mypageViewModel.mypageScrapData.observe(viewLifecycleOwner) { myPageScrapData ->
+            myPageScrapData.let {
+                if (binding.rcvMyscrap.adapter != null) with(binding.rcvMyscrap.adapter as MyScrapAdapter) {
+                    submitList(myPageScrapData)
+                }
+            }
+        }
+    }
+
+    private fun setIsScrapFilterClickedObserve() {
+        mypageViewModel.isScrapFilterClicked.observe(viewLifecycleOwner) { isScrapFilteredClicked ->
+            isScrapFilteredClicked.let {
+                if (isScrapFilteredClicked) {
+                    val bottomSheetFragment = BottomWriteFragment(SCRAP_FILTER)
+                    bottomSheetFragment.show(
+                        requireActivity().supportFragmentManager,
+                        bottomSheetFragment.tag
+                    )
+                    mypageViewModel.scrapFilterOnClickFalse()
+                }
+            }
+        }
+    }
+
+    private fun setScrapFilterObserve() {
+        mypageViewModel.scrapFilter.observe(viewLifecycleOwner) { scrapFilter ->
+            scrapFilter.let {
+                mypageViewModel.initScrapPage()
+                mypageViewModel.getMyScrap()
+            }
+        }
+    }
+
+    private fun setIsScrapMaxObserve() {
+        mypageViewModel.isScrapMax.observe(viewLifecycleOwner) { isScrapMax ->
+            isScrapMax.let {
+                if (isScrapMax) {
+                    binding.btnScrapShowmore.visibility = View.GONE
+                } else {
+                    binding.btnScrapShowmore.visibility = View.VISIBLE
+                }
+            }
+        }
+    }
+
+    private fun setIsScrapEmptyObserve() {
+        mypageViewModel.isScrapEmpty.observe(viewLifecycleOwner) { isScrapEmpty ->
+            isScrapEmpty.let {
+                if (isScrapEmpty) {
+                    binding.rcvMyscrap.visibility = View.GONE
+                    binding.constraintScrapEmpty.visibility = View.VISIBLE
+                } else {
+                    binding.constraintScrapEmpty.visibility = View.GONE
+                    binding.rcvMyscrap.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
     private fun setSearchView() {
@@ -83,55 +134,7 @@ class MyScrapFragment : Fragment() {
         })
     }
 
-    private fun isEmptyListener(isEmpty: Boolean) {
-        if (isEmpty) {
-            binding.rcvMyscrap.visibility = View.GONE
-            binding.constraintScrapEmpty.visibility = View.VISIBLE
-        } else {
-            binding.constraintScrapEmpty.visibility = View.GONE
-            binding.rcvMyscrap.visibility = View.VISIBLE
-        }
-    }
-
-    private fun filterClickListener(isFilterClicked: Boolean) {
-        if (isFilterClicked) {
-            val bottomSheetFragment = BottomWriteFragment(SCRAP_FILTER)
-            bottomSheetFragment.show(
-                requireActivity().supportFragmentManager,
-                bottomSheetFragment.tag
-            )
-            mypageViewModel.scrapFilterOnClickFalse()
-        }
-    }
-
-    private fun setAdapter(scrapAdapter: MyScrapAdapter) {
-        binding.rcvMyscrap.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = scrapAdapter
-        }
-    }
-
-    private fun getSheetDataListener() {
-        mypageViewModel.initScrapPage()
-        mypageViewModel.getMyScrap()
-    }
-
-    private fun isMaxListener(isMax: Boolean) {
-        if (isMax) {
-            binding.btnScrapShowmore.visibility = View.GONE
-        } else {
-            binding.btnScrapShowmore.visibility = View.VISIBLE
-        }
-    }
-
-    private fun setClickListenerForPlusData(
-        binding: FragmentMyScrapBinding,
-        scrapAdapter: MyScrapAdapter
-    ) {
-        binding.btnScrapShowmore.setOnClickListener {
-            binding.btnScrapShowmore.visibility = View.GONE
-            mypageViewModel.getMyScrap()
-            scrapAdapter.submitList(mypageViewModel.mypageScrapData.value?.toMutableList())
-        }
+    fun setScrollToTop() {
+        view?.let { binding.nestedScrollViewMyscrap.smoothScrollTo(0, it.top) }
     }
 }

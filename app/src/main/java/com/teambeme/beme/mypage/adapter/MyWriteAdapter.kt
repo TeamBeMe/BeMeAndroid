@@ -1,9 +1,9 @@
 package com.teambeme.beme.mypage.adapter
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,16 +14,16 @@ import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.mypage.model.ResponseMyAnswer
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 
-class MyWriteAdapter(private val myViewModel: MyPageViewModel) :
+class MyWriteAdapter(private val myViewModel: MyPageViewModel, private val context: Context) :
     ListAdapter<ResponseMyAnswer.Data.Answer, MyWriteAdapter.MyWriteViewHolder>(MyWriteDiffUtil()) {
-    private var writeList = mutableListOf<ResponseMyAnswer.Data.Answer>()
 
-    class MyWriteViewHolder(private val binding: ItemMywriteBinding) :
+    inner class MyWriteViewHolder(private val binding: ItemMywriteBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(write: ResponseMyAnswer.Data.Answer) {
             binding.myWrite = write
+            setSecretBtnClickListener(binding, write)
+            setClickListenerForGoDetail(binding, write, context)
         }
-        val secretBtn: ImageButton = binding.imgMywriteSecret
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyWriteViewHolder {
@@ -35,23 +35,6 @@ class MyWriteAdapter(private val myViewModel: MyPageViewModel) :
 
     override fun onBindViewHolder(holder: MyWriteViewHolder, position: Int) {
         holder.bind(getItem(position))
-        holder.bind(getItem(position)).let {
-            with(holder) {
-                secretBtn.setOnClickListener {
-                    myViewModel.setPublicPosition(position)
-                    if (getItem(position).publicFlag) {
-                        secretBtn.setImageResource(R.drawable.ic_secret_on_mypage)
-                    } else {
-                        secretBtn.setImageResource(R.drawable.ic_secret_off_mypage)
-                    }
-                }
-                itemView.setOnClickListener { view ->
-                    val intent = Intent(view.context, DetailActivity::class.java)
-                    intent.putExtra("answerId", getItem(holder.adapterPosition).id)
-                    view.context.startActivity(intent)
-                }
-            }
-        }
     }
 
     private class MyWriteDiffUtil : DiffUtil.ItemCallback<ResponseMyAnswer.Data.Answer>() {
@@ -68,8 +51,29 @@ class MyWriteAdapter(private val myViewModel: MyPageViewModel) :
             (oldItem == newItem)
     }
 
-    fun replaceWriteList(list: List<ResponseMyAnswer.Data.Answer>) {
-        writeList = list.toMutableList()
-        submitList(writeList)
+    private fun setSecretBtnClickListener(
+        binding: ItemMywriteBinding,
+        myWriteData: ResponseMyAnswer.Data.Answer
+    ) {
+        binding.imgMywriteSecret.setOnClickListener {
+            myViewModel.putPublic(myWriteData.id, myWriteData.publicFlag)
+            if (myWriteData.publicFlag) {
+                binding.imgMywriteSecret.setImageResource(R.drawable.ic_secret_on_mypage)
+            } else {
+                binding.imgMywriteSecret.setImageResource(R.drawable.ic_secret_off_mypage)
+            }
+        }
+    }
+
+    private fun setClickListenerForGoDetail(
+        binding: ItemMywriteBinding,
+        myWriteData: ResponseMyAnswer.Data.Answer,
+        context: Context
+    ) {
+        binding.constraintMywrite.setOnClickListener {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("answerId", myWriteData.id)
+            context.startActivity(intent)
+        }
     }
 }

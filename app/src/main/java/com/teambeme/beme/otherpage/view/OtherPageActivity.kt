@@ -22,6 +22,7 @@ class OtherPageActivity : BindingActivity<ActivityOtherPageBinding>(R.layout.act
         OtherPageViewModelFactory(OtherPageRepositoryImpl(OtherPageDataSourceImpl(RetrofitObjects.getOtherPageService())))
     private val otherViewModel: OtherPageViewModel by viewModels { otherViewModelFactory }
     private var userId: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
@@ -30,25 +31,23 @@ class OtherPageActivity : BindingActivity<ActivityOtherPageBinding>(R.layout.act
         userId = intent.getIntExtra("userId", 0)
         val isAuthor = intent.getBooleanExtra("isAuthor", false)
         myProfileListener(isAuthor)
-        val otherAdapter = OtherPageAdapter(otherViewModel)
-        setAdapter(otherAdapter)
         otherViewModel.requestUser(userId)
         otherViewModel.requestItem(userId)
-        otherViewModel.otherAnswerList.observe(this) { it ->
-            it.let { otherAdapter.submitList(it) }
-        }
-        otherViewModel.isMax.observe(this) { it ->
-            isMaxListener(it)
-        }
-        setClickListenerForPlusData(binding, otherAdapter)
+        setRcvOtherDataAdapter()
+        setOtherDataObserve()
+        setIsMaxObserve()
+        setClickListenerForPlusData(binding)
+        setOnClickListenerForGoBack()
+        setOnClickListenerForDot3()
+        setIsEmptyObserve()
+    }
+
+    private fun setOnClickListenerForGoBack() {
         binding.btnOtherpageBack.setOnClickListener { finish() }
+    }
+
+    private fun setOnClickListenerForDot3() {
         binding.btnOtherpageDot3.setOnClickListener { dotClickListener() }
-        otherViewModel.scrapPosition.observe(this) {
-            scrapListener()
-        }
-        otherViewModel.isOtherEmpty.observe(this) {
-            isEmptyListener(it)
-        }
     }
 
     private fun myProfileListener(isAuthor: Boolean) {
@@ -58,32 +57,47 @@ class OtherPageActivity : BindingActivity<ActivityOtherPageBinding>(R.layout.act
         }
     }
 
-    private fun scrapListener() {
-        otherViewModel.putScrap()
-    }
-
-    private fun isEmptyListener(isEmpty: Boolean) {
-        if (isEmpty) {
-            binding.rcvOtherdata.visibility = View.GONE
-            binding.constraintOtherEmpty.visibility = View.VISIBLE
-        } else {
-            binding.constraintOtherEmpty.visibility = View.GONE
-            binding.rcvOtherdata.visibility = View.VISIBLE
+    private fun setIsEmptyObserve() {
+        otherViewModel.isOtherEmpty.observe(this) { isOtherEmpty ->
+            isOtherEmpty.let {
+                if (isOtherEmpty) {
+                    binding.rcvOtherdata.visibility = View.GONE
+                    binding.constraintOtherEmpty.visibility = View.VISIBLE
+                } else {
+                    binding.constraintOtherEmpty.visibility = View.GONE
+                    binding.rcvOtherdata.visibility = View.VISIBLE
+                }
+            }
         }
     }
 
-    private fun isMaxListener(isMax: Boolean) {
-        if (isMax) {
-            binding.btnOtherShowmore.visibility = View.GONE
-        } else {
-            binding.btnOtherShowmore.visibility = View.VISIBLE
+    private fun setIsMaxObserve() {
+        otherViewModel.isMax.observe(this) { isMax ->
+            isMax.let {
+                if (isMax) {
+                    binding.btnOtherShowmore.visibility = View.GONE
+                } else {
+                    binding.btnOtherShowmore.visibility = View.VISIBLE
+                }
+            }
         }
     }
 
-    private fun setAdapter(otherAdapter: OtherPageAdapter) {
+    private fun setRcvOtherDataAdapter() {
+        val otherAdapter = OtherPageAdapter(otherViewModel, this)
         binding.rcvOtherdata.apply {
             layoutManager = LinearLayoutManager(this@OtherPageActivity)
             adapter = otherAdapter
+        }
+    }
+
+    private fun setOtherDataObserve() {
+        otherViewModel.otherAnswerList.observe(this) { otherAnswerList ->
+            otherAnswerList.let {
+                if (binding.rcvOtherdata.adapter != null) with(binding.rcvOtherdata.adapter as OtherPageAdapter) {
+                    submitList(otherAnswerList)
+                }
+            }
         }
     }
 
@@ -96,8 +110,7 @@ class OtherPageActivity : BindingActivity<ActivityOtherPageBinding>(R.layout.act
     }
 
     private fun setClickListenerForPlusData(
-        binding: ActivityOtherPageBinding,
-        otherAdapter: OtherPageAdapter
+        binding: ActivityOtherPageBinding
     ) {
         binding.btnOtherShowmore.setOnClickListener {
             otherViewModel.requestAddItem(userId)

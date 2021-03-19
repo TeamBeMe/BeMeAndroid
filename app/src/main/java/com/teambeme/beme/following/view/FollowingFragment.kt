@@ -18,7 +18,6 @@ import com.teambeme.beme.databinding.*
 import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
 import com.teambeme.beme.following.adapter.FollowerProfilesRcvAdapter
 import com.teambeme.beme.following.adapter.FollowingProfilesRcvAdapter
-import com.teambeme.beme.following.model.RequestFollowingAnswer
 import com.teambeme.beme.following.repository.FollowingRepositoryImpl
 import com.teambeme.beme.following.viewmodel.FollowingViewModel
 import com.teambeme.beme.following.viewmodel.FollowingViewModelFactory
@@ -98,15 +97,6 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         }
     }
 
-    private fun getOtherButtonClickListener(): OtherQuestionsRcvAdapter.OtherQuestionButtonClickListener {
-        return object : OtherQuestionsRcvAdapter.OtherQuestionButtonClickListener {
-            override fun otherQuestionAnswerClickListener(questionId: Int) {
-                val answer = RequestFollowingAnswer(questionId)
-                followingViewModel.requestAnswer(answer)
-            }
-        }
-    }
-
     private fun setOtherFollowingQuestionsAdapter() {
         followingViewModel.myNickname.observe(viewLifecycleOwner) {
             it?.let {
@@ -115,8 +105,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
                         requireContext(),
                         R.layout.item_explore_other_questions,
                         it,
-                        followingViewModel,
-                        getOtherButtonClickListener()
+                        followingViewModel
                     )
                 binding.rcvFollowingOtherQuestions.adapter = otherFollowingQuestionsAdapter
             }
@@ -294,5 +283,9 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
             followingViewModel.requestFollowerFollowingList()
             binding.pullRefreshLayoutFollowing.setRefreshing(false)
         }
+    }
+
+    fun setScrollToTop() {
+        view?.let { binding.nestedScrollViewFollowing.smoothScrollTo(0, it.top) }
     }
 }
