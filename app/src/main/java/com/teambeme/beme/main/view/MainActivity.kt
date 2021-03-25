@@ -1,6 +1,5 @@
 package com.teambeme.beme.main.view
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -49,6 +48,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 Log.d("BeMeApplication.TAG", msg)
             }
         })
+        StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
         mainViewModel.getFireBaseToken()
         setViewPagerAdapter(this)
         setBottomNavigationSelectListener(binding.bnvMain)
@@ -58,18 +58,18 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun setBottomNavigationSelectListener(bottomNavigationView: BottomNavigationView) {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_main_home -> {
-                    binding.vpMain.currentItem = 0
-                    StatusBarUtil.setStatusBar(this, Color.BLACK)
-                    setViewPagerDefaultPosition()
-                }
                 R.id.menu_main_explore -> {
-                    binding.vpMain.currentItem = 1
+                    binding.vpMain.currentItem = 0
                     StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
                 }
                 R.id.menu_main_following -> {
-                    binding.vpMain.currentItem = 2
+                    binding.vpMain.currentItem = 1
                     StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
+                }
+                R.id.menu_main_home -> {
+                    binding.vpMain.currentItem = 2
+                    StatusBarUtil.setStatusBar(this, resources.getColor(R.color.black, null))
+                    setViewPagerDefaultPosition()
                 }
                 R.id.menu_main_mypage -> {
                     binding.vpMain.currentItem = 3
@@ -107,17 +107,17 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     }
 
     private fun setViewPagerDefaultPosition() {
-        val homeFragment = supportFragmentManager.findFragmentByTag("f0") as HomeFragment
+        val homeFragment = supportFragmentManager.findFragmentByTag("f2") as HomeFragment
         homeFragment.returnToDefaultPosition()
     }
 
     private fun setExploreFragmentScrollToTop() {
-        val exploreFragment = supportFragmentManager.findFragmentByTag("f1") as ExploreFragment
+        val exploreFragment = supportFragmentManager.findFragmentByTag("f0") as ExploreFragment
         exploreFragment.setScrollToTop()
     }
 
     private fun setFollowingFragmentScrollToTop() {
-        val followingFragment = supportFragmentManager.findFragmentByTag("f2") as FollowingFragment
+        val followingFragment = supportFragmentManager.findFragmentByTag("f1") as FollowingFragment
         followingFragment.setScrollToTop()
     }
 
@@ -130,9 +130,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
             binding.bnvMain.selectedItemId = when (position) {
-                0 -> R.id.menu_main_home
-                1 -> R.id.menu_main_explore
-                2 -> R.id.menu_main_following
+                0 -> R.id.menu_main_explore
+                1 -> R.id.menu_main_following
+                2 -> R.id.menu_main_home
                 3 -> R.id.menu_main_mypage
                 else -> throw IllegalArgumentException("Wrong Position $position")
             }

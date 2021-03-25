@@ -14,9 +14,9 @@ class MainViewPagerAdapter(fragmentActivity: FragmentActivity) :
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> HomeFragment()
-            1 -> ExploreFragment()
-            2 -> FollowingFragment()
+            0 -> ExploreFragment()
+            1 -> FollowingFragment()
+            2 -> HomeFragment()
             else -> MyPageFragment()
         }
     }
