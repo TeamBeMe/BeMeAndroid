@@ -55,7 +55,7 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
 
     private fun recordScreen() {
         Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, "FollowingFragment")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "MyPage_MyScrapFragment")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "MainActivity")
         }
     }

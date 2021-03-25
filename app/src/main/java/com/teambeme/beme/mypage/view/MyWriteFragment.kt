@@ -7,6 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.data.remote.datasource.MyPageDataSourceImpl
@@ -41,13 +45,22 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
         setIsAnswerEmptyObserve()
         setImgWriteFilterClickListener()
         setSearchView()
+        recordScreen()
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        recordScreen()
         mypageViewModel.initPage()
         mypageViewModel.getMyAnswer()
+    }
+
+    private fun recordScreen() {
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "MyPage_MyWriteFragment")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "MainActivity")
+        }
     }
 
     private fun setMyWriteAdapter() {
