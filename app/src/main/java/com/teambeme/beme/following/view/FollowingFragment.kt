@@ -8,6 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
@@ -34,6 +38,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
     private val followingViewModel: FollowingViewModel by activityViewModels { followingViewModelFactory }
 
     override fun onResume() {
+        recordScreen()
         super.onResume()
         followingViewModel.requestFollowingFollowerAnswers(followingViewModel.tempPage)
         followingViewModel.requestFollowerFollowingList()
@@ -63,7 +68,15 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         setDoAnswerDataObserve()
         setIsMorePageObserve()
         setListenerForPullRefreshLayout()
+        recordScreen()
         return binding.root
+    }
+
+    private fun recordScreen() {
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "FollowingFragment")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "MainActivity")
+        }
     }
 
     private fun setIsMorePageObserve() {
