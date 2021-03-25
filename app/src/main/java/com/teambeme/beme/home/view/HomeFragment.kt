@@ -12,6 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
@@ -42,13 +46,22 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             QuestionPagerAdapter(childFragmentManager, homeViewModel, getHomeButtonClickListener())
         setAnswerPager(questionPagerAdapter)
         setObserve()
+        recordScreen()
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        recordScreen()
         homeViewModel.refreshTaskCompleted()
         returnToDefaultPosition()
+    }
+
+    private fun recordScreen() {
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "HomeFragment")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "MainActivity")
+        }
     }
 
     private fun getHomeButtonClickListener(): QuestionPagerAdapter.QuestionButtonClickListener {
