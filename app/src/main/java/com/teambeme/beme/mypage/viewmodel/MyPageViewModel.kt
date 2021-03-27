@@ -7,12 +7,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.data.repository.MyPageRepository
 import com.teambeme.beme.mypage.model.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewModel() {
+@HiltViewModel
+class MyPageViewModel @Inject constructor(
+    private val myPageRepository: MyPageRepository
+) : ViewModel() {
     private var copyMyAnswerList: MutableList<ResponseMyAnswer.Data.Answer> = mutableListOf()
     private var copyMyScrapList: MutableList<ResponseMyScrap.Data.Answer> = mutableListOf()
 

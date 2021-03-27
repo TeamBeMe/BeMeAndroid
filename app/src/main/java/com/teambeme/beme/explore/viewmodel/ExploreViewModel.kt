@@ -4,15 +4,20 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.teambeme.beme.data.repository.ExploreRepository
 import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
-import com.teambeme.beme.data.repository.ExploreRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class ExploreViewModel(private val exploreRepository: ExploreRepository) : ViewModel() {
+@HiltViewModel
+class ExploreViewModel @Inject constructor(
+    private val exploreRepository: ExploreRepository
+) : ViewModel() {
     private var _userNickname: String = ""
     val userNickname: String
         get() = _userNickname

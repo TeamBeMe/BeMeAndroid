@@ -4,17 +4,22 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.teambeme.beme.data.repository.OtherPageRepository
 import com.teambeme.beme.otherpage.model.ResponseFollow
 import com.teambeme.beme.otherpage.model.ResponseOtherData
 import com.teambeme.beme.otherpage.model.ResponseOtherData.Data.Answer
 import com.teambeme.beme.otherpage.model.ResponseOtherInfo
 import com.teambeme.beme.otherpage.model.ResponseScrap
-import com.teambeme.beme.data.repository.OtherPageRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class OtherPageViewModel(private val otherRepository: OtherPageRepository) : ViewModel() {
+@HiltViewModel
+class OtherPageViewModel @Inject constructor(
+    private val otherRepository: OtherPageRepository
+) : ViewModel() {
     private var copyOtherAnswerList: MutableList<Answer> = mutableListOf()
 
     private val _otherAnswerList = MutableLiveData<MutableList<Answer>>()

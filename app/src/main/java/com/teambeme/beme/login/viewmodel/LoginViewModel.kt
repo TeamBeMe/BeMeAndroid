@@ -7,14 +7,19 @@ import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
-import com.teambeme.beme.login.model.ResponseLogin
 import com.teambeme.beme.data.repository.LoginRepository
+import com.teambeme.beme.login.model.ResponseLogin
 import com.teambeme.beme.util.ErrorBody
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val loginRepository: LoginRepository
+) : ViewModel() {
     var nickNameText = MutableLiveData<String>()
     var passwordText = MutableLiveData<String>()
 

@@ -4,13 +4,18 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.idsearchfollowing.model.*
 import com.teambeme.beme.data.repository.IdSearchRepository
+import com.teambeme.beme.idsearchfollowing.model.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class IdSearchViewModel(private val idSearchRepository: IdSearchRepository) : ViewModel() {
+@HiltViewModel
+class IdSearchViewModel @Inject constructor(
+    private val idSearchRepository: IdSearchRepository
+) : ViewModel() {
     private var copyRecentSearchList: MutableList<ResponseRecentSearchRecord.Data> = mutableListOf()
 
     private val _recentSearchData = MutableLiveData<MutableList<ResponseRecentSearchRecord.Data>>()

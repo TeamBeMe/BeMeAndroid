@@ -5,12 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teambeme.beme.home.model.Answer
 import com.teambeme.beme.data.repository.HomeRepository
+import com.teambeme.beme.home.model.Answer
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val homeRepository: HomeRepository
+) : ViewModel() {
     private val _answerList = MutableLiveData<MutableList<Answer>>()
     val answerList: LiveData<MutableList<Answer>>
         get() = _answerList
@@ -107,7 +112,8 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     transitPublicFlag(currentList[position].publicFlag)
                 )
                 if (response.success) {
-                    currentList[position].publicFlag = transitPublicFlag(currentList[position].publicFlag)
+                    currentList[position].publicFlag =
+                        transitPublicFlag(currentList[position].publicFlag)
                     _answerList.value = currentList
                 }
             } catch (e: HttpException) {
