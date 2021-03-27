@@ -6,21 +6,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teambeme.beme.data.remote.datasource.SignUpDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
+import com.teambeme.beme.data.repository.SignUpRepository
 import com.teambeme.beme.signup.model.ResponseNickDoubleCheck
 import com.teambeme.beme.signup.model.ResponseSignUp
-import com.teambeme.beme.signup.repository.SignUpRepositoryImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class SignUpViewModel : ViewModel() {
-    private val signUpRepository =
-        SignUpRepositoryImpl(SignUpDataSourceImpl(RetrofitObjects.getSignUpService()))
+@HiltViewModel
+class SignUpViewModel @Inject constructor(
+    private val signUpRepository: SignUpRepository
+) : ViewModel() {
     val isPersonalChecked = MutableLiveData<Boolean>(false)
     val isServiceChecked = MutableLiveData<Boolean>(false)
 

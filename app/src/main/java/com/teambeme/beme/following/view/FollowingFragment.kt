@@ -12,26 +12,22 @@ import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.base.BindingFragment
-import com.teambeme.beme.data.remote.datasource.FollowingDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
-import com.teambeme.beme.databinding.*
+import com.teambeme.beme.databinding.FragmentFollowingBinding
+import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
+import com.teambeme.beme.databinding.ItemFollowingProfilesOfFollowerBinding
+import com.teambeme.beme.databinding.ItemFollowingProfilesOfFollowingBinding
 import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
 import com.teambeme.beme.following.adapter.FollowerProfilesRcvAdapter
 import com.teambeme.beme.following.adapter.FollowingProfilesRcvAdapter
-import com.teambeme.beme.following.repository.FollowingRepositoryImpl
 import com.teambeme.beme.following.viewmodel.FollowingViewModel
-import com.teambeme.beme.following.viewmodel.FollowingViewModelFactory
 import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
 import com.teambeme.beme.notification.view.NotificationActivity
 import com.teambeme.beme.util.recordClickEvent
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fragment_following) {
-    private val followingViewModelFactory = FollowingViewModelFactory(
-        FollowingRepositoryImpl(
-            FollowingDataSourceImpl(RetrofitObjects.getFollowingService())
-        )
-    )
-    private val followingViewModel: FollowingViewModel by activityViewModels { followingViewModelFactory }
+    private val followingViewModel: FollowingViewModel by activityViewModels()
 
     override fun onResume() {
         super.onResume()

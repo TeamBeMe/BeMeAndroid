@@ -1,7 +1,6 @@
 package com.teambeme.beme.answer.view
 
 import android.animation.ValueAnimator
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -9,33 +8,28 @@ import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.model.RequestAnswerData
-import com.teambeme.beme.answer.repository.AnswerRepositoryImpl
 import com.teambeme.beme.answer.viewmodel.AnswerViewModel
-import com.teambeme.beme.answer.viewmodel.AnswerViewModelFactory
 import com.teambeme.beme.base.BindingActivity
-import com.teambeme.beme.data.local.database.AppDatabase
 import com.teambeme.beme.data.local.entity.AnswerData
-import com.teambeme.beme.data.remote.datasource.AnswerDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityAnswerBinding
 import com.teambeme.beme.util.StatusBarUtil
 import com.teambeme.beme.util.dp
 import com.teambeme.beme.util.recordClickEvent
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_answer) {
-
-    private lateinit var answerViewModel: AnswerViewModel
+    private val answerViewModel: AnswerViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initViewModel(this)
         binding.lifecycleOwner = this
         binding.answerActivity = this
         binding.answerViewModel = answerViewModel
@@ -67,18 +61,6 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         }
         setSwitchListener()
         observePublicSwitch()
-    }
-
-    private fun initViewModel(context: Context) {
-        val answerViewModelFactory = AnswerViewModelFactory(
-            AnswerRepositoryImpl(
-                AppDatabase.getInstance(context.applicationContext).answerDao,
-                AnswerDataSourceImpl(RetrofitObjects.getAnswerService())
-            )
-        )
-
-        answerViewModel =
-            ViewModelProvider(this, answerViewModelFactory).get(AnswerViewModel::class.java)
     }
 
     private fun setTitleText(answerData: AnswerData) {

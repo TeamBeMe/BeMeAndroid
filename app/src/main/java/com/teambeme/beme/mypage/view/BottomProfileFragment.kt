@@ -21,26 +21,22 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.teambeme.beme.R
-import com.teambeme.beme.data.remote.datasource.MyPageDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ItemBottomProfileBinding
-import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
-import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
 import com.theartofdev.edmodo.cropper.CropImage
+import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.ByteArrayOutputStream
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import java.io.ByteArrayOutputStream
 import java.io.File
 
+@AndroidEntryPoint
 class BottomProfileFragment : BottomSheetDialogFragment() {
     private lateinit var binding: ItemBottomProfileBinding
-    private val myViewModelFactory =
-        MyPageViewModelFactory(MyPageRepositoryImpl(MyPageDataSourceImpl(RetrofitObjects.getMyPageService())))
-    private val mypageViewModel: MyPageViewModel by activityViewModels { myViewModelFactory }
+    private val mypageViewModel: MyPageViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

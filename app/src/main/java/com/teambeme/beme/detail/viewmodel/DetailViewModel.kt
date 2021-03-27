@@ -5,14 +5,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.answer.model.IntentAnswerData
+import com.teambeme.beme.data.repository.DetailRepository
 import com.teambeme.beme.detail.model.*
-import com.teambeme.beme.detail.repository.DetailRepository
 import com.teambeme.beme.otherpage.model.ResponseScrap
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class DetailViewModel(private val detailRepository: DetailRepository) : ViewModel() {
+@HiltViewModel
+class DetailViewModel @Inject constructor(
+    private val detailRepository: DetailRepository
+) : ViewModel() {
     val answerText = MutableLiveData<String>()
 
     var copyChildData: MutableList<ResponseDetail.Data.Comment.Children> = mutableListOf()

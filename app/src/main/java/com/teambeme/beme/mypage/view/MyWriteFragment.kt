@@ -9,20 +9,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingFragment
-import com.teambeme.beme.data.remote.datasource.MyPageDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentMyWriteBinding
 import com.teambeme.beme.mypage.adapter.MyWriteAdapter
-import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.view.BottomWriteFragment.Companion.WRITE_FILTER
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
-import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
 import com.teambeme.beme.util.recordClickEvent
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragment_my_write) {
-    private val myViewModelFactory =
-        MyPageViewModelFactory(MyPageRepositoryImpl(MyPageDataSourceImpl(RetrofitObjects.getMyPageService())))
-    private val mypageViewModel: MyPageViewModel by activityViewModels { myViewModelFactory }
+    private val mypageViewModel: MyPageViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

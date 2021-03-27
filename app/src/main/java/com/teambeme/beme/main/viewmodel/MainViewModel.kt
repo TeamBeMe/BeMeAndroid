@@ -3,13 +3,18 @@ package com.teambeme.beme.main.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.repository.MainRepository
 import com.teambeme.beme.main.model.ResponseFbTokenRegister
-import com.teambeme.beme.main.repository.MainRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val mainRepository: MainRepository
+) : ViewModel() {
     fun getFireBaseToken() {
         mainRepository.fbTokenRegister(
             fb_token = BeMeAuthPreference.fireBaseToken

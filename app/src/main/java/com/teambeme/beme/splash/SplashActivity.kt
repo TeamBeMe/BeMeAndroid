@@ -23,30 +23,31 @@ import com.google.gson.reflect.TypeToken
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
-import com.teambeme.beme.data.remote.datasource.LoginDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
+import com.teambeme.beme.data.repository.LoginRepository
 import com.teambeme.beme.databinding.ActivitySplashBinding
 import com.teambeme.beme.login.model.ResponseLogin
-import com.teambeme.beme.login.repository.LoginRepositoryImpl
 import com.teambeme.beme.login.view.LoginActivity
 import com.teambeme.beme.main.view.MainActivity
 import com.teambeme.beme.onboarding.view.OnBoardingActivity
 import com.teambeme.beme.util.ErrorBody
 import com.teambeme.beme.util.StatusBarUtil
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_splash) {
-    private val loginRepository =
-        LoginRepositoryImpl(LoginDataSourceImpl(RetrofitObjects.getLoginService()))
+    @Inject
+    lateinit var loginRepository: LoginRepository
     private val appUpdateManager by lazy() { AppUpdateManagerFactory.create(this) }
     private val REQUEST_CODE_UPDATE = 9999
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StatusBarUtil.setStatusBar(this, R.color.black)
-        initInAppUpdate(true)
+        initInAppUpdate(false)
         setFullScreen()
     }
 

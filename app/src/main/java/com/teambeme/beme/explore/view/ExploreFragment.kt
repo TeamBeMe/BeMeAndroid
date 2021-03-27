@@ -10,26 +10,19 @@ import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.base.BindingFragment
-import com.teambeme.beme.data.remote.datasource.ExploreDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentExploreBinding
 import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
 import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
-import com.teambeme.beme.explore.repository.ExploreRepositoryImpl
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
-import com.teambeme.beme.explore.viewmodel.ExploreViewModelFactory
 import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
 import com.teambeme.beme.notification.view.NotificationActivity
 import com.teambeme.beme.util.recordClickEvent
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragment_explore) {
-    private val exploreViewModelFactory = ExploreViewModelFactory(
-        ExploreRepositoryImpl(
-            ExploreDataSourceImpl(RetrofitObjects.getExploreService())
-        )
-    )
-    private val exploreViewModel: ExploreViewModel by activityViewModels { exploreViewModelFactory }
+    private val exploreViewModel: ExploreViewModel by activityViewModels()
 
     override fun onResume() {
         super.onResume()

@@ -16,20 +16,16 @@ import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.base.BindingFragment
-import com.teambeme.beme.data.remote.datasource.HomeDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentHomeBinding
 import com.teambeme.beme.home.adapter.QuestionPagerAdapter
 import com.teambeme.beme.home.model.Answer
-import com.teambeme.beme.home.repository.HomeRepositoryImpl
 import com.teambeme.beme.home.viewmodel.HomeViewModel
-import com.teambeme.beme.home.viewmodel.HomeViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
 
+@AndroidEntryPoint
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
-    private val homeViewModelFactory =
-        HomeViewModelFactory(HomeRepositoryImpl(HomeDataSourceImpl(RetrofitObjects.getHomeService())))
-    private val homeViewModel: HomeViewModel by activityViewModels() { homeViewModelFactory }
+    private val homeViewModel: HomeViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

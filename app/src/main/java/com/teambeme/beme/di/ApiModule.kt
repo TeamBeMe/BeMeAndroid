@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class ApiModule {
+object ApiModule {
     @Provides
     @Singleton
     fun provideAnswerService(retrofit: Retrofit): AnswerService =
