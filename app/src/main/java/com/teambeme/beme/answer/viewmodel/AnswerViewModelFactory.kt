@@ -2,7 +2,7 @@ package com.teambeme.beme.answer.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teambeme.beme.answer.repository.AnswerRepository
+import com.teambeme.beme.data.repository.AnswerRepository
 
 class AnswerViewModelFactory(
     private val answerRepository: AnswerRepository

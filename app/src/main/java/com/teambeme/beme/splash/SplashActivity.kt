@@ -27,7 +27,7 @@ import com.teambeme.beme.data.remote.datasource.LoginDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivitySplashBinding
 import com.teambeme.beme.login.model.ResponseLogin
-import com.teambeme.beme.login.repository.LoginRepositoryImpl
+import com.teambeme.beme.data.repository.LoginRepositoryImpl
 import com.teambeme.beme.login.view.LoginActivity
 import com.teambeme.beme.main.view.MainActivity
 import com.teambeme.beme.onboarding.view.OnBoardingActivity

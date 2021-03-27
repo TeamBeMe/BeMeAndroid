@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.teambeme.beme.data.repository.MyPageRepository
 import com.teambeme.beme.mypage.model.*
-import com.teambeme.beme.mypage.repository.MyPageRepository
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -265,7 +265,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
         get() = _profileUri
 
     fun setProfileUri(uri: Uri?) {
-        _profileUri.value = uri
+        _profileUri.value = uri!!
     }
 
     fun setProfileNull() {

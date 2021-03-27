@@ -8,7 +8,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
 import com.teambeme.beme.login.model.ResponseLogin
-import com.teambeme.beme.login.repository.LoginRepository
+import com.teambeme.beme.data.repository.LoginRepository
 import com.teambeme.beme.util.ErrorBody
 import retrofit2.Call
 import retrofit2.Callback

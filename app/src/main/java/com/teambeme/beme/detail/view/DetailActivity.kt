@@ -16,7 +16,7 @@ import com.teambeme.beme.data.remote.datasource.DetailDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityDetailBinding
 import com.teambeme.beme.detail.adapter.ReplyAdapter
-import com.teambeme.beme.detail.repository.DetailRepositoryImpl
+import com.teambeme.beme.data.repository.DetailRepositoryImpl
 import com.teambeme.beme.detail.viewmodel.DetailViewModel
 import com.teambeme.beme.detail.viewmodel.DetailViewModel.Companion.MY_OTHER_REPLY
 import com.teambeme.beme.detail.viewmodel.DetailViewModel.Companion.MY_REPLY

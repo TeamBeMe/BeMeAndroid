@@ -2,7 +2,7 @@ package com.teambeme.beme.idsearchfollowing.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teambeme.beme.idsearchfollowing.repository.IdSearchRepository
+import com.teambeme.beme.data.repository.IdSearchRepository
 
 class IdSearchViewModelFactory(private val idSearchRepository: IdSearchRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

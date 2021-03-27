@@ -13,7 +13,7 @@ import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ItemBottomWriteBinding
 import com.teambeme.beme.mypage.model.CategoryFilter
 import com.teambeme.beme.mypage.model.PublicRange
-import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
+import com.teambeme.beme.data.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
 import com.teambeme.beme.util.recordClickEvent

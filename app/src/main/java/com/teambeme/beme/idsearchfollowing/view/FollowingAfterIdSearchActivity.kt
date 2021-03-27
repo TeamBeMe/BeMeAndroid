@@ -13,7 +13,7 @@ import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityFollowingAfterIdSearchBinding
 import com.teambeme.beme.idsearchfollowing.adapter.IdSearchAdapter
 import com.teambeme.beme.idsearchfollowing.adapter.RecentSearchAdapter
-import com.teambeme.beme.idsearchfollowing.repository.IdSearchRepositoryImpl
+import com.teambeme.beme.data.repository.IdSearchRepositoryImpl
 import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModel
 import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModelFactory
 import com.teambeme.beme.util.StatusBarUtil

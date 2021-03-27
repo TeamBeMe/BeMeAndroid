@@ -2,7 +2,7 @@ package com.teambeme.beme.detail.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teambeme.beme.detail.repository.DetailRepository
+import com.teambeme.beme.data.repository.DetailRepository
 
 class DetailViewModelFactory(private val detailRepository: DetailRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

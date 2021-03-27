@@ -16,7 +16,7 @@ import com.teambeme.beme.data.remote.datasource.MyPageDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentMyPageBinding
 import com.teambeme.beme.mypage.adapter.MyPageViewPagerAdapter
-import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
+import com.teambeme.beme.data.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
 import com.teambeme.beme.setting.view.SettingActivity

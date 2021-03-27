@@ -10,7 +10,7 @@ import com.teambeme.beme.data.remote.datasource.NoticeDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityNotificationBinding
 import com.teambeme.beme.notification.adapter.NoticeAdapter
-import com.teambeme.beme.notification.repository.NoticeRepositoryImpl
+import com.teambeme.beme.data.repository.NoticeRepositoryImpl
 import com.teambeme.beme.notification.viewmodel.NoticeViewModel
 import com.teambeme.beme.notification.viewmodel.NoticeViewModelFactory
 import com.teambeme.beme.util.StatusBarUtil

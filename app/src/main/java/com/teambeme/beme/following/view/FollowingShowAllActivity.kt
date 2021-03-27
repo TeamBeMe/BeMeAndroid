@@ -13,7 +13,7 @@ import com.teambeme.beme.databinding.*
 import com.teambeme.beme.following.adapter.FollowerProfilesRcvAdapter
 import com.teambeme.beme.following.adapter.FollowingProfilesRcvAdapter
 import com.teambeme.beme.following.adapter.SearchProfilesRcvAdapter
-import com.teambeme.beme.following.repository.FollowingRepositoryImpl
+import com.teambeme.beme.data.repository.FollowingRepositoryImpl
 import com.teambeme.beme.following.viewmodel.FollowingViewModel
 import com.teambeme.beme.following.viewmodel.FollowingViewModelFactory
 import com.teambeme.beme.util.StatusBarUtil

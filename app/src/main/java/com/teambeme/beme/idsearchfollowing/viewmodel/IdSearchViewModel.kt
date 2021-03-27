@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.idsearchfollowing.model.*
-import com.teambeme.beme.idsearchfollowing.repository.IdSearchRepository
+import com.teambeme.beme.data.repository.IdSearchRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

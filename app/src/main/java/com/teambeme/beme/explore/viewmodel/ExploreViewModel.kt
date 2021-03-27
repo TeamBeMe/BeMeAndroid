@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
-import com.teambeme.beme.explore.repository.ExploreRepository
+import com.teambeme.beme.data.repository.ExploreRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -2,7 +2,7 @@ package com.teambeme.beme.otherpage.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teambeme.beme.otherpage.repository.OtherPageRepository
+import com.teambeme.beme.data.repository.OtherPageRepository
 
 class OtherPageViewModelFactory(private val otherRepository: OtherPageRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.detail.model.*
-import com.teambeme.beme.detail.repository.DetailRepository
+import com.teambeme.beme.data.repository.DetailRepository
 import com.teambeme.beme.otherpage.model.ResponseScrap
 import retrofit2.Call
 import retrofit2.Callback

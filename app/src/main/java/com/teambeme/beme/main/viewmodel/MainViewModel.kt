@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
 import com.teambeme.beme.main.model.ResponseFbTokenRegister
-import com.teambeme.beme.main.repository.MainRepository
+import com.teambeme.beme.data.repository.MainRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

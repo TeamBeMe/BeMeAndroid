@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.model.RequestAnswerData
-import com.teambeme.beme.answer.repository.AnswerRepository
+import com.teambeme.beme.data.repository.AnswerRepository
 import com.teambeme.beme.data.local.entity.AnswerData
 import kotlinx.coroutines.launch
 import retrofit2.HttpException

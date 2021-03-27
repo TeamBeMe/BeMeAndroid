@@ -2,7 +2,7 @@ package com.teambeme.beme.mypage.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teambeme.beme.mypage.repository.MyPageRepository
+import com.teambeme.beme.data.repository.MyPageRepository
 
 class MyPageViewModelFactory(private val myRepository: MyPageRepository) :
     ViewModelProvider.Factory {

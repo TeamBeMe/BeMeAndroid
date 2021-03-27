@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.notification.model.ResponseNoticeData
-import com.teambeme.beme.notification.repository.NoticeRepository
+import com.teambeme.beme.data.repository.NoticeRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

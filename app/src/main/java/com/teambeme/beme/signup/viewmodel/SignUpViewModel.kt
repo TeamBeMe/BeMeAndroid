@@ -10,7 +10,7 @@ import com.teambeme.beme.data.remote.datasource.SignUpDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.signup.model.ResponseNickDoubleCheck
 import com.teambeme.beme.signup.model.ResponseSignUp
-import com.teambeme.beme.signup.repository.SignUpRepositoryImpl
+import com.teambeme.beme.data.repository.SignUpRepositoryImpl
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody

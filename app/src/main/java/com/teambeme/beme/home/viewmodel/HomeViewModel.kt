@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teambeme.beme.home.model.Answer
-import com.teambeme.beme.home.repository.HomeRepository
+import com.teambeme.beme.data.repository.HomeRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 

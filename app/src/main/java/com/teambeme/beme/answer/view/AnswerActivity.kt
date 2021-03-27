@@ -15,7 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.model.RequestAnswerData
-import com.teambeme.beme.answer.repository.AnswerRepositoryImpl
+import com.teambeme.beme.data.repository.AnswerRepositoryImpl
 import com.teambeme.beme.answer.viewmodel.AnswerViewModel
 import com.teambeme.beme.answer.viewmodel.AnswerViewModelFactory
 import com.teambeme.beme.base.BindingActivity

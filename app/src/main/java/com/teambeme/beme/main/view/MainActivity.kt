@@ -19,7 +19,7 @@ import com.teambeme.beme.explore.view.ExploreFragment
 import com.teambeme.beme.following.view.FollowingFragment
 import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.main.adapter.MainViewPagerAdapter
-import com.teambeme.beme.main.repository.MainRepositoryImpl
+import com.teambeme.beme.data.repository.MainRepositoryImpl
 import com.teambeme.beme.main.viewmodel.MainViewModel
 import com.teambeme.beme.main.viewmodel.MainViewModelFactory
 import com.teambeme.beme.mypage.view.MyPageFragment

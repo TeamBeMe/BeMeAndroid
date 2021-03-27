@@ -2,7 +2,7 @@ package com.teambeme.beme.explore.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teambeme.beme.explore.repository.ExploreRepository
+import com.teambeme.beme.data.repository.ExploreRepository
 
 class ExploreViewModelFactory(private val exploreRepository: ExploreRepository) :
     ViewModelProvider.Factory {

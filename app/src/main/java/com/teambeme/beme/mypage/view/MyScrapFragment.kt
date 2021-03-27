@@ -12,7 +12,7 @@ import com.teambeme.beme.data.remote.datasource.MyPageDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentMyScrapBinding
 import com.teambeme.beme.mypage.adapter.MyScrapAdapter
-import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
+import com.teambeme.beme.data.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.view.BottomWriteFragment.Companion.SCRAP_FILTER
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory

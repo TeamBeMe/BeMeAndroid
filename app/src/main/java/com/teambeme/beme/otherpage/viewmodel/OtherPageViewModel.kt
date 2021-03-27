@@ -9,7 +9,7 @@ import com.teambeme.beme.otherpage.model.ResponseOtherData
 import com.teambeme.beme.otherpage.model.ResponseOtherData.Data.Answer
 import com.teambeme.beme.otherpage.model.ResponseOtherInfo
 import com.teambeme.beme.otherpage.model.ResponseScrap
-import com.teambeme.beme.otherpage.repository.OtherPageRepository
+import com.teambeme.beme.data.repository.OtherPageRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

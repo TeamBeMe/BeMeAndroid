@@ -12,7 +12,7 @@ import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityOtherPageBinding
 import com.teambeme.beme.detail.view.BottomOtherReplyFragment
 import com.teambeme.beme.otherpage.adapter.OtherPageAdapter
-import com.teambeme.beme.otherpage.repository.OtherPageRepositoryImpl
+import com.teambeme.beme.data.repository.OtherPageRepositoryImpl
 import com.teambeme.beme.otherpage.viewmodel.OtherPageViewModel
 import com.teambeme.beme.otherpage.viewmodel.OtherPageViewModelFactory
 import com.teambeme.beme.util.StatusBarUtil

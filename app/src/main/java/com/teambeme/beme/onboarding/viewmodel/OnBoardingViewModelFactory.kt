@@ -2,7 +2,7 @@ package com.teambeme.beme.onboarding.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teambeme.beme.login.repository.LoginRepository
+import com.teambeme.beme.data.repository.LoginRepository
 
 class OnBoardingViewModelFactory(private val loginRepository: LoginRepository) :
     ViewModelProvider.Factory {

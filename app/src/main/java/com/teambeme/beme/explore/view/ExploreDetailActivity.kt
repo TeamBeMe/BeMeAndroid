@@ -11,7 +11,7 @@ import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityExploreDetailBinding
 import com.teambeme.beme.databinding.ItemExploreDetailOtherAnswersBinding
 import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
-import com.teambeme.beme.explore.repository.ExploreRepositoryImpl
+import com.teambeme.beme.data.repository.ExploreRepositoryImpl
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
 import com.teambeme.beme.explore.viewmodel.ExploreViewModelFactory
 import com.teambeme.beme.util.StatusBarUtil

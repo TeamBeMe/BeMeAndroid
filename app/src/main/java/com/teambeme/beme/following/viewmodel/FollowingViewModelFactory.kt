@@ -2,7 +2,7 @@ package com.teambeme.beme.following.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.teambeme.beme.following.repository.FollowingRepository
+import com.teambeme.beme.data.repository.FollowingRepository
 
 class FollowingViewModelFactory(private val followingRepository: FollowingRepository) :
     ViewModelProvider.Factory {
