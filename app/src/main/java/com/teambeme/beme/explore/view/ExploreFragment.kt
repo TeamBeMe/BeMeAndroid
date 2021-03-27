@@ -61,10 +61,25 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
 
     private fun setChipListener() {
         with(binding) {
-            chipExploreThink.setOnClickListener { recordClickEvent("BUTTON", "CLICK_VALUES_SEARCH") }
-            chipExploreRelationship.setOnClickListener { recordClickEvent("BUTTON", "CLICK_RELATIONSHIP_SEARCH") }
+            chipExploreThink.setOnClickListener {
+                recordClickEvent(
+                    "BUTTON",
+                    "CLICK_VALUES_SEARCH"
+                )
+            }
+            chipExploreRelationship.setOnClickListener {
+                recordClickEvent(
+                    "BUTTON",
+                    "CLICK_RELATIONSHIP_SEARCH"
+                )
+            }
             chipExploreLove.setOnClickListener { recordClickEvent("BUTTON", "CLICK_LOVE_SEARCH") }
-            chipExploreDaily.setOnClickListener { recordClickEvent("BUTTON", "CLICK_DAILYLIFE_SEARCH") }
+            chipExploreDaily.setOnClickListener {
+                recordClickEvent(
+                    "BUTTON",
+                    "CLICK_DAILYLIFE_SEARCH"
+                )
+            }
             chipExploreMe.setOnClickListener { recordClickEvent("BUTTON", "CLICK_ABOUTME_SEARCH") }
             chipExploreStory.setOnClickListener { recordClickEvent("BUTTON", "CLICK_STORY_SEARCH") }
         }
