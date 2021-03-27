@@ -18,7 +18,9 @@ import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentPersonalInfoBinding
 import com.teambeme.beme.signup.viewmodel.SignUpViewModel
 import com.teambeme.beme.util.recordClickEvent
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PersonalInfoFragment : Fragment() {
     private lateinit var binding: FragmentPersonalInfoBinding
     private val signUpViewModel: SignUpViewModel by activityViewModels()

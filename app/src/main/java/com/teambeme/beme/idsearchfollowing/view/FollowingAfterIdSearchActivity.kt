@@ -8,22 +8,17 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
-import com.teambeme.beme.data.remote.datasource.IdSearchDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityFollowingAfterIdSearchBinding
 import com.teambeme.beme.idsearchfollowing.adapter.IdSearchAdapter
 import com.teambeme.beme.idsearchfollowing.adapter.RecentSearchAdapter
-import com.teambeme.beme.data.repository.IdSearchRepositoryImpl
 import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModel
-import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModelFactory
 import com.teambeme.beme.util.StatusBarUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FollowingAfterIdSearchActivity :
     BindingActivity<ActivityFollowingAfterIdSearchBinding>(R.layout.activity_following_after_id_search) {
-    private val idSearchViewModelFactory =
-        IdSearchViewModelFactory(IdSearchRepositoryImpl(IdSearchDataSourceImpl(RetrofitObjects.getIdSearchService())))
-
-    private val idSearchViewModel: IdSearchViewModel by viewModels { idSearchViewModelFactory }
+    private val idSearchViewModel: IdSearchViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

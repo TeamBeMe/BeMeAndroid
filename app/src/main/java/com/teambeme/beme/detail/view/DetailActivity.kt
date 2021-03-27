@@ -12,23 +12,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
-import com.teambeme.beme.data.remote.datasource.DetailDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityDetailBinding
 import com.teambeme.beme.detail.adapter.ReplyAdapter
-import com.teambeme.beme.data.repository.DetailRepositoryImpl
 import com.teambeme.beme.detail.viewmodel.DetailViewModel
 import com.teambeme.beme.detail.viewmodel.DetailViewModel.Companion.MY_OTHER_REPLY
 import com.teambeme.beme.detail.viewmodel.DetailViewModel.Companion.MY_REPLY
-import com.teambeme.beme.detail.viewmodel.DetailViewModelFactory
 import com.teambeme.beme.explore.view.ExploreDetailActivity
 import com.teambeme.beme.otherpage.view.OtherPageActivity
 import com.teambeme.beme.util.StatusBarUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_detail) {
-    private val detailViewModelFactory =
-        DetailViewModelFactory(DetailRepositoryImpl(DetailDataSourceImpl(RetrofitObjects.getDetailService())))
-    private val detailViewModel: DetailViewModel by viewModels { detailViewModelFactory }
+    private val detailViewModel: DetailViewModel by viewModels()
     private var answerId: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

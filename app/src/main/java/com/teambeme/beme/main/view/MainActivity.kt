@@ -11,24 +11,20 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
-import com.teambeme.beme.data.remote.datasource.FbTokenRegisterDataSourceImpl
 import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityMainBinding
 import com.teambeme.beme.explore.view.ExploreFragment
 import com.teambeme.beme.following.view.FollowingFragment
 import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.main.adapter.MainViewPagerAdapter
-import com.teambeme.beme.data.repository.MainRepositoryImpl
 import com.teambeme.beme.main.viewmodel.MainViewModel
-import com.teambeme.beme.main.viewmodel.MainViewModelFactory
 import com.teambeme.beme.mypage.view.MyPageFragment
 import com.teambeme.beme.util.StatusBarUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
-    private val mainViewModelFactory =
-        MainViewModelFactory(MainRepositoryImpl(FbTokenRegisterDataSourceImpl(RetrofitObjects.getFbTokenRegisterService())))
-    private val mainViewModel: MainViewModel by viewModels { mainViewModelFactory }
+    private val mainViewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)

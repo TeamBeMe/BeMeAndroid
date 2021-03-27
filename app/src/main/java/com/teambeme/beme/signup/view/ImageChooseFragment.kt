@@ -27,6 +27,7 @@ import com.teambeme.beme.databinding.FragmentImageChooseBinding
 import com.teambeme.beme.signup.viewmodel.SignUpViewModel
 import com.teambeme.beme.util.recordClickEvent
 import com.theartofdev.edmodo.cropper.CropImage
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,6 +37,7 @@ import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
 
+@AndroidEntryPoint
 class ImageChooseFragment : Fragment() {
     private lateinit var binding: FragmentImageChooseBinding
     private val signUpViewModel: SignUpViewModel by activityViewModels()

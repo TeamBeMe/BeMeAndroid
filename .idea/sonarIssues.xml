@@ -188,6 +188,26 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/detail/view/BottomMyOtherReplyFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/detail/view/BottomMyReplyFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/detail/view/BottomOtherReplyFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/detail/view/DetailActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/detail/viewmodel/DetailViewModel.kt">
           <value>
             <set />
@@ -228,6 +248,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/explore/view/ExploreDetailActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/explore/view/ExploreFragment.kt">
           <value>
             <set />
@@ -243,7 +268,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/following/view/FollowingShowAllActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/following/viewmodel/FollowingViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/home/view/AnswerSuggestFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/home/view/HomeFragment.kt">
           <value>
             <set />
           </value>
@@ -293,6 +333,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/main/view/MainActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/main/viewmodel/MainViewModel.kt">
           <value>
             <set />
@@ -308,7 +353,27 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/mypage/view/BottomProfileFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/mypage/view/BottomScrapFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/mypage/view/BottomWriteFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/mypage/view/MyPageFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/mypage/view/MyScrapFragment.kt">
           <value>
             <set />
           </value>
@@ -324,6 +389,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/notification/adapter/NoticeAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/notification/view/NotificationActivity.kt">
           <value>
             <set />
           </value>
@@ -344,6 +414,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/onboarding/viewmodel/OnBoardingViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/otherpage/view/OtherPageActivity.kt">
           <value>
             <set />
           </value>

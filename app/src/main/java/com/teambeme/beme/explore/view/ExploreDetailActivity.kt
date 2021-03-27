@@ -6,29 +6,25 @@ import android.view.View
 import androidx.activity.viewModels
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
-import com.teambeme.beme.data.remote.datasource.ExploreDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityExploreDetailBinding
 import com.teambeme.beme.databinding.ItemExploreDetailOtherAnswersBinding
 import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
-import com.teambeme.beme.data.repository.ExploreRepositoryImpl
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
-import com.teambeme.beme.explore.viewmodel.ExploreViewModelFactory
 import com.teambeme.beme.util.StatusBarUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ExploreDetailActivity :
     BindingActivity<ActivityExploreDetailBinding>(R.layout.activity_explore_detail) {
-    private val exploreDetailViewModelFactory = ExploreViewModelFactory(
-        ExploreRepositoryImpl(
-            ExploreDataSourceImpl(RetrofitObjects.getExploreService())
-        )
-    )
-    private val exploreDetailViewModel: ExploreViewModel by viewModels { exploreDetailViewModelFactory }
+    private val exploreDetailViewModel: ExploreViewModel by viewModels()
     private var questionId: Int = 0
 
     override fun onRestart() {
         super.onRestart()
-        exploreDetailViewModel.requestSameQuestionsOtherAnswers(questionId, exploreDetailViewModel.tempPage)
+        exploreDetailViewModel.requestSameQuestionsOtherAnswers(
+            questionId,
+            exploreDetailViewModel.tempPage
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +33,10 @@ class ExploreDetailActivity :
         StatusBarUtil.setStatusBar(this, Color.WHITE)
         binding.exploreDetailViewModel = exploreDetailViewModel
         questionId = intent.getIntExtra("questionId", 0)
-        exploreDetailViewModel.requestSameQuestionsOtherAnswers(questionId, exploreDetailViewModel.tempPage)
+        exploreDetailViewModel.requestSameQuestionsOtherAnswers(
+            questionId,
+            exploreDetailViewModel.tempPage
+        )
         binding.lifecycleOwner = this
         binding.otherMindsTitle = intent.getStringExtra("otherMindsTitle")
         setOtherAnswersAdapter()

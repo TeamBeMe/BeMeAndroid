@@ -6,15 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemBottomOtherBinding
-import com.teambeme.beme.detail.viewmodel.DetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BottomOtherReplyFragment : BottomSheetDialogFragment() {
     private lateinit var binding: ItemBottomOtherBinding
-    private val detailViewModel: DetailViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -7,25 +7,18 @@ import androidx.activity.viewModels
 import com.google.android.material.tabs.TabLayout
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
-import com.teambeme.beme.data.remote.datasource.FollowingDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.*
 import com.teambeme.beme.following.adapter.FollowerProfilesRcvAdapter
 import com.teambeme.beme.following.adapter.FollowingProfilesRcvAdapter
 import com.teambeme.beme.following.adapter.SearchProfilesRcvAdapter
-import com.teambeme.beme.data.repository.FollowingRepositoryImpl
 import com.teambeme.beme.following.viewmodel.FollowingViewModel
-import com.teambeme.beme.following.viewmodel.FollowingViewModelFactory
 import com.teambeme.beme.util.StatusBarUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FollowingShowAllActivity :
     BindingActivity<ActivityFollowingShowAllBinding>(R.layout.activity_following_show_all) {
-    private val followingViewModelFactory = FollowingViewModelFactory(
-        FollowingRepositoryImpl(
-            FollowingDataSourceImpl(RetrofitObjects.getFollowingService())
-        )
-    )
-    private val followingShowAllViewModel: FollowingViewModel by viewModels { followingViewModelFactory }
+    private val followingShowAllViewModel: FollowingViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
@@ -236,6 +229,7 @@ class FollowingShowAllActivity :
                     }
                 }
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         }

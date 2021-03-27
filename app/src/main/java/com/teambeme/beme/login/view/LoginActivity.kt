@@ -12,26 +12,22 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
-import com.teambeme.beme.data.remote.datasource.LoginDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityLoginBinding
 import com.teambeme.beme.login.model.ResponseLogin
-import com.teambeme.beme.data.repository.LoginRepositoryImpl
 import com.teambeme.beme.login.viewmodel.LoginViewModel
-import com.teambeme.beme.login.viewmodel.LoginViewModelFactory
 import com.teambeme.beme.main.view.MainActivity
 import com.teambeme.beme.signup.view.SignUpActivity
 import com.teambeme.beme.util.KeyboardVisibilityUtils
 import com.teambeme.beme.util.StatusBarUtil
 import com.teambeme.beme.util.recordClickEvent
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private lateinit var keyboardVisibilityUtils: KeyboardVisibilityUtils
     private var visibleDisplayFrameHeight = 0
     private var keyboardHeight = 0
-    private val loginViewModelFactory =
-        LoginViewModelFactory(LoginRepositoryImpl(LoginDataSourceImpl(RetrofitObjects.getLoginService())))
-    private val loginViewModel: LoginViewModel by viewModels { loginViewModelFactory }
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +48,18 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
                 recordClickEvent("BUTTON", "CLICK_SIGN_SIGN")
                 startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
             }
-            btnRegisterFindId.setOnClickListener { recordClickEvent("BUTTON", "CLICK_SEARCHID_LOGIN") }
-            btnRegisterFindPassword.setOnClickListener { recordClickEvent("BUTTON", "CLICK_FINDPWD_LOGIN") }
+            btnRegisterFindId.setOnClickListener {
+                recordClickEvent(
+                    "BUTTON",
+                    "CLICK_SEARCHID_LOGIN"
+                )
+            }
+            btnRegisterFindPassword.setOnClickListener {
+                recordClickEvent(
+                    "BUTTON",
+                    "CLICK_FINDPWD_LOGIN"
+                )
+            }
             txtlayoutLoginPassword.setEndIconOnClickListener { loginViewModel?.setShowPassword() }
         }
         keyboardVisibilityUtils = KeyboardVisibilityUtils(window,
@@ -98,7 +104,9 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             }
         }
         loginViewModel.errorMessage.observe(this) { errorMessage ->
-            if (!errorMessage.isNullOrBlank()) { binding.linearLoginError.visibility = View.VISIBLE }
+            if (!errorMessage.isNullOrBlank()) {
+                binding.linearLoginError.visibility = View.VISIBLE
+            }
         }
     }
 

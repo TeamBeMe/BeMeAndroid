@@ -18,7 +18,9 @@ import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentTermBinding
 import com.teambeme.beme.signup.viewmodel.SignUpViewModel
 import com.teambeme.beme.util.recordClickEvent
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TermFragment : Fragment() {
     private lateinit var binding: FragmentTermBinding
     private val signUpViewModel: SignUpViewModel by activityViewModels()
@@ -56,6 +58,7 @@ class TermFragment : Fragment() {
             binding.btnTermDone.isEnabled = value && signUpViewModel.isServiceChecked.value!!
         }
     }
+
     private fun setCheckBoxListener() {
         binding.checkboxTermEssence.setOnCheckedChangeListener { _, isChecked ->
             signUpViewModel.isPersonalChecked.value = isChecked

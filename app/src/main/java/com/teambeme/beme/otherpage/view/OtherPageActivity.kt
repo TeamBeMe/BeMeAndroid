@@ -7,20 +7,16 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
-import com.teambeme.beme.data.remote.datasource.OtherPageDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityOtherPageBinding
 import com.teambeme.beme.detail.view.BottomOtherReplyFragment
 import com.teambeme.beme.otherpage.adapter.OtherPageAdapter
-import com.teambeme.beme.data.repository.OtherPageRepositoryImpl
 import com.teambeme.beme.otherpage.viewmodel.OtherPageViewModel
-import com.teambeme.beme.otherpage.viewmodel.OtherPageViewModelFactory
 import com.teambeme.beme.util.StatusBarUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OtherPageActivity : BindingActivity<ActivityOtherPageBinding>(R.layout.activity_other_page) {
-    private val otherViewModelFactory =
-        OtherPageViewModelFactory(OtherPageRepositoryImpl(OtherPageDataSourceImpl(RetrofitObjects.getOtherPageService())))
-    private val otherViewModel: OtherPageViewModel by viewModels { otherViewModelFactory }
+    private val otherViewModel: OtherPageViewModel by viewModels()
     private var userId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {

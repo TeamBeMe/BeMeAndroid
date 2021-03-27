@@ -13,21 +13,17 @@ import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
-import com.teambeme.beme.data.remote.datasource.LoginDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityOnBoardingBinding
-import com.teambeme.beme.data.repository.LoginRepositoryImpl
 import com.teambeme.beme.login.view.LoginActivity
 import com.teambeme.beme.main.view.MainActivity
 import com.teambeme.beme.onboarding.adapter.OnBoardingAdapter
 import com.teambeme.beme.onboarding.viewmodel.OnBoardingViewModel
-import com.teambeme.beme.onboarding.viewmodel.OnBoardingViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OnBoardingActivity :
     BindingActivity<ActivityOnBoardingBinding>(R.layout.activity_on_boarding) {
-    private val onBoardingViewModelFactory =
-        OnBoardingViewModelFactory(LoginRepositoryImpl(LoginDataSourceImpl(RetrofitObjects.getLoginService())))
-    private val viewModel by viewModels<OnBoardingViewModel>() { onBoardingViewModelFactory }
+    private val viewModel by viewModels<OnBoardingViewModel>()
     private lateinit var onBoardingAdapter: OnBoardingAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

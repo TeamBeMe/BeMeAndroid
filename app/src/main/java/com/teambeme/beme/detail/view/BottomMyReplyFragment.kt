@@ -12,7 +12,9 @@ import com.teambeme.beme.R
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.databinding.ItemBottomMyBinding
 import com.teambeme.beme.detail.viewmodel.DetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BottomMyReplyFragment(private val child: Boolean) : BottomSheetDialogFragment() {
     private lateinit var binding: ItemBottomMyBinding
     private val detailViewModel: DetailViewModel by activityViewModels()
@@ -24,7 +26,7 @@ class BottomMyReplyFragment(private val child: Boolean) : BottomSheetDialogFragm
         binding = DataBindingUtil.inflate(inflater, R.layout.item_bottom_my, container, false)
         binding.lifecycleOwner = this
         binding.detailViewModel = detailViewModel
-        if (child == true) {
+        if (child) {
             onAnswerListener()
         } else {
             onReplyListener()
