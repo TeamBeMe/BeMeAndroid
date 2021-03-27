@@ -5,8 +5,11 @@ import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
 import retrofit2.Call
+import javax.inject.Inject
 
-class ExploreRepositoryImpl(private val exploreDataSource: ExploreDataSource) : ExploreRepository {
+class ExploreRepositoryImpl @Inject constructor(
+    private val exploreDataSource: ExploreDataSource
+) : ExploreRepository {
     override fun getExplorationOtherQuestions(
         page: Int,
         category: Int?

@@ -5,9 +5,11 @@ import com.teambeme.beme.otherpage.model.ResponseFollow
 import com.teambeme.beme.otherpage.model.ResponseOtherInfo
 import com.teambeme.beme.otherpage.model.ResponseScrap
 import retrofit2.Call
+import javax.inject.Inject
 
-class OtherPageRepositoryImpl(private val otherDataSource: OtherPageDataSource) :
-    OtherPageRepository {
+class OtherPageRepositoryImpl @Inject constructor(
+    private val otherDataSource: OtherPageDataSource
+) : OtherPageRepository {
     override fun getProfileAnswer(userId: Int, page: Int) =
         otherDataSource.getProfileAnswer(userId, page)
 

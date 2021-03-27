@@ -7,9 +7,11 @@ import com.teambeme.beme.mypage.model.ResponseMyScrap
 import com.teambeme.beme.mypage.model.ResponsePublic
 import okhttp3.MultipartBody
 import retrofit2.Call
+import javax.inject.Inject
 
-class MyPageRepositoryImpl(private val myDataSource: MyPageDataSource) :
-    MyPageRepository {
+class MyPageRepositoryImpl @Inject constructor(
+    private val myDataSource: MyPageDataSource
+) : MyPageRepository {
     override fun putProfile(file: MultipartBody.Part?) =
         myDataSource.putProfile(file)
 

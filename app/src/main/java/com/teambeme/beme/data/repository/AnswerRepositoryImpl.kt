@@ -5,8 +5,9 @@ import com.teambeme.beme.answer.model.ResponseAnswerStatus
 import com.teambeme.beme.data.local.dao.AnswerDao
 import com.teambeme.beme.data.local.entity.AnswerData
 import com.teambeme.beme.data.remote.datasource.AnswerDataSource
+import javax.inject.Inject
 
-class AnswerRepositoryImpl(
+class AnswerRepositoryImpl @Inject constructor(
     private val answerDao: AnswerDao,
     private val answerDataSource: AnswerDataSource
 ) : AnswerRepository {

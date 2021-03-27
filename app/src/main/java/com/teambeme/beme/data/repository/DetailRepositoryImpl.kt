@@ -4,9 +4,11 @@ import com.teambeme.beme.data.remote.datasource.DetailDataSource
 import com.teambeme.beme.detail.model.*
 import com.teambeme.beme.otherpage.model.ResponseScrap
 import retrofit2.Call
+import javax.inject.Inject
 
-class DetailRepositoryImpl(private val detailDataSource: DetailDataSource) :
-    DetailRepository {
+class DetailRepositoryImpl @Inject constructor(
+    private val detailDataSource: DetailDataSource
+) : DetailRepository {
     override fun getDetail(answerId: Int): Call<ResponseDetail> =
         detailDataSource.getDetail(answerId)
 

@@ -4,8 +4,11 @@ import com.teambeme.beme.data.remote.datasource.SignUpDataSource
 import com.teambeme.beme.signup.model.ResponseSignUp
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import javax.inject.Inject
 
-class SignUpRepositoryImpl(private val signUpDataSource: SignUpDataSource) : SignUpRepository {
+class SignUpRepositoryImpl @Inject constructor(
+    private val signUpDataSource: SignUpDataSource
+) : SignUpRepository {
     override suspend fun signUp(
         body: HashMap<String, RequestBody>,
         image: MultipartBody.Part?

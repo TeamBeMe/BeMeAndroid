@@ -2,9 +2,11 @@ package com.teambeme.beme.data.repository
 
 import com.teambeme.beme.data.remote.datasource.IdSearchDataSource
 import com.teambeme.beme.idsearchfollowing.model.RequestFollowAndFollowing
+import javax.inject.Inject
 
-class IdSearchRepositoryImpl(private val idSearchDataSource: IdSearchDataSource) :
-    IdSearchRepository {
+class IdSearchRepositoryImpl @Inject constructor(
+    private val idSearchDataSource: IdSearchDataSource
+) : IdSearchRepository {
     override fun idSearch(query: String, range: String) = idSearchDataSource.idSearch(query, range)
 
     override fun getRecentSearchRecord() = idSearchDataSource.getRecentSearchRecord()
