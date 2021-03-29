@@ -21,6 +21,7 @@ import com.teambeme.beme.following.adapter.FollowerProfilesRcvAdapter
 import com.teambeme.beme.following.adapter.FollowingProfilesRcvAdapter
 import com.teambeme.beme.following.viewmodel.FollowingViewModel
 import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
+import com.teambeme.beme.main.viewmodel.EventViewModel
 import com.teambeme.beme.notification.view.NotificationActivity
 import com.teambeme.beme.util.recordClickEvent
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fragment_following) {
     private val followingViewModel: FollowingViewModel by activityViewModels()
+    private val eventViewModel: EventViewModel by activityViewModels()
 
     override fun onResume() {
         super.onResume()
@@ -59,6 +61,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         setDoAnswerDataObserve()
         setIsMorePageObserve()
         setListenerForPullRefreshLayout()
+        setScrollToTop()
         return binding.root
     }
 
@@ -281,7 +284,9 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         }
     }
 
-    fun setScrollToTop() {
-        view?.let { binding.nestedScrollViewFollowing.smoothScrollTo(0, it.top) }
+    private fun setScrollToTop() {
+        eventViewModel.thirdButtonClicked.observe(viewLifecycleOwner) {
+            binding.nestedScrollViewFollowing.apply { smoothScrollTo(0, this.top) }
+        }
     }
 }

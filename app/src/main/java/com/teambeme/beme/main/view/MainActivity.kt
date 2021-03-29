@@ -13,18 +13,16 @@ import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
 import com.teambeme.beme.databinding.ActivityMainBinding
-import com.teambeme.beme.explore.view.ExploreFragment
-import com.teambeme.beme.following.view.FollowingFragment
-import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.main.adapter.MainViewPagerAdapter
+import com.teambeme.beme.main.viewmodel.EventViewModel
 import com.teambeme.beme.main.viewmodel.MainViewModel
-import com.teambeme.beme.mypage.view.MyPageFragment
 import com.teambeme.beme.util.StatusBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val mainViewModel: MainViewModel by viewModels()
+    private val eventViewModel: EventViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
@@ -37,10 +35,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 )
                 return@OnCompleteListener
             } else {
-                // Get new FCM registration token
                 val token = task.result
                 BeMeAuthPreference.fireBaseToken = token ?: "SomeThing"
-                // Log and toast
                 val msg = getString(R.string.msg_token_fmt, token)
                 Log.d("BeMeApplication.TAG", msg)
             }
@@ -57,7 +53,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 R.id.menu_main_home -> {
                     binding.vpMain.currentItem = 0
                     StatusBarUtil.setStatusBar(this, Color.BLACK)
-                    setViewPagerDefaultPosition()
                 }
                 R.id.menu_main_explore -> {
                     binding.vpMain.currentItem = 1
@@ -72,6 +67,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
                 }
             }
+            eventViewModel.buttonClickedAt(binding.vpMain.currentItem)
             true
         }
     }
@@ -79,14 +75,17 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun setBottomNavigationReSelectListener(bottomNavigationView: BottomNavigationView) {
         bottomNavigationView.setOnNavigationItemReselectedListener { item ->
             when (item.itemId) {
+                R.id.menu_main_home -> {
+                    eventViewModel.buttonClickedAt(0)
+                }
                 R.id.menu_main_explore -> {
-                    setExploreFragmentScrollToTop()
+                    eventViewModel.buttonClickedAt(1)
                 }
                 R.id.menu_main_following -> {
-                    setFollowingFragmentScrollToTop()
+                    eventViewModel.buttonClickedAt(2)
                 }
                 R.id.menu_main_mypage -> {
-                    setMyPageFragmentScrollToTop()
+                    eventViewModel.buttonClickedAt(3)
                 }
             }
         }
@@ -100,26 +99,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             requestDisallowInterceptTouchEvent(false)
             isUserInputEnabled = false
         }
-    }
-
-    private fun setViewPagerDefaultPosition() {
-        val homeFragment = supportFragmentManager.findFragmentByTag("f0") as HomeFragment
-        homeFragment.returnToDefaultPosition()
-    }
-
-    private fun setExploreFragmentScrollToTop() {
-        val exploreFragment = supportFragmentManager.findFragmentByTag("f1") as ExploreFragment
-        exploreFragment.setScrollToTop()
-    }
-
-    private fun setFollowingFragmentScrollToTop() {
-        val followingFragment = supportFragmentManager.findFragmentByTag("f2") as FollowingFragment
-        followingFragment.setScrollToTop()
-    }
-
-    private fun setMyPageFragmentScrollToTop() {
-        val mypageFragment = supportFragmentManager.findFragmentByTag("f3") as MyPageFragment
-        mypageFragment.setScrollToTop()
     }
 
     private inner class PageChangeCallBack : ViewPager2.OnPageChangeCallback() {

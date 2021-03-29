@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.observe
 import com.google.android.material.tabs.TabLayoutMediator
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentMyPageBinding
+import com.teambeme.beme.main.viewmodel.EventViewModel
 import com.teambeme.beme.mypage.adapter.MyPageViewPagerAdapter
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 import com.teambeme.beme.setting.view.SettingActivity
@@ -21,7 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MyPageFragment : Fragment() {
     private lateinit var binding: FragmentMyPageBinding
-    private val mypageViewModel: MyPageViewModel by activityViewModels()
+    private val myPageViewModel: MyPageViewModel by activityViewModels()
+    private val eventViewModel: EventViewModel by activityViewModels()
     private var isChangeProfile: Boolean = false
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,15 +30,16 @@ class MyPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         setViewPagerAdapter()
-        binding.myPageViewModel = mypageViewModel
-        mypageViewModel.profileUri.observe(viewLifecycleOwner) {
+        binding.myPageViewModel = myPageViewModel
+        myPageViewModel.profileUri.observe(viewLifecycleOwner) {
             editProfileListener(it)
             isChangeProfile = true
         }
         binding.btnMypageProfile.setOnClickListener { editProfileClickListener() }
         settingClickListener()
+        setScrollToTop()
         return binding.root
     }
 
@@ -46,7 +48,7 @@ class MyPageFragment : Fragment() {
         if (isChangeProfile) {
             isChangeProfile = false
         } else {
-            mypageViewModel.getMyProfile()
+            myPageViewModel.getMyProfile()
         }
     }
 
@@ -80,18 +82,13 @@ class MyPageFragment : Fragment() {
             childFragmentManager,
             bottomSheetFragment.tag
         )
-        mypageViewModel.scrapFilterOnClickFalse()
+        myPageViewModel.scrapFilterOnClickFalse()
     }
 
-    fun setScrollToTop() {
+    private fun setScrollToTop() {
         binding.appbarLayoutMypage.setExpanded(true, true)
-
-        if (binding.tabMypage.selectedTabPosition == 0) {
-            val myWriteFragment = childFragmentManager.findFragmentByTag("f0") as MyWriteFragment
-            myWriteFragment.setScrollToTop()
-        } else {
-            val myScrapFragment = childFragmentManager.findFragmentByTag("f1") as MyScrapFragment
-            myScrapFragment.setScrollToTop()
+        eventViewModel.fourthButtonClicked.observe(viewLifecycleOwner) {
+            myPageViewModel.scrollUp(binding.tabMypage.selectedTabPosition)
         }
     }
 }
