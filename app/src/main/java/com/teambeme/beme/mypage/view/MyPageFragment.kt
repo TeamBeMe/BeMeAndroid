@@ -84,13 +84,13 @@ class MyPageFragment : Fragment() {
 
     fun setScrollToTop() {
         binding.appbarLayoutMypage.setExpanded(true, true)
-
-        if (binding.tabMypage.selectedTabPosition == 0) {
-            val myWriteFragment = childFragmentManager.findFragmentByTag("f0") as MyWriteFragment
-            myWriteFragment.setScrollToTop()
-        } else {
-            val myScrapFragment = childFragmentManager.findFragmentByTag("f1") as MyScrapFragment
-            myScrapFragment.setScrollToTop()
-        }
+        myPageViewModel.scrollUp(binding.tabMypage.selectedTabPosition)
+//        if (binding.tabMypage.selectedTabPosition == 0) {
+//            val myWriteFragment = childFragmentManager.findFragmentByTag("f0") as MyWriteFragment
+//            myWriteFragment.setScrollToTop()
+//        } else {
+//            val myScrapFragment = childFragmentManager.findFragmentByTag("f1") as MyScrapFragment
+//            myScrapFragment.setScrollToTop()
+//        }
     }
 }

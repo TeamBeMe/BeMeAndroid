@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.observe
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.databinding.FragmentMyScrapBinding
@@ -34,6 +33,7 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
         setIsScrapMaxObserve()
         setIsScrapEmptyObserve()
         setSearchView()
+        setScrollToTop()
         return binding.root
     }
 
@@ -130,7 +130,9 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
         })
     }
 
-    fun setScrollToTop() {
-        view?.let { binding.nestedScrollViewMyscrap.smoothScrollTo(0, it.top) }
+    private fun setScrollToTop() {
+        mypageViewModel.scrapScrollUp.observe(viewLifecycleOwner) {
+            binding.nestedScrollViewMyscrap.apply { smoothScrollTo(0, this.top) }
+        }
     }
 }

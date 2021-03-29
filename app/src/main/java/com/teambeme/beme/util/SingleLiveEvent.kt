@@ -1,3 +1,5 @@
+package com.teambeme.beme.util
+
 import android.util.Log
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
@@ -33,6 +35,6 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
     }
 
     companion object {
-        private val TAG = "SingleLiveEvent"
+        private const val TAG = "com.teambeme.beme.util.SingleLiveEvent"
     }
 }

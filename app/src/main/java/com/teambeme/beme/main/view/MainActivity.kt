@@ -17,6 +17,7 @@ import com.teambeme.beme.explore.view.ExploreFragment
 import com.teambeme.beme.following.view.FollowingFragment
 import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.main.adapter.MainViewPagerAdapter
+import com.teambeme.beme.main.viewmodel.EventViewModel
 import com.teambeme.beme.main.viewmodel.MainViewModel
 import com.teambeme.beme.mypage.view.MyPageFragment
 import com.teambeme.beme.util.StatusBarUtil
@@ -25,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val mainViewModel: MainViewModel by viewModels()
+    private val eventViewModel: EventViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
@@ -79,6 +81,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     private fun setBottomNavigationReSelectListener(bottomNavigationView: BottomNavigationView) {
         bottomNavigationView.setOnNavigationItemReselectedListener { item ->
             when (item.itemId) {
+                R.id.menu_main_home -> {
+                    setViewPagerDefaultPosition()
+                }
                 R.id.menu_main_explore -> {
                     setExploreFragmentScrollToTop()
                 }

@@ -1,6 +1,6 @@
 package com.teambeme.beme.mypage.viewmodel
 
-import SingleLiveEvent
+import com.teambeme.beme.util.SingleLiveEvent
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -30,9 +30,13 @@ class MyPageViewModel @Inject constructor(
     val myProfileInfo: LiveData<ResponseMyProfile.Data>
         get() = _myProfileInfo
 
-    private val _tabButtonClick = SingleLiveEvent<Unit>()
-    val tabButtonClick: LiveData<Unit>
-        get() = _tabButtonClick
+    private val _writeScrollUp = SingleLiveEvent<Unit>()
+    val writeScrollUp: LiveData<Unit>
+        get() = _writeScrollUp
+
+    private val _scrapScrollUp = SingleLiveEvent<Unit>()
+    val scrapScrollUp: LiveData<Unit>
+        get() = _scrapScrollUp
 
     private var page = 1
     private var scrapPage = 1
@@ -308,5 +312,12 @@ class MyPageViewModel @Inject constructor(
 
     fun writeFilterOnClickFalse() {
         _isWriteFilterClicked.value = false
+    }
+
+    fun scrollUp(selectedTabPosition: Int) {
+        when (selectedTabPosition) {
+            0 -> _writeScrollUp.call()
+            else -> _scrapScrollUp.call()
+        }
     }
 }

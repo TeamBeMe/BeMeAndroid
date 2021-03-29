@@ -36,6 +36,7 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
         setIsAnswerEmptyObserve()
         setImgWriteFilterClickListener()
         setSearchView()
+        setScrollToTop()
         return binding.root
     }
 
@@ -140,7 +141,9 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
         })
     }
 
-    fun setScrollToTop() {
-        view?.let { binding.nestedScrollViewMywrite.smoothScrollTo(0, it.top) }
+    private fun setScrollToTop() {
+        mypageViewModel.writeScrollUp.observe(viewLifecycleOwner) {
+            binding.nestedScrollViewMywrite.apply { smoothScrollTo(0, this.top) }
+        }
     }
 }
