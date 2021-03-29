@@ -28,7 +28,7 @@ class MyPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         setViewPagerAdapter()
         binding.myPageViewModel = myPageViewModel
         myPageViewModel.profileUri.observe(viewLifecycleOwner) {

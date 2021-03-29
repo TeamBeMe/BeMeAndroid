@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.observe
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.databinding.FragmentMyWriteBinding
@@ -27,7 +26,7 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding.myPageViewModel = mypageViewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         mypageViewModel.initMyAnswer()
         setMyWriteAdapter()
         setMyWriteObserve()

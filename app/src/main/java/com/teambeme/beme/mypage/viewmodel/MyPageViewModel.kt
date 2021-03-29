@@ -1,5 +1,6 @@
 package com.teambeme.beme.mypage.viewmodel
 
+import SingleLiveEvent
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -28,6 +29,10 @@ class MyPageViewModel @Inject constructor(
     private val _myProfileInfo = MutableLiveData<ResponseMyProfile.Data>()
     val myProfileInfo: LiveData<ResponseMyProfile.Data>
         get() = _myProfileInfo
+
+    private val _tabButtonClick = SingleLiveEvent<Unit>()
+    val tabButtonClick: LiveData<Unit>
+        get() = _tabButtonClick
 
     private var page = 1
     private var scrapPage = 1

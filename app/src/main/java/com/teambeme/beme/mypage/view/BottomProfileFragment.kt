@@ -43,7 +43,7 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.item_bottom_profile, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.mypageViewModel = mypageViewModel
         binding.tbProfilebottomEdit.setOnClickListener {
             addPermission()

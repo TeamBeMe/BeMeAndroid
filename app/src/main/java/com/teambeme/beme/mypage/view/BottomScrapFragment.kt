@@ -23,7 +23,7 @@ class BottomScrapFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.item_bottom_scrap, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.myPageViewModel = mypageViewModel
         binding.txtScrapsheetApply.setOnClickListener {
             applyFilter()

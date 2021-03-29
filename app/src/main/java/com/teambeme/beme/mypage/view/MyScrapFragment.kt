@@ -24,7 +24,7 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.myPageViewModel = mypageViewModel
         mypageViewModel.initScrap()
         setMyScrapAdapter()
