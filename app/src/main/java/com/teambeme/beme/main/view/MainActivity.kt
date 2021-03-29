@@ -39,10 +39,8 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 )
                 return@OnCompleteListener
             } else {
-                // Get new FCM registration token
                 val token = task.result
                 BeMeAuthPreference.fireBaseToken = token ?: "SomeThing"
-                // Log and toast
                 val msg = getString(R.string.msg_token_fmt, token)
                 Log.d("BeMeApplication.TAG", msg)
             }
@@ -59,7 +57,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 R.id.menu_main_home -> {
                     binding.vpMain.currentItem = 0
                     StatusBarUtil.setStatusBar(this, Color.BLACK)
-                    setViewPagerDefaultPosition()
                 }
                 R.id.menu_main_explore -> {
                     binding.vpMain.currentItem = 1
@@ -74,6 +71,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                     StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
                 }
             }
+            eventViewModel.buttonClickedAt(binding.vpMain.currentItem)
             true
         }
     }

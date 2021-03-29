@@ -20,12 +20,14 @@ import com.teambeme.beme.databinding.FragmentHomeBinding
 import com.teambeme.beme.home.adapter.QuestionPagerAdapter
 import com.teambeme.beme.home.model.Answer
 import com.teambeme.beme.home.viewmodel.HomeViewModel
+import com.teambeme.beme.main.viewmodel.EventViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
 
 @AndroidEntryPoint
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val homeViewModel: HomeViewModel by activityViewModels()
+    private val eventViewModel: EventViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -81,6 +83,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         homeViewModel.successMessage.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
+        eventViewModel.firstButtonClicked.observe(viewLifecycleOwner) { returnToDefaultPosition() }
     }
 
     private fun setAnswerPager(pagerAdapter: QuestionPagerAdapter) {
