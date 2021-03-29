@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentMyPageBinding
+import com.teambeme.beme.main.viewmodel.EventViewModel
 import com.teambeme.beme.mypage.adapter.MyPageViewPagerAdapter
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 import com.teambeme.beme.setting.view.SettingActivity
@@ -21,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MyPageFragment : Fragment() {
     private lateinit var binding: FragmentMyPageBinding
     private val myPageViewModel: MyPageViewModel by activityViewModels()
+    private val eventViewModel: EventViewModel by activityViewModels()
     private var isChangeProfile: Boolean = false
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +39,7 @@ class MyPageFragment : Fragment() {
         }
         binding.btnMypageProfile.setOnClickListener { editProfileClickListener() }
         settingClickListener()
+        setScrollToTop()
         return binding.root
     }
 
@@ -82,15 +85,10 @@ class MyPageFragment : Fragment() {
         myPageViewModel.scrapFilterOnClickFalse()
     }
 
-    fun setScrollToTop() {
+    private fun setScrollToTop() {
         binding.appbarLayoutMypage.setExpanded(true, true)
-        myPageViewModel.scrollUp(binding.tabMypage.selectedTabPosition)
-//        if (binding.tabMypage.selectedTabPosition == 0) {
-//            val myWriteFragment = childFragmentManager.findFragmentByTag("f0") as MyWriteFragment
-//            myWriteFragment.setScrollToTop()
-//        } else {
-//            val myScrapFragment = childFragmentManager.findFragmentByTag("f1") as MyScrapFragment
-//            myScrapFragment.setScrollToTop()
-//        }
+        eventViewModel.fourthButtonClicked.observe(viewLifecycleOwner) {
+            myPageViewModel.scrollUp(binding.tabMypage.selectedTabPosition)
+        }
     }
 }

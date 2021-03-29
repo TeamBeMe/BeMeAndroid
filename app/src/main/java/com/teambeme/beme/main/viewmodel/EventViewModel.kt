@@ -26,5 +26,4 @@ class EventViewModel : ViewModel() {
             else -> _fourthButtonClicked.call()
         }
     }
-
 }

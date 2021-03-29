@@ -16,6 +16,7 @@ import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
 import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
+import com.teambeme.beme.main.viewmodel.EventViewModel
 import com.teambeme.beme.notification.view.NotificationActivity
 import com.teambeme.beme.util.recordClickEvent
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragment_explore) {
     private val exploreViewModel: ExploreViewModel by activityViewModels()
-
+    private val eventViewModel: EventViewModel by activityViewModels()
     override fun onResume() {
         super.onResume()
         exploreViewModel.requestOtherQuestionsWithCategorySorting(
@@ -49,6 +50,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         setIntentAnswerObserve()
         setListenerForPullRefreshLayout()
         setChipListener()
+        setScrollToTop()
         return binding.root
     }
 
@@ -162,7 +164,9 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         }
     }
 
-    fun setScrollToTop() {
-        view?.let { binding.stickyScrollViewExplore.smoothScrollTo(0, it.top) }
+    private fun setScrollToTop() {
+        eventViewModel.secondButtonClicked.observe(viewLifecycleOwner) {
+            binding.stickyScrollViewExplore.apply { smoothScrollTo(0, this.top) }
+        }
     }
 }
