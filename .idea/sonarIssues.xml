@@ -468,6 +468,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/util/SingleLiveEvent.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/drawable/ic_onboarding_04_compress.xml">
           <value>
             <set />
@@ -629,6 +634,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../MARU_Android/gradle/wrapper/gradle-wrapper.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../MVPArchitecture/buildSrc/build.gradle.kts">
           <value>
             <set />
           </value>
