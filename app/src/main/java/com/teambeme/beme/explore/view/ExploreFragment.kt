@@ -6,10 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.logEvent
-import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
@@ -25,6 +21,7 @@ import com.teambeme.beme.explore.viewmodel.ExploreViewModelFactory
 import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
 import com.teambeme.beme.notification.view.NotificationActivity
+import com.teambeme.beme.util.RecordScreenUtil
 import com.teambeme.beme.util.recordClickEvent
 
 class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragment_explore) {
@@ -37,7 +34,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
 
     override fun onResume() {
         super.onResume()
-        recordScreen()
+        RecordScreenUtil.recordScreen("ExploreFragment", "MainActivity")
         exploreViewModel.requestOtherQuestionsWithCategorySorting(
             exploreViewModel.categoryNum,
             exploreViewModel.tempPage
@@ -61,15 +58,8 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         setIntentAnswerObserve()
         setListenerForPullRefreshLayout()
         setChipListener()
-        recordScreen()
+        RecordScreenUtil.recordScreen("ExploreFragment", "MainActivity")
         return binding.root
-    }
-
-    private fun recordScreen() {
-        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, "ExploreFragment")
-            param(FirebaseAnalytics.Param.SCREEN_CLASS, "MainActivity")
-        }
     }
 
     private fun setChipListener() {

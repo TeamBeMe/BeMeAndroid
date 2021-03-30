@@ -6,10 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.logEvent
-import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.data.remote.datasource.MyPageDataSourceImpl
@@ -20,6 +16,7 @@ import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.view.BottomWriteFragment.Companion.SCRAP_FILTER
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
+import com.teambeme.beme.util.RecordScreenUtil
 
 class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragment_my_scrap) {
     private val myViewModelFactory =
@@ -42,22 +39,15 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
         setIsScrapMaxObserve()
         setIsScrapEmptyObserve()
         setSearchView()
-        recordScreen()
+        RecordScreenUtil.recordScreen("MyPage_MyScrapFragment", "MainActivity")
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        recordScreen()
+        RecordScreenUtil.recordScreen("MyPage_MyScrapFragment", "MainActivity")
         mypageViewModel.initScrapPage()
         mypageViewModel.getMyScrap()
-    }
-
-    private fun recordScreen() {
-        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, "MyPage_MyScrapFragment")
-            param(FirebaseAnalytics.Param.SCREEN_CLASS, "MainActivity")
-        }
     }
 
     private fun setMyScrapAdapter() {

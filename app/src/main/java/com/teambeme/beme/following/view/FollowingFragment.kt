@@ -8,17 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.logEvent
-import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.data.remote.datasource.FollowingDataSourceImpl
 import com.teambeme.beme.data.remote.singleton.RetrofitObjects
-import com.teambeme.beme.databinding.*
+import com.teambeme.beme.databinding.FragmentFollowingBinding
+import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
+import com.teambeme.beme.databinding.ItemFollowingProfilesOfFollowerBinding
+import com.teambeme.beme.databinding.ItemFollowingProfilesOfFollowingBinding
 import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
 import com.teambeme.beme.following.adapter.FollowerProfilesRcvAdapter
 import com.teambeme.beme.following.adapter.FollowingProfilesRcvAdapter
@@ -27,6 +26,7 @@ import com.teambeme.beme.following.viewmodel.FollowingViewModel
 import com.teambeme.beme.following.viewmodel.FollowingViewModelFactory
 import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
 import com.teambeme.beme.notification.view.NotificationActivity
+import com.teambeme.beme.util.RecordScreenUtil
 import com.teambeme.beme.util.recordClickEvent
 
 class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fragment_following) {
@@ -38,7 +38,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
     private val followingViewModel: FollowingViewModel by activityViewModels { followingViewModelFactory }
 
     override fun onResume() {
-        recordScreen()
+        RecordScreenUtil.recordScreen("FollowingFragment", "MainActivity")
         super.onResume()
         followingViewModel.requestFollowingFollowerAnswers(followingViewModel.tempPage)
         followingViewModel.requestFollowerFollowingList()
@@ -68,15 +68,8 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         setDoAnswerDataObserve()
         setIsMorePageObserve()
         setListenerForPullRefreshLayout()
-        recordScreen()
+        RecordScreenUtil.recordScreen("FollowingFragment", "MainActivity")
         return binding.root
-    }
-
-    private fun recordScreen() {
-        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, "FollowingFragment")
-            param(FirebaseAnalytics.Param.SCREEN_CLASS, "MainActivity")
-        }
     }
 
     private fun setIsMorePageObserve() {
