@@ -12,8 +12,6 @@ import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.base.BindingFragment
-import com.teambeme.beme.data.remote.datasource.FollowingDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentFollowingBinding
 import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
 import com.teambeme.beme.databinding.ItemFollowingProfilesOfFollowerBinding
