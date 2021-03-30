@@ -86,8 +86,8 @@ class MyPageFragment : Fragment() {
     }
 
     private fun setScrollToTop() {
-        binding.appbarLayoutMypage.setExpanded(true, true)
         eventViewModel.fourthButtonClicked.observe(viewLifecycleOwner) {
+            binding.appbarLayoutMypage.setExpanded(true, true)
             myPageViewModel.scrollUp(binding.tabMypage.selectedTabPosition)
         }
     }

@@ -61,7 +61,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 R.id.menu_main_home -> {
                     binding.vpMain.currentItem = 2
                     StatusBarUtil.setStatusBar(this, resources.getColor(R.color.black, null))
-                    setViewPagerDefaultPosition()
                 }
                 R.id.menu_main_mypage -> {
                     binding.vpMain.currentItem = 3
