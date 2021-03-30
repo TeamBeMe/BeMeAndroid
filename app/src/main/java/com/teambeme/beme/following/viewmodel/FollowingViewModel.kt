@@ -4,15 +4,20 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.teambeme.beme.data.repository.FollowingRepository
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
 import com.teambeme.beme.following.model.*
-import com.teambeme.beme.following.repository.FollowingRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class FollowingViewModel(private val followingRepository: FollowingRepository) : ViewModel() {
+@HiltViewModel
+class FollowingViewModel @Inject constructor(
+    private val followingRepository: FollowingRepository
+) : ViewModel() {
     private var tempFollowingFollowerAnswersList: MutableList<ResponseExplorationQuestions.Data.Answer>? =
         mutableListOf()
     private val _followingAnswersList =

@@ -4,8 +4,11 @@ import com.teambeme.beme.data.remote.api.MyPageService
 import com.teambeme.beme.mypage.model.*
 import okhttp3.MultipartBody
 import retrofit2.Call
+import javax.inject.Inject
 
-class MyPageDataSourceImpl(private val service: MyPageService) : MyPageDataSource {
+class MyPageDataSourceImpl @Inject constructor(
+    private val service: MyPageService
+) : MyPageDataSource {
     override fun putProfile(
         file: MultipartBody.Part?
     ): Call<ResponseProfile> {

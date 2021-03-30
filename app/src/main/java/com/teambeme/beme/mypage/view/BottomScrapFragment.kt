@@ -8,18 +8,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.teambeme.beme.R
-import com.teambeme.beme.data.remote.datasource.MyPageDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ItemBottomScrapBinding
-import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
-import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BottomScrapFragment : BottomSheetDialogFragment() {
     private lateinit var binding: ItemBottomScrapBinding
-    private val myViewModelFactory =
-        MyPageViewModelFactory(MyPageRepositoryImpl(MyPageDataSourceImpl(RetrofitObjects.getMyPageService())))
-    private val mypageViewModel: MyPageViewModel by activityViewModels { myViewModelFactory }
+    private val mypageViewModel: MyPageViewModel by activityViewModels()
     private var category: Int? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +23,7 @@ class BottomScrapFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.item_bottom_scrap, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.myPageViewModel = mypageViewModel
         binding.txtScrapsheetApply.setOnClickListener {
             applyFilter()

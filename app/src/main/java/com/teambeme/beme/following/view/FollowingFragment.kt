@@ -21,21 +21,18 @@ import com.teambeme.beme.databinding.ItemFollowingProfilesOfFollowingBinding
 import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
 import com.teambeme.beme.following.adapter.FollowerProfilesRcvAdapter
 import com.teambeme.beme.following.adapter.FollowingProfilesRcvAdapter
-import com.teambeme.beme.following.repository.FollowingRepositoryImpl
 import com.teambeme.beme.following.viewmodel.FollowingViewModel
-import com.teambeme.beme.following.viewmodel.FollowingViewModelFactory
 import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
+import com.teambeme.beme.main.viewmodel.EventViewModel
 import com.teambeme.beme.notification.view.NotificationActivity
 import com.teambeme.beme.util.RecordScreenUtil
 import com.teambeme.beme.util.recordClickEvent
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fragment_following) {
-    private val followingViewModelFactory = FollowingViewModelFactory(
-        FollowingRepositoryImpl(
-            FollowingDataSourceImpl(RetrofitObjects.getFollowingService())
-        )
-    )
-    private val followingViewModel: FollowingViewModel by activityViewModels { followingViewModelFactory }
+    private val followingViewModel: FollowingViewModel by activityViewModels()
+    private val eventViewModel: EventViewModel by activityViewModels()
 
     override fun onResume() {
         RecordScreenUtil.recordScreen("FollowingFragment")
@@ -69,6 +66,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         setIsMorePageObserve()
         setListenerForPullRefreshLayout()
         RecordScreenUtil.recordScreen("FollowingFragment")
+        setScrollToTop()
         return binding.root
     }
 
@@ -291,7 +289,9 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         }
     }
 
-    fun setScrollToTop() {
-        view?.let { binding.nestedScrollViewFollowing.smoothScrollTo(0, it.top) }
+    private fun setScrollToTop() {
+        eventViewModel.thirdButtonClicked.observe(viewLifecycleOwner) {
+            binding.nestedScrollViewFollowing.apply { smoothScrollTo(0, this.top) }
+        }
     }
 }

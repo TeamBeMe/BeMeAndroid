@@ -5,8 +5,11 @@ import com.teambeme.beme.home.model.RequestModifyPublic
 import com.teambeme.beme.home.model.ResponseAnswer
 import com.teambeme.beme.home.model.ResponseAnswers
 import com.teambeme.beme.home.model.ResponseModifyData
+import javax.inject.Inject
 
-class HomeDataSourceImpl(private val homeService: HomeService) : HomeDataSource {
+class HomeDataSourceImpl @Inject constructor(
+    private val homeService: HomeService
+) : HomeDataSource {
     override suspend fun modifyPublic(body: RequestModifyPublic): ResponseModifyData =
         homeService.modifyPublic(body)
 

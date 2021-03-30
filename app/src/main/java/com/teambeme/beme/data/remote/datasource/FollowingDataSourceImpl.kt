@@ -5,8 +5,11 @@ import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
 import com.teambeme.beme.following.model.*
 import retrofit2.Call
+import javax.inject.Inject
 
-class FollowingDataSourceImpl(private val service: FollowingService) : FollowingDataSource {
+class FollowingDataSourceImpl @Inject constructor(
+    private val service: FollowingService
+) : FollowingDataSource {
     override fun getFollowingAnswers(
         page: Int
     ): Call<ResponseExplorationQuestions> {

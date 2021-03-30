@@ -6,21 +6,16 @@ import android.view.View
 import androidx.activity.viewModels
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
-import com.teambeme.beme.data.remote.datasource.NoticeDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.ActivityNotificationBinding
 import com.teambeme.beme.notification.adapter.NoticeAdapter
-import com.teambeme.beme.notification.repository.NoticeRepositoryImpl
 import com.teambeme.beme.notification.viewmodel.NoticeViewModel
-import com.teambeme.beme.notification.viewmodel.NoticeViewModelFactory
 import com.teambeme.beme.util.StatusBarUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NotificationActivity :
     BindingActivity<ActivityNotificationBinding>(R.layout.activity_notification) {
-    private val noticeViewModelFactory =
-        NoticeViewModelFactory(NoticeRepositoryImpl(NoticeDataSourceImpl(RetrofitObjects.getNoticeService())))
-
-    private val noticeViewModel: NoticeViewModel by viewModels { noticeViewModelFactory }
+    private val noticeViewModel: NoticeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -5,23 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.observe
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingFragment
-import com.teambeme.beme.data.remote.datasource.MyPageDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentMyScrapBinding
 import com.teambeme.beme.mypage.adapter.MyScrapAdapter
-import com.teambeme.beme.mypage.repository.MyPageRepositoryImpl
 import com.teambeme.beme.mypage.view.BottomWriteFragment.Companion.SCRAP_FILTER
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
-import com.teambeme.beme.mypage.viewmodel.MyPageViewModelFactory
 import com.teambeme.beme.util.RecordScreenUtil
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragment_my_scrap) {
-    private val myViewModelFactory =
-        MyPageViewModelFactory(MyPageRepositoryImpl(MyPageDataSourceImpl(RetrofitObjects.getMyPageService())))
-    private val mypageViewModel: MyPageViewModel by activityViewModels { myViewModelFactory }
+    private val mypageViewModel: MyPageViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +24,7 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.myPageViewModel = mypageViewModel
         mypageViewModel.initScrap()
         setMyScrapAdapter()
@@ -40,6 +35,7 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
         setIsScrapEmptyObserve()
         setSearchView()
         RecordScreenUtil.recordScreen("MyPage_MyScrapFragment")
+        setScrollToTop()
         return binding.root
     }
 
@@ -137,7 +133,9 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
         })
     }
 
-    fun setScrollToTop() {
-        view?.let { binding.nestedScrollViewMyscrap.smoothScrollTo(0, it.top) }
+    private fun setScrollToTop() {
+        mypageViewModel.scrapScrollUp.observe(viewLifecycleOwner) {
+            binding.nestedScrollViewMyscrap.apply { smoothScrollTo(0, this.top) }
+        }
     }
 }

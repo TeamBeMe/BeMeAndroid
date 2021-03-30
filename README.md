@@ -5,6 +5,7 @@
   <img src="https://img.shields.io/badge/Android-4.1.2-blue?logo=Android+Studio"/>
   <img src="https://img.shields.io/badge/targetSdk-30-green?logo=Android"/>
   <img src="https://img.shields.io/badge/minSdk-26-green?logo=Android"/>
+  <img src="https://github.com/TeamBeMe/BeMeAndroid/actions/workflows/build.yml/badge.svg?branch=develop"/>
 </p>
 
 <p align="center">
