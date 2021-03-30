@@ -11,6 +11,7 @@ import com.teambeme.beme.databinding.FragmentMyScrapBinding
 import com.teambeme.beme.mypage.adapter.MyScrapAdapter
 import com.teambeme.beme.mypage.view.BottomWriteFragment.Companion.SCRAP_FILTER
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
+import com.teambeme.beme.util.RecordScreenUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,12 +34,14 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
         setIsScrapMaxObserve()
         setIsScrapEmptyObserve()
         setSearchView()
+        RecordScreenUtil.recordScreen("MyPage_MyScrapFragment")
         setScrollToTop()
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        RecordScreenUtil.recordScreen("MyPage_MyScrapFragment")
         mypageViewModel.initScrapPage()
         mypageViewModel.getMyScrap()
     }

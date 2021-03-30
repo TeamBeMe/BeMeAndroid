@@ -18,6 +18,7 @@ import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
 import com.teambeme.beme.main.viewmodel.EventViewModel
 import com.teambeme.beme.notification.view.NotificationActivity
+import com.teambeme.beme.util.RecordScreenUtil
 import com.teambeme.beme.util.recordClickEvent
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +28,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
     private val eventViewModel: EventViewModel by activityViewModels()
     override fun onResume() {
         super.onResume()
+        RecordScreenUtil.recordScreen("ExploreFragment")
         exploreViewModel.requestOtherQuestionsWithCategorySorting(
             exploreViewModel.categoryNum,
             exploreViewModel.tempPage
@@ -50,6 +52,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         setIntentAnswerObserve()
         setListenerForPullRefreshLayout()
         setChipListener()
+        RecordScreenUtil.recordScreen("ExploreFragment")
         setScrollToTop()
         return binding.root
     }

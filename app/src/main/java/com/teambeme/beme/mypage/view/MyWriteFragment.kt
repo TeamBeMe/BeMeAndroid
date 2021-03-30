@@ -12,6 +12,7 @@ import com.teambeme.beme.databinding.FragmentMyWriteBinding
 import com.teambeme.beme.mypage.adapter.MyWriteAdapter
 import com.teambeme.beme.mypage.view.BottomWriteFragment.Companion.WRITE_FILTER
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
+import com.teambeme.beme.util.RecordScreenUtil
 import com.teambeme.beme.util.recordClickEvent
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,12 +37,14 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
         setIsAnswerEmptyObserve()
         setImgWriteFilterClickListener()
         setSearchView()
+        RecordScreenUtil.recordScreen("MyPage_MyWriteFragment")
         setScrollToTop()
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        RecordScreenUtil.recordScreen("MyPage_MyWriteFragment")
         mypageViewModel.initPage()
         mypageViewModel.getMyAnswer()
     }

@@ -57,10 +57,11 @@ class MyWriteAdapter(private val myViewModel: MyPageViewModel, private val conte
     ) {
         binding.imgMywriteSecret.setOnClickListener {
             myViewModel.putPublic(myWriteData.id, myWriteData.publicFlag)
+            myWriteData.publicFlag = !myWriteData.publicFlag
             if (myWriteData.publicFlag) {
-                binding.imgMywriteSecret.setImageResource(R.drawable.ic_secret_on_mypage)
-            } else {
                 binding.imgMywriteSecret.setImageResource(R.drawable.ic_secret_off_mypage)
+            } else {
+                binding.imgMywriteSecret.setImageResource(R.drawable.ic_secret_on_mypage)
             }
         }
     }

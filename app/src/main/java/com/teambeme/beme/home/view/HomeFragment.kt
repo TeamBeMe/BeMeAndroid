@@ -20,6 +20,7 @@ import com.teambeme.beme.databinding.FragmentHomeBinding
 import com.teambeme.beme.home.adapter.QuestionPagerAdapter
 import com.teambeme.beme.home.model.Answer
 import com.teambeme.beme.home.viewmodel.HomeViewModel
+import com.teambeme.beme.util.RecordScreenUtil
 import com.teambeme.beme.main.viewmodel.EventViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
@@ -40,11 +41,13 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             QuestionPagerAdapter(childFragmentManager, homeViewModel, getHomeButtonClickListener())
         setAnswerPager(questionPagerAdapter)
         setObserve()
+        RecordScreenUtil.recordScreen("HomeFragment")
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        RecordScreenUtil.recordScreen("HomeFragment")
         homeViewModel.refreshTaskCompleted()
         returnToDefaultPosition()
     }

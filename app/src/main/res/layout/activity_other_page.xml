@@ -107,9 +107,9 @@
                 app:chipCornerRadius="4dp"
                 app:chipStrokeColor="@color/explore_chipstroke_selector"
                 app:chipStrokeWidth="1dp"
+                app:layout_constraintBottom_toBottomOf="@id/txt_otherpage_name"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txt_otherpage_name"
-                app:layout_constraintBottom_toBottomOf="@id/txt_otherpage_name"/>
+                app:layout_constraintTop_toTopOf="@+id/txt_otherpage_name" />
 
 
             <TextView
@@ -186,13 +186,12 @@
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="28dp"
+                android:layout_marginBottom="20dp"
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintBottom_toTopOf="@+id/btn_other_showmore"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_otherpage_attend"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintTop_toBottomOf="@+id/txt_otherpage_attend">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -202,6 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
+                android:layout_marginBottom="150dp"
                 android:backgroundTint="@color/other_black"
                 android:paddingTop="12dp"
                 android:paddingBottom="16dp"
@@ -209,6 +209,7 @@
                 android:textColor="@color/other_white"
                 android:textSize="16sp"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:cornerRadius="6dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
