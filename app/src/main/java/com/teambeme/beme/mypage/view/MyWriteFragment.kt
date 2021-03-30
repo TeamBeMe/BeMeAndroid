@@ -42,13 +42,13 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
         setIsAnswerEmptyObserve()
         setImgWriteFilterClickListener()
         setSearchView()
-        RecordScreenUtil.recordScreen("MyPage_MyWriteFragment", "MainActivity")
+        RecordScreenUtil.recordScreen("MyPage_MyWriteFragment")
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        RecordScreenUtil.recordScreen("MyPage_MyWriteFragment", "MainActivity")
+        RecordScreenUtil.recordScreen("MyPage_MyWriteFragment")
         mypageViewModel.initPage()
         mypageViewModel.getMyAnswer()
     }

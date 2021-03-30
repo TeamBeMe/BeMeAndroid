@@ -43,13 +43,13 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             QuestionPagerAdapter(childFragmentManager, homeViewModel, getHomeButtonClickListener())
         setAnswerPager(questionPagerAdapter)
         setObserve()
-        RecordScreenUtil.recordScreen("HomeFragment", "MainActivity")
+        RecordScreenUtil.recordScreen("HomeFragment")
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        RecordScreenUtil.recordScreen("HomeFragment", "MainActivity")
+        RecordScreenUtil.recordScreen("HomeFragment")
         homeViewModel.refreshTaskCompleted()
         returnToDefaultPosition()
     }

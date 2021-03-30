@@ -39,13 +39,13 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
         setIsScrapMaxObserve()
         setIsScrapEmptyObserve()
         setSearchView()
-        RecordScreenUtil.recordScreen("MyPage_MyScrapFragment", "MainActivity")
+        RecordScreenUtil.recordScreen("MyPage_MyScrapFragment")
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        RecordScreenUtil.recordScreen("MyPage_MyScrapFragment", "MainActivity")
+        RecordScreenUtil.recordScreen("MyPage_MyScrapFragment")
         mypageViewModel.initScrapPage()
         mypageViewModel.getMyScrap()
     }

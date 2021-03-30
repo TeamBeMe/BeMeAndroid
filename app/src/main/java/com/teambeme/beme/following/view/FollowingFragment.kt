@@ -38,7 +38,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
     private val followingViewModel: FollowingViewModel by activityViewModels { followingViewModelFactory }
 
     override fun onResume() {
-        RecordScreenUtil.recordScreen("FollowingFragment", "MainActivity")
+        RecordScreenUtil.recordScreen("FollowingFragment")
         super.onResume()
         followingViewModel.requestFollowingFollowerAnswers(followingViewModel.tempPage)
         followingViewModel.requestFollowerFollowingList()
@@ -68,7 +68,7 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
         setDoAnswerDataObserve()
         setIsMorePageObserve()
         setListenerForPullRefreshLayout()
-        RecordScreenUtil.recordScreen("FollowingFragment", "MainActivity")
+        RecordScreenUtil.recordScreen("FollowingFragment")
         return binding.root
     }
 

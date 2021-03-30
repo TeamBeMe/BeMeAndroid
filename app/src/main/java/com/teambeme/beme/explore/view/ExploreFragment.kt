@@ -34,7 +34,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
 
     override fun onResume() {
         super.onResume()
-        RecordScreenUtil.recordScreen("ExploreFragment", "MainActivity")
+        RecordScreenUtil.recordScreen("ExploreFragment")
         exploreViewModel.requestOtherQuestionsWithCategorySorting(
             exploreViewModel.categoryNum,
             exploreViewModel.tempPage
@@ -58,7 +58,7 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         setIntentAnswerObserve()
         setListenerForPullRefreshLayout()
         setChipListener()
-        RecordScreenUtil.recordScreen("ExploreFragment", "MainActivity")
+        RecordScreenUtil.recordScreen("ExploreFragment")
         return binding.root
     }
 
