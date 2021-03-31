@@ -2,7 +2,9 @@ name: BeMe Android Builder
 
 on:
   push:
-    branches: [ develop ]
+    branches:
+      - develop
+      - 'release/**'
 
 defaults:
   run:

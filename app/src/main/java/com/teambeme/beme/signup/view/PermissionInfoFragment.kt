@@ -14,7 +14,9 @@ import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.FragmentPermissionInfoBinding
 import com.teambeme.beme.util.recordClickEvent
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PermissionInfoFragment : Fragment() {
     private var _binding: FragmentPermissionInfoBinding? = null
     private val binding get() = _binding!!
