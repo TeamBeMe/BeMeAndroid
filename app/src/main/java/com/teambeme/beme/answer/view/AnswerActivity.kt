@@ -98,7 +98,7 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
                 answerViewModel.registerAnswer(requestAnswerData)
                 delay(500)
                 val position = intent.getIntExtra("position", -1)
-                intent.putExtra("posittion", position)
+                intent.putExtra("position", position)
                 intent.putExtra("content", answerViewModel.answer.value)
                 setResult(RESULT_OK, intent)
                 finish()
