@@ -22,7 +22,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
-import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.local.singleton.BeMeRepository
 import com.teambeme.beme.data.repository.LoginRepository
 import com.teambeme.beme.databinding.ActivitySplashBinding
 import com.teambeme.beme.login.model.ResponseLogin
@@ -97,7 +97,7 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
     }
 
     private fun setNextActivity() {
-        if (BeMeAuthPreference.userId.isEmpty()) {
+        if (BeMeRepository.userId.isEmpty()) {
             startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
             finish()
         } else {
@@ -107,8 +107,8 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
 
     private fun requestLogin() {
         loginRepository.login(
-            BeMeAuthPreference.userId,
-            BeMeAuthPreference.userPassword
+            BeMeRepository.userId,
+            BeMeRepository.userPassword
         ).enqueue(object :
             Callback<ResponseLogin> {
             override fun onResponse(
@@ -116,7 +116,7 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
                 response: Response<ResponseLogin>
             ) {
                 if (response.isSuccessful) {
-                    BeMeAuthPreference.userToken =
+                    BeMeRepository.userToken =
                         response.body()!!.data!!.token
                     val intent =
                         Intent(this@SplashActivity, MainActivity::class.java)
@@ -220,7 +220,7 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
     private fun navigateNextScreen() {
         lifecycleScope.launchWhenCreated {
             delay(1000L)
-            if (BeMeAuthPreference.isFirst) {
+            if (BeMeRepository.isFirst) {
                 navigateToOnBoarding()
             } else {
                 setNextActivity()

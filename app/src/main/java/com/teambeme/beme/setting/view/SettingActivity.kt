@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
-import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.local.singleton.BeMeRepository
 import com.teambeme.beme.databinding.ActivitySettingBinding
 import com.teambeme.beme.login.view.LoginActivity
 import com.teambeme.beme.util.StatusBarUtil
@@ -25,7 +25,7 @@ class SettingActivity : BindingActivity<ActivitySettingBinding>(R.layout.activit
     }
 
     private fun logout() {
-        with(BeMeAuthPreference) {
+        with(BeMeRepository) {
             userId = ""
             userPassword = ""
             userToken = ""

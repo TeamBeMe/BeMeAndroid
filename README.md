@@ -1,8 +1,8 @@
 <h1 align="center"> BeMe </h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Kotlin-1.4.30-yellowgreen?logo=kotlin"/>
-  <img src="https://img.shields.io/badge/Android-4.1.2-blue?logo=Android+Studio"/>
+  <img src="https://img.shields.io/badge/Kotlin-1.4.32-yellowgreen?logo=kotlin"/>
+  <img src="https://img.shields.io/badge/Android-4.1.3-blue?logo=Android+Studio"/>
   <img src="https://img.shields.io/badge/targetSdk-30-green?logo=Android"/>
   <img src="https://img.shields.io/badge/minSdk-26-green?logo=Android"/>
   <img src="https://github.com/TeamBeMe/BeMeAndroid/actions/workflows/build.yml/badge.svg?branch=develop"/>

@@ -2,7 +2,7 @@ package com.teambeme.beme.main.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.local.singleton.BeMeRepository
 import com.teambeme.beme.data.repository.MainRepository
 import com.teambeme.beme.main.model.ResponseFbTokenRegister
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     fun getFireBaseToken() {
         mainRepository.fbTokenRegister(
-            fb_token = BeMeAuthPreference.fireBaseToken
+            fb_token = BeMeRepository.fireBaseToken
         ).enqueue(object : Callback<ResponseFbTokenRegister> {
             override fun onResponse(
                 call: Call<ResponseFbTokenRegister>,
