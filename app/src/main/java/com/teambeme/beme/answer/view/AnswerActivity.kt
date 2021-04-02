@@ -7,7 +7,6 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
@@ -38,8 +37,6 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         val intentAnswerData = intent.getParcelableExtra<IntentAnswerData>("intentAnswerData")!!
         val isChange = intent.getIntExtra(IS_CHANGE, IS_WRITE_VALUE)
         answerViewModel.setIntentAnswerData(intentAnswerData)
-        Log.d("answer", intentAnswerData.toString())
-        Log.d("answer", "isChange == IS_CHANGE_VALUE is ${isChange == IS_CHANGE_VALUE}")
         binding.txtAnswerData.text = intentAnswerData.createdAt
         if (isChange != IS_CHANGE_VALUE) {
             answerViewModel.checkStored(intentAnswerData.questionId)
@@ -48,17 +45,13 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         }
         answerViewModel.answerData.observe(this) {
             if (it != null) {
-                Log.d("answer", "it is not null")
                 answerViewModel.initEditText()
                 setTitleText(it)
             } else {
-                Log.d("answer", "it is null")
                 answerViewModel.initAnswerData(intentAnswerData)
             }
         }
-        binding.txtAnswerComplete.setOnClickListener {
-            submitAnswer(isChange)
-        }
+        binding.txtAnswerComplete.setOnClickListener { submitAnswer(isChange) }
         setSwitchListener()
         observePublicSwitch()
     }
@@ -97,6 +90,10 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
             lifecycleScope.launch {
                 answerViewModel.registerAnswer(requestAnswerData)
                 delay(500)
+                recordClickEvent(
+                    "BUTTON",
+                    "CLICK_ANSWER_SUBMIT"
+                )
                 val position = intent.getIntExtra("position", -1)
                 intent.putExtra("position", position)
                 intent.putExtra("content", answerViewModel.answer.value)
@@ -106,6 +103,10 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         } else if (status == IS_CHANGE_VALUE) {
             lifecycleScope.launch {
                 answerViewModel.modifyAnswer(requestAnswerData)
+                recordClickEvent(
+                    "BUTTON",
+                    "CLICK_ANSWER_MODIFY"
+                )
                 delay(500)
                 finish()
             }
