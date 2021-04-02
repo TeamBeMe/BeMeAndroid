@@ -11,7 +11,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemBottomMyOtherBinding
 import com.teambeme.beme.detail.viewmodel.DetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BottomMyOtherReplyFragment : BottomSheetDialogFragment() {
     private lateinit var binding: ItemBottomMyOtherBinding
     private val detailViewModel: DetailViewModel by activityViewModels()

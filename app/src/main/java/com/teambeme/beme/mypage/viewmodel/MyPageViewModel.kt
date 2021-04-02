@@ -1,18 +1,24 @@
 package com.teambeme.beme.mypage.viewmodel
 
+import com.teambeme.beme.util.SingleLiveEvent
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.teambeme.beme.data.repository.MyPageRepository
 import com.teambeme.beme.mypage.model.*
-import com.teambeme.beme.mypage.repository.MyPageRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewModel() {
+@HiltViewModel
+class MyPageViewModel @Inject constructor(
+    private val myPageRepository: MyPageRepository
+) : ViewModel() {
     private var copyMyAnswerList: MutableList<ResponseMyAnswer.Data.Answer> = mutableListOf()
     private var copyMyScrapList: MutableList<ResponseMyScrap.Data.Answer> = mutableListOf()
 
@@ -23,6 +29,14 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
     private val _myProfileInfo = MutableLiveData<ResponseMyProfile.Data>()
     val myProfileInfo: LiveData<ResponseMyProfile.Data>
         get() = _myProfileInfo
+
+    private val _writeScrollUp = SingleLiveEvent<Unit>()
+    val writeScrollUp: LiveData<Unit>
+        get() = _writeScrollUp
+
+    private val _scrapScrollUp = SingleLiveEvent<Unit>()
+    val scrapScrollUp: LiveData<Unit>
+        get() = _scrapScrollUp
 
     private var page = 1
     private var scrapPage = 1
@@ -265,7 +279,7 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
         get() = _profileUri
 
     fun setProfileUri(uri: Uri?) {
-        _profileUri.value = uri
+        _profileUri.value = uri!!
     }
 
     fun setProfileNull() {
@@ -298,5 +312,12 @@ class MyPageViewModel(private val myPageRepository: MyPageRepository) : ViewMode
 
     fun writeFilterOnClickFalse() {
         _isWriteFilterClicked.value = false
+    }
+
+    fun scrollUp(selectedTabPosition: Int) {
+        when (selectedTabPosition) {
+            0 -> _writeScrollUp.call()
+            else -> _scrapScrollUp.call()
+        }
     }
 }

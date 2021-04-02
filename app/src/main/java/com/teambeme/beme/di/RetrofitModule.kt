@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class RetrofitModule {
+object RetrofitModule {
     private val BASE_URL = "http://52.79.42.85:3000/"
 
     private fun httpLoggingInterceptor(): HttpLoggingInterceptor {

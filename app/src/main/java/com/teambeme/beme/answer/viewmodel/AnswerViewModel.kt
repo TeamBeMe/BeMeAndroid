@@ -7,12 +7,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.model.RequestAnswerData
-import com.teambeme.beme.answer.repository.AnswerRepository
 import com.teambeme.beme.data.local.entity.AnswerData
+import com.teambeme.beme.data.repository.AnswerRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewModel() {
+@HiltViewModel
+class AnswerViewModel @Inject constructor(
+    private val answerRepository: AnswerRepository
+) : ViewModel() {
     private val _answerData = MutableLiveData<AnswerData?>()
     val answerData: LiveData<AnswerData?>
         get() = _answerData
@@ -40,7 +45,8 @@ class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewMode
         viewModelScope.launch {
             try {
                 answerRepository.registerAnswer(requestAnswerData)
-            } catch (e: HttpException) { }
+            } catch (e: HttpException) {
+            }
         }
     }
 
@@ -48,7 +54,8 @@ class AnswerViewModel(private val answerRepository: AnswerRepository) : ViewMode
         viewModelScope.launch {
             try {
                 answerRepository.modifyAnswer(requestAnswerData)
-            } catch (e: HttpException) { }
+            } catch (e: HttpException) {
+            }
         }
     }
 

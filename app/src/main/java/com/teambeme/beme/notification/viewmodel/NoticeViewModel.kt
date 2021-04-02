@@ -4,13 +4,18 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.teambeme.beme.data.repository.NoticeRepository
 import com.teambeme.beme.notification.model.ResponseNoticeData
-import com.teambeme.beme.notification.repository.NoticeRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class NoticeViewModel(private val noticeRepository: NoticeRepository) : ViewModel() {
+@HiltViewModel
+class NoticeViewModel @Inject constructor(
+    private val noticeRepository: NoticeRepository
+) : ViewModel() {
     private var copyNoticeDataList: MutableList<ResponseNoticeData.Data.Activity> = mutableListOf()
 
     private val _noticeDataList = MutableLiveData<MutableList<ResponseNoticeData.Data.Activity>>()

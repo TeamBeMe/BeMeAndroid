@@ -16,20 +16,19 @@ import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.base.BindingFragment
-import com.teambeme.beme.data.remote.datasource.HomeDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentHomeBinding
 import com.teambeme.beme.home.adapter.QuestionPagerAdapter
 import com.teambeme.beme.home.model.Answer
-import com.teambeme.beme.home.repository.HomeRepositoryImpl
 import com.teambeme.beme.home.viewmodel.HomeViewModel
-import com.teambeme.beme.home.viewmodel.HomeViewModelFactory
+import com.teambeme.beme.util.RecordScreenUtil
+import com.teambeme.beme.main.viewmodel.EventViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
 
+@AndroidEntryPoint
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
-    private val homeViewModelFactory =
-        HomeViewModelFactory(HomeRepositoryImpl(HomeDataSourceImpl(RetrofitObjects.getHomeService())))
-    private val homeViewModel: HomeViewModel by activityViewModels() { homeViewModelFactory }
+    private val homeViewModel: HomeViewModel by activityViewModels()
+    private val eventViewModel: EventViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,11 +41,13 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             QuestionPagerAdapter(childFragmentManager, homeViewModel, getHomeButtonClickListener())
         setAnswerPager(questionPagerAdapter)
         setObserve()
+        RecordScreenUtil.recordScreen("HomeFragment")
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        RecordScreenUtil.recordScreen("HomeFragment")
         homeViewModel.refreshTaskCompleted()
         returnToDefaultPosition()
     }
@@ -85,6 +86,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         homeViewModel.successMessage.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
+        eventViewModel.firstButtonClicked.observe(viewLifecycleOwner) { returnToDefaultPosition() }
     }
 
     private fun setAnswerPager(pagerAdapter: QuestionPagerAdapter) {

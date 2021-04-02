@@ -10,29 +10,25 @@ import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.base.BindingFragment
-import com.teambeme.beme.data.remote.datasource.ExploreDataSourceImpl
-import com.teambeme.beme.data.remote.singleton.RetrofitObjects
 import com.teambeme.beme.databinding.FragmentExploreBinding
 import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
 import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
-import com.teambeme.beme.explore.repository.ExploreRepositoryImpl
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
-import com.teambeme.beme.explore.viewmodel.ExploreViewModelFactory
 import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
+import com.teambeme.beme.main.viewmodel.EventViewModel
 import com.teambeme.beme.notification.view.NotificationActivity
+import com.teambeme.beme.util.RecordScreenUtil
 import com.teambeme.beme.util.recordClickEvent
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragment_explore) {
-    private val exploreViewModelFactory = ExploreViewModelFactory(
-        ExploreRepositoryImpl(
-            ExploreDataSourceImpl(RetrofitObjects.getExploreService())
-        )
-    )
-    private val exploreViewModel: ExploreViewModel by activityViewModels { exploreViewModelFactory }
-
+    private val exploreViewModel: ExploreViewModel by activityViewModels()
+    private val eventViewModel: EventViewModel by activityViewModels()
     override fun onResume() {
         super.onResume()
+        RecordScreenUtil.recordScreen("ExploreFragment")
         exploreViewModel.requestOtherQuestionsWithCategorySorting(
             exploreViewModel.categoryNum,
             exploreViewModel.tempPage
@@ -56,15 +52,32 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         setIntentAnswerObserve()
         setListenerForPullRefreshLayout()
         setChipListener()
+        RecordScreenUtil.recordScreen("ExploreFragment")
+        setScrollToTop()
         return binding.root
     }
 
     private fun setChipListener() {
         with(binding) {
-            chipExploreThink.setOnClickListener { recordClickEvent("BUTTON", "CLICK_VALUES_SEARCH") }
-            chipExploreRelationship.setOnClickListener { recordClickEvent("BUTTON", "CLICK_RELATIONSHIP_SEARCH") }
+            chipExploreThink.setOnClickListener {
+                recordClickEvent(
+                    "BUTTON",
+                    "CLICK_VALUES_SEARCH"
+                )
+            }
+            chipExploreRelationship.setOnClickListener {
+                recordClickEvent(
+                    "BUTTON",
+                    "CLICK_RELATIONSHIP_SEARCH"
+                )
+            }
             chipExploreLove.setOnClickListener { recordClickEvent("BUTTON", "CLICK_LOVE_SEARCH") }
-            chipExploreDaily.setOnClickListener { recordClickEvent("BUTTON", "CLICK_DAILYLIFE_SEARCH") }
+            chipExploreDaily.setOnClickListener {
+                recordClickEvent(
+                    "BUTTON",
+                    "CLICK_DAILYLIFE_SEARCH"
+                )
+            }
             chipExploreMe.setOnClickListener { recordClickEvent("BUTTON", "CLICK_ABOUTME_SEARCH") }
             chipExploreStory.setOnClickListener { recordClickEvent("BUTTON", "CLICK_STORY_SEARCH") }
         }
@@ -154,7 +167,9 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
         }
     }
 
-    fun setScrollToTop() {
-        view?.let { binding.stickyScrollViewExplore.smoothScrollTo(0, it.top) }
+    private fun setScrollToTop() {
+        eventViewModel.secondButtonClicked.observe(viewLifecycleOwner) {
+            binding.stickyScrollViewExplore.apply { smoothScrollTo(0, this.top) }
+        }
     }
 }

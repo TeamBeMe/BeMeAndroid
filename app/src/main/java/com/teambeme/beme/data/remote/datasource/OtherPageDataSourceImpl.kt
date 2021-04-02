@@ -3,9 +3,11 @@ package com.teambeme.beme.data.remote.datasource
 import com.teambeme.beme.data.remote.api.OtherService
 import com.teambeme.beme.otherpage.model.*
 import retrofit2.Call
+import javax.inject.Inject
 
-class OtherPageDataSourceImpl(private val service: OtherService) :
-    OtherPageDataSource {
+class OtherPageDataSourceImpl @Inject constructor(
+    private val service: OtherService
+) : OtherPageDataSource {
     override fun getProfileAnswer(userId: Int, page: Int): Call<ResponseOtherData> =
         service.getProfileAnswer(userId, page)
 
