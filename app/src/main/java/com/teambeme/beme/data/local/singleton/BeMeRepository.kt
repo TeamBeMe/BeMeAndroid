@@ -5,13 +5,14 @@ import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 
-object BeMeAuthPreference {
+object BeMeRepository {
     private const val AUTH_KEY = "AUTH_TOKEN"
     private const val FB_KEY = "FB_TOKEN"
     private const val PREF_KEY = "haskhey"
     private const val ID_KEY = "ID_KEY"
     private const val PASSWORD_KEY = "PASSWORD_KEY"
     private const val IS_FIRST_KEY = "ONBOARDING_KEY"
+    private const val MODIFY_DATE = "MODIFY_DATE_KEY"
 
     private lateinit var preferences: SharedPreferences
     private lateinit var authPreferences: SharedPreferences
@@ -54,4 +55,8 @@ object BeMeAuthPreference {
     var isFirst: Boolean
         get() = authPreferences.getBoolean(IS_FIRST_KEY, true)
         set(value) = authPreferences.edit { it.putBoolean(IS_FIRST_KEY, value) }
+
+    var modifyDate: String
+        get() = authPreferences.getString(MODIFY_DATE, "") ?: ""
+        set(value) = authPreferences.edit { it.putString(MODIFY_DATE, value) }
 }

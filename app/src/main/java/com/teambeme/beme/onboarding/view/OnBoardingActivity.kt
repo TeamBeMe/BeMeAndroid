@@ -12,7 +12,7 @@ import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
-import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.local.singleton.BeMeRepository
 import com.teambeme.beme.databinding.ActivityOnBoardingBinding
 import com.teambeme.beme.login.view.LoginActivity
 import com.teambeme.beme.main.view.MainActivity
@@ -50,7 +50,7 @@ class OnBoardingActivity :
     private fun subscribeData() {
         with(viewModel) {
             responseValue.observe(this@OnBoardingActivity) {
-                BeMeAuthPreference.userToken = it?.data?.token ?: "Error"
+                BeMeRepository.userToken = it?.data?.token ?: "Error"
                 val intent =
                     Intent(this@OnBoardingActivity, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -69,8 +69,8 @@ class OnBoardingActivity :
     }
 
     private fun setNextActivity() {
-        BeMeAuthPreference.isFirst = false
-        when (BeMeAuthPreference.userId.isNotEmpty()) {
+        BeMeRepository.isFirst = false
+        when (BeMeRepository.userId.isNotEmpty()) {
             true -> viewModel.requestLogin()
             false -> navigateTo(LoginActivity::class.java)
         }

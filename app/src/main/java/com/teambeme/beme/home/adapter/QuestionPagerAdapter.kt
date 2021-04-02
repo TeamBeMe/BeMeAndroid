@@ -5,12 +5,14 @@ import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
+import com.teambeme.beme.data.local.singleton.BeMeRepository
 import com.teambeme.beme.databinding.ItemHomeMoreQuestionBinding
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
 import com.teambeme.beme.home.model.Answer
@@ -20,6 +22,8 @@ import com.teambeme.beme.home.view.InfoChangeFragment
 import com.teambeme.beme.home.view.InfoChangeFragment.InfoChangeClickListener
 import com.teambeme.beme.home.view.TransitionPublicFragment
 import com.teambeme.beme.home.viewmodel.HomeViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class QuestionPagerAdapter(
     private val fragmentManager: FragmentManager,
@@ -82,7 +86,15 @@ class QuestionPagerAdapter(
             }
 
             binding.txtHomeChangeQuestion.setOnClickListener {
-                homeViewModel.changeQuestion(position)
+                if (BeMeRepository.modifyDate == convertTimeToString(Calendar.getInstance().time)) {
+                    Toast.makeText(context, "질문 수정은 1일 1회만 가능합니다.", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    homeViewModel.changeQuestion(position)
+                    Toast.makeText(context, "질문 수정 되었습니다.", Toast.LENGTH_SHORT)
+                        .show()
+                    BeMeRepository.modifyDate = convertTimeToString(Calendar.getInstance().time)
+                }
             }
         }
     }
@@ -206,9 +218,15 @@ class QuestionPagerAdapter(
             date
     }
 
+    private fun convertTimeToString(time: Date): String {
+        val monthDayDateFormat = SimpleDateFormat(DATE_FORMAT, Locale.KOREA)
+        return monthDayDateFormat.format(time)
+    }
+
     companion object {
         const val TYPE_FOOTER = 0
         const val TYPE_ITEM = 1
         const val TYPE_HEADER = 2
+        const val DATE_FORMAT = "yyyy-MM-DD"
     }
 }

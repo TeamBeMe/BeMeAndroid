@@ -1,7 +1,7 @@
 package com.teambeme.beme
 
 import android.app.Application
-import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.local.singleton.BeMeRepository
 import com.teambeme.beme.util.PixelRatio
 import dagger.hilt.android.HiltAndroidApp
 
@@ -10,7 +10,7 @@ class BeMeApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         initPixelUtil()
-        BeMeAuthPreference.init(this)
+        BeMeRepository.init(this)
     }
 
     private fun initPixelUtil() {

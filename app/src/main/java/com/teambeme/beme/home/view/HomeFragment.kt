@@ -20,8 +20,8 @@ import com.teambeme.beme.databinding.FragmentHomeBinding
 import com.teambeme.beme.home.adapter.QuestionPagerAdapter
 import com.teambeme.beme.home.model.Answer
 import com.teambeme.beme.home.viewmodel.HomeViewModel
-import com.teambeme.beme.util.RecordScreenUtil
 import com.teambeme.beme.main.viewmodel.EventViewModel
+import com.teambeme.beme.util.RecordScreenUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
 
@@ -133,7 +133,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         return compositePageTransformer
     }
 
-    fun returnToDefaultPosition() {
+    private fun returnToDefaultPosition() {
         binding.vpHomeQuestionSlider.postDelayed({
             homeViewModel.answerList
                 .value

@@ -10,7 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
-import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.local.singleton.BeMeRepository
 import com.teambeme.beme.databinding.ActivityMainBinding
 import com.teambeme.beme.main.adapter.MainViewPagerAdapter
 import com.teambeme.beme.main.viewmodel.EventViewModel
@@ -35,7 +35,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
                 return@OnCompleteListener
             } else {
                 val token = task.result
-                BeMeAuthPreference.fireBaseToken = token ?: "SomeThing"
+                BeMeRepository.fireBaseToken = token ?: "SomeThing"
                 val msg = getString(R.string.msg_token_fmt, token)
                 Log.d("BeMeApplication.TAG", msg)
             }
