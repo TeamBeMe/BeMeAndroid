@@ -7,13 +7,14 @@ import javax.inject.Inject
 class IdSearchRepositoryImpl @Inject constructor(
     private val idSearchDataSource: IdSearchDataSource
 ) : IdSearchRepository {
-    override fun idSearch(query: String, range: String) = idSearchDataSource.idSearch(query, range)
+    override suspend fun idSearch(query: String, range: String) =
+        idSearchDataSource.idSearch(query, range)
 
-    override fun getRecentSearchRecord() = idSearchDataSource.getRecentSearchRecord()
+    override suspend fun getRecentSearchRecord() = idSearchDataSource.getRecentSearchRecord()
 
-    override fun deleteRecentSearchRecord(searchedId: Int) =
+    override suspend fun deleteRecentSearchRecord(searchedId: Int) =
         idSearchDataSource.deleteRecentSearchRecord(searchedId)
 
-    override fun putFollowAndFollowing(body: RequestFollowAndFollowing) =
+    override suspend fun putFollowAndFollowing(body: RequestFollowAndFollowing) =
         idSearchDataSource.putFollowAndFollowing(body)
 }
