@@ -22,9 +22,10 @@ class FollowingAfterIdSearchActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
         StatusBarUtil.setStatusBar(this, Color.WHITE)
-        initBinding(binding)
+        LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
+        binding.idSearchViewModel = idSearchViewModel
+        binding.lifecycleOwner = this
         setRecentSearchAdapter(binding)
         idSearchViewModel.requestRecentSearchData()
 
@@ -51,11 +52,6 @@ class FollowingAfterIdSearchActivity :
                 }
             }
         }
-    }
-
-    private fun initBinding(binding: ActivityFollowingAfterIdSearchBinding) {
-        binding.idSearchViewModel = idSearchViewModel
-        binding.lifecycleOwner = this@FollowingAfterIdSearchActivity
     }
 
     private fun setRecentSearchAdapter(binding: ActivityFollowingAfterIdSearchBinding) {

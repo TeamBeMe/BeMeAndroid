@@ -54,15 +54,13 @@ class IdSearchAdapter(
 
     override fun onBindViewHolder(holder: IdSearchViewHolder, position: Int) {
         holder.bind(getItem(position))
-        holder.bind(getItem(position)).let {
-            with(holder) {
-                userProfilePic.setOnClickListener { view ->
-                    val intent = Intent(view.context, OtherPageActivity::class.java)
-                    intent.putExtra("userId", getItem(position).id)
-                    Log.d("Internt", position.toString())
-                    Log.d("Internt", getItem(position).id.toString())
-                    view.context.startActivity(intent)
-                }
+        with(holder) {
+            userProfilePic.setOnClickListener { view ->
+                val intent = Intent(view.context, OtherPageActivity::class.java)
+                intent.putExtra("userId", getItem(position).id)
+                Log.d("Internt", position.toString())
+                Log.d("Internt", getItem(position).id.toString())
+                view.context.startActivity(intent)
             }
         }
     }
