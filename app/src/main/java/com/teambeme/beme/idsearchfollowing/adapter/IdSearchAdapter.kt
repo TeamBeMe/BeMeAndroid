@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemFollowingAfterIdsearchBinding
 import com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData
+import com.teambeme.beme.util.recordClickEvent
 
 class IdSearchAdapter(
     private val followButtonEvent: FollowButton
@@ -24,9 +25,15 @@ class IdSearchAdapter(
                 idSearch = idSearchData
                 btnFollowingFollowing.setOnClickListener {
                     followButtonEvent.setOnUnfollowClickListener(idSearchData.id)
+                    recordClickEvent("BUTTON", "FOLLOW_SEARCHID_FALSE")
+                    binding.btnFollowingFollow.visibility = View.VISIBLE
+                    binding.btnFollowingFollowing.visibility = View.INVISIBLE
                 }
                 btnFollowingFollow.setOnClickListener {
                     followButtonEvent.setOnFollowClickListener(idSearchData.id)
+                    recordClickEvent("BUTTON", "FOLLOW_SEARCHID_TRUE")
+                    binding.btnFollowingFollow.visibility = View.INVISIBLE
+                    binding.btnFollowingFollowing.visibility = View.VISIBLE
                 }
                 setFollowingFollowBtn(binding, idSearchData)
                 executePendingBindings()

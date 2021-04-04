@@ -1,13 +1,15 @@
 package com.teambeme.beme.idsearchfollowing.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.teambeme.beme.data.repository.IdSearchRepository
 import com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData
 import com.teambeme.beme.idsearchfollowing.model.ResponseRecentSearchRecord
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,12 +33,27 @@ class IdSearchViewModel @Inject constructor(
     val errorMessage: LiveData<String>
         get() = _errorMessage
 
-    private var searchQuery: String = ""
-    fun setSearchQuery(query: String) {
-        searchQuery = query
-    }
+    @ExperimentalCoroutinesApi
+    val searchQuery = BroadcastChannel<String>(Channel.CONFLATED)
 
-    private val _deletePosition = MutableLiveData<Int>()
+    @ExperimentalCoroutinesApi
+    @FlowPreview
+    val searchResult = searchQuery.asFlow()
+        .debounce(500)
+        .distinctUntilChanged()
+        .mapLatest { query ->
+            idSearchRepository.idSearch(query, "all").data.let { mutableListOf(it) }
+        }.catch {
+            _errorMessage.value = "검색 중 네트워크 오류가 발생했습니다."
+        }.asLiveData()
+
+//    private var searchQuery: String = ""
+//    fun setSearchQuery(query: String) {
+//        searchQuery = query
+//    }
+
+    private
+    val _deletePosition = MutableLiveData<Int>()
     val deletePosition: LiveData<Int>
         get() = _deletePosition
 
@@ -120,11 +137,11 @@ class IdSearchViewModel @Inject constructor(
     }
 
     fun requestIdSearchData() {
-        viewModelScope.launch {
-            runCatching { idSearchRepository.idSearch(searchQuery, "all") }
-                .onSuccess { _idSearchData.value = it.data?.let { mutableListOf(it) } }
-                .onFailure { _errorMessage.value = "검색 중 네트워크 오류가 발생했습니다." }
-        }
+//        viewModelScope.launch {
+//            runCatching { idSearchRepository.idSearch(searchQuery, "all") }
+//                .onSuccess { _idSearchData.value = it.data?.let { mutableListOf(it) } }
+//                .onFailure { _errorMessage.value = "검색 중 네트워크 오류가 발생했습니다." }
+//        }
 //        idSearchRepository.idSearch(
 //            searchQuery, "all"
 //        )

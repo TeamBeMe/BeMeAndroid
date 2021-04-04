@@ -16,6 +16,8 @@ import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModel
 import com.teambeme.beme.otherpage.view.OtherPageActivity
 import com.teambeme.beme.util.StatusBarUtil
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
 @AndroidEntryPoint
 class FollowingAfterIdSearchActivity :
@@ -24,6 +26,8 @@ class FollowingAfterIdSearchActivity :
     private val recentSearchAdapter = RecentSearchAdapter(provideProfileButtonClickListener())
     private val idSearchAdapter = IdSearchAdapter(provideFollowButtonClickListener())
 
+    @ExperimentalCoroutinesApi
+    @FlowPreview
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         StatusBarUtil.setStatusBar(this, Color.WHITE)
@@ -33,6 +37,8 @@ class FollowingAfterIdSearchActivity :
         initView()
     }
 
+    @FlowPreview
+    @ExperimentalCoroutinesApi
     private fun initView() {
         setAdapter()
         setViewListener()
@@ -48,36 +54,39 @@ class FollowingAfterIdSearchActivity :
         binding.rcvFollowingAfterIdsearch.adapter = idSearchAdapter
     }
 
+    @ExperimentalCoroutinesApi
     private fun setViewListener() {
-        with(binding) {
-            searchViewFollowingIdsearch.setOnQueryTextListener(object :
-                androidx.appcompat.widget.SearchView.OnQueryTextListener {
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    val queryText = newText ?: ""
-                    if (queryText.count() > 0) {
-                        binding.viewRecentSearch.visibility = View.GONE
-                        binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
-                    } else {
-                        idSearchViewModel.deleteSearchRecord()
-                        binding.viewRecentSearch.visibility = View.VISIBLE
-                        binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE
-                        binding.noticeWhenNoSearchData.visibility = View.GONE
-                    }
-                    return false
+        binding.searchViewFollowingIdsearch.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val queryText = newText ?: ""
+                if (queryText.count() > 0) {
+                    binding.viewRecentSearch.visibility = View.GONE
+//                    binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
+                    idSearchViewModel.searchQuery.offer(queryText)
+                } else {
+                    idSearchViewModel.deleteSearchRecord()
+                    idSearchViewModel.searchQuery.offer(" ")
+                    binding.viewRecentSearch.visibility = View.VISIBLE
+                    binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE
+                    binding.noticeWhenNoSearchData.visibility = View.GONE
                 }
+                return true
+            }
 
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    if (query != null) {
-                        idSearchViewModel.setSearchQuery(query)
-                        idSearchViewModel.requestIdSearchData()
-                    }
-                    return false
-                }
-            })
-            btnBackFollowingIdsearch.setOnClickListener { onBackPressed() }
-        }
+            override fun onQueryTextSubmit(query: String?): Boolean {
+//                    if (query != null) {
+//                        idSearchViewModel.setSearchQuery(query)
+//                        idSearchViewModel.requestIdSearchData()
+//                    }
+                return true
+            }
+        })
+        binding.btnBackFollowingIdsearch.setOnClickListener { onBackPressed() }
     }
 
+    @FlowPreview
+    @ExperimentalCoroutinesApi
     private fun subscribeData() {
         with(idSearchViewModel) {
             recentSearchData.observe(this@FollowingAfterIdSearchActivity) { list ->
@@ -86,25 +95,44 @@ class FollowingAfterIdSearchActivity :
             deletePosition.observe(this@FollowingAfterIdSearchActivity) {
                 idSearchViewModel.deleteRecentSearch()
             }
-            idSearchData.observe(this@FollowingAfterIdSearchActivity) { idSearchData ->
-                idSearchData?.let {
-                    if (binding.rcvFollowingAfterIdsearch.adapter != null) {
-                        with(binding.rcvFollowingAfterIdsearch.adapter as IdSearchAdapter) {
-                            submitList(idSearchData)
-                        }
-                    }
-                    if (idSearchData[0].isFollowed == null) {
-                        binding.noticeWhenNoSearchData.visibility = View.VISIBLE
-                        binding.constraintViewFollowingAfterIdsearch.visibility = View.INVISIBLE
-                    } else {
-                        binding.noticeWhenNoSearchData.visibility = View.INVISIBLE
-                        binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
-                    }
-                }
-            }
+//            idSearchData.observe(this@FollowingAfterIdSearchActivity) { idSearchData ->
+//                idSearchData?.let {
+//                    if (binding.rcvFollowingAfterIdsearch.adapter != null) {
+//                        with(binding.rcvFollowingAfterIdsearch.adapter as IdSearchAdapter) {
+//                            submitList(idSearchData)
+//                        }
+//                    }
+//                    if (idSearchData[0].isFollowed == null) {
+//                        binding.noticeWhenNoSearchData.visibility = View.VISIBLE
+//                        binding.constraintViewFollowingAfterIdsearch.visibility = View.INVISIBLE
+//                    } else {
+//                        binding.noticeWhenNoSearchData.visibility = View.INVISIBLE
+//                        binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
+//                    }
+//                }
+//            }
             errorMessage.observe(this@FollowingAfterIdSearchActivity) {
                 Toast.makeText(this@FollowingAfterIdSearchActivity, it, Toast.LENGTH_SHORT)
                     .show()
+            }
+            searchResult.observe(this@FollowingAfterIdSearchActivity) { idSearchData ->
+                idSearchData?.let {
+                    if (it[0] == null) {
+                        binding.noticeWhenNoSearchData.visibility = View.VISIBLE
+                        binding.constraintViewFollowingAfterIdsearch.visibility = View.INVISIBLE
+                    } else {
+                        if (it[0]?.isFollowed == null) {
+                            binding.noticeWhenNoSearchData.visibility = View.VISIBLE
+                            binding.constraintViewFollowingAfterIdsearch.visibility = View.INVISIBLE
+                        } else {
+                            binding.noticeWhenNoSearchData.visibility = View.INVISIBLE
+                            binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
+                        }
+                        if (binding.rcvFollowingAfterIdsearch.adapter != null) {
+                            idSearchAdapter.submitList(idSearchData)
+                        }
+                    }
+                }
             }
         }
     }
