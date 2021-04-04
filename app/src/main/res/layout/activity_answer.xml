@@ -105,11 +105,12 @@
         <ScrollView
             android:id="@+id/scrollview_answer_answer"
             android:layout_width="match_parent"
+            android:overScrollMode="never"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="30dp"
+            android:layout_marginHorizontal="28dp"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="128dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@id/linear_answer_public"
             app:layout_constraintTop_toBottomOf="@id/divider_answer_top">
 
             <EditText
@@ -122,7 +123,7 @@
                 android:text="@={answerViewModel.answer}"
                 android:textColor="@color/answer_text_black"
                 android:textColorHint="@color/answer_text_gray"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider_answer_top" />
         </ScrollView>
@@ -155,16 +156,18 @@
                     android:text="답변 공개하기"
                     android:textColor="@color/home_black"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/switch_answer_public"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@id/switch_answer_public" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_answer_public"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="28dp"
                     android:checked="true"
+                    android:minHeight="0dp"
                     android:thumb="@drawable/switch_thumb"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -192,16 +195,18 @@
                 android:text="댓글 기능 해제"
                 android:textColor="@color/home_black"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/switch_answer_reply_cancel"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/switch_answer_reply_cancel" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch_answer_reply_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="28dp"
                 android:checked="false"
+                android:minHeight="0dp"
                 android:thumb="@drawable/switch_thumb"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
