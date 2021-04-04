@@ -1,8 +1,8 @@
 package com.teambeme.beme.idsearchfollowing.view
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +12,7 @@ import com.teambeme.beme.databinding.ActivityFollowingAfterIdSearchBinding
 import com.teambeme.beme.idsearchfollowing.adapter.IdSearchAdapter
 import com.teambeme.beme.idsearchfollowing.adapter.RecentSearchAdapter
 import com.teambeme.beme.idsearchfollowing.viewmodel.IdSearchViewModel
+import com.teambeme.beme.otherpage.view.OtherPageActivity
 import com.teambeme.beme.util.StatusBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class FollowingAfterIdSearchActivity :
     BindingActivity<ActivityFollowingAfterIdSearchBinding>(R.layout.activity_following_after_id_search) {
     private val idSearchViewModel: IdSearchViewModel by viewModels()
+    private val recentSearchAdapter = RecentSearchAdapter(provideProfileButtonClickListener())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,79 +28,92 @@ class FollowingAfterIdSearchActivity :
         LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
         binding.idSearchViewModel = idSearchViewModel
         binding.lifecycleOwner = this
-        setRecentSearchAdapter(binding)
-        idSearchViewModel.requestRecentSearchData()
+        initView()
 
         val idSearchAdapter = IdSearchAdapter(idSearchViewModel)
         binding.rcvFollowingAfterIdsearch.adapter = idSearchAdapter
-
-        setIdSearchListObserve()
-        setQueryTextListener()
-        backBtnWorking()
     }
 
-    private fun setIdSearchListObserve() {
-        idSearchViewModel.idSearchData.observe(this) { idSearchData ->
-            idSearchData?.let {
-                if (binding.rcvFollowingAfterIdsearch.adapter != null) with(binding.rcvFollowingAfterIdsearch.adapter as IdSearchAdapter) {
-                    submitList(idSearchData)
-                }
-                if (idSearchData[0].isFollowed == null) {
-                    binding.noticeWhenNoSearchData.visibility = View.VISIBLE
-                    binding.constraintViewFollowingAfterIdsearch.visibility = View.INVISIBLE
-                } else {
-                    binding.noticeWhenNoSearchData.visibility = View.INVISIBLE
-                    binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
-                }
-            }
-        }
+    private fun initView() {
+        setAdapter()
+        setViewListener()
+        idSearchViewModel.requestRecentSearchData()
+        subscribeData()
     }
 
-    private fun setRecentSearchAdapter(binding: ActivityFollowingAfterIdSearchBinding) {
-        val recentSearchAdapter = RecentSearchAdapter(idSearchViewModel)
+    private fun setAdapter() {
         binding.rcvRecentSearch.apply {
             adapter = recentSearchAdapter
             layoutManager = LinearLayoutManager(this@FollowingAfterIdSearchActivity)
         }
-        idSearchViewModel.recentSearchData.observe(this) { list ->
-            recentSearchAdapter.replaceRecentSearchList(list)
-        }
-        idSearchViewModel.deletePosition.observe(this) {
-            deleteListener()
+    }
+
+    private fun setViewListener() {
+        with(binding) {
+            searchViewFollowingIdsearch.setOnQueryTextListener(object :
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    val queryText = newText ?: ""
+                    if (queryText.count() > 0) {
+                        binding.viewRecentSearch.visibility = View.GONE
+                        binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
+                    } else {
+                        idSearchViewModel.deleteSearchRecord()
+                        binding.viewRecentSearch.visibility = View.VISIBLE
+                        binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE
+                        binding.noticeWhenNoSearchData.visibility = View.GONE
+                    }
+                    return false
+                }
+
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    if (query != null) {
+                        idSearchViewModel.setSearchQuery(query)
+                        idSearchViewModel.requestIdSearchData()
+                    }
+                    return false
+                }
+            })
+            btnBackFollowingIdsearch.setOnClickListener { onBackPressed() }
         }
     }
 
-    private fun deleteListener() = idSearchViewModel.deleteRecentSearch()
-
-    private fun backBtnWorking() {
-        binding.btnBackFollowingIdsearch.setOnClickListener { onBackPressed() }
+    private fun subscribeData() {
+        with(idSearchViewModel) {
+            recentSearchData.observe(this@FollowingAfterIdSearchActivity) { list ->
+                recentSearchAdapter.replaceList(list)
+            }
+            deletePosition.observe(this@FollowingAfterIdSearchActivity) {
+                idSearchViewModel.deleteRecentSearch()
+            }
+            idSearchData.observe(this@FollowingAfterIdSearchActivity) { idSearchData ->
+                idSearchData?.let {
+                    if (binding.rcvFollowingAfterIdsearch.adapter != null) {
+                        with(binding.rcvFollowingAfterIdsearch.adapter as IdSearchAdapter) {
+                            submitList(idSearchData)
+                        }
+                    }
+                    if (idSearchData[0].isFollowed == null) {
+                        binding.noticeWhenNoSearchData.visibility = View.VISIBLE
+                        binding.constraintViewFollowingAfterIdsearch.visibility = View.INVISIBLE
+                    } else {
+                        binding.noticeWhenNoSearchData.visibility = View.INVISIBLE
+                        binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
     }
 
-    private fun setQueryTextListener() {
-        binding.searchViewFollowingIdsearch.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(newText: String?): Boolean {
-                val queryText = newText ?: ""
-                if (queryText.count() > 0) {
-                    binding.viewRecentSearch.visibility = View.GONE
-                    binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
-                } else {
-                    idSearchViewModel.deleteSearchRecord()
-                    binding.viewRecentSearch.visibility = View.VISIBLE
-                    binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE
-                    binding.noticeWhenNoSearchData.visibility = View.GONE
-                }
-                return false
-            }
+    private fun provideProfileButtonClickListener() = object : RecentSearchAdapter.ProfileButton {
+        override fun setOnPicClickListener(id: Int) {
+            val intent = Intent(this@FollowingAfterIdSearchActivity, OtherPageActivity::class.java)
+            intent.putExtra("userId", id)
+            startActivity(intent)
+        }
 
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null) {
-                    idSearchViewModel.setSearchQuery(query)
-                    idSearchViewModel.requestIdSearchData()
-                    Log.d("search_semin", "${idSearchViewModel.idSearchData.value}")
-                }
-                return false
-            }
-        })
+        override fun setDeleteClickListener(position: Int) {
+            idSearchViewModel.setPosition(position)
+        }
     }
 }
