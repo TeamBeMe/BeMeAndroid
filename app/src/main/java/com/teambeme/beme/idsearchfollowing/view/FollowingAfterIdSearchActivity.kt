@@ -60,13 +60,14 @@ class FollowingAfterIdSearchActivity :
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String?): Boolean {
                 val queryText = newText ?: ""
+                idSearchViewModel.query = queryText
                 if (queryText.count() > 0) {
                     binding.viewRecentSearch.visibility = View.GONE
 //                    binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
                     idSearchViewModel.searchQuery.offer(queryText)
                 } else {
                     idSearchViewModel.deleteSearchRecord()
-                    idSearchViewModel.searchQuery.offer(" ")
+//                    idSearchViewModel.searchQuery.offer("")
                     binding.viewRecentSearch.visibility = View.VISIBLE
                     binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE
                     binding.noticeWhenNoSearchData.visibility = View.GONE
@@ -117,19 +118,23 @@ class FollowingAfterIdSearchActivity :
             }
             searchResult.observe(this@FollowingAfterIdSearchActivity) { idSearchData ->
                 idSearchData?.let {
-                    if (it[0] == null) {
-                        binding.noticeWhenNoSearchData.visibility = View.VISIBLE
-                        binding.constraintViewFollowingAfterIdsearch.visibility = View.INVISIBLE
-                    } else {
-                        if (it[0]?.isFollowed == null) {
+                    if (idSearchViewModel.query.isNotEmpty()) {
+                        if (it[0] == null) {
                             binding.noticeWhenNoSearchData.visibility = View.VISIBLE
                             binding.constraintViewFollowingAfterIdsearch.visibility = View.INVISIBLE
                         } else {
-                            binding.noticeWhenNoSearchData.visibility = View.INVISIBLE
-                            binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
-                        }
-                        if (binding.rcvFollowingAfterIdsearch.adapter != null) {
-                            idSearchAdapter.submitList(idSearchData)
+                            if (it[0]?.isFollowed == null) {
+                                binding.noticeWhenNoSearchData.visibility = View.VISIBLE
+                                binding.constraintViewFollowingAfterIdsearch.visibility =
+                                    View.INVISIBLE
+                            } else {
+                                binding.noticeWhenNoSearchData.visibility = View.INVISIBLE
+                                binding.constraintViewFollowingAfterIdsearch.visibility =
+                                    View.VISIBLE
+                            }
+                            if (binding.rcvFollowingAfterIdsearch.adapter != null) {
+                                idSearchAdapter.submitList(idSearchData)
+                            }
                         }
                     }
                 }

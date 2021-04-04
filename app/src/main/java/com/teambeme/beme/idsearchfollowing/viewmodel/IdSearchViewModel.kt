@@ -47,7 +47,8 @@ class IdSearchViewModel @Inject constructor(
             _errorMessage.value = "검색 중 네트워크 오류가 발생했습니다."
         }.asLiveData()
 
-//    private var searchQuery: String = ""
+    var query = ""
+//    var Query: String = ""
 //    fun setSearchQuery(query: String) {
 //        searchQuery = query
 //    }
