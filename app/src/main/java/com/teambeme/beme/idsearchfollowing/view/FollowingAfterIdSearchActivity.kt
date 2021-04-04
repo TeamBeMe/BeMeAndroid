@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teambeme.beme.R
@@ -21,6 +22,7 @@ class FollowingAfterIdSearchActivity :
     BindingActivity<ActivityFollowingAfterIdSearchBinding>(R.layout.activity_following_after_id_search) {
     private val idSearchViewModel: IdSearchViewModel by viewModels()
     private val recentSearchAdapter = RecentSearchAdapter(provideProfileButtonClickListener())
+    private val idSearchAdapter = IdSearchAdapter(provideFollowButtonClickListener())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +31,6 @@ class FollowingAfterIdSearchActivity :
         binding.idSearchViewModel = idSearchViewModel
         binding.lifecycleOwner = this
         initView()
-
-        val idSearchAdapter = IdSearchAdapter(idSearchViewModel)
-        binding.rcvFollowingAfterIdsearch.adapter = idSearchAdapter
     }
 
     private fun initView() {
@@ -46,6 +45,7 @@ class FollowingAfterIdSearchActivity :
             adapter = recentSearchAdapter
             layoutManager = LinearLayoutManager(this@FollowingAfterIdSearchActivity)
         }
+        binding.rcvFollowingAfterIdsearch.adapter = idSearchAdapter
     }
 
     private fun setViewListener() {
@@ -102,6 +102,10 @@ class FollowingAfterIdSearchActivity :
                     }
                 }
             }
+            errorMessage.observe(this@FollowingAfterIdSearchActivity) {
+                Toast.makeText(this@FollowingAfterIdSearchActivity, it, Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
     }
 
@@ -114,6 +118,22 @@ class FollowingAfterIdSearchActivity :
 
         override fun setDeleteClickListener(position: Int) {
             idSearchViewModel.setPosition(position)
+        }
+    }
+
+    private fun provideFollowButtonClickListener() = object : IdSearchAdapter.FollowButton {
+        override fun setOnUnfollowClickListener(id: Int) {
+            idSearchViewModel.requestFollowAndFollowing(id)
+        }
+
+        override fun setOnFollowClickListener(id: Int) {
+            idSearchViewModel.requestFollowAndFollowing(id)
+        }
+
+        override fun setProfilePicClickListener(id: Int) {
+            val intent = Intent(this@FollowingAfterIdSearchActivity, OtherPageActivity::class.java)
+            intent.putExtra("userId", id)
+            startActivity(intent)
         }
     }
 }

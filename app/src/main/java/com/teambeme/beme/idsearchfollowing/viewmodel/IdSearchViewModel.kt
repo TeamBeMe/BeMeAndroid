@@ -100,7 +100,6 @@ class IdSearchViewModel @Inject constructor(
             }.onFailure {
                 _errorMessage.value = "삭제 시 네트워크 오류가 발생했습니다."
             }
-
         }
 //        idSearchRepository.deleteRecentSearchRecord(
 //            copyRecentSearchList[deletePosition.value!!].id
