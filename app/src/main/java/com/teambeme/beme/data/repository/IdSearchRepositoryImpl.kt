@@ -15,6 +15,6 @@ class IdSearchRepositoryImpl @Inject constructor(
     override suspend fun deleteRecentSearchRecord(searchedId: Int) =
         idSearchDataSource.deleteRecentSearchRecord(searchedId)
 
-    override suspend fun putFollowAndFollowing(body: RequestFollowAndFollowing) =
-        idSearchDataSource.putFollowAndFollowing(body)
+    override suspend fun putFollowAndFollowing(userId: Int) =
+        idSearchDataSource.putFollowAndFollowing(RequestFollowAndFollowing(userId))
 }

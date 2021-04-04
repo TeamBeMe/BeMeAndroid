@@ -68,14 +68,10 @@ class FollowingAfterIdSearchActivity :
         }
     }
 
-    private fun deleteListener() {
-        idSearchViewModel.deleteRecentSearch()
-    }
+    private fun deleteListener() = idSearchViewModel.deleteRecentSearch()
 
     private fun backBtnWorking() {
-        binding.btnBackFollowingIdsearch.setOnClickListener {
-            onBackPressed()
-        }
+        binding.btnBackFollowingIdsearch.setOnClickListener { onBackPressed() }
     }
 
     private fun setQueryTextListener() {
@@ -98,7 +94,7 @@ class FollowingAfterIdSearchActivity :
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
                     idSearchViewModel.setSearchQuery(query)
-                    idSearchViewModel.requestIdSearchgData()
+                    idSearchViewModel.requestIdSearchData()
                     Log.d("search_semin", "${idSearchViewModel.idSearchData.value}")
                 }
                 return false

@@ -1,15 +1,14 @@
 package com.teambeme.beme.idsearchfollowing.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.teambeme.beme.data.repository.IdSearchRepository
-import com.teambeme.beme.idsearchfollowing.model.*
+import com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData
+import com.teambeme.beme.idsearchfollowing.model.ResponseRecentSearchRecord
 import dagger.hilt.android.lifecycle.HiltViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,6 +26,10 @@ class IdSearchViewModel @Inject constructor(
     private val _idSearchData = MutableLiveData<MutableList<ResponseIdSearchData.Data>>()
     val idSearchData: LiveData<MutableList<ResponseIdSearchData.Data>>
         get() = _idSearchData
+
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
 
     private var searchQuery: String = ""
     fun setSearchQuery(query: String) {
@@ -49,31 +52,39 @@ class IdSearchViewModel @Inject constructor(
     }
 
     fun requestRecentSearchData() {
-        idSearchRepository.getRecentSearchRecord()
-            .enqueue(
-                object : Callback<ResponseRecentSearchRecord> {
-                    override fun onResponse(
-                        call: Call<ResponseRecentSearchRecord>,
-                        response: Response<ResponseRecentSearchRecord>
-                    ) {
-                        if (response.isSuccessful) {
-                            Log.d("Network is success", response.body().toString())
-                            copyRecentSearchList =
-                                response.body()!!.data?.toMutableList() ?: mutableListOf()
-                            _recentSearchData.value = copyRecentSearchList.toMutableList()
-                        } else {
-                            Log.d("Network Error", response.body()?.data.toString())
-                            Log.d("Network Error", response.body()?.status.toString())
-                            Log.d("Network Error", response.body()?.success.toString())
-                            Log.d("Network Error", response.message())
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseRecentSearchRecord>, t: Throwable) {
-                        Log.d("network_requestOtherMinds", "통신실패")
-                    }
+        viewModelScope.launch {
+            runCatching { idSearchRepository.getRecentSearchRecord() }
+                .onSuccess {
+                    copyRecentSearchList = it.data?.toMutableList() ?: mutableListOf()
+                    _recentSearchData.value = copyRecentSearchList.toMutableList()
                 }
-            )
+                .onFailure { it.printStackTrace() }
+        }
+//        idSearchRepository.getRecentSearchRecord()
+//            .enqueue(
+//                object : Callback<ResponseRecentSearchRecord> {
+//                    override fun onResponse(
+//                        call: Call<ResponseRecentSearchRecord>,
+//                        response: Response<ResponseRecentSearchRecord>
+//                    ) {
+//                        if (response.isSuccessful) {
+//                            Log.d("Network is success", response.body().toString())
+//                            copyRecentSearchList =
+//                                response.body()!!.data?.toMutableList() ?: mutableListOf()
+//                            _recentSearchData.value = copyRecentSearchList.toMutableList()
+//                        } else {
+//                            Log.d("Network Error", response.body()?.data.toString())
+//                            Log.d("Network Error", response.body()?.status.toString())
+//                            Log.d("Network Error", response.body()?.success.toString())
+//                            Log.d("Network Error", response.message())
+//                        }
+//                    }
+//
+//                    override fun onFailure(call: Call<ResponseRecentSearchRecord>, t: Throwable) {
+//                        Log.d("network_requestOtherMinds", "통신실패")
+//                    }
+//                }
+//            )
     }
 
     fun setPosition(position: Int) {
@@ -81,74 +92,93 @@ class IdSearchViewModel @Inject constructor(
     }
 
     fun deleteRecentSearch() {
-        idSearchRepository.deleteRecentSearchRecord(
-            copyRecentSearchList[deletePosition.value!!].id
-        ).enqueue(object : Callback<ResponseDeleteRecentSearchRecord> {
-            override fun onResponse(
-                call: Call<ResponseDeleteRecentSearchRecord>,
-                response: Response<ResponseDeleteRecentSearchRecord>
-            ) {
-                if (response.isSuccessful) {
-                    Log.d("Network Fail", response.body().toString())
-                }
+        viewModelScope.launch {
+            runCatching {
+                idSearchRepository.deleteRecentSearchRecord(
+                    copyRecentSearchList[deletePosition.value!!].id
+                )
+            }.onFailure {
+                _errorMessage.value = "삭제 시 네트워크 오류가 발생했습니다."
             }
 
-            override fun onFailure(call: Call<ResponseDeleteRecentSearchRecord>, t: Throwable) {
-                Log.d("Network Fail", t.message.toString())
-            }
-        })
+        }
+//        idSearchRepository.deleteRecentSearchRecord(
+//            copyRecentSearchList[deletePosition.value!!].id
+//        ).enqueue(object : Callback<ResponseDeleteRecentSearchRecord> {
+//            override fun onResponse(
+//                call: Call<ResponseDeleteRecentSearchRecord>,
+//                response: Response<ResponseDeleteRecentSearchRecord>
+//            ) {
+//                if (response.isSuccessful) {
+//                    Log.d("Network Fail", response.body().toString())
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ResponseDeleteRecentSearchRecord>, t: Throwable) {
+//                Log.d("Network Fail", t.message.toString())
+//            }
+//        })
     }
 
-    fun requestIdSearchgData() {
-        idSearchRepository.idSearch(
-            searchQuery, "all"
-        )
-            .enqueue(
-                object : Callback<ResponseIdSearchData> {
-                    override fun onResponse(
-                        call: Call<ResponseIdSearchData>,
-                        response: Response<ResponseIdSearchData>
-                    ) {
-                        if (response.isSuccessful) {
-                            Log.d("Network is success", response.body().toString())
-                            tempIdSearchList = response.body()!!.data?.let { mutableListOf(it) }
-                            _idSearchData.value = tempIdSearchList?.toMutableList()
-                            if (tempIdSearchList == null || tempIdSearchList?.size == 0) {
-                                deleteSearchRecord()
-                            }
-                        } else {
-                            Log.d("Network Error", response.body()?.data.toString())
-                            Log.d("Network Error", response.body()?.status.toString())
-                            Log.d("Network Error", response.body()?.success.toString())
-                            Log.d("Network Error", response.message())
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseIdSearchData>, t: Throwable) {
-                        Log.d("network_requestOtherMinds", "통신실패")
-                    }
-                }
-            )
+    fun requestIdSearchData() {
+        viewModelScope.launch {
+            runCatching { idSearchRepository.idSearch(searchQuery, "all") }
+                .onSuccess { _idSearchData.value = it.data?.let { mutableListOf(it) } }
+                .onFailure { _errorMessage.value = "검색 중 네트워크 오류가 발생했습니다." }
+        }
+//        idSearchRepository.idSearch(
+//            searchQuery, "all"
+//        )
+//            .enqueue(
+//                object : Callback<ResponseIdSearchData> {
+//                    override fun onResponse(
+//                        call: Call<ResponseIdSearchData>,
+//                        response: Response<ResponseIdSearchData>
+//                    ) {
+//                        if (response.isSuccessful) {
+//                            Log.d("Network is success", response.body().toString())
+//                            tempIdSearchList = response.body()!!.data?.let { mutableListOf(it) }
+//                            _idSearchData.value = tempIdSearchList?.toMutableList()
+//                            if (tempIdSearchList == null || tempIdSearchList?.size == 0) {
+//                                deleteSearchRecord()
+//                            }
+//                        } else {
+//                            Log.d("Network Error", response.body()?.data.toString())
+//                            Log.d("Network Error", response.body()?.status.toString())
+//                            Log.d("Network Error", response.body()?.success.toString())
+//                            Log.d("Network Error", response.message())
+//                        }
+//                    }
+//
+//                    override fun onFailure(call: Call<ResponseIdSearchData>, t: Throwable) {
+//                        Log.d("network_requestOtherMinds", "통신실패")
+//                    }
+//                }
+//            )
     }
 
     fun requestFollowAndFollowing(userId: Int) {
-        idSearchRepository.putFollowAndFollowing(
-            RequestFollowAndFollowing(userId)
-        ).enqueue(
-            object : Callback<ResponseFollowAndFollowing> {
-                override fun onResponse(
-                    call: Call<ResponseFollowAndFollowing>,
-                    response: Response<ResponseFollowAndFollowing>
-                ) {
-                    Log.d("network_requestSearch", "통신성")
-                    if (response.isSuccessful) {
-                    }
-                }
-
-                override fun onFailure(call: Call<ResponseFollowAndFollowing>, t: Throwable) {
-                    Log.d("network_requestSearch", "통신실패")
-                }
-            }
-        )
+        viewModelScope.launch {
+            runCatching { idSearchRepository.putFollowAndFollowing(userId) }
+                .onFailure { _errorMessage.value = "네트워크 오류가 발생했습니다." }
+        }
+//        idSearchRepository.putFollowAndFollowing(
+//            RequestFollowAndFollowing(userId)
+//        ).enqueue(
+//            object : Callback<ResponseFollowAndFollowing> {
+//                override fun onResponse(
+//                    call: Call<ResponseFollowAndFollowing>,
+//                    response: Response<ResponseFollowAndFollowing>
+//                ) {
+//                    Log.d("network_requestSearch", "통신성")
+//                    if (response.isSuccessful) {
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<ResponseFollowAndFollowing>, t: Throwable) {
+//                    Log.d("network_requestSearch", "통신실패")
+//                }
+//            }
+//        )
     }
 }
