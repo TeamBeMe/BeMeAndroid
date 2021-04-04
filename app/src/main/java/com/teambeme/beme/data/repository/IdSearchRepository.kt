@@ -1,13 +1,10 @@
 package com.teambeme.beme.data.repository
 
 import com.teambeme.beme.idsearchfollowing.model.*
-import retrofit2.Call
 
 interface IdSearchRepository {
-    fun idSearch(query: String, range: String): Call<ResponseIdSearchData>
-    fun getRecentSearchRecord(): Call<ResponseRecentSearchRecord>
-    fun deleteRecentSearchRecord(searchedId: Int): Call<ResponseDeleteRecentSearchRecord>
-    fun putFollowAndFollowing(
-        body: RequestFollowAndFollowing
-    ): Call<ResponseFollowAndFollowing>
+    suspend fun idSearch(query: String, range: String): ResponseIdSearchData
+    suspend fun getRecentSearchRecord(): ResponseRecentSearchRecord
+    suspend fun deleteRecentSearchRecord(searchedId: Int): ResponseDeleteRecentSearchRecord
+    suspend fun putFollowAndFollowing(userId: Int): ResponseFollowAndFollowing
 }
