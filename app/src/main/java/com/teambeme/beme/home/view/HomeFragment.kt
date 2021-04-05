@@ -148,17 +148,14 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             if (resultCode == RESULT_OK) {
                 val position = data!!.getIntExtra("position", -1)
                 val answerList = homeViewModel.answerList.value!!.toMutableList()
-                answerList[position].content = data!!.getStringExtra("content")
+                answerList[position].content = data.getStringExtra("content")
                 homeViewModel.refreshList(answerList)
             }
         }
     }
 
     private fun transformDateFormat(date: String): String {
-        return if (date.length > DATE_LENGTH)
-            date.substring(0, DATE_LENGTH)
-        else
-            date
+        return if (date.length > DATE_LENGTH) date.substring(0, DATE_LENGTH) else date
     }
 
     companion object {

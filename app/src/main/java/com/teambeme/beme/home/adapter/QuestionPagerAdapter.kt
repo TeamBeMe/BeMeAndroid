@@ -29,15 +29,13 @@ class QuestionPagerAdapter(
     private val fragmentManager: FragmentManager,
     private val homeViewModel: HomeViewModel,
     private val questionButtonClickListener: QuestionButtonClickListener
-) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var answerList = mutableListOf<Answer>()
 
     inner class QuestionViewHolder(
         private val context: Context,
         private val binding: ItemHomeQuestionBinding
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(answer: Answer, position: Int) {
             binding.answer = answer
 
@@ -104,8 +102,7 @@ class QuestionPagerAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(supportFragmentManager: FragmentManager) {
             binding.btnHomeMoreQuestion.setOnClickListener {
-                Log.d("Home", "${answerList.all { answer -> answer.content != null }}")
-                if (answerList.all { answer -> answer.content != null }) {
+                if (answerList.last().content != null) {
                     homeViewModel.getMoreQuestion()
                 } else {
                     val answerSuggestFragment = AnswerSuggestFragment()
