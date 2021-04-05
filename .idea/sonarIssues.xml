@@ -58,6 +58,26 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/data/local/singleton/BeMeAuthPreference.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/data/local/singleton/BeMeRepoitory.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/data/local/singleton/BeMeRepository.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/data/remote/api/IdSearchService.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/data/remote/datasource/AnswerDataSourceImpl.kt">
           <value>
             <set />
@@ -84,6 +104,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/data/remote/datasource/HomeDataSourceImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/data/remote/datasource/IdSearchDataSource.kt">
           <value>
             <set />
           </value>
@@ -144,6 +169,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/data/repository/HomeRepositoryImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/data/repository/IdSearchRepository.kt">
           <value>
             <set />
           </value>
@@ -283,6 +313,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/home/adapter/QuestionPagerAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/home/view/AnswerSuggestFragment.kt">
           <value>
             <set />
@@ -299,6 +334,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/idsearchfollowing/adapter/IdSearchAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/idsearchfollowing/adapter/RecentSearchAdapter.kt">
           <value>
             <set />
           </value>
@@ -493,6 +533,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_answer.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_following_after_id_search.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
           <value>
             <set />
@@ -579,6 +629,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../BeMeroid/app/src/main/res/layout/item_project_info.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/.gitignore">
           <value>
             <set />
           </value>

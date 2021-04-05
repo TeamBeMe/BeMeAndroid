@@ -20,8 +20,8 @@ import com.teambeme.beme.databinding.FragmentHomeBinding
 import com.teambeme.beme.home.adapter.QuestionPagerAdapter
 import com.teambeme.beme.home.model.Answer
 import com.teambeme.beme.home.viewmodel.HomeViewModel
-import com.teambeme.beme.util.RecordScreenUtil
 import com.teambeme.beme.main.viewmodel.EventViewModel
+import com.teambeme.beme.util.RecordScreenUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
 
@@ -133,7 +133,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         return compositePageTransformer
     }
 
-    fun returnToDefaultPosition() {
+    private fun returnToDefaultPosition() {
         binding.vpHomeQuestionSlider.postDelayed({
             homeViewModel.answerList
                 .value
@@ -148,17 +148,14 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
             if (resultCode == RESULT_OK) {
                 val position = data!!.getIntExtra("position", -1)
                 val answerList = homeViewModel.answerList.value!!.toMutableList()
-                answerList[position].content = data!!.getStringExtra("content")
+                answerList[position].content = data.getStringExtra("content")
                 homeViewModel.refreshList(answerList)
             }
         }
     }
 
     private fun transformDateFormat(date: String): String {
-        return if (date.length > DATE_LENGTH)
-            date.substring(0, DATE_LENGTH)
-        else
-            date
+        return if (date.length > DATE_LENGTH) date.substring(0, DATE_LENGTH) else date
     }
 
     companion object {

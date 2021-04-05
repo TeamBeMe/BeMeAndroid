@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.local.singleton.BeMeRepository
 import com.teambeme.beme.data.repository.LoginRepository
 import com.teambeme.beme.login.model.ResponseLogin
 import com.teambeme.beme.util.ErrorBody
@@ -45,8 +45,8 @@ class LoginViewModel @Inject constructor(
             override fun onResponse(call: Call<ResponseLogin>, response: Response<ResponseLogin>) {
                 if (response.isSuccessful) {
                     _responseValue.value = response.body()
-                    BeMeAuthPreference.userId = nickNameText.value!!
-                    BeMeAuthPreference.userPassword = passwordText.value!!
+                    BeMeRepository.userId = nickNameText.value!!
+                    BeMeRepository.userPassword = passwordText.value!!
                 } else {
                     val gson = Gson()
                     val type = object : TypeToken<ErrorBody>() {}.type

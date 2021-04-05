@@ -17,9 +17,11 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_answer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_white"
+        android:scrollbars="vertical"
         tools:context=".answer.view.AnswerActivity">
 
         <androidx.appcompat.widget.Toolbar
@@ -47,8 +49,10 @@
                     android:id="@+id/txt_answer_complete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="32dp"
+                    android:layout_marginEnd="16dp"
                     android:clickable="@{answerViewModel.answer.length() != 0 ? true : false}"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="12dp"
                     android:text="완료"
                     android:textColor="@{answerViewModel.answer.length() != 0 ? @color/home_black : @color/home_title_gray}"
                     android:textSize="16sp"
@@ -100,30 +104,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_answer_data" />
 
-        <ScrollView
-            android:id="@+id/scrollview_answer_answer"
+<!--        <ScrollView-->
+<!--            android:id="@+id/scrollview_answer_answer"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_marginHorizontal="28dp"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:layout_marginBottom="100dp"-->
+<!--            android:overScrollMode="never"-->
+<!--            android:scrollbars="vertical"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/linear_answer_public"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/divider_answer_top">-->
+
+<!--            -->
+<!--        </ScrollView>-->
+        <EditText
+            android:id="@+id/txt_answer_answer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="30dp"
+            android:layout_marginHorizontal="28dp"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="128dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider_answer_top">
-            <EditText
-                android:id="@+id/txt_answer_answer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:gravity="top"
-                android:hint="답변을 써주세요"
-                android:text="@={answerViewModel.answer}"
-                android:textColor="@color/answer_text_black"
-                android:textColorHint="@color/answer_text_gray"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider_answer_top" />
-        </ScrollView>
-
+            android:layout_marginBottom="30dp"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="답변을 써주세요"
+            android:text="@={answerViewModel.answer}"
+            android:textColor="@color/answer_text_black"
+            android:textColorHint="@color/answer_text_gray"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/linear_answer_public"
+            app:layout_constraintTop_toBottomOf="@id/divider_answer_top" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linear_answer_public"
@@ -152,16 +162,18 @@
                     android:text="답변 공개하기"
                     android:textColor="@color/home_black"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/switch_answer_public"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@id/switch_answer_public" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_answer_public"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="28dp"
                     android:checked="true"
+                    android:minHeight="0dp"
                     android:thumb="@drawable/switch_thumb"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -189,16 +201,18 @@
                 android:text="댓글 기능 해제"
                 android:textColor="@color/home_black"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/switch_answer_reply_cancel"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/switch_answer_reply_cancel" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switch_answer_reply_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="28dp"
                 android:checked="false"
+                android:minHeight="0dp"
                 android:thumb="@drawable/switch_thumb"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -208,4 +222,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

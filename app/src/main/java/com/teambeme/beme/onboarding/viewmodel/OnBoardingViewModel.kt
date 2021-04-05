@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.teambeme.beme.R
-import com.teambeme.beme.data.local.singleton.BeMeAuthPreference
+import com.teambeme.beme.data.local.singleton.BeMeRepository
 import com.teambeme.beme.data.repository.LoginRepository
 import com.teambeme.beme.login.model.ResponseLogin
 import com.teambeme.beme.onboarding.model.OnBoardingData
@@ -64,8 +64,8 @@ class OnBoardingViewModel @Inject constructor(
 
     fun requestLogin() {
         loginRepository.login(
-            BeMeAuthPreference.userId,
-            BeMeAuthPreference.userPassword
+            BeMeRepository.userId,
+            BeMeRepository.userPassword
         ).enqueue(object :
             Callback<ResponseLogin> {
             override fun onResponse(

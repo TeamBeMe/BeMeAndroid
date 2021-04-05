@@ -1,6 +1,7 @@
 package com.teambeme.beme.answer.view
 
 import android.animation.ValueAnimator
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -8,6 +9,8 @@ import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
 import android.util.Log
+import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +21,7 @@ import com.teambeme.beme.answer.viewmodel.AnswerViewModel
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.data.local.entity.AnswerData
 import com.teambeme.beme.databinding.ActivityAnswerBinding
+import com.teambeme.beme.util.KeyboardVisibilityUtils
 import com.teambeme.beme.util.StatusBarUtil
 import com.teambeme.beme.util.dp
 import com.teambeme.beme.util.recordClickEvent
@@ -28,6 +32,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_answer) {
     private val answerViewModel: AnswerViewModel by viewModels()
+    private lateinit var keyboardVisibilityUtils: KeyboardVisibilityUtils
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.lifecycleOwner = this
@@ -38,8 +43,6 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         val intentAnswerData = intent.getParcelableExtra<IntentAnswerData>("intentAnswerData")!!
         val isChange = intent.getIntExtra(IS_CHANGE, IS_WRITE_VALUE)
         answerViewModel.setIntentAnswerData(intentAnswerData)
-        Log.d("answer", intentAnswerData.toString())
-        Log.d("answer", "isChange == IS_CHANGE_VALUE is ${isChange == IS_CHANGE_VALUE}")
         binding.txtAnswerData.text = intentAnswerData.createdAt
         if (isChange != IS_CHANGE_VALUE) {
             answerViewModel.checkStored(intentAnswerData.questionId)
@@ -48,19 +51,44 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         }
         answerViewModel.answerData.observe(this) {
             if (it != null) {
-                Log.d("answer", "it is not null")
                 answerViewModel.initEditText()
                 setTitleText(it)
             } else {
-                Log.d("answer", "it is null")
                 answerViewModel.initAnswerData(intentAnswerData)
             }
         }
-        binding.txtAnswerComplete.setOnClickListener {
-            submitAnswer(isChange)
-        }
+        binding.txtAnswerComplete.setOnClickListener { submitAnswer(isChange) }
         setSwitchListener()
         observePublicSwitch()
+        setHideKeyboard()
+        setEditTextWhenOpenKeyboard()
+    }
+
+    private fun setHideKeyboard() {
+        binding.constraintAnswer.setOnClickListener {
+            val keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            keyboard.hideSoftInputFromWindow(binding.txtAnswerAnswer.windowToken, 0)
+        }
+    }
+
+    private fun setEditTextWhenOpenKeyboard() {
+        val param = binding.txtAnswerAnswer.layoutParams as ViewGroup.MarginLayoutParams
+        keyboardVisibilityUtils = KeyboardVisibilityUtils(window,
+            onShowKeyboard = { keyboardHeight, _ ->
+                param.setMargins(
+                    param.leftMargin,
+                    param.topMargin,
+                    param.rightMargin,
+                    keyboardHeight - 300
+                )
+                binding.txtAnswerAnswer.layoutParams = param
+                Log.d("keyboard", keyboardHeight.toString())
+            },
+            onHideKeyboard = {
+                param.setMargins(param.leftMargin, param.topMargin, param.rightMargin, 30)
+                binding.txtAnswerAnswer.layoutParams = param
+            }
+        )
     }
 
     private fun setTitleText(answerData: AnswerData) {
@@ -97,6 +125,10 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
             lifecycleScope.launch {
                 answerViewModel.registerAnswer(requestAnswerData)
                 delay(500)
+                recordClickEvent(
+                    "BUTTON",
+                    "CLICK_ANSWER_SUBMIT"
+                )
                 val position = intent.getIntExtra("position", -1)
                 intent.putExtra("position", position)
                 intent.putExtra("content", answerViewModel.answer.value)
@@ -106,6 +138,10 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
         } else if (status == IS_CHANGE_VALUE) {
             lifecycleScope.launch {
                 answerViewModel.modifyAnswer(requestAnswerData)
+                recordClickEvent(
+                    "BUTTON",
+                    "CLICK_ANSWER_MODIFY"
+                )
                 delay(500)
                 finish()
             }

@@ -2,21 +2,20 @@ package com.teambeme.beme.data.remote.datasource
 
 import com.teambeme.beme.data.remote.api.IdSearchService
 import com.teambeme.beme.idsearchfollowing.model.*
-import retrofit2.Call
 import javax.inject.Inject
 
 class IdSearchDataSourceImpl @Inject constructor(
     private val service: IdSearchService
 ) : IdSearchDataSource {
-    override fun idSearch(query: String, range: String): Call<ResponseIdSearchData> =
+    override suspend fun idSearch(query: String, range: String): ResponseIdSearchData =
         service.idSearch(query, range)
 
-    override fun getRecentSearchRecord(): Call<ResponseRecentSearchRecord> =
+    override suspend fun getRecentSearchRecord(): ResponseRecentSearchRecord =
         service.getRecentSearchRecord()
 
-    override fun deleteRecentSearchRecord(searchedId: Int): Call<ResponseDeleteRecentSearchRecord> =
+    override suspend fun deleteRecentSearchRecord(searchedId: Int): ResponseDeleteRecentSearchRecord =
         service.deleteRecentSearchRecord(searchedId)
 
-    override fun putFollowAndFollowing(body: RequestFollowAndFollowing): Call<ResponseFollowAndFollowing> =
+    override suspend fun putFollowAndFollowing(body: RequestFollowAndFollowing): ResponseFollowAndFollowing =
         service.putFollowAndFollowing(body)
 }
