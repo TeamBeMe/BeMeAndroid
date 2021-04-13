@@ -36,13 +36,26 @@ jobs:
 
         - name: Change gradlew permissions
           run: chmod +x ./gradlew
+          
+        - name: Check Lint
+          run: ./gradlew ktlintCheck  
 
         - name: Build with Gradle
           run: ./gradlew assembleDebug
-
+          
         - name: Upload APK
           if: ${{ success() }}
           uses: actions/upload-artifact@v2
           with:
             name: apk
             path: app/build/outputs/apk/debug/
+            
+        - name: Build App Bundle with Gradle
+          run: ./gradlew bundleRelease
+          
+        - name: Upload Bundle
+          if: ${{ success() }}
+          uses: actions/upload-artifact@v2
+          with:
+            name: aab
+            path: app/build/outputs/bundle/release/          
