@@ -1,7 +1,6 @@
 package com.teambeme.beme.mypage.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +38,6 @@ class BottomWriteFragment(private val filter: Boolean) : BottomSheetDialogFragme
             dismiss()
         }
         binding.chipGroupRange.setOnCheckedChangeListener { group, checkedId ->
-            Log.d("filterID", checkedId.toString())
             recordClickEvent("BUTTON", PublicRange.asItemId(checkedId))
             setRangeOnCheckedListner(checkedId)
         }
