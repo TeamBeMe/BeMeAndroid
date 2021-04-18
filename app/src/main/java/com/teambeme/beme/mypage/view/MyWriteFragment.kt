@@ -28,7 +28,6 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
         super.onCreateView(inflater, container, savedInstanceState)
         binding.myPageViewModel = mypageViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        mypageViewModel.initMyAnswer()
         setMyWriteAdapter()
         setMyWriteObserve()
         setIsWriteFilterClickedObserve()
@@ -45,8 +44,7 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
     override fun onResume() {
         super.onResume()
         RecordScreenUtil.recordScreen("MyPage_MyWriteFragment")
-        mypageViewModel.initPage()
-        mypageViewModel.getMyAnswer()
+        mypageViewModel.getMyAnswer(mypageViewModel.tempPage)
     }
 
     private fun setMyWriteAdapter() {
@@ -83,7 +81,8 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
         mypageViewModel.mywriteFilter.observe(viewLifecycleOwner) { myWriteFilter ->
             myWriteFilter.let {
                 mypageViewModel.initPage()
-                mypageViewModel.getMyAnswer()
+                mypageViewModel.clearCopyMyAnswerList()
+                mypageViewModel.getMyAnswer(mypageViewModel.tempPage)
             }
         }
     }
@@ -127,7 +126,8 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
             override fun onQueryTextSubmit(newText: String?): Boolean {
                 Log.d("Search", newText ?: "hyunwoo")
                 mypageViewModel.initPage()
-                mypageViewModel.getMyAnswer()
+                mypageViewModel.clearCopyMyAnswerList()
+                mypageViewModel.getMyAnswer(mypageViewModel.tempPage)
                 return false
             }
 
@@ -137,7 +137,8 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
                 if (userInputText.count() == 0) {
                     mypageViewModel.initPage()
                     mypageViewModel.deleteMyQuery()
-                    mypageViewModel.getMyAnswer()
+                    mypageViewModel.clearCopyMyAnswerList()
+                    mypageViewModel.getMyAnswer(mypageViewModel.tempPage)
                 }
                 return false
             }

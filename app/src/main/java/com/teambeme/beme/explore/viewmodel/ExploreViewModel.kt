@@ -116,11 +116,7 @@ class ExploreViewModel @Inject constructor(
                                 if (tempPage == 1) {
                                     clearTempOtherQuestionsList()
                                 }
-                                response.body()!!.data.answers.toMutableList().let {
-                                    tempOtherQuestionsList?.addAll(
-                                        it
-                                    )
-                                }
+                                tempOtherQuestionsList?.addAll(response.body()!!.data.answers.toMutableList())
                                 _tempPage++
                                 if (response.body()!!.data.answers.isNotEmpty()) {
                                     _isMorePage.value = response.body()!!.data.answers.size == 10
