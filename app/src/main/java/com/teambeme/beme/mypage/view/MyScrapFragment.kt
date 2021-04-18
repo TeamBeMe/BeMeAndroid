@@ -26,7 +26,6 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
         super.onCreateView(inflater, container, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.myPageViewModel = mypageViewModel
-        mypageViewModel.initScrap()
         setMyScrapAdapter()
         setMyPageScrapDataObserve()
         setIsScrapFilterClickedObserve()
@@ -42,8 +41,7 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
     override fun onResume() {
         super.onResume()
         RecordScreenUtil.recordScreen("MyPage_MyScrapFragment")
-        mypageViewModel.initScrapPage()
-        mypageViewModel.getMyScrap()
+        mypageViewModel.getMyScrap(mypageViewModel.scrapTempPage)
     }
 
     private fun setMyScrapAdapter() {
@@ -80,7 +78,7 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
         mypageViewModel.scrapFilter.observe(viewLifecycleOwner) { scrapFilter ->
             scrapFilter.let {
                 mypageViewModel.initScrapPage()
-                mypageViewModel.getMyScrap()
+                mypageViewModel.getMyScrap(mypageViewModel.scrapTempPage)
             }
         }
     }
@@ -116,7 +114,7 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(newText: String?): Boolean {
                 mypageViewModel.initScrapPage()
-                mypageViewModel.getMyScrap()
+                mypageViewModel.getMyScrap(mypageViewModel.scrapTempPage)
                 return false
             }
 
@@ -126,7 +124,7 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
                 if (userInputText.count() == 0) {
                     mypageViewModel.initScrapPage()
                     mypageViewModel.deleteScrapQuery()
-                    mypageViewModel.getMyScrap()
+                    mypageViewModel.getMyScrap(mypageViewModel.scrapTempPage)
                 }
                 return false
             }

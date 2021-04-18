@@ -86,24 +86,12 @@ class MyPageViewModel @Inject constructor(
         _scrapQuery.value = null
     }
 
-    fun initMyAnswer() {
-        _mywriteFilter.value?.category = null
-        _mywriteFilter.value?.range = null
-        _page = 2
-        _myQuery.value = null
-    }
-
     fun initPage() {
         _page = 2
     }
 
-    fun initScrap() {
-        _scrapPage = 1
-        _scrapQuery.value = null
-    }
-
     fun initScrapPage() {
-        _scrapPage = 1
+        _scrapPage = 2
     }
 
     fun setScrapFilter(range: String?, category: Int?) {
@@ -197,10 +185,6 @@ class MyPageViewModel @Inject constructor(
                 response: Response<ResponseMyAnswer>
             ) {
                 if (response.isSuccessful) {
-                    Log.d(
-                        "recursion_mypage",
-                        "pageNum : $pageNum, page : $page, tempPage : $tempPage"
-                    )
                     if (pageNum != page) {
                         if (tempPage == 1) {
                             clearCopyMyAnswerList()
@@ -217,10 +201,6 @@ class MyPageViewModel @Inject constructor(
                         _mypageWriteData.value = copyMyAnswerList.toMutableList()
                         _tempPage = 1
                     }
-                    Log.d(
-                        "recursion_mypage",
-                        " tempPage : $tempPage"
-                    )
                 }
             }
 
@@ -243,10 +223,6 @@ class MyPageViewModel @Inject constructor(
                 response: Response<ResponseMyAnswer>
             ) {
                 if (response.isSuccessful) {
-                    Log.d(
-                        "recursion_mypage",
-                        "page : $page, tempPage : $tempPage"
-                    )
                     copyMyAnswerList.addAll(response.body()!!.data.answers.toMutableList())
                     _mypageWriteData.value = copyMyAnswerList.toMutableList()
                     if (response.body()!!.data.answers.isNotEmpty()) {
@@ -286,12 +262,12 @@ class MyPageViewModel @Inject constructor(
         })
     }
 
-    fun getMyScrap() {
+    fun getMyScrap(pageNum: Int) {
         myPageRepository.getMyScrap(
             scrapFilter.value?.range,
             scrapFilter.value?.category,
             scrapQuery.value,
-            scrapPage
+            pageNum
         ).enqueue(object :
             Callback<ResponseMyScrap> {
             override fun onResponse(
@@ -299,26 +275,59 @@ class MyPageViewModel @Inject constructor(
                 response: Response<ResponseMyScrap>
             ) {
                 if (response.isSuccessful) {
-                    if (scrapPage == 1) {
-                        copyMyScrapList = response.body()!!.data.answers.toMutableList()
-                        _isScrapEmpty.value = copyMyScrapList.size == 0
-                        _mypageScrapData.value = copyMyScrapList.toMutableList()
-
-                        if (response.body()!!.data.answers.size == 10) {
-                            _isScrapMax.value = false
-                            _scrapPage++
-                        } else {
-                            _isScrapMax.value = true
+                    Log.d(
+                        "recursion_mypage",
+                        "pageNum : $pageNum, page : $page, tempPage : $scrapTempPage"
+                    )
+                    if (pageNum != scrapPage) {
+                        if (scrapTempPage == 1) {
+                            clearCopyMyScrapList()
                         }
-                    } else {
                         copyMyScrapList.addAll(response.body()!!.data.answers.toMutableList())
-                        _mypageScrapData.value = copyMyScrapList.toMutableList()
-                        if (response.body()!!.data.answers.size == 10) {
-                            _isScrapMax.value = false
-                            _scrapPage++
+                        _scrapTempPage++
+                        if (response.body()!!.data.answers.isNotEmpty()) {
+                            _isScrapMax.value = response.body()!!.data.answers.size != 10
                         } else {
                             _isScrapMax.value = true
                         }
+                        getMyScrap(scrapTempPage)
+                    } else {
+                        _mypageScrapData.value = copyMyScrapList.toMutableList()
+                        _scrapTempPage = 1
+                    }
+                    Log.d(
+                        "recursion_mypage",
+                        " tempPage : $scrapTempPage"
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMyScrap>, t: Throwable) {
+                Log.d("Network Fail", t.message.toString())
+            }
+        })
+    }
+
+    fun getPlusMyScrap() {
+        myPageRepository.getMyScrap(
+            scrapFilter.value?.range,
+            scrapFilter.value?.category,
+            scrapQuery.value,
+            page
+        ).enqueue(object :
+            Callback<ResponseMyScrap> {
+            override fun onResponse(
+                call: Call<ResponseMyScrap>,
+                response: Response<ResponseMyScrap>
+            ) {
+                if (response.isSuccessful) {
+                    copyMyScrapList.addAll(response.body()!!.data.answers.toMutableList())
+                    _mypageScrapData.value = copyMyScrapList.toMutableList()
+                    if (response.body()!!.data.answers.isNotEmpty()) {
+                        _scrapPage++
+                        _isScrapMax.value = response.body()!!.data.answers.size != 10
+                    } else {
+                        _isScrapMax.value = true
                     }
                 }
             }
