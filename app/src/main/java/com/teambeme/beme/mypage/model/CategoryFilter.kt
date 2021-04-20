@@ -3,7 +3,7 @@ package com.teambeme.beme.mypage.model
 import com.teambeme.beme.R
 
 enum class CategoryFilter(
-    private val checkId: Int?,
+    private val checkId: Int,
     private val itemId: String
 ) {
     NONE(-1, "CLICK_ANY_CATEGORY_MPFILTER"),

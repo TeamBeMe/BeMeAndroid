@@ -38,21 +38,15 @@ class MyPageViewModel @Inject constructor(
     val scrapScrollUp: LiveData<Unit>
         get() = _scrapScrollUp
 
-    private var _page: Int = 2
-    val page: Int
-        get() = _page
+    private var page: Int = 2
 
-    private var _tempPage: Int = 1
-    val tempPage: Int
-        get() = _tempPage
+    var tempPage: Int = 1
+        private set
 
-    private var _scrapPage = 2
-    val scrapPage: Int
-        get() = _scrapPage
+    private var scrapPage = 2
 
-    private var _scrapTempPage: Int = 1
-    val scrapTempPage: Int
-        get() = _scrapTempPage
+    var scrapTempPage: Int = 1
+        private set
 
     fun clearCopyMyAnswerList() {
         copyMyAnswerList.clear()
@@ -87,11 +81,11 @@ class MyPageViewModel @Inject constructor(
     }
 
     fun initPage() {
-        _page = 2
+        page = 2
     }
 
     fun initScrapPage() {
-        _scrapPage = 2
+        scrapPage = 2
     }
 
     fun setScrapFilter(range: String?, category: Int?) {
@@ -190,7 +184,7 @@ class MyPageViewModel @Inject constructor(
                             clearCopyMyAnswerList()
                         }
                         copyMyAnswerList.addAll(response.body()!!.data.answers.toMutableList())
-                        _tempPage++
+                        tempPage++
                         if (response.body()!!.data.answers.isNotEmpty()) {
                             _isAnswerMax.value = response.body()!!.data.answers.size != 10
                         } else {
@@ -199,7 +193,7 @@ class MyPageViewModel @Inject constructor(
                         getMyAnswer(tempPage)
                     } else {
                         _mypageWriteData.value = copyMyAnswerList.toMutableList()
-                        _tempPage = 1
+                        tempPage = 1
                     }
                 }
             }
@@ -226,7 +220,7 @@ class MyPageViewModel @Inject constructor(
                     copyMyAnswerList.addAll(response.body()!!.data.answers.toMutableList())
                     _mypageWriteData.value = copyMyAnswerList.toMutableList()
                     if (response.body()!!.data.answers.isNotEmpty()) {
-                        _page++
+                        page++
                         _isAnswerMax.value = response.body()!!.data.answers.size != 10
                     } else {
                         _isAnswerMax.value = true
@@ -284,7 +278,7 @@ class MyPageViewModel @Inject constructor(
                             clearCopyMyScrapList()
                         }
                         copyMyScrapList.addAll(response.body()!!.data.answers.toMutableList())
-                        _scrapTempPage++
+                        scrapTempPage++
                         if (response.body()!!.data.answers.isNotEmpty()) {
                             _isScrapMax.value = response.body()!!.data.answers.size != 10
                         } else {
@@ -293,7 +287,7 @@ class MyPageViewModel @Inject constructor(
                         getMyScrap(scrapTempPage)
                     } else {
                         _mypageScrapData.value = copyMyScrapList.toMutableList()
-                        _scrapTempPage = 1
+                        scrapTempPage = 1
                     }
                     Log.d(
                         "recursion_mypage",
@@ -324,7 +318,7 @@ class MyPageViewModel @Inject constructor(
                     copyMyScrapList.addAll(response.body()!!.data.answers.toMutableList())
                     _mypageScrapData.value = copyMyScrapList.toMutableList()
                     if (response.body()!!.data.answers.isNotEmpty()) {
-                        _scrapPage++
+                        scrapPage++
                         _isScrapMax.value = response.body()!!.data.answers.size != 10
                     } else {
                         _isScrapMax.value = true
