@@ -56,6 +56,7 @@ class BottomWriteFragment(private val filter: Boolean) : BottomSheetDialogFragme
             R.id.chip_write_4 -> category = CATEGORY_DAILY
             R.id.chip_write_5 -> category = CATEGORY_ME
             R.id.chip_write_6 -> category = CATEGORY_STORY
+            else -> category = CATEGORY_ALL
         }
     }
 
@@ -64,6 +65,7 @@ class BottomWriteFragment(private val filter: Boolean) : BottomSheetDialogFragme
             R.id.chip_range_1 -> range = null
             R.id.chip_range_2 -> range = "public"
             R.id.chip_range_3 -> range = "unpublic"
+            else -> range = null
         }
     }
 
@@ -76,6 +78,7 @@ class BottomWriteFragment(private val filter: Boolean) : BottomSheetDialogFragme
     }
 
     companion object {
+        private val CATEGORY_ALL = null
         private val CATEGORY_VALUE = 1
         private val CATEGORY_RELATION = 2
         private val CATEGORY_LOVE = 3

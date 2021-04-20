@@ -109,7 +109,7 @@
                 android:layout_marginEnd="28dp"
                 android:layout_marginBottom="150dp"
                 android:backgroundTint="@color/mypage_black"
-                android:onClick="@{()->myPageViewModel.getMyScrap()}"
+                android:onClick="@{()->myPageViewModel.getPlusMyScrap()}"
                 android:paddingTop="12dp"
                 android:paddingBottom="16dp"
                 android:text="더보기"
