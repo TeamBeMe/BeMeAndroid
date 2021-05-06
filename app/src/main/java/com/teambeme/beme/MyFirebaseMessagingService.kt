@@ -19,22 +19,12 @@ import com.teambeme.beme.notification.view.NotificationActivity
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         Log.d(TAG, "new Token: $token")
-//        val pref = this.getSharedPreferences("token", Context.MODE_PRIVATE)
-//        val editor = pref.edit()
-//        editor.putString("token", token).apply()
-//        editor.commit()
-//
-//        Log.i("로그: ", "성공적으로 토큰을 저장함")
-
         sendRegistrationToServer(token)
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "From: " + remoteMessage.data)
         super.onMessageReceived(remoteMessage)
-        Log.i("notice", remoteMessage.notification?.body.toString())
-        Log.i("notice", remoteMessage.notification?.title.toString())
-
         if (remoteMessage.data.isNotEmpty()) {
             Log.i("notice 바디: ", remoteMessage.data["body"].toString())
             Log.i("notice 타이틀: ", remoteMessage.data["title"].toString())
