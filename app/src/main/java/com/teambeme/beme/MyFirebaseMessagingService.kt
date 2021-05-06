@@ -43,6 +43,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val uniId = remoteMessage.sentTime.toInt()
 
         val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("isOpenFromPushAlarm", true)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
         val pendingIntent = PendingIntent.getActivity(
