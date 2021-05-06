@@ -44,7 +44,7 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.32'
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
     implementation 'androidx.core:core-ktx:1.3.2'
-    implementation "androidx.fragment:fragment-ktx:1.3.2"
+    implementation "androidx.fragment:fragment-ktx:1.3.3"
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
@@ -61,7 +61,7 @@ dependencies {
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
-    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
     // Retrofit & Gson
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -70,10 +70,10 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.2.2'
 
     // Room
-    implementation "androidx.room:room-runtime:2.2.6"
-    kapt "androidx.room:room-compiler:2.2.6"
-    implementation "androidx.room:room-ktx:2.2.6"
-    testImplementation "androidx.room:room-testing:2.2.6"
+    implementation "androidx.room:room-runtime:2.3.0"
+    kapt "androidx.room:room-compiler:2.3.0"
+    implementation "androidx.room:room-ktx:2.3.0"
+    testImplementation "androidx.room:room-testing:2.3.0"
 
     // Lottie
     implementation 'com.airbnb.android:lottie:3.6.0'
@@ -84,7 +84,7 @@ dependencies {
     // FireBase
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'com.google.firebase:firebase-messaging:21.1.0'
 
     // Image Crop
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
@@ -93,25 +93,25 @@ dependencies {
     implementation 'com.github.didikk:sticky-nestedscrollview:1.0.1'
 
     // AndroidX Navigation Component
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.4"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.4"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
 
     // Dot Indicator
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
 
     // AndroidX Security: EncryptedSharedPreference
-    implementation "androidx.security:security-crypto:1.0.0-rc03"
+    implementation "androidx.security:security-crypto:1.0.0"
 
     // PullRefreshLayout
     implementation 'com.baoyz.pullrefreshlayout:library:1.2.0'
 
     // Android Dagger-Hilt
-    implementation "com.google.dagger:hilt-android:2.33-beta"
-    kapt "com.google.dagger:hilt-android-compiler:2.33-beta"
+    implementation "com.google.dagger:hilt-android:2.35"
+    kapt "com.google.dagger:hilt-android-compiler:2.35"
 
     // Google Play Store API
     implementation 'com.google.android.play:core:1.10.0'
 
     // Kotlin Coroutines for Android
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3'
 }
