@@ -219,6 +219,7 @@ class PersonalInfoFragment : Fragment() {
             if (signUpViewModel.validateAllValues()) {
                 view.findNavController()
                     .navigate(R.id.action_personalInfoFragment_to_imageChooseFragment)
+                signUpViewModel.setUserInfo()
             } else {
                 makeProblemToastMessage(
                     signUpViewModel.isEmailValidated.value!!,
