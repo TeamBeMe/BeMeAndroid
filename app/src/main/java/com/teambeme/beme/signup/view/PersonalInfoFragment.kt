@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -15,14 +13,16 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
+import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.databinding.FragmentPersonalInfoBinding
 import com.teambeme.beme.signup.viewmodel.SignUpViewModel
+import com.teambeme.beme.util.color
 import com.teambeme.beme.util.recordClickEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PersonalInfoFragment : Fragment() {
-    private lateinit var binding: FragmentPersonalInfoBinding
+class PersonalInfoFragment :
+    BindingFragment<FragmentPersonalInfoBinding>(R.layout.fragment_personal_info) {
     private val signUpViewModel: SignUpViewModel by activityViewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -37,8 +37,7 @@ class PersonalInfoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_personal_info, container, false)
+        super.onCreateView(inflater, container, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.signUpViewModel = signUpViewModel
         binding.btnPersonalBack.setOnClickListener { view ->
@@ -47,7 +46,7 @@ class PersonalInfoFragment : Fragment() {
         }
         setDoubleCheckListener()
         setDoneButtonClickListener()
-        setObserve()
+        subscribeData()
         return binding.root
     }
 
@@ -60,12 +59,11 @@ class PersonalInfoFragment : Fragment() {
                 } else {
                     binding.txtPersonalNicknameCheck.apply {
                         text = "이미 존재하는 닉네임입니다"
-                        setTextColor(resources.getColor(R.color.signup_red, null))
+                        setTextColor(color(R.color.signup_red))
                     }
                     binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_red)
                 }
             }
-            checkButtonEnable()
         }
     }
 
@@ -86,7 +84,33 @@ class PersonalInfoFragment : Fragment() {
         }
     }
 
-    private fun setObserve() {
+    private fun subscribeData() {
+        signUpViewModel.isDoneButtonEnabled.observe(viewLifecycleOwner) {
+            binding.btnPersonalDone.isEnabled = it
+        }
+        signUpViewModel.isEmailValid.observe(viewLifecycleOwner) {
+            when (it) {
+                true -> {
+                    binding.txtPersonalEmailCheck.text = "형식에 맞는 이메일입니다"
+                    binding.txtPersonalEmailCheck.setTextColor(
+                        resources.getColor(
+                            R.color.signup_term_blue,
+                            null
+                        )
+                    )
+                }
+                else -> {
+                    binding.txtPersonalEmailCheck.text = "형식에 맞지 않는 이메일입니다"
+                    binding.txtPersonalEmailCheck.setTextColor(
+                        resources.getColor(
+                            R.color.signup_red,
+                            null
+                        )
+                    )
+                    binding.imgPersonalEmailCheck.setImageResource(R.drawable.ic_personal_check_red)
+                }
+            }
+        }
         signUpViewModel.userEmail.observe(viewLifecycleOwner) { email ->
             if (email.isNullOrBlank()) {
                 binding.txtPersonalEmailCheck.text = "bean@example.com 형식으로 입력해 주세요"
@@ -121,18 +145,14 @@ class PersonalInfoFragment : Fragment() {
                     signUpViewModel.emailNotValidated()
                 }
             }
-            checkButtonEnable()
         }
         signUpViewModel.userNickName.observe(viewLifecycleOwner) { nickName ->
             if (nickName.isEmpty()) {
                 binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_gray)
-                binding.txtPersonalNicknameCheck.text = "영문, 숫자로 5자 이상 20자 이내로 입력해 주세요."
-                binding.txtPersonalNicknameCheck.setTextColor(
-                    resources.getColor(
-                        R.color.signup_personal_check,
-                        null
-                    )
-                )
+                binding.txtPersonalNicknameCheck.apply {
+                    text = "영문, 숫자로 5자 이상 20자 이내로 입력해 주세요."
+                    setTextColor(color(R.color.signup_personal_check))
+                }
                 signUpViewModel.nickNameNotValidated()
             } else if (!nickName.isLettersOrDigits() || !nickNameLengthValidation(nickName)) {
                 binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_red)
@@ -149,8 +169,6 @@ class PersonalInfoFragment : Fragment() {
                 }
                 signUpViewModel.nickNameValidated()
             }
-
-            checkButtonEnable()
         }
 
         signUpViewModel.userPassWord.observe(viewLifecycleOwner) { passWord ->
@@ -231,6 +249,7 @@ class PersonalInfoFragment : Fragment() {
         }
     }
 
+    @Deprecated("MediatorLiveData로 대체되었습니다.")
     private fun checkButtonEnable() {
         binding.btnPersonalDone.isEnabled = signUpViewModel.validateAllValues()
     }

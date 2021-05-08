@@ -32,7 +32,7 @@ class SignUpViewModel @Inject constructor(
     val userNickName = MutableLiveData("")
     val userPassWord = MutableLiveData("")
     val userPassWordCheck = MutableLiveData("")
-    private val isEmailValid = Transformations.map(userEmail) { validEmail(it) }
+    val isEmailValid = Transformations.map(userEmail) { validEmail(it) }
     private val _isPasswordDoubleChecked = MediatorLiveData<Boolean>().apply {
         addSourceList(userPassWord, userPassWordCheck) { passwordValid() }
     }
@@ -45,6 +45,12 @@ class SignUpViewModel @Inject constructor(
         Transformations.map(userNickName) { nickNameLengthValidation(it) }
     private val isNicknameRegexValid =
         Transformations.map(userNickName) { regexValid(it) }
+    private val _nickNameDoubleCheck = MutableLiveData<ResponseNickDoubleCheck>()
+    val nickDoubleCheck: LiveData<ResponseNickDoubleCheck>
+        get() = _nickNameDoubleCheck
+    private val _isNickNameDoubleChecked = MutableLiveData(false)
+    val isNickNameDoubleChecked: LiveData<Boolean>
+        get() = _isNickNameDoubleChecked
 
     val isDoneButtonEnabled = MediatorLiveData<Boolean>().apply {
         addSourceList(
@@ -63,18 +69,12 @@ class SignUpViewModel @Inject constructor(
     private val _isNickNameValidated = MutableLiveData(false)
     val isNickNameValidated: LiveData<Boolean>
         get() = _isNickNameValidated
-    private val _isNickNameDoubleChecked = MutableLiveData(false)
-    val isNickNameDoubleChecked: LiveData<Boolean>
-        get() = _isNickNameDoubleChecked
     private val _isPassWordValidated = MutableLiveData(false)
     val isPassWordValidated: LiveData<Boolean>
         get() = _isPassWordValidated
     private val _isPassWordCheckValidated = MutableLiveData(false)
     val isPassWordCheckValidated: LiveData<Boolean>
         get() = _isPassWordCheckValidated
-    private val _nickNameDoubleCheck = MutableLiveData<ResponseNickDoubleCheck>()
-    val nickDoubleCheck: LiveData<ResponseNickDoubleCheck>
-        get() = _nickNameDoubleCheck
     private val _profileImageUri = MutableLiveData<Uri>()
     val profileImageUri: LiveData<Uri>
         get() = _profileImageUri
@@ -205,7 +205,7 @@ class SignUpViewModel @Inject constructor(
 
     private fun validUserInfo() =
         isEmailValid.value!! && isPasswordDoubleChecked.value!! && isPasswordRegexValid.value!!
-                && isPasswordLengthValid.value!! && isNicknameLengthValid.value!! && isNicknameRegexValid.value!!
+                && isPasswordLengthValid.value!! && isNickNameDoubleChecked.value!!
 
     companion object {
         private val REGEX_EMAIL = Regex(pattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
