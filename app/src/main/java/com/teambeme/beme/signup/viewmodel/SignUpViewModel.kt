@@ -10,10 +10,7 @@ import com.teambeme.beme.signup.model.ResponseSignUp
 import com.teambeme.beme.util.addSourceList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -28,24 +25,25 @@ class SignUpViewModel @Inject constructor(
     // PersonalInfoFragment
     private lateinit var userInfo: User
     private val validatedId = hashSetOf<String>()
+    fun isDoubleCheckedId(nickName: String) = validatedId.contains(nickName)
+    fun registerId(nickName: String) { validatedId.add(nickName) }
 
     val userEmail = MutableLiveData("")
     val userNickName = MutableLiveData("")
     val userPassWord = MutableLiveData("")
     val userPassWordCheck = MutableLiveData("")
+
+    // Email
     val isEmailValid = Transformations.map(userEmail) { validEmail(it) }
-    private val _isPasswordDoubleChecked = MediatorLiveData<Boolean>().apply {
-        addSourceList(userPassWord, userPassWordCheck) { passwordValid() }
-    }
-    private val isPasswordDoubleChecked: LiveData<Boolean>
-        get() = _isPasswordDoubleChecked
-    private val isPasswordRegexValid = Transformations.map(userPassWord) { regexValid(it) }
-    private val isPasswordLengthValid =
-        Transformations.map(userPassWord) { passwordLengthValid(it) }
+
+    // Nickname
     private val isNicknameLengthValid =
         Transformations.map(userNickName) { nickNameLengthValidation(it) }
     private val isNicknameRegexValid =
         Transformations.map(userNickName) { regexValid(it) }
+    val isNicknameValid = MediatorLiveData<Boolean>().apply {
+        addSourceList(isNicknameLengthValid, isNicknameRegexValid) { nicknameValid() }
+    }
     private val _nickNameDoubleCheck = MutableLiveData<ResponseNickDoubleCheck>()
     val nickDoubleCheck: LiveData<ResponseNickDoubleCheck>
         get() = _nickNameDoubleCheck
@@ -53,10 +51,24 @@ class SignUpViewModel @Inject constructor(
     val isNickNameDoubleChecked: LiveData<Boolean>
         get() = _isNickNameDoubleChecked
 
+    // Password
+    private val isPasswordRegexValid = Transformations.map(userPassWord) { regexValid(it) }
+    private val isPasswordLengthValid =
+        Transformations.map(userPassWord) { passwordLengthValid(it) }
+    val isPasswordValid = MediatorLiveData<Boolean>().apply {
+        addSourceList(isPasswordRegexValid, isPasswordLengthValid) { passwordValid() }
+    }
+    private val _isPasswordDoubleChecked = MediatorLiveData<Boolean>().apply {
+        addSourceList(userPassWord, userPassWordCheck) { passwordDoubleCheckValid() }
+    }
+    private val isPasswordDoubleChecked: LiveData<Boolean>
+        get() = _isPasswordDoubleChecked
+
+
     val isDoneButtonEnabled = MediatorLiveData<Boolean>().apply {
         addSourceList(
             isEmailValid, isPasswordDoubleChecked, isPasswordRegexValid, isPasswordLengthValid,
-            isNicknameLengthValid, isNicknameRegexValid
+            isNicknameLengthValid, isNicknameRegexValid, isNickNameDoubleChecked
         ) { validUserInfo() }
     }
     private val _profileImageUri = MutableLiveData<Uri>()
@@ -71,16 +83,31 @@ class SignUpViewModel @Inject constructor(
         get() = _errorMessage
 
     // Old Function
+    @Deprecated("LiveData로 대체")
     private val _isEmailValidated = MutableLiveData<Boolean>(false)
+
+    @Deprecated("LiveData로 대체")
     val isEmailValidated: LiveData<Boolean>
         get() = _isEmailValidated
+
+    @Deprecated("LiveData로 대체")
     private val _isNickNameValidated = MutableLiveData(false)
+
+    @Deprecated("LiveData로 대체")
     val isNickNameValidated: LiveData<Boolean>
         get() = _isNickNameValidated
+
+    @Deprecated("LiveData로 대체")
     private val _isPassWordValidated = MutableLiveData(false)
+
+    @Deprecated("LiveData로 대체")
     val isPassWordValidated: LiveData<Boolean>
         get() = _isPassWordValidated
+
+    @Deprecated("LiveData로 대체")
     private val _isPassWordCheckValidated = MutableLiveData(false)
+
+    @Deprecated("LiveData로 대체")
     val isPassWordCheckValidated: LiveData<Boolean>
         get() = _isPassWordCheckValidated
 
@@ -89,40 +116,52 @@ class SignUpViewModel @Inject constructor(
     val signUpUserInfo: LiveData<ResponseSignUp?>
         get() = _signUpUserInfo
 
+    @Deprecated("LiveData로 대체")
     fun emailValidated() {
         _isEmailValidated.value = true
     }
 
+    @Deprecated("LiveData로 대체")
     fun emailNotValidated() {
         _isEmailValidated.value = false
     }
 
+    @Deprecated("LiveData로 대체")
     fun nickNameValidated() {
         _isNickNameValidated.value = true
     }
 
+    @Deprecated("LiveData로 대체")
     fun nickNameNotValidated() {
         _isNickNameValidated.value = false
     }
 
+    @Deprecated("LiveData로 대체")
     fun passWordValidated() {
         _isPassWordValidated.value = true
     }
 
+    @Deprecated("LiveData로 대체")
     fun passWordNotValidated() {
         _isPassWordValidated.value = false
     }
 
+    @Deprecated("LiveData로 대체")
     fun passWordCheckValidated() {
         _isPassWordCheckValidated.value = true
     }
 
+    @Deprecated("LiveData로 대체")
     fun passWordCheckNotValidated() {
         _isPassWordCheckValidated.value = false
     }
 
     fun nickDoubleCheckValidated() {
         _isNickNameDoubleChecked.value = true
+    }
+
+    fun nickDoubleCheckInvalidated() {
+        _isNickNameDoubleChecked.value = false
     }
 
     @Deprecated(
@@ -174,17 +213,17 @@ class SignUpViewModel @Inject constructor(
         _profileImageUri.value = uri
     }
 
-    @Deprecated("User 클래스의 확장함수로 대체되었습니다.", ReplaceWith("User.toRequestBody()로 대체"))
-    private fun getPartMap(): HashMap<String, RequestBody> {
-        val email = userEmail.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
-        val nickName = userNickName.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
-        val passWord = userPassWord.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
-        return hashMapOf(
-            "email" to email,
-            "nickname" to nickName,
-            "password" to passWord
-        )
-    }
+//    @Deprecated("User 클래스의 확장함수로 대체되었습니다.", ReplaceWith("User.toRequestBody()로 대체"))
+//    private fun getPartMap(): HashMap<String, RequestBody> {
+//        val email = userEmail.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
+//        val nickName = userNickName.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
+//        val passWord = userPassWord.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
+//        return hashMapOf(
+//            "email" to email,
+//            "nickname" to nickName,
+//            "password" to passWord
+//        )
+//    }
 
     // NEW Functions
 
@@ -192,11 +231,17 @@ class SignUpViewModel @Inject constructor(
         return REGEX_EMAIL.matches(email)
     }
 
-    private fun passwordValid(): Boolean {
+    private fun passwordDoubleCheckValid(): Boolean {
         if (userPassWord.value.isNullOrEmpty() || userPassWordCheck.value.isNullOrEmpty())
             return false
         return userPassWord.value == userPassWordCheck.value
     }
+
+    private fun nicknameValid() = isNicknameLengthValid.value ?: false &&
+            isNicknameLengthValid.value ?: false
+
+    private fun passwordValid() = isPasswordRegexValid.value ?: false
+            && isPasswordLengthValid.value ?: false
 
     private fun regexValid(letter: String) = letter
         .filter { it in 'A'..'Z' || it in 'a'..'z' || it in '0'..'9' }
