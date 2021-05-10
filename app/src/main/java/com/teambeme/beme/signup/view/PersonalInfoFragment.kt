@@ -74,8 +74,10 @@ class PersonalInfoFragment :
             Toast.LENGTH_SHORT
         ).show()
         binding.apply {
-            edittxtPersonalNickname.isEnabled = false
-            edittxtPersonalNickname.setTextColor(resources.getColor(R.color.signup_disabled, null))
+            edittxtPersonalNickname.apply {
+                isEnabled = false
+                setTextColor(color(R.color.signup_disabled))
+            }
             btnPersonalNicknameDoubleCheck.visibility = View.GONE
             txtPersonalNicknameCheck.apply {
                 text = "사용 가능한 닉네임입니다"
@@ -91,60 +93,52 @@ class PersonalInfoFragment :
         signUpViewModel.isEmailValid.observe(viewLifecycleOwner) {
             when (it) {
                 true -> {
-                    binding.txtPersonalEmailCheck.text = "형식에 맞는 이메일입니다"
-                    binding.txtPersonalEmailCheck.setTextColor(
-                        resources.getColor(
-                            R.color.signup_term_blue,
-                            null
-                        )
-                    )
+                    binding.txtPersonalEmailCheck.apply {
+                        text = "형식에 맞는 이메일입니다"
+                        setTextColor(color(R.color.signup_term_blue))
+                    }
                 }
                 else -> {
-                    binding.txtPersonalEmailCheck.text = "형식에 맞지 않는 이메일입니다"
-                    binding.txtPersonalEmailCheck.setTextColor(
-                        resources.getColor(
-                            R.color.signup_red,
-                            null
-                        )
-                    )
+                    binding.txtPersonalEmailCheck.apply {
+                        text = "형식에 맞지 않는 이메일입니다"
+                        setTextColor(color(R.color.signup_red))
+                    }
                     binding.imgPersonalEmailCheck.setImageResource(R.drawable.ic_personal_check_red)
                 }
             }
         }
         signUpViewModel.userEmail.observe(viewLifecycleOwner) { email ->
             if (email.isNullOrBlank()) {
-                binding.txtPersonalEmailCheck.text = "bean@example.com 형식으로 입력해 주세요"
-                binding.txtPersonalEmailCheck.setTextColor(
-                    resources.getColor(
-                        R.color.signup_personal_check,
-                        null
-                    )
-                )
+                binding.txtPersonalEmailCheck.apply {
+                    text = "bean@example.com 형식으로 입력해 주세요"
+                    setTextColor(color(R.color.signup_personal_check))
+                }
                 binding.imgPersonalEmailCheck.setImageResource(R.drawable.ic_personal_check_gray)
                 signUpViewModel.emailNotValidated()
-            } else {
-                if (REGEX_EMAIL.matches(email)) {
-                    binding.txtPersonalEmailCheck.text = "형식에 맞는 이메일입니다"
-                    binding.txtPersonalEmailCheck.setTextColor(
-                        resources.getColor(
-                            R.color.signup_term_blue,
-                            null
-                        )
-                    )
-                    binding.imgPersonalEmailCheck.setImageResource(R.drawable.ic_personal_check_blue)
-                    signUpViewModel.emailValidated()
-                } else {
-                    binding.txtPersonalEmailCheck.text = "형식에 맞지 않는 이메일입니다"
-                    binding.txtPersonalEmailCheck.setTextColor(
-                        resources.getColor(
-                            R.color.signup_red,
-                            null
-                        )
-                    )
-                    binding.imgPersonalEmailCheck.setImageResource(R.drawable.ic_personal_check_red)
-                    signUpViewModel.emailNotValidated()
-                }
             }
+//            else {
+//                if (REGEX_EMAIL.matches(email)) {
+//                    binding.txtPersonalEmailCheck.text = "형식에 맞는 이메일입니다"
+//                    binding.txtPersonalEmailCheck.setTextColor(
+//                        resources.getColor(
+//                            R.color.signup_term_blue,
+//                            null
+//                        )
+//                    )
+//                    binding.imgPersonalEmailCheck.setImageResource(R.drawable.ic_personal_check_blue)
+//                    signUpViewModel.emailValidated()
+//                } else {
+//                    binding.txtPersonalEmailCheck.text = "형식에 맞지 않는 이메일입니다"
+//                    binding.txtPersonalEmailCheck.setTextColor(
+//                        resources.getColor(
+//                            R.color.signup_red,
+//                            null
+//                        )
+//                    )
+//                    binding.imgPersonalEmailCheck.setImageResource(R.drawable.ic_personal_check_red)
+//                    signUpViewModel.emailNotValidated()
+//                }
+//            }
         }
         signUpViewModel.userNickName.observe(viewLifecycleOwner) { nickName ->
             if (nickName.isEmpty()) {
@@ -158,14 +152,14 @@ class PersonalInfoFragment :
                 binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_red)
                 binding.txtPersonalNicknameCheck.apply {
                     text = "다른 닉네임을 입력해주세요"
-                    setTextColor(resources.getColor(R.color.signup_red, null))
+                    setTextColor(color(R.color.signup_red))
                 }
                 signUpViewModel.nickNameNotValidated()
             } else {
                 binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_blue)
                 binding.txtPersonalNicknameCheck.apply {
                     text = "사용 가능한 닉네임입니다, 중복확인을 해주세요"
-                    setTextColor(resources.getColor(R.color.signup_term_blue, null))
+                    setTextColor(color(R.color.signup_term_blue))
                 }
                 signUpViewModel.nickNameValidated()
             }
@@ -174,13 +168,10 @@ class PersonalInfoFragment :
         signUpViewModel.userPassWord.observe(viewLifecycleOwner) { passWord ->
             if (passWord.isEmpty()) {
                 binding.imgPersonalPassword.setImageResource(R.drawable.ic_personal_check_gray)
-                binding.txtPersonalPassword.text = "비밀번호는 영문 숫자로 8자 이상 입력해 주세요"
-                binding.txtPersonalPassword.setTextColor(
-                    resources.getColor(
-                        R.color.signup_personal_check,
-                        null
-                    )
-                )
+                binding.txtPersonalPassword.apply {
+                    text = "비밀번호는 영문 숫자로 8자 이상 입력해 주세요"
+                    setTextColor(color(R.color.signup_personal_check))
+                }
                 signUpViewModel.passWordNotValidated()
             } else if (!passWord.isAlphabets() || !passWord.isNumbers() || !passWordLengthValidation(
                     passWord
@@ -189,18 +180,17 @@ class PersonalInfoFragment :
                 binding.imgPersonalPassword.setImageResource(R.drawable.ic_personal_check_red)
                 binding.txtPersonalPassword.apply {
                     text = "8자 이상 20자 이내인 영문과 숫자의 조합이어야 합니다."
-                    setTextColor(resources.getColor(R.color.signup_red, null))
+                    setTextColor(color(R.color.signup_red))
                 }
                 signUpViewModel.passWordNotValidated()
             } else {
                 binding.imgPersonalPassword.setImageResource(R.drawable.ic_personal_check_blue)
                 binding.txtPersonalPassword.apply {
                     text = "사용 가능한 비밀번호입니다"
-                    setTextColor(resources.getColor(R.color.signup_term_blue, null))
+                    setTextColor(color(R.color.signup_term_blue))
                 }
                 signUpViewModel.passWordValidated()
             }
-            checkButtonEnable()
         }
 
         signUpViewModel.userPassWordCheck.observe(viewLifecycleOwner) { passWordCheck ->
@@ -213,19 +203,18 @@ class PersonalInfoFragment :
                     binding.imgPersonalPasswordCheck.setImageResource(R.drawable.ic_personal_check_red)
                     binding.txtPersonalPasswordCheck.apply {
                         text = "비밀번호가 일치하지 않습니다"
-                        setTextColor(resources.getColor(R.color.signup_red, null))
+                        setTextColor(color(R.color.signup_red))
                     }
                     signUpViewModel.passWordCheckNotValidated()
                 } else {
                     binding.imgPersonalPasswordCheck.setImageResource(R.drawable.ic_personal_check_blue)
                     binding.txtPersonalPasswordCheck.apply {
                         text = "비밀번호가 일치합니다"
-                        setTextColor(resources.getColor(R.color.signup_term_blue, null))
+                        setTextColor(color(R.color.signup_term_blue))
                     }
                     signUpViewModel.passWordCheckValidated()
                 }
             }
-            checkButtonEnable()
         }
     }
 

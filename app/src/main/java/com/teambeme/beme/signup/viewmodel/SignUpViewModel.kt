@@ -22,11 +22,12 @@ class SignUpViewModel @Inject constructor(
     private val signUpRepository: SignUpRepository
 ) : ViewModel() {
     // TermFragment
-    val isPersonalChecked = MutableLiveData<Boolean>(false)
-    val isServiceChecked = MutableLiveData<Boolean>(false)
+    val isPersonalChecked = MutableLiveData(false)
+    val isServiceChecked = MutableLiveData(false)
 
     // PersonalInfoFragment
     private lateinit var userInfo: User
+    private val validatedId = hashSetOf<String>()
 
     val userEmail = MutableLiveData("")
     val userNickName = MutableLiveData("")
@@ -58,11 +59,18 @@ class SignUpViewModel @Inject constructor(
             isNicknameLengthValid, isNicknameRegexValid
         ) { validUserInfo() }
     }
+    private val _profileImageUri = MutableLiveData<Uri>()
+    val profileImageUri: LiveData<Uri>
+        get() = _profileImageUri
+    private val _profilePart = MutableLiveData<MultipartBody.Part>()
+    val profilePart: LiveData<MultipartBody.Part>
+        get() = _profilePart
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String>
         get() = _errorMessage
 
+    // Old Function
     private val _isEmailValidated = MutableLiveData<Boolean>(false)
     val isEmailValidated: LiveData<Boolean>
         get() = _isEmailValidated
@@ -75,12 +83,7 @@ class SignUpViewModel @Inject constructor(
     private val _isPassWordCheckValidated = MutableLiveData(false)
     val isPassWordCheckValidated: LiveData<Boolean>
         get() = _isPassWordCheckValidated
-    private val _profileImageUri = MutableLiveData<Uri>()
-    val profileImageUri: LiveData<Uri>
-        get() = _profileImageUri
-    private val _profilePart = MutableLiveData<MultipartBody.Part>()
-    val profilePart: LiveData<MultipartBody.Part>
-        get() = _profilePart
+
 
     private val _signUpUserInfo = MutableLiveData<ResponseSignUp?>()
     val signUpUserInfo: LiveData<ResponseSignUp?>
@@ -122,13 +125,18 @@ class SignUpViewModel @Inject constructor(
         _isNickNameDoubleChecked.value = true
     }
 
+    @Deprecated(
+        "MediatorLiveData로 대체되었습니다.",
+        ReplaceWith("validUserInfo")
+    )
     fun validateAllValues() =
         isEmailValidated.value!! && isNickNameValidated.value!! && isPassWordValidated.value!! && isPassWordCheckValidated.value!! && isNickNameDoubleChecked.value!!
 
     fun signUp() = viewModelScope.launch {
         if (profilePart.value != null) {
             try {
-                _signUpUserInfo.value = signUpRepository.signUp(getPartMap(), profilePart.value!!)
+                _signUpUserInfo.value =
+                    signUpRepository.signUp(userInfo.toRequestBody(), profilePart.value!!)
             } catch (e: HttpException) {
                 Log.d("SignUp", e.code().toString())
                 Log.d("SignUp", e.message())
@@ -136,7 +144,7 @@ class SignUpViewModel @Inject constructor(
             }
         } else {
             try {
-                _signUpUserInfo.value = signUpRepository.signUp(getPartMap(), null)
+                _signUpUserInfo.value = signUpRepository.signUp(userInfo.toRequestBody(), null)
             } catch (e: HttpException) {
                 Log.d("SignUp", e.code().toString())
                 Log.d("SignUp", e.message())
@@ -146,7 +154,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun signUpWithoutImage() = viewModelScope.launch {
-        _signUpUserInfo.value = signUpRepository.signUp(getPartMap(), null)
+        _signUpUserInfo.value = signUpRepository.signUp(userInfo.toRequestBody(), null)
         Log.d("SignUp", _signUpUserInfo.value.toString())
     }
 
@@ -166,6 +174,7 @@ class SignUpViewModel @Inject constructor(
         _profileImageUri.value = uri
     }
 
+    @Deprecated("User 클래스의 확장함수로 대체되었습니다.", ReplaceWith("User.toRequestBody()로 대체"))
     private fun getPartMap(): HashMap<String, RequestBody> {
         val email = userEmail.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
         val nickName = userNickName.value!!.toRequestBody("text/plain".toMediaTypeOrNull())
@@ -176,6 +185,8 @@ class SignUpViewModel @Inject constructor(
             "password" to passWord
         )
     }
+
+    // NEW Functions
 
     private fun validEmail(email: String): Boolean {
         return REGEX_EMAIL.matches(email)
