@@ -23,6 +23,7 @@ import com.google.firebase.ktx.Firebase
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.teambeme.beme.R
+import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.databinding.FragmentImageChooseBinding
 import com.teambeme.beme.signup.viewmodel.SignUpViewModel
 import com.teambeme.beme.util.recordClickEvent
@@ -38,8 +39,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 
 @AndroidEntryPoint
-class ImageChooseFragment : Fragment() {
-    private lateinit var binding: FragmentImageChooseBinding
+class ImageChooseFragment : BindingFragment<FragmentImageChooseBinding>(R.layout.fragment_image_choose) {
     private val signUpViewModel: SignUpViewModel by activityViewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -54,8 +54,7 @@ class ImageChooseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_image_choose, container, false)
+        super.onCreateView(inflater, container, savedInstanceState)
         binding.viewModel = signUpViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
