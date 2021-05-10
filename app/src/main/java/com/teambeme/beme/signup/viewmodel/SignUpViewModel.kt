@@ -1,7 +1,6 @@
 package com.teambeme.beme.signup.viewmodel
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.*
 import com.teambeme.beme.data.repository.SignUpRepository
 import com.teambeme.beme.signup.domain.entity.User
@@ -11,7 +10,6 @@ import com.teambeme.beme.util.addSourceList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
-import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -97,29 +95,18 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun signUp() = viewModelScope.launch {
-        if (profilePart.value != null) {
-            try {
-                _signUpUserInfo.value =
-                    signUpRepository.signUp(userInfo.toRequestBody(), profilePart.value!!)
-            } catch (e: HttpException) {
-                Log.d("SignUp", e.code().toString())
-                Log.d("SignUp", e.message())
-                Log.d("SignUp", e.stackTraceToString())
-            }
-        } else {
-            try {
-                _signUpUserInfo.value = signUpRepository.signUp(userInfo.toRequestBody(), null)
-            } catch (e: HttpException) {
-                Log.d("SignUp", e.code().toString())
-                Log.d("SignUp", e.message())
-                Log.d("SignUp", e.stackTraceToString())
-            }
-        }
+        runCatching { signUpRepository.signUp(userInfo.toRequestBody(), profilePart.value) }
+            .onSuccess { _signUpUserInfo.value = it }
+            .onFailure { it.printStackTrace() }
     }
 
-    fun signUpWithoutImage() = viewModelScope.launch {
-        _signUpUserInfo.value = signUpRepository.signUp(userInfo.toRequestBody(), null)
-        Log.d("SignUp", _signUpUserInfo.value.toString())
+
+    fun signUpWithoutImage() {
+        viewModelScope.launch {
+            runCatching { signUpRepository.signUp(userInfo.toRequestBody(), null) }
+                .onSuccess { _signUpUserInfo.value = it }
+                .onFailure { it.printStackTrace() }
+        }
     }
 
     fun nickNameDoubleCheck() {
@@ -137,8 +124,6 @@ class SignUpViewModel @Inject constructor(
     fun setProfileUri(uri: Uri) {
         _profileImageUri.value = uri
     }
-
-    // NEW Functions
 
     private fun validEmail(email: String): Boolean {
         return REGEX_EMAIL.matches(email)
