@@ -58,25 +58,6 @@ class PersonalInfoFragment :
         }
     }
 
-//    private fun fixNickName() {
-//        Toast.makeText(
-//            requireContext(),
-//            "닉네임이 ${signUpViewModel.userNickName.value!!}로 설정되었습니다.",
-//            Toast.LENGTH_SHORT
-//        ).show()
-//        binding.apply {
-//            edittxtPersonalNickname.apply {
-//                isEnabled = false
-//                setTextColor(color(R.color.signup_disabled))
-//            }
-//            btnPersonalNicknameDoubleCheck.visibility = View.GONE
-//            txtPersonalNicknameCheck.apply {
-//                text = "사용 가능한 닉네임입니다"
-//                setTextColor(color(R.color.signup_term_blue))
-//            }
-//        }
-//    }
-
     private fun subscribeData() {
         signUpViewModel.userEmail.observe(viewLifecycleOwner) { email ->
             if (email.isNullOrBlank()) {
@@ -111,18 +92,27 @@ class PersonalInfoFragment :
         signUpViewModel.isNicknameValid.observe(viewLifecycleOwner) {
             if (requireNotNull(signUpViewModel.userNickName.value).isNotEmpty()) {
                 binding.btnPersonalNicknameDoubleCheck.isEnabled = it
-                if (it) {
-                    binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_blue)
-                    binding.txtPersonalNicknameCheck.apply {
-                        text = "사용 가능한 닉네임입니다, 중복확인을 해주세요"
-                        setTextColor(color(R.color.signup_term_blue))
-                    }
-                } else {
+                if (!it) {
                     binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_red)
                     binding.txtPersonalNicknameCheck.apply {
                         text = "다른 닉네임을 입력해주세요"
                         setTextColor(color(R.color.signup_red))
                     }
+                    signUpViewModel.nickDoubleCheckInvalidated()
+                } else if (signUpViewModel.isDoubleCheckedId(requireNotNull(signUpViewModel.userNickName.value))) {
+                    binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_blue)
+                    binding.txtPersonalNicknameCheck.apply {
+                        text = "사용 가능한 닉네임입니다"
+                        setTextColor(color(R.color.signup_term_blue))
+                    }
+                    signUpViewModel.nickDoubleCheckValidated()
+                } else {
+                    binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_blue)
+                    binding.txtPersonalNicknameCheck.apply {
+                        text = "사용 가능한 닉네임입니다, 중복확인을 해주세요"
+                        setTextColor(color(R.color.signup_term_blue))
+                    }
+                    signUpViewModel.nickDoubleCheckInvalidated()
                 }
             }
         }
@@ -154,7 +144,6 @@ class PersonalInfoFragment :
                     "닉네임이 ${signUpViewModel.userNickName.value!!}로 설정되었습니다.",
                     Toast.LENGTH_SHORT
                 ).show()
-                // binding.btnPersonalNicknameDoubleCheck.visibility = View.GONE
                 binding.txtPersonalNicknameCheck.apply {
                     text = "사용 가능한 닉네임입니다"
                     setTextColor(color(R.color.signup_term_blue))
@@ -167,6 +156,15 @@ class PersonalInfoFragment :
                     setTextColor(color(R.color.signup_red))
                 }
                 binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_red)
+            }
+        }
+        signUpViewModel.isNickNameDoubleChecked.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.imgPersonalNicknameCheck.setImageResource(R.drawable.ic_personal_check_blue)
+                binding.txtPersonalNicknameCheck.apply {
+                    text = "사용 가능한 닉네임입니다"
+                    setTextColor(color(R.color.signup_term_blue))
+                }
             }
         }
 

@@ -26,7 +26,9 @@ class SignUpViewModel @Inject constructor(
     private lateinit var userInfo: User
     private val validatedId = hashSetOf<String>()
     fun isDoubleCheckedId(nickName: String) = validatedId.contains(nickName)
-    fun registerId(nickName: String) { validatedId.add(nickName) }
+    fun registerId(nickName: String) {
+        validatedId.add(nickName)
+    }
 
     val userEmail = MutableLiveData("")
     val userNickName = MutableLiveData("")
