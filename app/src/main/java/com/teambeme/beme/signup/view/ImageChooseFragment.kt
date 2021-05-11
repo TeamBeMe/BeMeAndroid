@@ -113,8 +113,7 @@ class ImageChooseFragment :
                 .setDeniedMessage("[설정] > [권한]에서 권한을 허용할 수 있습니다")
                 .setGotoSettingButton(true)
                 .setPermissions(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    Manifest.permission.READ_EXTERNAL_STORAGE
                 )
                 .check()
         }
