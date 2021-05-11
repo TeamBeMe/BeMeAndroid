@@ -67,10 +67,7 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
 
     private fun addPermission() {
         val permissionListener = object : PermissionListener {
-            override fun onPermissionGranted() {
-                ImagePicker()
-            }
-
+            override fun onPermissionGranted() { imagePicker() }
             override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {}
         }
         TedPermission.with(requireContext())
@@ -79,13 +76,12 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
             .setDeniedMessage("[설정] > [권한]에서 권한을 허용할 수 있습니다")
             .setGotoSettingButton(true)
             .setPermissions(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.READ_EXTERNAL_STORAGE
             )
             .check()
     }
 
-    private fun ImagePicker() {
+    private fun imagePicker() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
@@ -125,17 +121,17 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
                 mypageViewModel.setProfileUri(resultUri)
                 dismiss()
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                val error = result.getError()
+                val error = result.error
                 Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun getImageUri(context: Context, inImage: Bitmap): Uri? {
-        var bytes = ByteArrayOutputStream()
+        val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.PNG, 1, bytes)
         val titlename = Math.random()
-        var path =
+        val path =
             MediaStore.Images.Media.insertImage(context.contentResolver, inImage, "asdsad", null)
         return Uri.parse(path)
     }
