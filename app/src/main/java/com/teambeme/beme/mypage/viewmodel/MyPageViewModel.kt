@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.data.repository.MyPageRepository
+import com.teambeme.beme.domain.repository.MyPageRepository
 import com.teambeme.beme.mypage.model.*
 import com.teambeme.beme.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -2,7 +2,7 @@ package com.teambeme.beme.signup.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.*
-import com.teambeme.beme.data.repository.SignUpRepository
+import com.teambeme.beme.domain.repository.SignUpRepository
 import com.teambeme.beme.signup.domain.entity.User
 import com.teambeme.beme.signup.model.ResponseNickDoubleCheck
 import com.teambeme.beme.signup.model.ResponseSignUp

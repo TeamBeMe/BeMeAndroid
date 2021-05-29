@@ -3,6 +3,7 @@ package com.teambeme.beme.di
 import com.teambeme.beme.data.local.dao.AnswerDao
 import com.teambeme.beme.data.remote.datasource.*
 import com.teambeme.beme.data.repository.*
+import com.teambeme.beme.domain.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

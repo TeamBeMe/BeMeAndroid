@@ -1,6 +1,7 @@
 package com.teambeme.beme.data.repository
 
 import com.teambeme.beme.data.remote.datasource.FbTokenRegisterDataSource
+import com.teambeme.beme.domain.repository.MainRepository
 import com.teambeme.beme.main.model.ResponseFbTokenRegister
 import javax.inject.Inject
 import retrofit2.Call

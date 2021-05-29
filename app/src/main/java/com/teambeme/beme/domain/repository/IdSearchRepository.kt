@@ -1,4 +1,4 @@
-package com.teambeme.beme.data.repository
+package com.teambeme.beme.domain.repository
 
 import com.teambeme.beme.idsearchfollowing.model.*
 

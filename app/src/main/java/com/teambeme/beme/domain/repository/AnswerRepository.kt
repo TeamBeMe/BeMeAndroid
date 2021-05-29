@@ -1,4 +1,4 @@
-package com.teambeme.beme.data.repository
+package com.teambeme.beme.domain.repository
 
 import com.teambeme.beme.answer.model.RequestAnswerData
 import com.teambeme.beme.answer.model.ResponseAnswerStatus

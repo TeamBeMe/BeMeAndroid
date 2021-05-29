@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teambeme.beme.data.repository.HomeRepository
+import com.teambeme.beme.domain.repository.HomeRepository
 import com.teambeme.beme.home.model.Answer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

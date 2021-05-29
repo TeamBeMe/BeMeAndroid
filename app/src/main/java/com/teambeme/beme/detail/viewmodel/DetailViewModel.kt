@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.answer.model.IntentAnswerData
-import com.teambeme.beme.data.repository.DetailRepository
+import com.teambeme.beme.domain.repository.DetailRepository
 import com.teambeme.beme.detail.model.*
 import com.teambeme.beme.otherpage.model.ResponseScrap
 import dagger.hilt.android.lifecycle.HiltViewModel

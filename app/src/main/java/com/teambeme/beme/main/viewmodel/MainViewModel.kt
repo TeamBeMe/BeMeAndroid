@@ -3,7 +3,7 @@ package com.teambeme.beme.main.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.data.local.singleton.BeMeRepository
-import com.teambeme.beme.data.repository.MainRepository
+import com.teambeme.beme.domain.repository.MainRepository
 import com.teambeme.beme.main.model.ResponseFbTokenRegister
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
