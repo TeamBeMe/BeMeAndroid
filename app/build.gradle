@@ -84,7 +84,7 @@ dependencies {
     // FireBase
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.google.firebase:firebase-messaging:21.1.0'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
 
     // Image Crop
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'

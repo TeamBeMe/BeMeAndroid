@@ -13,10 +13,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 
-abstract class BindingFragment<T : ViewDataBinding>(@LayoutRes private val layoutResId: Int) :
-    Fragment() {
+abstract class BindingFragment<T : ViewDataBinding>(
+    @LayoutRes private val layoutResId: Int
+) : Fragment() {
     private var _binding: T? = null
-    protected val binding get() = _binding!!
+    protected val binding get() = requireNotNull(_binding)
 
     override fun onCreateView(
         inflater: LayoutInflater,
