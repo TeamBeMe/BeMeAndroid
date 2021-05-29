@@ -127,9 +127,10 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
     private fun setOtherQuestionsObserve() {
         exploreViewModel.otherQuestionsList.observe(viewLifecycleOwner) { otherQuestionsList ->
             otherQuestionsList?.let {
-                if (binding.rcvExploreOtherQuestions.adapter != null) with(binding.rcvExploreOtherQuestions.adapter as OtherQuestionsRcvAdapter<*>) {
-                    submitList(otherQuestionsList)
-                }
+                if (binding.rcvExploreOtherQuestions.adapter != null)
+                    with(binding.rcvExploreOtherQuestions.adapter as OtherQuestionsRcvAdapter<*>) {
+                        submitList(otherQuestionsList)
+                    }
             }
         }
     }

@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import com.teambeme.beme.data.repository.NoticeRepository
 import com.teambeme.beme.notification.model.ResponseNoticeData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
 @HiltViewModel
 class NoticeViewModel @Inject constructor(
@@ -39,72 +39,72 @@ class NoticeViewModel @Inject constructor(
         noticeRepository.notice(
             _page
         ).enqueue(object :
-            Callback<ResponseNoticeData> {
-            override fun onResponse(
-                call: Call<ResponseNoticeData>,
-                responseData: Response<ResponseNoticeData>
-            ) {
-                if (responseData.isSuccessful) {
-                    Log.d("Network is success", responseData.body().toString())
-                    copyNoticeDataList = responseData.body()!!.data?.activities?.toMutableList()
-                    _noticeDataList.value = copyNoticeDataList.toMutableList()
-                    Log.d("Network is success", copyNoticeDataList.toString())
-                    if (responseData.body()!!.data != null) {
-                        if (responseData.body()!!.data?.pageLen > _page) {
-                            _page++
-                            _isMorePage.value = true
+                Callback<ResponseNoticeData> {
+                override fun onResponse(
+                    call: Call<ResponseNoticeData>,
+                    responseData: Response<ResponseNoticeData>
+                ) {
+                    if (responseData.isSuccessful) {
+                        Log.d("Network is success", responseData.body().toString())
+                        copyNoticeDataList = responseData.body()!!.data?.activities?.toMutableList()
+                        _noticeDataList.value = copyNoticeDataList.toMutableList()
+                        Log.d("Network is success", copyNoticeDataList.toString())
+                        if (responseData.body()!!.data != null) {
+                            if (responseData.body()!!.data?.pageLen > _page) {
+                                _page++
+                                _isMorePage.value = true
+                            } else {
+                                _isMorePage.value = false
+                            }
                         } else {
                             _isMorePage.value = false
                         }
+                        Log.d("notice_request_copy", "$copyNoticeDataList")
+                        val d = Log.d("notice_request_data", "${noticeDataList.value}")
                     } else {
-                        _isMorePage.value = false
+                        Log.d("Network Error", responseData.body()?.data.toString())
+                        Log.d("Network Error", responseData.body()?.status.toString())
+                        Log.d("Network Error", responseData.body()?.success.toString())
+                        Log.d("Network Error", responseData.message())
                     }
-                    Log.d("notice_request_copy", "$copyNoticeDataList")
-                    val d = Log.d("notice_request_data", "${noticeDataList.value}")
-                } else {
-                    Log.d("Network Error", responseData.body()?.data.toString())
-                    Log.d("Network Error", responseData.body()?.status.toString())
-                    Log.d("Network Error", responseData.body()?.success.toString())
-                    Log.d("Network Error", responseData.message())
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseNoticeData>, t: Throwable) {
-                Log.d("Network Fail", t.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<ResponseNoticeData>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
     }
 
     fun requestAddNoticeItem() {
         noticeRepository.notice(
             _page
         ).enqueue(object :
-            Callback<ResponseNoticeData> {
-            override fun onResponse(
-                call: Call<ResponseNoticeData>,
-                responseData: Response<ResponseNoticeData>
-            ) {
-                if (responseData.isSuccessful) {
-                    copyNoticeDataList.addAll(responseData.body()!!.data?.activities.toMutableList())
-                    _noticeDataList.value = copyNoticeDataList.toMutableList()
-                    if (responseData.body()!!.data != null) {
-                        if (responseData.body()!!.data?.pageLen > _page) {
-                            _page++
-                            _isMorePage.value = true
+                Callback<ResponseNoticeData> {
+                override fun onResponse(
+                    call: Call<ResponseNoticeData>,
+                    responseData: Response<ResponseNoticeData>
+                ) {
+                    if (responseData.isSuccessful) {
+                        copyNoticeDataList.addAll(responseData.body()!!.data?.activities.toMutableList())
+                        _noticeDataList.value = copyNoticeDataList.toMutableList()
+                        if (responseData.body()!!.data != null) {
+                            if (responseData.body()!!.data?.pageLen > _page) {
+                                _page++
+                                _isMorePage.value = true
+                            } else {
+                                _isMorePage.value = false
+                            }
                         } else {
                             _isMorePage.value = false
                         }
-                    } else {
-                        _isMorePage.value = false
+                        Log.d("notice_plus_copy", "$copyNoticeDataList")
+                        val d = Log.d("notice_plus_data", "${noticeDataList.value}")
                     }
-                    Log.d("notice_plus_copy", "$copyNoticeDataList")
-                    val d = Log.d("notice_plus_data", "${noticeDataList.value}")
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseNoticeData>, t: Throwable) {
-                Log.d("Network Fail", t.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<ResponseNoticeData>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
     }
 }

@@ -5,9 +5,9 @@ import com.teambeme.beme.mypage.model.ResponseMyAnswer
 import com.teambeme.beme.mypage.model.ResponseMyProfile
 import com.teambeme.beme.mypage.model.ResponseMyScrap
 import com.teambeme.beme.mypage.model.ResponsePublic
+import javax.inject.Inject
 import okhttp3.MultipartBody
 import retrofit2.Call
-import javax.inject.Inject
 
 class MyPageRepositoryImpl @Inject constructor(
     private val myDataSource: MyPageDataSource

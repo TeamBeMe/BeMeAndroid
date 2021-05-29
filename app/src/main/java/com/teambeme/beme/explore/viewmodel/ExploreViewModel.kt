@@ -9,10 +9,10 @@ import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
 @HiltViewModel
 class ExploreViewModel @Inject constructor(

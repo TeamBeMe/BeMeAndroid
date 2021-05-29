@@ -25,13 +25,13 @@ import com.teambeme.beme.databinding.ItemBottomProfileBinding
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.ByteArrayOutputStream
+import java.io.File
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-import java.io.ByteArrayOutputStream
-import java.io.File
 
 @AndroidEntryPoint
 class BottomProfileFragment : BottomSheetDialogFragment() {

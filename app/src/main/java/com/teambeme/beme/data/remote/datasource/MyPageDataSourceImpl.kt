@@ -2,9 +2,9 @@ package com.teambeme.beme.data.remote.datasource
 
 import com.teambeme.beme.data.remote.api.MyPageService
 import com.teambeme.beme.mypage.model.*
+import javax.inject.Inject
 import okhttp3.MultipartBody
 import retrofit2.Call
-import javax.inject.Inject
 
 class MyPageDataSourceImpl @Inject constructor(
     private val service: MyPageService

@@ -57,32 +57,32 @@ class FollowingAfterIdSearchActivity :
     @ExperimentalCoroutinesApi
     private fun setViewListener() {
         binding.searchViewFollowingIdsearch.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(newText: String?): Boolean {
-                val queryText = newText ?: ""
-                idSearchViewModel.query = queryText
-                if (queryText.count() > 0) {
-                    binding.viewRecentSearch.visibility = View.GONE
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    val queryText = newText ?: ""
+                    idSearchViewModel.query = queryText
+                    if (queryText.count() > 0) {
+                        binding.viewRecentSearch.visibility = View.GONE
 //                    binding.constraintViewFollowingAfterIdsearch.visibility = View.VISIBLE
-                    idSearchViewModel.searchQuery.offer(queryText)
-                } else {
-                    idSearchViewModel.deleteSearchRecord()
+                        idSearchViewModel.searchQuery.offer(queryText)
+                    } else {
+                        idSearchViewModel.deleteSearchRecord()
 //                    idSearchViewModel.searchQuery.offer("")
-                    binding.viewRecentSearch.visibility = View.VISIBLE
-                    binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE
-                    binding.noticeWhenNoSearchData.visibility = View.GONE
+                        binding.viewRecentSearch.visibility = View.VISIBLE
+                        binding.constraintViewFollowingAfterIdsearch.visibility = View.GONE
+                        binding.noticeWhenNoSearchData.visibility = View.GONE
+                    }
+                    return true
                 }
-                return true
-            }
 
-            override fun onQueryTextSubmit(query: String?): Boolean {
+                override fun onQueryTextSubmit(query: String?): Boolean {
 //                    if (query != null) {
 //                        idSearchViewModel.setSearchQuery(query)
 //                        idSearchViewModel.requestIdSearchData()
 //                    }
-                return true
-            }
-        })
+                    return true
+                }
+            })
         binding.btnBackFollowingIdsearch.setOnClickListener { onBackPressed() }
     }
 

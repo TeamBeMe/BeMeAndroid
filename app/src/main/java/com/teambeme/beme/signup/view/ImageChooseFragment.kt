@@ -29,12 +29,12 @@ import com.teambeme.beme.signup.viewmodel.SignUpViewModel
 import com.teambeme.beme.util.recordClickEvent
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.ByteArrayOutputStream
+import java.io.File
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.ByteArrayOutputStream
-import java.io.File
 
 @AndroidEntryPoint
 class ImageChooseFragment :

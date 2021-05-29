@@ -111,24 +111,24 @@ class MyScrapFragment : BindingFragment<FragmentMyScrapBinding>(R.layout.fragmen
 
     private fun setSearchView() {
         binding.searchViewScrapSearch.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(newText: String?): Boolean {
-                mypageViewModel.initScrapPage()
-                mypageViewModel.getMyScrap(mypageViewModel.scrapTempPage)
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                val userInputText = newText ?: ""
-                mypageViewModel.setScrapQuery(newText.toString())
-                if (userInputText.count() == 0) {
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(newText: String?): Boolean {
                     mypageViewModel.initScrapPage()
-                    mypageViewModel.deleteScrapQuery()
                     mypageViewModel.getMyScrap(mypageViewModel.scrapTempPage)
+                    return false
                 }
-                return false
-            }
-        })
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    val userInputText = newText ?: ""
+                    mypageViewModel.setScrapQuery(newText.toString())
+                    if (userInputText.count() == 0) {
+                        mypageViewModel.initScrapPage()
+                        mypageViewModel.deleteScrapQuery()
+                        mypageViewModel.getMyScrap(mypageViewModel.scrapTempPage)
+                    }
+                    return false
+                }
+            })
     }
 
     private fun setScrollToTop() {

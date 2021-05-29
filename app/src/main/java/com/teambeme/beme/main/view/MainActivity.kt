@@ -25,21 +25,23 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LifeCycleEventLogger(javaClass.name).registerLogger(lifecycle)
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(
-                    "BeMeApplication.TAG",
-                    "Fetching FCM registration token failed",
-                    task.exception
-                )
-                return@OnCompleteListener
-            } else {
-                val token = task.result
-                BeMeRepository.fireBaseToken = token ?: "SomeThing"
-                val msg = getString(R.string.msg_token_fmt, token)
-                Log.d("BeMeApplication.TAG", msg)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(
+            OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(
+                        "BeMeApplication.TAG",
+                        "Fetching FCM registration token failed",
+                        task.exception
+                    )
+                    return@OnCompleteListener
+                } else {
+                    val token = task.result
+                    BeMeRepository.fireBaseToken = token ?: "SomeThing"
+                    val msg = getString(R.string.msg_token_fmt, token)
+                    Log.d("BeMeApplication.TAG", msg)
+                }
             }
-        })
+        )
         StatusBarUtil.setStatusBar(this, resources.getColor(R.color.white, null))
         mainViewModel.getFireBaseToken()
         setViewPagerAdapter(this)

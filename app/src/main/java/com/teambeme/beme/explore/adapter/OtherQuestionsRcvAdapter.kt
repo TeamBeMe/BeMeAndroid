@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.BR
 import com.teambeme.beme.R
-import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
 import com.teambeme.beme.databinding.ItemExploreDetailOtherAnswersBinding
+import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
 import com.teambeme.beme.detail.view.DetailActivity
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.view.ExploreDetailActivity

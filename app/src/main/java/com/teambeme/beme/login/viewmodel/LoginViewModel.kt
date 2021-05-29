@@ -11,10 +11,10 @@ import com.teambeme.beme.data.repository.LoginRepository
 import com.teambeme.beme.login.model.ResponseLogin
 import com.teambeme.beme.util.ErrorBody
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -41,31 +41,34 @@ class LoginViewModel @Inject constructor(
 
     fun requestLogin() {
         loginRepository.login(nickNameText.value ?: "", passwordText.value ?: "").enqueue(object :
-            Callback<ResponseLogin> {
-            override fun onResponse(call: Call<ResponseLogin>, response: Response<ResponseLogin>) {
-                if (response.isSuccessful) {
-                    _responseValue.value = response.body()
-                    BeMeRepository.userId = nickNameText.value!!
-                    BeMeRepository.userPassword = passwordText.value!!
-                } else {
-                    val gson = Gson()
-                    val type = object : TypeToken<ErrorBody>() {}.type
-                    val errorResponse: ErrorBody? =
-                        gson.fromJson(response.errorBody()!!.charStream(), type)
-                    _errorMessage.value = "아이디 또는 비밀번호를 다시 확인해주세요"
+                Callback<ResponseLogin> {
+                override fun onResponse(
+                    call: Call<ResponseLogin>,
+                    response: Response<ResponseLogin>
+                ) {
+                    if (response.isSuccessful) {
+                        _responseValue.value = response.body()
+                        BeMeRepository.userId = nickNameText.value!!
+                        BeMeRepository.userPassword = passwordText.value!!
+                    } else {
+                        val gson = Gson()
+                        val type = object : TypeToken<ErrorBody>() {}.type
+                        val errorResponse: ErrorBody? =
+                            gson.fromJson(response.errorBody()!!.charStream(), type)
+                        _errorMessage.value = "아이디 또는 비밀번호를 다시 확인해주세요"
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
-                Log.d("Network Fail", t.message.toString())
-                for (element in t.stackTrace) {
-                    Log.d("Network element", element.toString())
-                    Log.d("Network className", element.className)
-                    Log.d("Network methodName", element.methodName)
-                    Log.d("Network fileName", element.fileName)
-                    Log.d("Network lineNumber", element.lineNumber.toString())
+                override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                    for (element in t.stackTrace) {
+                        Log.d("Network element", element.toString())
+                        Log.d("Network className", element.className)
+                        Log.d("Network methodName", element.methodName)
+                        Log.d("Network fileName", element.fileName)
+                        Log.d("Network lineNumber", element.lineNumber.toString())
+                    }
                 }
-            }
-        })
+            })
     }
 }

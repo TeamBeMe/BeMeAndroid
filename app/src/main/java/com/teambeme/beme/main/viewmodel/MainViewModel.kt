@@ -6,10 +6,10 @@ import com.teambeme.beme.data.local.singleton.BeMeRepository
 import com.teambeme.beme.data.repository.MainRepository
 import com.teambeme.beme.main.model.ResponseFbTokenRegister
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
