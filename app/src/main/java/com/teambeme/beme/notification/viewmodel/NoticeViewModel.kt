@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.teambeme.beme.data.repository.NoticeRepository
+import com.teambeme.beme.domain.repository.NoticeRepository
 import com.teambeme.beme.notification.model.ResponseNoticeData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

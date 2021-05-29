@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.teambeme.beme.data.local.singleton.BeMeRepository
-import com.teambeme.beme.data.repository.LoginRepository
+import com.teambeme.beme.domain.repository.LoginRepository
 import com.teambeme.beme.login.model.ResponseLogin
 import com.teambeme.beme.util.ErrorBody
 import dagger.hilt.android.lifecycle.HiltViewModel

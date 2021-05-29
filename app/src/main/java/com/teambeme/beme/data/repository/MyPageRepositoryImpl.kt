@@ -1,6 +1,7 @@
 package com.teambeme.beme.data.repository
 
 import com.teambeme.beme.data.remote.datasource.MyPageDataSource
+import com.teambeme.beme.domain.repository.MyPageRepository
 import com.teambeme.beme.mypage.model.ResponseMyAnswer
 import com.teambeme.beme.mypage.model.ResponseMyProfile
 import com.teambeme.beme.mypage.model.ResponseMyScrap

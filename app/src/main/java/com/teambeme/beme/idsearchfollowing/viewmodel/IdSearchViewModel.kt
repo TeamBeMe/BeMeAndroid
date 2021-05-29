@@ -1,7 +1,7 @@
 package com.teambeme.beme.idsearchfollowing.viewmodel
 
 import androidx.lifecycle.*
-import com.teambeme.beme.data.repository.IdSearchRepository
+import com.teambeme.beme.domain.repository.IdSearchRepository
 import com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData
 import com.teambeme.beme.idsearchfollowing.model.ResponseRecentSearchRecord
 import dagger.hilt.android.lifecycle.HiltViewModel
