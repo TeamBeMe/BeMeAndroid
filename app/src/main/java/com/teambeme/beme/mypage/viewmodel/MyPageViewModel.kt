@@ -1,6 +1,5 @@
 package com.teambeme.beme.mypage.viewmodel
 
-import com.teambeme.beme.util.SingleLiveEvent
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -8,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.data.repository.MyPageRepository
 import com.teambeme.beme.mypage.model.*
+import com.teambeme.beme.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -38,8 +38,23 @@ class MyPageViewModel @Inject constructor(
     val scrapScrollUp: LiveData<Unit>
         get() = _scrapScrollUp
 
-    private var page = 1
-    private var scrapPage = 1
+    private var page: Int = 2
+
+    var tempPage: Int = 1
+        private set
+
+    private var scrapPage = 2
+
+    var scrapTempPage: Int = 1
+        private set
+
+    fun clearCopyMyAnswerList() {
+        copyMyAnswerList.clear()
+    }
+
+    fun clearCopyMyScrapList() {
+        copyMyScrapList.clear()
+    }
 
     private val _scrapFilter = MutableLiveData<MyWriteFilter>()
     val scrapFilter: LiveData<MyWriteFilter>
@@ -65,24 +80,12 @@ class MyPageViewModel @Inject constructor(
         _scrapQuery.value = null
     }
 
-    fun initMyAnswer() {
-        _mywriteFilter.value?.category = null
-        _mywriteFilter.value?.range = null
-        page = 1
-        _myQuery.value = null
-    }
-
     fun initPage() {
-        page = 1
-    }
-
-    fun initScrap() {
-        scrapPage = 1
-        _scrapQuery.value = null
+        page = 2
     }
 
     fun initScrapPage() {
-        scrapPage = 1
+        scrapPage = 2
     }
 
     fun setScrapFilter(range: String?, category: Int?) {
@@ -163,7 +166,45 @@ class MyPageViewModel @Inject constructor(
     val isScrapEmpty: LiveData<Boolean>
         get() = _isScrapEmpty
 
-    fun getMyAnswer() {
+    fun getMyAnswer(pageNum: Int) {
+        myPageRepository.getMyAnswer(
+            mywriteFilter.value?.range,
+            mywriteFilter.value?.category,
+            myQuery.value,
+            pageNum
+        ).enqueue(object :
+            Callback<ResponseMyAnswer> {
+            override fun onResponse(
+                call: Call<ResponseMyAnswer>,
+                response: Response<ResponseMyAnswer>
+            ) {
+                if (response.isSuccessful) {
+                    if (pageNum != page) {
+                        if (tempPage == 1) {
+                            clearCopyMyAnswerList()
+                        }
+                        copyMyAnswerList.addAll(response.body()!!.data.answers.toMutableList())
+                        tempPage++
+                        if (response.body()!!.data.answers.isNotEmpty()) {
+                            _isAnswerMax.value = response.body()!!.data.answers.size != 10
+                        } else {
+                            _isAnswerMax.value = true
+                        }
+                        getMyAnswer(tempPage)
+                    } else {
+                        _mypageWriteData.value = copyMyAnswerList.toMutableList()
+                        tempPage = 1
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMyAnswer>, t: Throwable) {
+                Log.d("Network Fail", t.message.toString())
+            }
+        })
+    }
+
+    fun getPlusMyAnswer() {
         myPageRepository.getMyAnswer(
             mywriteFilter.value?.range,
             mywriteFilter.value?.category,
@@ -176,25 +217,13 @@ class MyPageViewModel @Inject constructor(
                 response: Response<ResponseMyAnswer>
             ) {
                 if (response.isSuccessful) {
-                    if (page == 1) {
-                        copyMyAnswerList = response.body()!!.data?.answers?.toMutableList()
-                        _isAnswerEmpty.value = copyMyAnswerList.size == 0
-                        _mypageWriteData.value = copyMyAnswerList.toMutableList()
-                        if (response.body()!!.data.answers.size == 10) {
-                            _isAnswerMax.value = false
-                            page++
-                        } else {
-                            _isAnswerMax.value = true
-                        }
+                    copyMyAnswerList.addAll(response.body()!!.data.answers.toMutableList())
+                    _mypageWriteData.value = copyMyAnswerList.toMutableList()
+                    if (response.body()!!.data.answers.isNotEmpty()) {
+                        page++
+                        _isAnswerMax.value = response.body()!!.data.answers.size != 10
                     } else {
-                        copyMyAnswerList.addAll(response.body()!!.data?.answers?.toMutableList())
-                        _mypageWriteData.value = copyMyAnswerList.toMutableList()
-                        if (response.body()!!.data.answers.size == 10) {
-                            _isAnswerMax.value = false
-                            page++
-                        } else {
-                            _isAnswerMax.value = true
-                        }
+                        _isAnswerMax.value = true
                     }
                 }
             }
@@ -227,12 +256,12 @@ class MyPageViewModel @Inject constructor(
         })
     }
 
-    fun getMyScrap() {
+    fun getMyScrap(pageNum: Int) {
         myPageRepository.getMyScrap(
             scrapFilter.value?.range,
             scrapFilter.value?.category,
             scrapQuery.value,
-            scrapPage
+            pageNum
         ).enqueue(object :
             Callback<ResponseMyScrap> {
             override fun onResponse(
@@ -240,26 +269,59 @@ class MyPageViewModel @Inject constructor(
                 response: Response<ResponseMyScrap>
             ) {
                 if (response.isSuccessful) {
-                    if (scrapPage == 1) {
-                        copyMyScrapList = response.body()!!.data?.answers?.toMutableList()
-                        _isScrapEmpty.value = copyMyScrapList.size == 0
-                        _mypageScrapData.value = copyMyScrapList.toMutableList()
-
-                        if (response.body()!!.data.answers.size == 10) {
-                            _isScrapMax.value = false
-                            scrapPage++
+                    Log.d(
+                        "recursion_mypage",
+                        "pageNum : $pageNum, page : $page, tempPage : $scrapTempPage"
+                    )
+                    if (pageNum != scrapPage) {
+                        if (scrapTempPage == 1) {
+                            clearCopyMyScrapList()
+                        }
+                        copyMyScrapList.addAll(response.body()!!.data.answers.toMutableList())
+                        scrapTempPage++
+                        if (response.body()!!.data.answers.isNotEmpty()) {
+                            _isScrapMax.value = response.body()!!.data.answers.size != 10
                         } else {
                             _isScrapMax.value = true
                         }
+                        getMyScrap(scrapTempPage)
                     } else {
-                        copyMyScrapList.addAll(response.body()!!.data?.answers.toMutableList())
                         _mypageScrapData.value = copyMyScrapList.toMutableList()
-                        if (response.body()!!.data.answers.size == 10) {
-                            _isScrapMax.value = false
-                            scrapPage++
-                        } else {
-                            _isScrapMax.value = true
-                        }
+                        scrapTempPage = 1
+                    }
+                    Log.d(
+                        "recursion_mypage",
+                        " tempPage : $scrapTempPage"
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseMyScrap>, t: Throwable) {
+                Log.d("Network Fail", t.message.toString())
+            }
+        })
+    }
+
+    fun getPlusMyScrap() {
+        myPageRepository.getMyScrap(
+            scrapFilter.value?.range,
+            scrapFilter.value?.category,
+            scrapQuery.value,
+            page
+        ).enqueue(object :
+            Callback<ResponseMyScrap> {
+            override fun onResponse(
+                call: Call<ResponseMyScrap>,
+                response: Response<ResponseMyScrap>
+            ) {
+                if (response.isSuccessful) {
+                    copyMyScrapList.addAll(response.body()!!.data.answers.toMutableList())
+                    _mypageScrapData.value = copyMyScrapList.toMutableList()
+                    if (response.body()!!.data.answers.isNotEmpty()) {
+                        scrapPage++
+                        _isScrapMax.value = response.body()!!.data.answers.size != 10
+                    } else {
+                        _isScrapMax.value = true
                     }
                 }
             }

@@ -18,9 +18,8 @@ import javax.inject.Inject
 class ExploreViewModel @Inject constructor(
     private val exploreRepository: ExploreRepository
 ) : ViewModel() {
-    private var _userNickname: String = ""
-    val userNickname: String
-        get() = _userNickname
+    var userNickname: String = ""
+        private set
 
     private var tempOtherQuestionsList: MutableList<ResponseExplorationQuestions.Data.Answer?>? =
         mutableListOf()
@@ -49,13 +48,11 @@ class ExploreViewModel @Inject constructor(
     private val chipChecked: MutableList<Boolean>
         get() = _chipChecked
 
-    private var _categoryNum: Int? = null
-    val categoryNum: Int?
-        get() = _categoryNum
+    var categoryNum: Int? = null
+        private set
 
-    private var _page: Int = 2
-    val page: Int
-        get() = _page
+    var page: Int = 2
+        private set
 
     private var _isMorePage = MutableLiveData(false)
     val isMorePage: LiveData<Boolean>
@@ -63,26 +60,25 @@ class ExploreViewModel @Inject constructor(
 
     private var otherAnswersQuestionsID: Int = 0
 
-    private var _tempPage: Int = 1
-    val tempPage: Int
-        get() = _tempPage
+    var tempPage: Int = 1
+        private set
 
     fun setPageAtRefresh() {
-        _page = 2
+        page = 2
     }
 
     fun setCategoryNum(category: Int) {
         clearTempOtherQuestionsList()
-        _page = 2
+        page = 2
         chipChecked[category - 1] = !chipChecked[category - 1]
         if (chipChecked == listOf(false, false, false, false, false, false)) {
-            _categoryNum = null
+            categoryNum = null
         } else {
             _chipChecked = mutableListOf(false, false, false, false, false, false)
             chipChecked[category - 1] = !chipChecked[category - 1]
-            _categoryNum = category
+            categoryNum = category
         }
-        requestOtherQuestionsWithCategorySorting(_categoryNum, tempPage)
+        requestOtherQuestionsWithCategorySorting(categoryNum, tempPage)
     }
 
     fun clearTempOtherQuestionsList() {
@@ -112,18 +108,15 @@ class ExploreViewModel @Inject constructor(
                                 "recursion",
                                 "pageNum : $pageNum, page : $page, tempPage : $tempPage"
                             )
+                            val responseData = requireNotNull(response.body())
                             if (pageNum != page) {
                                 if (tempPage == 1) {
                                     clearTempOtherQuestionsList()
                                 }
-                                response.body()!!.data.answers.toMutableList().let {
-                                    tempOtherQuestionsList?.addAll(
-                                        it
-                                    )
-                                }
-                                _tempPage++
-                                if (response.body()!!.data.answers.isNotEmpty()) {
-                                    _isMorePage.value = response.body()!!.data.answers.size == 10
+                                tempOtherQuestionsList?.addAll(responseData.data.answers.toMutableList())
+                                tempPage++
+                                if (responseData.data.answers.isNotEmpty()) {
+                                    _isMorePage.value = responseData.data.answers.size == 10
                                 } else {
                                     _isMorePage.value = false
                                 }
@@ -133,7 +126,7 @@ class ExploreViewModel @Inject constructor(
                                 )
                             } else {
                                 _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
-                                _tempPage = 1
+                                tempPage = 1
                             }
                             Log.d(
                                 "recursion",
@@ -151,8 +144,8 @@ class ExploreViewModel @Inject constructor(
 
     fun requestPlusOtherQuestions() {
         exploreRepository.getExplorationOtherQuestions(
-            _page,
-            _categoryNum
+            page,
+            categoryNum
         )
             .enqueue(
                 object : Callback<ResponseExplorationQuestions> {
@@ -161,11 +154,12 @@ class ExploreViewModel @Inject constructor(
                         response: Response<ResponseExplorationQuestions>
                     ) {
                         if (response.isSuccessful) {
-                            tempOtherQuestionsList?.addAll(response.body()!!.data.answers.toMutableList())
+                            val responseData = requireNotNull(response.body())
+                            tempOtherQuestionsList?.addAll(responseData.data.answers.toMutableList())
                             _otherQuestionsList.value = tempOtherQuestionsList?.toMutableList()
 
-                            if (response.body()!!.data.answers.size == 10) {
-                                _page++
+                            if (responseData.data.answers.size == 10) {
+                                page++
                                 _isMorePage.value = true
                             } else {
                                 _isMorePage.value = false
@@ -196,13 +190,14 @@ class ExploreViewModel @Inject constructor(
                             "recursion_detail",
                             "pageNum : $pageNum, page : $page, tempPage : $tempPage"
                         )
+                        val responseData = requireNotNull(response.body())
                         if (pageNum != page) {
                             if (tempPage == 1) {
                                 clearTempSameQuestionOtherAnswersList()
                             }
-                            tempSameQuestionOtherAnswersList?.addAll(response.body()!!.data.answers.toMutableList())
-                            _tempPage++
-                            _isMorePage.value = response.body()!!.data.answers.size == 10
+                            tempSameQuestionOtherAnswersList?.addAll(responseData.data.answers.toMutableList())
+                            tempPage++
+                            _isMorePage.value = responseData.data.answers.size == 10
                             requestSameQuestionsOtherAnswers(
                                 otherAnswersQuestionsID,
                                 tempPage
@@ -210,7 +205,7 @@ class ExploreViewModel @Inject constructor(
                         } else {
                             _sameQuestionOtherAnswersList.value =
                                 tempSameQuestionOtherAnswersList?.toMutableList()
-                            _tempPage = 1
+                            tempPage = 1
                         }
                         Log.d(
                             "recursion_detail",
@@ -229,7 +224,7 @@ class ExploreViewModel @Inject constructor(
     fun requestPlusSameQuestionOtherAnswers() {
         exploreRepository.getExplorationSameQuestionOtherAnswers(
             otherAnswersQuestionsID,
-            _page
+            page
         ).enqueue(
             object : Callback<ResponseExplorationQuestions> {
                 override fun onResponse(
@@ -237,12 +232,13 @@ class ExploreViewModel @Inject constructor(
                     response: Response<ResponseExplorationQuestions>
                 ) {
                     if (response.isSuccessful) {
-                        tempSameQuestionOtherAnswersList?.addAll(response.body()!!.data.answers.toMutableList())
+                        val responseData = requireNotNull(response.body())
+                        tempSameQuestionOtherAnswersList?.addAll(responseData.data.answers.toMutableList())
                         _sameQuestionOtherAnswersList.value =
                             tempSameQuestionOtherAnswersList?.toMutableList()
 
-                        if (response.body()!!.data.answers.size == 10) {
-                            _page++
+                        if (responseData.data.answers.size == 10) {
+                            page++
                             _isMorePage.value = true
                         } else {
                             _isMorePage.value = false
@@ -289,8 +285,9 @@ class ExploreViewModel @Inject constructor(
                     response: Response<ResponseExplorationScrap>
                 ) {
                     if (response.isSuccessful) {
+                        val responseData = requireNotNull(response.body())
                         Log.d("scrap_viewmodel", answerId.toString())
-                        _scrapData = response.body()!!
+                        _scrapData = responseData
                         Log.d("scrap_1", scrapData.message)
                     }
                 }

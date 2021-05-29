@@ -6,6 +6,7 @@ enum class CategoryFilter(
     private val checkId: Int,
     private val itemId: String
 ) {
+    NONE(-1, "CLICK_ANY_CATEGORY_MPFILTER"),
     VALUES(R.id.chip_write_1, "CLICK_VALUES_MPFILTER"),
     RELATIONSHIP(R.id.chip_write_2, "CLICK_RELATIONSHIP_MPFILTER"),
     LOVE(R.id.chip_write_3, "CLICK_LOVE_MPFILTER"),

@@ -45,6 +45,9 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
         setViewPagerAdapter(this)
         setBottomNavigationSelectListener(binding.bnvMain)
         setBottomNavigationReSelectListener(binding.bnvMain)
+        if (intent.getBooleanExtra("isOpenFromPushAlarm", false)) {
+            binding.vpMain.setCurrentItem(2, true)
+        }
     }
 
     private fun setBottomNavigationSelectListener(bottomNavigationView: BottomNavigationView) {

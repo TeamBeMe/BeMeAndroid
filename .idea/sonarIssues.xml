@@ -8,6 +8,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/.github/PULL_REQUEST_TEMPLATE.md">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/.github/workflows/build.yml">
           <value>
             <set />
@@ -393,6 +398,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/mypage/adapter/MyScrapAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/mypage/model/CategoryFilter.kt">
           <value>
             <set />
@@ -483,6 +493,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/signup/domain/entity/User.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/signup/view/ImageChooseFragment.kt">
           <value>
             <set />
@@ -518,12 +533,27 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/util/ContextUtil.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/util/FirebaseEventUtil.kt">
           <value>
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/util/LiveDataUtil.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/util/SingleLiveEvent.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/util/ViewUtil.kt">
           <value>
             <set />
           </value>
@@ -558,7 +588,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/deprecated/item_explore_other_questions_unanswered.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_my_write.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_personal_info.xml">
           <value>
             <set />
           </value>
@@ -634,6 +674,81 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../HyunWooRoid/.gitignore">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/app/build.gradle.kts">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/app/src/main/java/com/l2hyunwoo/android/base/BindingActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/app/src/main/java/com/l2hyunwoo/android/base/BindingFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/app/src/main/java/com/l2hyunwoo/android/presentation/main/HomeViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/app/src/main/java/com/l2hyunwoo/android/presentation/main/MainActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/app/src/main/java/com/l2hyunwoo/android/presentation/signin/SignInActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/app/src/main/java/com/l2hyunwoo/android/presentation/signup/SignUpActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/app/src/main/java/com/l2hyunwoo/android/presentation/signup/SignUpViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/app/src/main/java/com/l2hyunwoo/android/presentation/util/BindingAdapters.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/app/src/main/java/com/l2hyunwoo/android/presentation/util/SingleLiveEvent.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/app/src/main/res/layout/activity_main.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/app/src/main/res/layout/activity_sign_up.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/build.gradle.kts">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/buildSrc/src/main/java/Dependencies.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../HyunWooRoid/buildSrc/src/main/java/Versions.kt">
           <value>
             <set />
           </value>
@@ -714,6 +829,41 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../OUNCE_REBOOT/README.md">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../RecyclerViewSample/app/src/main/AndroidManifest.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../RecyclerViewSample/app/src/main/java/kr/hyunwoo/recyclerviewsample/CityListAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../RecyclerViewSample/app/src/main/java/kr/hyunwoo/recyclerviewsample/DetailActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../RecyclerViewSample/app/src/main/java/kr/hyunwoo/recyclerviewsample/DisplayUtil.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../RecyclerViewSample/app/src/main/java/kr/hyunwoo/recyclerviewsample/MainActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../RecyclerViewSample/app/src/main/java/kr/hyunwoo/recyclerviewsample/SampleApp.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../RecyclerViewSample/app/src/main/res/layout/activity_detail.xml">
           <value>
             <set />
           </value>

@@ -112,7 +112,7 @@
                 style="@style/personal_info_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="닉네임 *"
+                android:hint="아이디 *"
                 android:importantForAutofill="no"
                 android:text="@={signUpViewModel.userNickName}" />
 
