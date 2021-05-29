@@ -22,7 +22,6 @@ object AndroidXDependencies {
 }
 
 object TestDependencies {
-    const val playCore = "com.google.android.play:core:${Versions.playCoreVersion}"
     const val jUnit = "junit:junit:${Versions.junitVersion}"
     const val androidTest = "androidx.test.ext:junit:${Versions.androidTestVersion}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espressoVersion}"
@@ -36,10 +35,11 @@ object MaterialDesignDependencies {
 
 object KaptDependencies {
     const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.hiltVersion}"
-    const val roomComiler = "androidx.room:room-compiler:${Versions.roomVersion}"
+    const val roomCompiler = "androidx.room:room-compiler:${Versions.roomVersion}"
 }
 
 object ThirdPartyDependencies {
+    const val playCore = "com.google.android.play:core:${Versions.playCoreVersion}"
     const val gson = "com.google.code.gson:gson:${Versions.gsonVersion}"
     const val glide = "com.github.bumptech.glide:glide:${Versions.glideVersion}"
     const val lottie = "com.airbnb.android:lottie:${Versions.lottieVersion}"
@@ -65,7 +65,6 @@ object ThirdPartyDependencies {
 object FirebaseDependency {
     const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBomVersion}"
     const val analyticsKtx = "com.google.firebase:firebase-analytics-ktx"
-    const val realtimeDatabseKtx = "com.google.firebase:firebase-database-ktx"
     const val firebaeMessaging =
         "com.google.firebase:firebase-messaging:${Versions.firebaseMessagingVersion}"
 }

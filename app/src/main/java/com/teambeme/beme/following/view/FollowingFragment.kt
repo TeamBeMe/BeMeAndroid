@@ -117,9 +117,10 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
     private fun setOtherFollowingQuestionsObserve() {
         followingViewModel.followingAnswersList.observe(viewLifecycleOwner) { otherFollowingQuestionsList ->
             otherFollowingQuestionsList?.let {
-                if (binding.rcvFollowingOtherQuestions.adapter != null) with(binding.rcvFollowingOtherQuestions.adapter as OtherQuestionsRcvAdapter<*>) {
-                    submitList(otherFollowingQuestionsList)
-                }
+                if (binding.rcvFollowingOtherQuestions.adapter != null)
+                    with(binding.rcvFollowingOtherQuestions.adapter as OtherQuestionsRcvAdapter<*>) {
+                        submitList(otherFollowingQuestionsList)
+                    }
                 if (otherFollowingQuestionsList.size == 0) {
                     binding.rcvFollowingOtherQuestions.visibility = View.GONE
                     binding.imgFollowingNoFollowingAnswerInformation.visibility = View.VISIBLE
@@ -156,9 +157,10 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
     private fun setFollowingProfilesObserve() {
         followingViewModel.followingList.observe(viewLifecycleOwner) { followingProfilesList ->
             followingProfilesList?.let {
-                if (binding.rcvFollowingProfilesOfFollowing.adapter != null) with(binding.rcvFollowingProfilesOfFollowing.adapter as FollowingProfilesRcvAdapter<*>) {
-                    submitList(followingProfilesList)
-                }
+                if (binding.rcvFollowingProfilesOfFollowing.adapter != null)
+                    with(binding.rcvFollowingProfilesOfFollowing.adapter as FollowingProfilesRcvAdapter<*>) {
+                        submitList(followingProfilesList)
+                    }
                 if (binding.tabLayoutFollowingSort.selectedTabPosition == 0) {
                     if (followingProfilesList.size == 0) {
                         binding.rcvFollowingProfilesOfFollowing.visibility = View.INVISIBLE
@@ -178,9 +180,10 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
     private fun setFollowerProfilesObserve() {
         followingViewModel.followerList.observe(viewLifecycleOwner) { followerProfilesList ->
             followerProfilesList?.let {
-                if (binding.rcvFollowingProfilesOfFollower.adapter != null) with(binding.rcvFollowingProfilesOfFollower.adapter as FollowerProfilesRcvAdapter<*>) {
-                    submitList(followerProfilesList)
-                }
+                if (binding.rcvFollowingProfilesOfFollower.adapter != null)
+                    with(binding.rcvFollowingProfilesOfFollower.adapter as FollowerProfilesRcvAdapter<*>) {
+                        submitList(followerProfilesList)
+                    }
                 if (binding.tabLayoutFollowingSort.selectedTabPosition == 1) {
                     if (followerProfilesList.size == 0) {
                         binding.rcvFollowingProfilesOfFollower.visibility = View.INVISIBLE
@@ -204,55 +207,55 @@ class FollowingFragment : BindingFragment<FragmentFollowingBinding>(R.layout.fra
 
     private fun setTabSelectedFromFollowingListener() {
         binding.tabLayoutFollowingSort.addOnTabSelectedListener(object :
-            TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.position?.let {
-                    when (tab.position) {
-                        0 -> {
-                            binding.rcvFollowingProfilesOfFollower.visibility = View.INVISIBLE
-                            binding.txtFollowingNoFollowerListInformation.visibility =
-                                View.INVISIBLE
-                            if (followingViewModel.followingList.value?.size == 0) {
-                                binding.rcvFollowingProfilesOfFollowing.visibility = View.INVISIBLE
-                                binding.txtFollowingNoFollowerListInformation.visibility =
-                                    View.INVISIBLE
-                                binding.imgFollowingNoFollowingListInformation.visibility =
-                                    View.VISIBLE
-                                binding.txtFollowingNoFollowingListInformation.visibility =
-                                    View.VISIBLE
-                            } else {
-                                binding.rcvFollowingProfilesOfFollowing.visibility = View.VISIBLE
-                                binding.imgFollowingNoFollowingListInformation.visibility =
-                                    View.INVISIBLE
-                            }
-                        }
-                        1 -> {
-                            binding.rcvFollowingProfilesOfFollowing.visibility = View.INVISIBLE
-                            binding.txtFollowingNoFollowingListInformation.visibility =
-                                View.INVISIBLE
-                            if (followingViewModel.followerList.value?.size == 0) {
+                TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    tab?.position?.let {
+                        when (tab.position) {
+                            0 -> {
                                 binding.rcvFollowingProfilesOfFollower.visibility = View.INVISIBLE
+                                binding.txtFollowingNoFollowerListInformation.visibility =
+                                    View.INVISIBLE
+                                if (followingViewModel.followingList.value?.size == 0) {
+                                    binding.rcvFollowingProfilesOfFollowing.visibility = View.INVISIBLE
+                                    binding.txtFollowingNoFollowerListInformation.visibility =
+                                        View.INVISIBLE
+                                    binding.imgFollowingNoFollowingListInformation.visibility =
+                                        View.VISIBLE
+                                    binding.txtFollowingNoFollowingListInformation.visibility =
+                                        View.VISIBLE
+                                } else {
+                                    binding.rcvFollowingProfilesOfFollowing.visibility = View.VISIBLE
+                                    binding.imgFollowingNoFollowingListInformation.visibility =
+                                        View.INVISIBLE
+                                }
+                            }
+                            1 -> {
+                                binding.rcvFollowingProfilesOfFollowing.visibility = View.INVISIBLE
                                 binding.txtFollowingNoFollowingListInformation.visibility =
                                     View.INVISIBLE
-                                binding.imgFollowingNoFollowingListInformation.visibility =
-                                    View.VISIBLE
-                                binding.txtFollowingNoFollowerListInformation.visibility =
-                                    View.VISIBLE
-                            } else {
-                                binding.rcvFollowingProfilesOfFollower.visibility = View.VISIBLE
-                                binding.imgFollowingNoFollowingListInformation.visibility =
-                                    View.INVISIBLE
-                                binding.txtFollowingNoFollowerListInformation.visibility =
-                                    View.INVISIBLE
+                                if (followingViewModel.followerList.value?.size == 0) {
+                                    binding.rcvFollowingProfilesOfFollower.visibility = View.INVISIBLE
+                                    binding.txtFollowingNoFollowingListInformation.visibility =
+                                        View.INVISIBLE
+                                    binding.imgFollowingNoFollowingListInformation.visibility =
+                                        View.VISIBLE
+                                    binding.txtFollowingNoFollowerListInformation.visibility =
+                                        View.VISIBLE
+                                } else {
+                                    binding.rcvFollowingProfilesOfFollower.visibility = View.VISIBLE
+                                    binding.imgFollowingNoFollowingListInformation.visibility =
+                                        View.INVISIBLE
+                                    binding.txtFollowingNoFollowerListInformation.visibility =
+                                        View.INVISIBLE
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        }
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+            }
         )
     }
 

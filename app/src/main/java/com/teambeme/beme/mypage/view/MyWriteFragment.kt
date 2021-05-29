@@ -122,27 +122,27 @@ class MyWriteFragment : BindingFragment<FragmentMyWriteBinding>(R.layout.fragmen
 
     private fun setSearchView() {
         binding.searchViewWriteSearch.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(newText: String?): Boolean {
-                Log.d("Search", newText ?: "hyunwoo")
-                mypageViewModel.initPage()
-                mypageViewModel.clearCopyMyAnswerList()
-                mypageViewModel.getMyAnswer(mypageViewModel.tempPage)
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                val userInputText = newText ?: ""
-                mypageViewModel.setMyQuery(newText.toString())
-                if (userInputText.count() == 0) {
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(newText: String?): Boolean {
+                    Log.d("Search", newText ?: "hyunwoo")
                     mypageViewModel.initPage()
-                    mypageViewModel.deleteMyQuery()
                     mypageViewModel.clearCopyMyAnswerList()
                     mypageViewModel.getMyAnswer(mypageViewModel.tempPage)
+                    return false
                 }
-                return false
-            }
-        })
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    val userInputText = newText ?: ""
+                    mypageViewModel.setMyQuery(newText.toString())
+                    if (userInputText.count() == 0) {
+                        mypageViewModel.initPage()
+                        mypageViewModel.deleteMyQuery()
+                        mypageViewModel.clearCopyMyAnswerList()
+                        mypageViewModel.getMyAnswer(mypageViewModel.tempPage)
+                    }
+                    return false
+                }
+            })
     }
 
     private fun setScrollToTop() {

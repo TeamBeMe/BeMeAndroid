@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.teambeme.beme.data.repository.HomeRepository
 import com.teambeme.beme.home.model.Answer
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
-import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(

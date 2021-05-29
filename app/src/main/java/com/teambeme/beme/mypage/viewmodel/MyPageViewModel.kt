@@ -9,11 +9,11 @@ import com.teambeme.beme.data.repository.MyPageRepository
 import com.teambeme.beme.mypage.model.*
 import com.teambeme.beme.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
@@ -144,18 +144,18 @@ class MyPageViewModel @Inject constructor(
             id,
             flag.toInt()
         ).enqueue(object :
-            Callback<ResponsePublic> {
-            override fun onResponse(
-                call: Call<ResponsePublic>,
-                response: Response<ResponsePublic>
-            ) {
-                if (response.isSuccessful) {
+                Callback<ResponsePublic> {
+                override fun onResponse(
+                    call: Call<ResponsePublic>,
+                    response: Response<ResponsePublic>
+                ) {
+                    if (response.isSuccessful) {
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponsePublic>, t: Throwable) {
-            }
-        })
+                override fun onFailure(call: Call<ResponsePublic>, t: Throwable) {
+                }
+            })
     }
 
     private val _isAnswerEmpty = MutableLiveData<Boolean>()
@@ -173,35 +173,35 @@ class MyPageViewModel @Inject constructor(
             myQuery.value,
             pageNum
         ).enqueue(object :
-            Callback<ResponseMyAnswer> {
-            override fun onResponse(
-                call: Call<ResponseMyAnswer>,
-                response: Response<ResponseMyAnswer>
-            ) {
-                if (response.isSuccessful) {
-                    if (pageNum != page) {
-                        if (tempPage == 1) {
-                            clearCopyMyAnswerList()
-                        }
-                        copyMyAnswerList.addAll(response.body()!!.data.answers.toMutableList())
-                        tempPage++
-                        if (response.body()!!.data.answers.isNotEmpty()) {
-                            _isAnswerMax.value = response.body()!!.data.answers.size != 10
+                Callback<ResponseMyAnswer> {
+                override fun onResponse(
+                    call: Call<ResponseMyAnswer>,
+                    response: Response<ResponseMyAnswer>
+                ) {
+                    if (response.isSuccessful) {
+                        if (pageNum != page) {
+                            if (tempPage == 1) {
+                                clearCopyMyAnswerList()
+                            }
+                            copyMyAnswerList.addAll(response.body()!!.data.answers.toMutableList())
+                            tempPage++
+                            if (response.body()!!.data.answers.isNotEmpty()) {
+                                _isAnswerMax.value = response.body()!!.data.answers.size != 10
+                            } else {
+                                _isAnswerMax.value = true
+                            }
+                            getMyAnswer(tempPage)
                         } else {
-                            _isAnswerMax.value = true
+                            _mypageWriteData.value = copyMyAnswerList.toMutableList()
+                            tempPage = 1
                         }
-                        getMyAnswer(tempPage)
-                    } else {
-                        _mypageWriteData.value = copyMyAnswerList.toMutableList()
-                        tempPage = 1
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseMyAnswer>, t: Throwable) {
-                Log.d("Network Fail", t.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<ResponseMyAnswer>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
     }
 
     fun getPlusMyAnswer() {
@@ -211,27 +211,27 @@ class MyPageViewModel @Inject constructor(
             myQuery.value,
             page
         ).enqueue(object :
-            Callback<ResponseMyAnswer> {
-            override fun onResponse(
-                call: Call<ResponseMyAnswer>,
-                response: Response<ResponseMyAnswer>
-            ) {
-                if (response.isSuccessful) {
-                    copyMyAnswerList.addAll(response.body()!!.data.answers.toMutableList())
-                    _mypageWriteData.value = copyMyAnswerList.toMutableList()
-                    if (response.body()!!.data.answers.isNotEmpty()) {
-                        page++
-                        _isAnswerMax.value = response.body()!!.data.answers.size != 10
-                    } else {
-                        _isAnswerMax.value = true
+                Callback<ResponseMyAnswer> {
+                override fun onResponse(
+                    call: Call<ResponseMyAnswer>,
+                    response: Response<ResponseMyAnswer>
+                ) {
+                    if (response.isSuccessful) {
+                        copyMyAnswerList.addAll(response.body()!!.data.answers.toMutableList())
+                        _mypageWriteData.value = copyMyAnswerList.toMutableList()
+                        if (response.body()!!.data.answers.isNotEmpty()) {
+                            page++
+                            _isAnswerMax.value = response.body()!!.data.answers.size != 10
+                        } else {
+                            _isAnswerMax.value = true
+                        }
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseMyAnswer>, t: Throwable) {
-                Log.d("Network Fail", t.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<ResponseMyAnswer>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
     }
 
     fun setScrapQuery(query: String) {
@@ -240,20 +240,20 @@ class MyPageViewModel @Inject constructor(
 
     fun getMyProfile() {
         myPageRepository.getMyProfile().enqueue(object :
-            Callback<ResponseMyProfile> {
-            override fun onResponse(
-                call: Call<ResponseMyProfile>,
-                response: Response<ResponseMyProfile>
-            ) {
-                if (response.isSuccessful) {
-                    _myProfileInfo.value = response.body()!!.data
+                Callback<ResponseMyProfile> {
+                override fun onResponse(
+                    call: Call<ResponseMyProfile>,
+                    response: Response<ResponseMyProfile>
+                ) {
+                    if (response.isSuccessful) {
+                        _myProfileInfo.value = response.body()!!.data
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseMyProfile>, t: Throwable) {
-                Log.d("Network Fail", t.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<ResponseMyProfile>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
     }
 
     fun getMyScrap(pageNum: Int) {
@@ -263,43 +263,43 @@ class MyPageViewModel @Inject constructor(
             scrapQuery.value,
             pageNum
         ).enqueue(object :
-            Callback<ResponseMyScrap> {
-            override fun onResponse(
-                call: Call<ResponseMyScrap>,
-                response: Response<ResponseMyScrap>
-            ) {
-                if (response.isSuccessful) {
-                    Log.d(
-                        "recursion_mypage",
-                        "pageNum : $pageNum, page : $page, tempPage : $scrapTempPage"
-                    )
-                    if (pageNum != scrapPage) {
-                        if (scrapTempPage == 1) {
-                            clearCopyMyScrapList()
-                        }
-                        copyMyScrapList.addAll(response.body()!!.data.answers.toMutableList())
-                        scrapTempPage++
-                        if (response.body()!!.data.answers.isNotEmpty()) {
-                            _isScrapMax.value = response.body()!!.data.answers.size != 10
+                Callback<ResponseMyScrap> {
+                override fun onResponse(
+                    call: Call<ResponseMyScrap>,
+                    response: Response<ResponseMyScrap>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d(
+                            "recursion_mypage",
+                            "pageNum : $pageNum, page : $page, tempPage : $scrapTempPage"
+                        )
+                        if (pageNum != scrapPage) {
+                            if (scrapTempPage == 1) {
+                                clearCopyMyScrapList()
+                            }
+                            copyMyScrapList.addAll(response.body()!!.data.answers.toMutableList())
+                            scrapTempPage++
+                            if (response.body()!!.data.answers.isNotEmpty()) {
+                                _isScrapMax.value = response.body()!!.data.answers.size != 10
+                            } else {
+                                _isScrapMax.value = true
+                            }
+                            getMyScrap(scrapTempPage)
                         } else {
-                            _isScrapMax.value = true
+                            _mypageScrapData.value = copyMyScrapList.toMutableList()
+                            scrapTempPage = 1
                         }
-                        getMyScrap(scrapTempPage)
-                    } else {
-                        _mypageScrapData.value = copyMyScrapList.toMutableList()
-                        scrapTempPage = 1
+                        Log.d(
+                            "recursion_mypage",
+                            " tempPage : $scrapTempPage"
+                        )
                     }
-                    Log.d(
-                        "recursion_mypage",
-                        " tempPage : $scrapTempPage"
-                    )
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseMyScrap>, t: Throwable) {
-                Log.d("Network Fail", t.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<ResponseMyScrap>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
     }
 
     fun getPlusMyScrap() {
@@ -309,27 +309,27 @@ class MyPageViewModel @Inject constructor(
             scrapQuery.value,
             page
         ).enqueue(object :
-            Callback<ResponseMyScrap> {
-            override fun onResponse(
-                call: Call<ResponseMyScrap>,
-                response: Response<ResponseMyScrap>
-            ) {
-                if (response.isSuccessful) {
-                    copyMyScrapList.addAll(response.body()!!.data.answers.toMutableList())
-                    _mypageScrapData.value = copyMyScrapList.toMutableList()
-                    if (response.body()!!.data.answers.isNotEmpty()) {
-                        scrapPage++
-                        _isScrapMax.value = response.body()!!.data.answers.size != 10
-                    } else {
-                        _isScrapMax.value = true
+                Callback<ResponseMyScrap> {
+                override fun onResponse(
+                    call: Call<ResponseMyScrap>,
+                    response: Response<ResponseMyScrap>
+                ) {
+                    if (response.isSuccessful) {
+                        copyMyScrapList.addAll(response.body()!!.data.answers.toMutableList())
+                        _mypageScrapData.value = copyMyScrapList.toMutableList()
+                        if (response.body()!!.data.answers.isNotEmpty()) {
+                            scrapPage++
+                            _isScrapMax.value = response.body()!!.data.answers.size != 10
+                        } else {
+                            _isScrapMax.value = true
+                        }
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseMyScrap>, t: Throwable) {
-                Log.d("Network Fail", t.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<ResponseMyScrap>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
     }
 
     private val _mypageScrapData = MutableLiveData<MutableList<ResponseMyScrap.Data.Answer>>()

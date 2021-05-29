@@ -3,8 +3,8 @@ package com.teambeme.beme.data.remote.datasource
 import com.teambeme.beme.data.remote.api.DetailService
 import com.teambeme.beme.detail.model.*
 import com.teambeme.beme.otherpage.model.ResponseScrap
-import retrofit2.Call
 import javax.inject.Inject
+import retrofit2.Call
 
 class DetailDataSourceImpl @Inject constructor(
     private val service: DetailService

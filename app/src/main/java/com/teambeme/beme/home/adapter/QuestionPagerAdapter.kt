@@ -44,7 +44,8 @@ class QuestionPagerAdapter(
             }
 
             binding.imgQuestionLock.setOnClickListener {
-                TransitionPublicFragment(answerList[position - 1].publicFlag,
+                TransitionPublicFragment(
+                    answerList[position - 1].publicFlag,
                     object : TransitionPublicFragment.ChangePublicClickListener {
                         override fun onClick() {
                             homeViewModel.changePublic(position - 1)
@@ -66,7 +67,8 @@ class QuestionPagerAdapter(
                             createdAt = transformDateFormat(currentAnswer.createdAt),
                             content = currentAnswer.content ?: "",
                             isPublic = transformIntToBoolean(currentAnswer.publicFlag),
-                            isCommentBlocked = transformIntToBoolean(currentAnswer.commentBlockedFlag)
+                            isCommentBlocked =
+                            transformIntToBoolean(currentAnswer.commentBlockedFlag)
                         )
                         val intent = Intent(context, AnswerActivity::class.java)
                         intent.putExtra("intentAnswerData", intentAnswerData)

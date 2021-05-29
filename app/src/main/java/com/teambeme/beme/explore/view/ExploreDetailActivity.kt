@@ -60,9 +60,10 @@ class ExploreDetailActivity :
     private fun setOtherAnswersObserve() {
         exploreDetailViewModel.sameQuestionOtherAnswersList.observe(this) { otherAnswersList ->
             otherAnswersList?.let {
-                if (binding.rcvExploreDetailOtherAnswers.adapter != null) with(binding.rcvExploreDetailOtherAnswers.adapter as OtherQuestionsRcvAdapter<*>) {
-                    submitList(otherAnswersList)
-                }
+                if (binding.rcvExploreDetailOtherAnswers.adapter != null)
+                    with(binding.rcvExploreDetailOtherAnswers.adapter as OtherQuestionsRcvAdapter<*>) {
+                        submitList(otherAnswersList)
+                    }
                 if (otherAnswersList.size == 0) {
                     binding.constraintLayoutExploreDetailEmpty.visibility = View.VISIBLE
                 } else {

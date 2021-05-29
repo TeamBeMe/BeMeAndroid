@@ -11,10 +11,10 @@ import com.teambeme.beme.otherpage.model.ResponseOtherData.Data.Answer
 import com.teambeme.beme.otherpage.model.ResponseOtherInfo
 import com.teambeme.beme.otherpage.model.ResponseScrap
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
 @HiltViewModel
 class OtherPageViewModel @Inject constructor(
@@ -86,21 +86,21 @@ class OtherPageViewModel @Inject constructor(
             userId
         )
             .enqueue(object :
-                Callback<ResponseOtherInfo> {
-                override fun onResponse(
-                    call: Call<ResponseOtherInfo>,
-                    response: Response<ResponseOtherInfo>
-                ) {
-                    if (response.isSuccessful) {
-                        _otherUserInfo.value = response.body()!!.data
-                        _isFollow.value = response.body()!!.data.isFollowed
+                    Callback<ResponseOtherInfo> {
+                    override fun onResponse(
+                        call: Call<ResponseOtherInfo>,
+                        response: Response<ResponseOtherInfo>
+                    ) {
+                        if (response.isSuccessful) {
+                            _otherUserInfo.value = response.body()!!.data
+                            _isFollow.value = response.body()!!.data.isFollowed
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<ResponseOtherInfo>, t: Throwable) {
-                    Log.d("Network Fail", t.message.toString())
-                }
-            })
+                    override fun onFailure(call: Call<ResponseOtherInfo>, t: Throwable) {
+                        Log.d("Network Fail", t.message.toString())
+                    }
+                })
     }
 
     fun requestAddItem(userId: Int) {
@@ -108,30 +108,30 @@ class OtherPageViewModel @Inject constructor(
             userId,
             page
         ).enqueue(object :
-            Callback<ResponseOtherData> {
-            override fun onResponse(
-                call: Call<ResponseOtherData>,
-                response: Response<ResponseOtherData>
-            ) {
-                if (response.isSuccessful) {
-                    copyOtherAnswerList.addAll(response.body()!!.data?.answers?.toMutableList())
-                    _otherAnswerList.value = copyOtherAnswerList.toMutableList()
-                    when (page < response.body()!!.data.pageLen) {
-                        true -> {
-                            _isMax.value = false
-                            page++
-                        }
-                        false -> {
-                            _isMax.value = true
+                Callback<ResponseOtherData> {
+                override fun onResponse(
+                    call: Call<ResponseOtherData>,
+                    response: Response<ResponseOtherData>
+                ) {
+                    if (response.isSuccessful) {
+                        copyOtherAnswerList.addAll(response.body()!!.data?.answers?.toMutableList())
+                        _otherAnswerList.value = copyOtherAnswerList.toMutableList()
+                        when (page < response.body()!!.data.pageLen) {
+                            true -> {
+                                _isMax.value = false
+                                page++
+                            }
+                            false -> {
+                                _isMax.value = true
+                            }
                         }
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseOtherData>, t: Throwable) {
-                Log.d("Network Fail", t.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<ResponseOtherData>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
     }
 
     fun requestItem(userId: Int) {
@@ -139,30 +139,30 @@ class OtherPageViewModel @Inject constructor(
             userId,
             page
         ).enqueue(object :
-            Callback<ResponseOtherData> {
-            override fun onResponse(
-                call: Call<ResponseOtherData>,
-                response: Response<ResponseOtherData>
-            ) {
-                if (response.isSuccessful) {
-                    copyOtherAnswerList = response.body()!!.data?.answers?.toMutableList()
-                    _isOtherEmpty.value = copyOtherAnswerList.size == 0
-                    _otherAnswerList.value = copyOtherAnswerList.toMutableList()
-                    when (page < response.body()!!.data.pageLen) {
-                        true -> {
-                            _isMax.value = false
-                            page++
-                        }
-                        false -> {
-                            _isMax.value = true
+                Callback<ResponseOtherData> {
+                override fun onResponse(
+                    call: Call<ResponseOtherData>,
+                    response: Response<ResponseOtherData>
+                ) {
+                    if (response.isSuccessful) {
+                        copyOtherAnswerList = response.body()!!.data?.answers?.toMutableList()
+                        _isOtherEmpty.value = copyOtherAnswerList.size == 0
+                        _otherAnswerList.value = copyOtherAnswerList.toMutableList()
+                        when (page < response.body()!!.data.pageLen) {
+                            true -> {
+                                _isMax.value = false
+                                page++
+                            }
+                            false -> {
+                                _isMax.value = true
+                            }
                         }
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseOtherData>, t: Throwable) {
-                Log.d("Network Fail", t.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<ResponseOtherData>, t: Throwable) {
+                    Log.d("Network Fail", t.message.toString())
+                }
+            })
     }
 }

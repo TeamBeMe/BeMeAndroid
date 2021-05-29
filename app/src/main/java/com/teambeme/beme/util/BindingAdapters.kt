@@ -29,7 +29,7 @@ object BindingAdapters {
     @JvmStatic
     fun setTextForUnAnswered(textView: TextView, myNickName: String, userNickName: String) {
         val text = "아직 " + myNickName + "님이 답하지 않은 질문입니다.\n" +
-                "답변을 하시고 " + userNickName + " 님의 글을 보시겠습니까?"
+            "답변을 하시고 " + userNickName + " 님의 글을 보시겠습니까?"
         val spannableString = SpannableStringBuilder(text)
         spannableString.setSpan(
             StyleSpan(Typeface.BOLD),

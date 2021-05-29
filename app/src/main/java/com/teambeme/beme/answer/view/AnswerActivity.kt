@@ -73,7 +73,8 @@ class AnswerActivity : BindingActivity<ActivityAnswerBinding>(R.layout.activity_
 
     private fun setEditTextWhenOpenKeyboard() {
         val param = binding.txtAnswerAnswer.layoutParams as ViewGroup.MarginLayoutParams
-        keyboardVisibilityUtils = KeyboardVisibilityUtils(window,
+        keyboardVisibilityUtils = KeyboardVisibilityUtils(
+            window,
             onShowKeyboard = { keyboardHeight, _ ->
                 param.setMargins(
                     param.leftMargin,

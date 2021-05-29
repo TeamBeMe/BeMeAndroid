@@ -8,9 +8,9 @@ import com.teambeme.beme.signup.model.ResponseNickDoubleCheck
 import com.teambeme.beme.signup.model.ResponseSignUp
 import com.teambeme.beme.util.addSourceList
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
-import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
@@ -64,7 +64,6 @@ class SignUpViewModel @Inject constructor(
     val isPasswordDoubleChecked: LiveData<Boolean>
         get() = _isPasswordDoubleChecked
 
-
     val isDoneButtonEnabled = MediatorLiveData<Boolean>().apply {
         addSourceList(
             isEmailValid, isPasswordDoubleChecked, isPasswordRegexValid, isPasswordLengthValid,
@@ -99,7 +98,6 @@ class SignUpViewModel @Inject constructor(
             .onSuccess { _signUpUserInfo.value = it }
             .onFailure { it.printStackTrace() }
     }
-
 
     fun signUpWithoutImage() {
         viewModelScope.launch {
@@ -136,10 +134,10 @@ class SignUpViewModel @Inject constructor(
     }
 
     private fun nicknameValid() = isNicknameLengthValid.value ?: false &&
-            isNicknameLengthValid.value ?: false
+        isNicknameLengthValid.value ?: false
 
-    private fun passwordValid() = isPasswordRegexValid.value ?: false
-            && isPasswordLengthValid.value ?: false
+    private fun passwordValid() = isPasswordRegexValid.value ?: false &&
+        isPasswordLengthValid.value ?: false
 
     private fun regexValid(letter: String) = letter
         .filter { it in 'A'..'Z' || it in 'a'..'z' || it in '0'..'9' }
@@ -158,8 +156,8 @@ class SignUpViewModel @Inject constructor(
     }
 
     private fun validUserInfo() =
-        isEmailValid.value!! && isPasswordDoubleChecked.value!! && isPasswordRegexValid.value!!
-                && isPasswordLengthValid.value!! && isNickNameDoubleChecked.value!!
+        isEmailValid.value!! && isPasswordDoubleChecked.value!! && isPasswordRegexValid.value!! &&
+            isPasswordLengthValid.value!! && isNickNameDoubleChecked.value!!
 
     companion object {
         private val REGEX_EMAIL = Regex(pattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")

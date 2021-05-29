@@ -82,9 +82,10 @@ class FollowingShowAllActivity :
     private fun setFollowingShowAllProfilesObserve() {
         followingShowAllViewModel.followingList.observe(this) { followingShowAllProfilesList ->
             followingShowAllProfilesList?.let {
-                if (binding.rcvFollowingShowAllProfilesFollowing.adapter != null) with(binding.rcvFollowingShowAllProfilesFollowing.adapter as FollowingProfilesRcvAdapter<*>) {
-                    submitList(followingShowAllProfilesList)
-                }
+                if (binding.rcvFollowingShowAllProfilesFollowing.adapter != null)
+                    with(binding.rcvFollowingShowAllProfilesFollowing.adapter as FollowingProfilesRcvAdapter<*>) {
+                        submitList(followingShowAllProfilesList)
+                    }
                 if (binding.tabLayoutFollowingShowAllSort.selectedTabPosition == 0) {
                     if (followingShowAllProfilesList.size == 0) {
                         binding.rcvFollowingShowAllProfilesFollowing.visibility = View.INVISIBLE
@@ -109,9 +110,10 @@ class FollowingShowAllActivity :
     private fun setFollowerShowAllProfilesObserve() {
         followingShowAllViewModel.followerList.observe(this) { followerShowAllProfilesList ->
             followerShowAllProfilesList?.let {
-                if (binding.rcvFollowingShowAllProfilesFollower.adapter != null) with(binding.rcvFollowingShowAllProfilesFollower.adapter as FollowerProfilesRcvAdapter<*>) {
-                    submitList(followerShowAllProfilesList)
-                }
+                if (binding.rcvFollowingShowAllProfilesFollower.adapter != null)
+                    with(binding.rcvFollowingShowAllProfilesFollower.adapter as FollowerProfilesRcvAdapter<*>) {
+                        submitList(followerShowAllProfilesList)
+                    }
                 if (binding.tabLayoutFollowingShowAllSort.selectedTabPosition == 1) {
                     if (followerShowAllProfilesList.size == 0) {
                         binding.rcvFollowingShowAllProfilesFollower.visibility = View.INVISIBLE
@@ -135,9 +137,10 @@ class FollowingShowAllActivity :
     private fun setFollowingSearchProfilesObserve() {
         followingShowAllViewModel.searchList.observe(this) { followingSearchList ->
             followingSearchList?.let {
-                if (binding.rcvFollowingShowAllProfilesSearchFollowing.adapter != null) with(binding.rcvFollowingShowAllProfilesSearchFollowing.adapter as SearchProfilesRcvAdapter<*>) {
-                    submitList(followingSearchList)
-                }
+                if (binding.rcvFollowingShowAllProfilesSearchFollowing.adapter != null)
+                    with(binding.rcvFollowingShowAllProfilesSearchFollowing.adapter as SearchProfilesRcvAdapter<*>) {
+                        submitList(followingSearchList)
+                    }
                 if (followingSearchList[0].isFollowed == null) {
                     binding.txtFollowingShowAllNoSearchInformation.visibility = View.VISIBLE
                     binding.imgFollowingShowAllEmptyInformation.visibility = View.VISIBLE
@@ -152,9 +155,10 @@ class FollowingShowAllActivity :
     private fun setFollowerSearchProfilesObserve() {
         followingShowAllViewModel.searchList.observe(this) { followerSearchList ->
             followerSearchList?.let {
-                if (binding.rcvFollowingShowAllProfilesSearchFollower.adapter != null) with(binding.rcvFollowingShowAllProfilesSearchFollower.adapter as SearchProfilesRcvAdapter<*>) {
-                    submitList(followerSearchList)
-                }
+                if (binding.rcvFollowingShowAllProfilesSearchFollower.adapter != null)
+                    with(binding.rcvFollowingShowAllProfilesSearchFollower.adapter as SearchProfilesRcvAdapter<*>) {
+                        submitList(followerSearchList)
+                    }
                 if (followerSearchList[0].isFollowed == null) {
                     binding.txtFollowingShowAllNoSearchInformation.visibility = View.VISIBLE
                     binding.imgFollowingShowAllEmptyInformation.visibility = View.VISIBLE
@@ -174,104 +178,104 @@ class FollowingShowAllActivity :
 
     private fun setTabSelectedFromFollowingShowAllListener() {
         binding.tabLayoutFollowingShowAllSort.addOnTabSelectedListener(object :
-            TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.position?.let {
-                    when (tab.position) {
-                        0 -> {
-                            followingShowAllViewModel.setSearchRange("followee")
-                            binding.searchViewFollowingShowAll.setQuery(null, false)
-                            binding.rcvFollowingShowAllProfilesFollower.visibility = View.INVISIBLE
-                            binding.txtFollowingShowAllFollowerEmptyInformation.visibility =
-                                View.INVISIBLE
-                            if (followingShowAllViewModel.followingList.value?.size == 0) {
-                                binding.searchViewFollowingShowAll.visibility = View.INVISIBLE
-                                binding.rcvFollowingShowAllProfilesFollowing.visibility =
-                                    View.INVISIBLE
+                TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    tab?.position?.let {
+                        when (tab.position) {
+                            0 -> {
+                                followingShowAllViewModel.setSearchRange("followee")
+                                binding.searchViewFollowingShowAll.setQuery(null, false)
+                                binding.rcvFollowingShowAllProfilesFollower.visibility = View.INVISIBLE
                                 binding.txtFollowingShowAllFollowerEmptyInformation.visibility =
                                     View.INVISIBLE
-                                binding.txtFollowingShowAllFollowingEmptyInformation.visibility =
-                                    View.VISIBLE
-                                binding.imgFollowingShowAllEmptyInformation.visibility =
-                                    View.VISIBLE
-                            } else {
-                                binding.searchViewFollowingShowAll.visibility = View.VISIBLE
-                                binding.rcvFollowingShowAllProfilesFollowing.visibility =
-                                    View.VISIBLE
-                                binding.imgFollowingShowAllEmptyInformation.visibility =
-                                    View.INVISIBLE
+                                if (followingShowAllViewModel.followingList.value?.size == 0) {
+                                    binding.searchViewFollowingShowAll.visibility = View.INVISIBLE
+                                    binding.rcvFollowingShowAllProfilesFollowing.visibility =
+                                        View.INVISIBLE
+                                    binding.txtFollowingShowAllFollowerEmptyInformation.visibility =
+                                        View.INVISIBLE
+                                    binding.txtFollowingShowAllFollowingEmptyInformation.visibility =
+                                        View.VISIBLE
+                                    binding.imgFollowingShowAllEmptyInformation.visibility =
+                                        View.VISIBLE
+                                } else {
+                                    binding.searchViewFollowingShowAll.visibility = View.VISIBLE
+                                    binding.rcvFollowingShowAllProfilesFollowing.visibility =
+                                        View.VISIBLE
+                                    binding.imgFollowingShowAllEmptyInformation.visibility =
+                                        View.INVISIBLE
+                                }
                             }
-                        }
-                        1 -> {
-                            followingShowAllViewModel.setSearchRange("follower")
-                            binding.searchViewFollowingShowAll.setQuery(null, false)
-                            binding.rcvFollowingShowAllProfilesFollowing.visibility = View.INVISIBLE
-                            binding.txtFollowingShowAllFollowingEmptyInformation.visibility =
-                                View.INVISIBLE
-                            if (followingShowAllViewModel.followerList.value?.size == 0) {
-                                binding.searchViewFollowingShowAll.visibility = View.INVISIBLE
-                                binding.rcvFollowingShowAllProfilesFollower.visibility =
-                                    View.INVISIBLE
+                            1 -> {
+                                followingShowAllViewModel.setSearchRange("follower")
+                                binding.searchViewFollowingShowAll.setQuery(null, false)
+                                binding.rcvFollowingShowAllProfilesFollowing.visibility = View.INVISIBLE
                                 binding.txtFollowingShowAllFollowingEmptyInformation.visibility =
                                     View.INVISIBLE
-                                binding.txtFollowingShowAllFollowerEmptyInformation.visibility =
-                                    View.VISIBLE
-                                binding.imgFollowingShowAllEmptyInformation.visibility =
-                                    View.VISIBLE
-                            } else {
-                                binding.searchViewFollowingShowAll.visibility = View.VISIBLE
-                                binding.rcvFollowingShowAllProfilesFollower.visibility =
-                                    View.VISIBLE
-                                binding.imgFollowingShowAllEmptyInformation.visibility =
-                                    View.INVISIBLE
+                                if (followingShowAllViewModel.followerList.value?.size == 0) {
+                                    binding.searchViewFollowingShowAll.visibility = View.INVISIBLE
+                                    binding.rcvFollowingShowAllProfilesFollower.visibility =
+                                        View.INVISIBLE
+                                    binding.txtFollowingShowAllFollowingEmptyInformation.visibility =
+                                        View.INVISIBLE
+                                    binding.txtFollowingShowAllFollowerEmptyInformation.visibility =
+                                        View.VISIBLE
+                                    binding.imgFollowingShowAllEmptyInformation.visibility =
+                                        View.VISIBLE
+                                } else {
+                                    binding.searchViewFollowingShowAll.visibility = View.VISIBLE
+                                    binding.rcvFollowingShowAllProfilesFollower.visibility =
+                                        View.VISIBLE
+                                    binding.imgFollowingShowAllEmptyInformation.visibility =
+                                        View.INVISIBLE
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        }
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+            }
         )
     }
 
     private fun setQueryTextListener() {
         binding.searchViewFollowingShowAll.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(newText: String?): Boolean {
-                val queryText = newText ?: ""
-                if (queryText.count() > 0) {
-                    binding.rcvFollowingShowAllProfilesFollower.visibility = View.INVISIBLE
-                    binding.rcvFollowingShowAllProfilesFollowing.visibility = View.INVISIBLE
-                    if (binding.tabLayoutFollowingShowAllSort.selectedTabPosition == 0) {
-                        binding.rcvFollowingShowAllProfilesSearchFollowing.visibility = View.VISIBLE
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    val queryText = newText ?: ""
+                    if (queryText.count() > 0) {
+                        binding.rcvFollowingShowAllProfilesFollower.visibility = View.INVISIBLE
+                        binding.rcvFollowingShowAllProfilesFollowing.visibility = View.INVISIBLE
+                        if (binding.tabLayoutFollowingShowAllSort.selectedTabPosition == 0) {
+                            binding.rcvFollowingShowAllProfilesSearchFollowing.visibility = View.VISIBLE
+                        } else {
+                            binding.rcvFollowingShowAllProfilesSearchFollower.visibility = View.VISIBLE
+                        }
                     } else {
-                        binding.rcvFollowingShowAllProfilesSearchFollower.visibility = View.VISIBLE
+                        followingShowAllViewModel.deleteSearchRecord()
+                        followingShowAllViewModel.requestFollowerFollowingList()
+                        binding.txtFollowingShowAllNoSearchInformation.visibility = View.INVISIBLE
+                        binding.imgFollowingShowAllEmptyInformation.visibility = View.INVISIBLE
+                        if (binding.tabLayoutFollowingShowAllSort.selectedTabPosition == 0) {
+                            binding.rcvFollowingShowAllProfilesFollowing.visibility = View.VISIBLE
+                        } else {
+                            binding.rcvFollowingShowAllProfilesFollower.visibility = View.VISIBLE
+                        }
+                        binding.rcvFollowingShowAllProfilesSearchFollower.visibility = View.INVISIBLE
+                        binding.rcvFollowingShowAllProfilesSearchFollowing.visibility = View.INVISIBLE
                     }
-                } else {
-                    followingShowAllViewModel.deleteSearchRecord()
-                    followingShowAllViewModel.requestFollowerFollowingList()
-                    binding.txtFollowingShowAllNoSearchInformation.visibility = View.INVISIBLE
-                    binding.imgFollowingShowAllEmptyInformation.visibility = View.INVISIBLE
-                    if (binding.tabLayoutFollowingShowAllSort.selectedTabPosition == 0) {
-                        binding.rcvFollowingShowAllProfilesFollowing.visibility = View.VISIBLE
-                    } else {
-                        binding.rcvFollowingShowAllProfilesFollower.visibility = View.VISIBLE
-                    }
-                    binding.rcvFollowingShowAllProfilesSearchFollower.visibility = View.INVISIBLE
-                    binding.rcvFollowingShowAllProfilesSearchFollowing.visibility = View.INVISIBLE
+                    return false
                 }
-                return false
-            }
 
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null) {
-                    followingShowAllViewModel.setSearchQuery(query)
-                    followingShowAllViewModel.requestSearchMyFollowingFollower()
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    if (query != null) {
+                        followingShowAllViewModel.setSearchQuery(query)
+                        followingShowAllViewModel.requestSearchMyFollowingFollower()
+                    }
+                    return false
                 }
-                return false
-            }
-        })
+            })
     }
 }

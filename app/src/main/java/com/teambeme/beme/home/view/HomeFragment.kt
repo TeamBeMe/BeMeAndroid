@@ -106,21 +106,23 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         }
 
         binding.vpHomeQuestionSlider.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                if (position != 0 && position != homeViewModel.answerList.value?.size?.plus(1)) {
-                    when (homeViewModel.answerList.value?.get(position - 1)?.isToday) {
-                        true -> binding.txtHomeTitle.text = "오늘의 질문"
-                        else -> binding.txtHomeTitle.text = "과거의 질문"
+                ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    if (position != 0 &&
+                        position != homeViewModel.answerList.value?.size?.plus(1)
+                    ) {
+                        when (homeViewModel.answerList.value?.get(position - 1)?.isToday) {
+                            true -> binding.txtHomeTitle.text = "오늘의 질문"
+                            else -> binding.txtHomeTitle.text = "과거의 질문"
+                        }
+                    } else if (position == homeViewModel.answerList.value?.size?.plus(1)) {
+                        binding.txtHomeTitle.text = "새로운 질문"
+                    } else {
+                        binding.txtHomeTitle.text = "과거의 질문 더 보기"
                     }
-                } else if (position == homeViewModel.answerList.value?.size?.plus(1)) {
-                    binding.txtHomeTitle.text = "새로운 질문"
-                } else {
-                    binding.txtHomeTitle.text = "과거의 질문 더 보기"
                 }
-            }
-        })
+            })
     }
 
     private fun getPageTransformer(): ViewPager2.PageTransformer {
@@ -134,12 +136,15 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private fun returnToDefaultPosition() {
-        binding.vpHomeQuestionSlider.postDelayed({
-            homeViewModel.answerList
-                .value
-                ?.size
-                ?.let { binding.vpHomeQuestionSlider.setCurrentItem(it, true) }
-        }, 100)
+        binding.vpHomeQuestionSlider.postDelayed(
+            {
+                homeViewModel.answerList
+                    .value
+                    ?.size
+                    ?.let { binding.vpHomeQuestionSlider.setCurrentItem(it, true) }
+            },
+            100
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

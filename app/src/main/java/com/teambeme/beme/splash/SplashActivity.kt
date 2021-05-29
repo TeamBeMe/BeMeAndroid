@@ -32,11 +32,11 @@ import com.teambeme.beme.onboarding.view.OnBoardingActivity
 import com.teambeme.beme.util.ErrorBody
 import com.teambeme.beme.util.StatusBarUtil
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_splash) {
@@ -79,12 +79,14 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
             }
         } else {
             @Suppress("DEPRECATION")
-            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN
+            window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_FULLSCREEN
                     or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                     or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                     or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION)
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                )
         }
     }
 
@@ -110,37 +112,37 @@ class SplashActivity : BindingActivity<ActivitySplashBinding>(R.layout.activity_
             BeMeRepository.userId,
             BeMeRepository.userPassword
         ).enqueue(object :
-            Callback<ResponseLogin> {
-            override fun onResponse(
-                call: Call<ResponseLogin>,
-                response: Response<ResponseLogin>
-            ) {
-                if (response.isSuccessful) {
-                    BeMeRepository.userToken =
-                        response.body()!!.data!!.token
-                    val intent =
-                        Intent(this@SplashActivity, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                } else {
-                    val gson = Gson()
-                    val type = object : TypeToken<ErrorBody>() {}.type
-                    val errorResponse: ErrorBody? =
-                        gson.fromJson(response.errorBody()!!.charStream(), type)
+                Callback<ResponseLogin> {
+                override fun onResponse(
+                    call: Call<ResponseLogin>,
+                    response: Response<ResponseLogin>
+                ) {
+                    if (response.isSuccessful) {
+                        BeMeRepository.userToken =
+                            response.body()!!.data!!.token
+                        val intent =
+                            Intent(this@SplashActivity, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        startActivity(intent)
+                    } else {
+                        val gson = Gson()
+                        val type = object : TypeToken<ErrorBody>() {}.type
+                        val errorResponse: ErrorBody? =
+                            gson.fromJson(response.errorBody()!!.charStream(), type)
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
-                for (element in t.stackTrace) {
-                    Log.d("Network element", element.toString())
-                    Log.d("Network className", element.className)
-                    Log.d("Network methodName", element.methodName)
-                    Log.d("Network fileName", element.fileName)
-                    Log.d("Network lineNumber", element.lineNumber.toString())
+                override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
+                    for (element in t.stackTrace) {
+                        Log.d("Network element", element.toString())
+                        Log.d("Network className", element.className)
+                        Log.d("Network methodName", element.methodName)
+                        Log.d("Network fileName", element.fileName)
+                        Log.d("Network lineNumber", element.lineNumber.toString())
+                    }
                 }
-            }
-        })
+            })
     }
 
     private fun initInAppUpdate(inAppUpdateAvailable: Boolean) {
