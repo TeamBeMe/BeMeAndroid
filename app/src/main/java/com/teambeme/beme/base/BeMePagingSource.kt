@@ -9,13 +9,28 @@ import androidx.paging.PagingState
 *
 * BeMePagingSource: Base PagingSource Class
 *
-* How to use
-*
-* You should inherit this class when you use PagingSource of Paging3
-* Just implement override load function
-*
 * */
-abstract class BeMePagingSource<V : Any> : PagingSource<Int, V>() {
+class BeMePagingSource<V : Any>(
+    private val pagingDataFactory: (Int) -> List<V>
+) : PagingSource<Int, V>() {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, V> {
+        val position = params.key ?: STARTING_PAGE_INDEX
+
+        val response = runCatching {
+            pagingDataFactory.invoke(position)
+        }.getOrElse { return LoadResult.Error(it) }
+        val nextKey = if (response.isEmpty()) null
+        else position + (params.loadSize / NETWORK_PAGE_SIZE)
+
+        return runCatching {
+            LoadResult.Page(
+                data = response,
+                prevKey = if (position == STARTING_PAGE_INDEX) null else position - 1,
+                nextKey = nextKey
+            )
+        }.getOrElse { return LoadResult.Error(it) }
+    }
+
     override fun getRefreshKey(state: PagingState<Int, V>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
@@ -24,4 +39,5 @@ abstract class BeMePagingSource<V : Any> : PagingSource<Int, V>() {
     }
 }
 
+const val STARTING_PAGE_INDEX = 1
 const val NETWORK_PAGE_SIZE = 10
