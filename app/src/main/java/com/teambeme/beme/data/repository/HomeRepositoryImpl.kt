@@ -4,7 +4,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.teambeme.beme.base.BeMePagingSource
 import com.teambeme.beme.base.NETWORK_PAGE_SIZE
-import com.teambeme.beme.data.remote.api.HomeService
 import com.teambeme.beme.data.remote.datasource.HomeDataSource
 import com.teambeme.beme.domain.repository.HomeRepository
 import com.teambeme.beme.presentation.home.model.RequestModifyPublic
@@ -41,5 +40,4 @@ class HomeRepositoryImpl @Inject constructor(
             }
         }
     ).flow
-
 }

@@ -32,6 +32,10 @@ class QuestionPagerAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var answerList = mutableListOf<Answer>()
 
+    interface QuestionButtonClickListener {
+        fun onAnswerButtonClick(answer: Answer, position: Int)
+    }
+
     inner class QuestionViewHolder(
         private val context: Context,
         private val binding: ItemHomeQuestionBinding
@@ -199,10 +203,6 @@ class QuestionPagerAdapter(
         notifyDataSetChanged()
     }
 
-    interface QuestionButtonClickListener {
-        fun onAnswerButtonClick(answer: Answer, position: Int)
-    }
-
     fun transformIntToBoolean(value: Int?): Boolean {
         return when (value) {
             0 -> false
@@ -213,8 +213,7 @@ class QuestionPagerAdapter(
     private fun transformDateFormat(date: String): String {
         return if (date.length > HomeFragment.DATE_LENGTH)
             date.substring(0, HomeFragment.DATE_LENGTH)
-        else
-            date
+        else date
     }
 
     private fun convertTimeToString(time: Date): String {

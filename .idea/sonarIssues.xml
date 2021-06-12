@@ -33,12 +33,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/build/generated/data_binding_base_class_source_out/debug/out/com/teambeme/beme/databinding/ItemOpensourceBinding.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/build/reports/ktlint/ktlintKotlinScriptCheck/ktlintKotlinScriptCheck.txt">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/build/reports/ktlint/ktlintMainSourceSetCheck/ktlintMainSourceSetCheck.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/build/reports/ktlint/ktlintMainSourceSetFormat/ktlintMainSourceSetFormat.txt">
           <value>
             <set />
           </value>
@@ -548,7 +558,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/presentation/home/adapter/QuestionPagerAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/presentation/home/model/ResponseAnswers.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/presentation/home/view/HomeFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/presentation/home/view/TransitionPublicFragment.kt">
           <value>
             <set />
           </value>
@@ -678,7 +703,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/item_home_question.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/item_onboarding.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/item_opensource.xml">
           <value>
             <set />
           </value>

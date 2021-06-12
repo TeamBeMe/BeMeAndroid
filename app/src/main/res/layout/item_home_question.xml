@@ -9,7 +9,7 @@
 
         <variable
             name="answer"
-            type="com.teambeme.beme.home.model.Answer" />
+            type="com.teambeme.beme.presentation.home.model.Answer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
