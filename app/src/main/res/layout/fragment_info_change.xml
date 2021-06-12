@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/home_bottomsheet_background"
     android:padding="28dp"
-    tools:context=".home.view.InfoChangeFragment">
+    tools:context=".presentation.home.view.InfoChangeFragment">
 
     <LinearLayout
         android:id="@+id/linear_home_edit"

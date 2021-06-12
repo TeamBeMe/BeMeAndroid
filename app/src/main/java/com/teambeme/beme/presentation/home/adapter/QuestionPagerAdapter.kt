@@ -1,4 +1,4 @@
-package com.teambeme.beme.home.adapter
+package com.teambeme.beme.presentation.home.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -15,13 +15,13 @@ import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.data.local.singleton.BeMeRepository
 import com.teambeme.beme.databinding.ItemHomeMoreQuestionBinding
 import com.teambeme.beme.databinding.ItemHomeQuestionBinding
-import com.teambeme.beme.home.model.Answer
-import com.teambeme.beme.home.view.AnswerSuggestFragment
-import com.teambeme.beme.home.view.HomeFragment
-import com.teambeme.beme.home.view.InfoChangeFragment
-import com.teambeme.beme.home.view.InfoChangeFragment.InfoChangeClickListener
-import com.teambeme.beme.home.view.TransitionPublicFragment
-import com.teambeme.beme.home.viewmodel.HomeViewModel
+import com.teambeme.beme.presentation.home.model.Answer
+import com.teambeme.beme.presentation.home.view.AnswerSuggestFragment
+import com.teambeme.beme.presentation.home.view.HomeFragment
+import com.teambeme.beme.presentation.home.view.InfoChangeFragment
+import com.teambeme.beme.presentation.home.view.InfoChangeFragment.InfoChangeClickListener
+import com.teambeme.beme.presentation.home.view.TransitionPublicFragment
+import com.teambeme.beme.presentation.home.viewmodel.HomeViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,6 +31,10 @@ class QuestionPagerAdapter(
     private val questionButtonClickListener: QuestionButtonClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var answerList = mutableListOf<Answer>()
+
+    interface QuestionButtonClickListener {
+        fun onAnswerButtonClick(answer: Answer, position: Int)
+    }
 
     inner class QuestionViewHolder(
         private val context: Context,
@@ -199,10 +203,6 @@ class QuestionPagerAdapter(
         notifyDataSetChanged()
     }
 
-    interface QuestionButtonClickListener {
-        fun onAnswerButtonClick(answer: Answer, position: Int)
-    }
-
     fun transformIntToBoolean(value: Int?): Boolean {
         return when (value) {
             0 -> false
@@ -213,8 +213,7 @@ class QuestionPagerAdapter(
     private fun transformDateFormat(date: String): String {
         return if (date.length > HomeFragment.DATE_LENGTH)
             date.substring(0, HomeFragment.DATE_LENGTH)
-        else
-            date
+        else date
     }
 
     private fun convertTimeToString(time: Date): String {

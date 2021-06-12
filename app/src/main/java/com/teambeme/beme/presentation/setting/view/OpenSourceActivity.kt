@@ -1,4 +1,4 @@
-package com.teambeme.beme.setting.view
+package com.teambeme.beme.presentation.setting.view
 
 import android.graphics.Color
 import android.graphics.Rect
@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.base.BindingActivity
 import com.teambeme.beme.databinding.ActivityOpenSourceBinding
-import com.teambeme.beme.setting.adapter.OpenSourceAdapter
-import com.teambeme.beme.setting.model.OpenSourceData
+import com.teambeme.beme.presentation.setting.adapter.OpenSourceAdapter
+import com.teambeme.beme.presentation.setting.model.OpenSourceData
 import com.teambeme.beme.util.StatusBarUtil
 import com.teambeme.beme.util.dp
 

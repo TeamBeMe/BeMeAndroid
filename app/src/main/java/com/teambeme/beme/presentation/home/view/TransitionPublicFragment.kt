@@ -1,4 +1,4 @@
-package com.teambeme.beme.home.view
+package com.teambeme.beme.presentation.home.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -48,12 +48,11 @@ class TransitionPublicFragment(
     override fun onStart() {
         super.onStart()
         val width = (resources.displayMetrics.widthPixels * 0.8).toInt()
-        val height = (resources.displayMetrics.heightPixels * 0.25).toInt()
         dialog!!.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 

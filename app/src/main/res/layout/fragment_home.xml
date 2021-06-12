@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/home_black"
-        tools:context=".home.view.HomeFragment">
+        tools:context=".presentation.home.view.HomeFragment">
 
         <TextView
             android:id="@+id/txt_home_title"

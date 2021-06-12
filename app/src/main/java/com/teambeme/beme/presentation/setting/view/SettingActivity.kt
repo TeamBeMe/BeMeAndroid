@@ -1,4 +1,4 @@
-package com.teambeme.beme.setting.view
+package com.teambeme.beme.presentation.setting.view
 
 import android.content.Intent
 import android.os.Bundle

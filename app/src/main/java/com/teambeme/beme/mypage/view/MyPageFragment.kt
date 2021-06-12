@@ -15,7 +15,7 @@ import com.teambeme.beme.databinding.FragmentMyPageBinding
 import com.teambeme.beme.main.viewmodel.EventViewModel
 import com.teambeme.beme.mypage.adapter.MyPageViewPagerAdapter
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
-import com.teambeme.beme.setting.view.SettingActivity
+import com.teambeme.beme.presentation.setting.view.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

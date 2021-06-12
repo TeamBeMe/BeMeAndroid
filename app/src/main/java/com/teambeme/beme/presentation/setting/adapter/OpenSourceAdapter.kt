@@ -1,4 +1,4 @@
-package com.teambeme.beme.setting.adapter
+package com.teambeme.beme.presentation.setting.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teambeme.beme.R
 import com.teambeme.beme.databinding.ItemOpensourceBinding
-import com.teambeme.beme.setting.model.OpenSourceData
+import com.teambeme.beme.presentation.setting.model.OpenSourceData
 
 class OpenSourceAdapter :
     ListAdapter<OpenSourceData, OpenSourceAdapter.OpenSourceViewHolder>(OpenSourceDiffCallback()) {

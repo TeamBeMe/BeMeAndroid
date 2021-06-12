@@ -1,10 +1,11 @@
 package com.teambeme.beme.data.remote.datasource
 
 import com.teambeme.beme.data.remote.api.HomeService
-import com.teambeme.beme.home.model.RequestModifyPublic
-import com.teambeme.beme.home.model.ResponseAnswer
-import com.teambeme.beme.home.model.ResponseAnswers
-import com.teambeme.beme.home.model.ResponseModifyData
+import com.teambeme.beme.presentation.home.model.RequestModifyPublic
+import com.teambeme.beme.presentation.home.model.ResponseAnswer
+import com.teambeme.beme.presentation.home.model.ResponseAnswers
+import com.teambeme.beme.presentation.home.model.ResponseModifyData
+import retrofit2.Call
 import javax.inject.Inject
 
 class HomeDataSourceImpl @Inject constructor(
@@ -22,4 +23,8 @@ class HomeDataSourceImpl @Inject constructor(
 
     override suspend fun deleteAnswer(answerId: Int): ResponseModifyData =
         homeService.deleteAnswer(answerId)
+
+    override suspend fun fetchAnswerPagingData(page: Int): Call<ResponseAnswers> {
+        return homeService.getAnswerPages(page)
+    }
 }

@@ -1,4 +1,4 @@
-package com.teambeme.beme.home.model
+package com.teambeme.beme.presentation.home.model
 
 import com.google.gson.annotations.SerializedName
 
