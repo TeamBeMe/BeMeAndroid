@@ -4,6 +4,7 @@ import com.teambeme.beme.presentation.home.model.RequestModifyPublic
 import com.teambeme.beme.presentation.home.model.ResponseAnswer
 import com.teambeme.beme.presentation.home.model.ResponseAnswers
 import com.teambeme.beme.presentation.home.model.ResponseModifyData
+import retrofit2.Call
 import retrofit2.http.*
 
 interface HomeService {
@@ -18,6 +19,12 @@ interface HomeService {
     suspend fun getAnswers(
         @Path("page") page: Int
     ): ResponseAnswers
+
+    @Headers("Content-Type:application/json")
+    @GET("home/all/{page}")
+    fun getAnswerPages(
+        @Path("page") page: Int
+    ): Call<ResponseAnswers>
 
     @Headers("Content-Type:application/json")
     @GET("home")

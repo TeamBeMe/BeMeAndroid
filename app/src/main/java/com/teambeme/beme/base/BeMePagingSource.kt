@@ -11,7 +11,7 @@ import androidx.paging.PagingState
 *
 * */
 class BeMePagingSource<V : Any>(
-    private val pagingDataFactory: (Int) -> List<V>
+    private val pagingDataFactory: suspend (Int) -> List<V>
 ) : PagingSource<Int, V>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, V> {
         val position = params.key ?: STARTING_PAGE_INDEX

@@ -5,12 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.teambeme.beme.domain.repository.HomeRepository
 import com.teambeme.beme.presentation.home.model.Answer
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -31,6 +34,11 @@ class HomeViewModel @Inject constructor(
     private val _returnToStartEvent = MutableLiveData<Boolean>()
     val returnToStartEvent: LiveData<Boolean>
         get() = _returnToStartEvent
+
+    fun loadAnswers(): Flow<PagingData<Answer>> {
+        return homeRepository.retrieveAnswerPages()
+            .cachedIn(viewModelScope)
+    }
 
     fun getMoreAnswers() {
         viewModelScope.launch {

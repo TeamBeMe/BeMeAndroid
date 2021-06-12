@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeMe"
         android:usesCleartextTraffic="true">
-        <activity android:name=".setting.view.OpenSourceActivity" />
+        <activity android:name="com.teambeme.beme.presentation.setting.view.OpenSourceActivity" />
         <activity android:name=".onboarding.view.OnBoardingActivity"
             android:exported="true" />
         <activity
@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".setting.view.SettingActivity" />
+        <activity android:name="com.teambeme.beme.presentation.setting.view.SettingActivity" />
         <activity
             android:name=".signup.view.SignUpActivity"
             android:exported="true"

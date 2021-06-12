@@ -38,6 +38,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/build/reports/ktlint/ktlintMainSourceSetCheck/ktlintMainSourceSetCheck.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/androidTest/java/com/teambeme/beme/ExampleInstrumentedTest.kt">
           <value>
             <set />
@@ -98,6 +103,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/data/remote/api/HomeService.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/data/remote/api/IdSearchService.kt">
           <value>
             <set />
@@ -124,6 +134,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/data/remote/datasource/FollowingDataSourceImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/data/remote/datasource/HomeDataSource.kt">
           <value>
             <set />
           </value>
@@ -314,6 +329,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/di/RetrofitModule.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/domain/repository/HomeRepository.kt">
           <value>
             <set />
           </value>
@@ -529,6 +549,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/presentation/home/model/ResponseAnswers.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/presentation/home/viewmodel/HomeViewModel.kt">
           <value>
             <set />
           </value>
