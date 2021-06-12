@@ -68,6 +68,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/base/BeMePagingSource.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/base/BindingActivity.kt">
           <value>
             <set />
@@ -519,6 +524,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/otherpage/viewmodel/OtherPageViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/teambeme/beme/presentation/home/model/ResponseAnswers.kt">
           <value>
             <set />
           </value>
@@ -1004,6 +1014,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../SpoonWeathercast/buildSrc/src/main/java/Versions.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="/fragment.java">
           <value>
             <set />
           </value>

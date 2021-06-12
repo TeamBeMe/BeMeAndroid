@@ -1,4 +1,4 @@
-package com.teambeme.beme.splash
+package com.teambeme.beme.presentation.splash
 
 import android.app.Activity
 import android.content.Intent

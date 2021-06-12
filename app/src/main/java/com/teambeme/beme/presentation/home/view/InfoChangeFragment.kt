@@ -1,4 +1,4 @@
-package com.teambeme.beme.home.view
+package com.teambeme.beme.presentation.home.view
 
 import android.os.Bundle
 import android.view.LayoutInflater

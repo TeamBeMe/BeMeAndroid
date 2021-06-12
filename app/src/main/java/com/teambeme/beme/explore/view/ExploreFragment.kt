@@ -14,7 +14,7 @@ import com.teambeme.beme.databinding.FragmentExploreBinding
 import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
 import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
-import com.teambeme.beme.home.view.HomeFragment
+import com.teambeme.beme.presentation.home.view.HomeFragment
 import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
 import com.teambeme.beme.main.viewmodel.EventViewModel
 import com.teambeme.beme.notification.view.NotificationActivity

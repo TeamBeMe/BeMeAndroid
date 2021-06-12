@@ -20,7 +20,7 @@
         <activity android:name=".onboarding.view.OnBoardingActivity"
             android:exported="true" />
         <activity
-            android:name=".splash.SplashActivity"
+            android:name="com.teambeme.beme.presentation.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>

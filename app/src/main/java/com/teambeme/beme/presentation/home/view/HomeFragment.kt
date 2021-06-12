@@ -1,4 +1,4 @@
-package com.teambeme.beme.home.view
+package com.teambeme.beme.presentation.home.view
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -17,9 +17,9 @@ import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.view.AnswerActivity
 import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.databinding.FragmentHomeBinding
-import com.teambeme.beme.home.adapter.QuestionPagerAdapter
-import com.teambeme.beme.home.model.Answer
-import com.teambeme.beme.home.viewmodel.HomeViewModel
+import com.teambeme.beme.presentation.home.adapter.QuestionPagerAdapter
+import com.teambeme.beme.presentation.home.model.Answer
+import com.teambeme.beme.presentation.home.viewmodel.HomeViewModel
 import com.teambeme.beme.main.viewmodel.EventViewModel
 import com.teambeme.beme.util.RecordScreenUtil
 import dagger.hilt.android.AndroidEntryPoint

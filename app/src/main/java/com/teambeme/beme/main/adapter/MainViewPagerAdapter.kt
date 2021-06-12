@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.teambeme.beme.explore.view.ExploreFragment
 import com.teambeme.beme.following.view.FollowingFragment
-import com.teambeme.beme.home.view.HomeFragment
+import com.teambeme.beme.presentation.home.view.HomeFragment
 import com.teambeme.beme.mypage.view.MyPageFragment
 
 class MainViewPagerAdapter(fragmentActivity: FragmentActivity) :

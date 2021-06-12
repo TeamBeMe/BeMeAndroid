@@ -1,9 +1,9 @@
 package com.teambeme.beme.data.remote.api
 
-import com.teambeme.beme.home.model.RequestModifyPublic
-import com.teambeme.beme.home.model.ResponseAnswer
-import com.teambeme.beme.home.model.ResponseAnswers
-import com.teambeme.beme.home.model.ResponseModifyData
+import com.teambeme.beme.presentation.home.model.RequestModifyPublic
+import com.teambeme.beme.presentation.home.model.ResponseAnswer
+import com.teambeme.beme.presentation.home.model.ResponseAnswers
+import com.teambeme.beme.presentation.home.model.ResponseModifyData
 import retrofit2.http.*
 
 interface HomeService {

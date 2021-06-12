@@ -2,10 +2,10 @@ package com.teambeme.beme.data.repository
 
 import com.teambeme.beme.data.remote.datasource.HomeDataSource
 import com.teambeme.beme.domain.repository.HomeRepository
-import com.teambeme.beme.home.model.RequestModifyPublic
-import com.teambeme.beme.home.model.ResponseAnswer
-import com.teambeme.beme.home.model.ResponseAnswers
-import com.teambeme.beme.home.model.ResponseModifyData
+import com.teambeme.beme.presentation.home.model.RequestModifyPublic
+import com.teambeme.beme.presentation.home.model.ResponseAnswer
+import com.teambeme.beme.presentation.home.model.ResponseAnswers
+import com.teambeme.beme.presentation.home.model.ResponseModifyData
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(

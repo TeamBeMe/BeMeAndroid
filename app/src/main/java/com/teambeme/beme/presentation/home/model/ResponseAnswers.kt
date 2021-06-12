@@ -1,12 +1,14 @@
-package com.teambeme.beme.home.model
+package com.teambeme.beme.presentation.home.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseModifyData(
+data class ResponseAnswers(
     @SerializedName("message")
     val message: String,
     @SerializedName("status")
     val status: Int,
     @SerializedName("success")
-    val success: Boolean
+    val success: Boolean,
+    @SerializedName("data")
+    val answers: List<Answer>
 )
