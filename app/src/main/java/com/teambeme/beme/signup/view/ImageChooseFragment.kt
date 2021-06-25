@@ -12,9 +12,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -23,23 +23,22 @@ import com.google.firebase.ktx.Firebase
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.teambeme.beme.R
+import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.databinding.FragmentImageChooseBinding
 import com.teambeme.beme.signup.viewmodel.SignUpViewModel
 import com.teambeme.beme.util.recordClickEvent
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import java.io.ByteArrayOutputStream
+import java.io.File
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.ByteArrayOutputStream
-import java.io.File
 
 @AndroidEntryPoint
-class ImageChooseFragment : Fragment() {
-    private lateinit var binding: FragmentImageChooseBinding
+class ImageChooseFragment :
+    BindingFragment<FragmentImageChooseBinding>(R.layout.fragment_image_choose) {
     private val signUpViewModel: SignUpViewModel by activityViewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -54,28 +53,49 @@ class ImageChooseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_image_choose, container, false)
+        super.onCreateView(inflater, container, savedInstanceState)
         binding.viewModel = signUpViewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        setUiClickListener()
+        subscribeData()
+        return binding.root
+    }
 
+    private fun subscribeData() {
+        signUpViewModel.profileImageUri.observe(viewLifecycleOwner) {
+            binding.imgChooseImagepick.visibility = View.GONE
+            binding.imgChooseImage.apply {
+                isVisible = true
+                setImageURI(it)
+            }
+        }
+        signUpViewModel.signUpUserInfo.observe(viewLifecycleOwner) { userInfo ->
+            if (userInfo != null) {
+                when (userInfo.success) {
+                    true -> {
+                        Toast.makeText(requireContext(), "회원가입 성공", Toast.LENGTH_SHORT).show()
+                        requireActivity().finish()
+                    }
+                    else -> {
+                        Log.d("SignUp", userInfo.message)
+                    }
+                }
+            } else {
+                Toast.makeText(requireContext(), "회원가입이 실패했습니다", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun setUiClickListener() {
         binding.btnBack.setOnClickListener { view ->
             recordClickEvent("BACK_PRESS", "OUT_PROFILE_SIGN")
             view.findNavController().popBackStack()
         }
 
         binding.btnImageChooseDone.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
+            lifecycleScope.launch {
                 signUpViewModel.signUp().join()
                 Toast.makeText(requireContext(), "회원가입 성공", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        signUpViewModel.profileImageUri.observe(viewLifecycleOwner) {
-            binding.imgChooseImagepick.visibility = View.GONE
-            binding.imgChooseImage.apply {
-                visibility = View.VISIBLE
-                setImageURI(it)
             }
         }
 
@@ -93,25 +113,10 @@ class ImageChooseFragment : Fragment() {
                 .setDeniedMessage("[설정] > [권한]에서 권한을 허용할 수 있습니다")
                 .setGotoSettingButton(true)
                 .setPermissions(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    Manifest.permission.READ_EXTERNAL_STORAGE
                 )
                 .check()
         }
-
-        signUpViewModel.signUpUserInfo.observe(viewLifecycleOwner) { userInfo ->
-            if (userInfo != null) {
-                if (userInfo.success) {
-                    Toast.makeText(requireContext(), "회원가입 성공", Toast.LENGTH_SHORT).show()
-                    requireActivity().finish()
-                } else {
-                    Log.d("SignUp", userInfo.message)
-                }
-            } else {
-                Toast.makeText(requireContext(), "회원가입이 실패했습니다", Toast.LENGTH_SHORT).show()
-            }
-        }
-        return binding.root
     }
 
     private fun pickImage() {

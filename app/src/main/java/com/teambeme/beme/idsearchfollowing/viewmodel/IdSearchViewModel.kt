@@ -1,17 +1,17 @@
 package com.teambeme.beme.idsearchfollowing.viewmodel
 
 import androidx.lifecycle.*
-import com.teambeme.beme.data.repository.IdSearchRepository
+import com.teambeme.beme.domain.repository.IdSearchRepository
 import com.teambeme.beme.idsearchfollowing.model.ResponseIdSearchData
 import com.teambeme.beme.idsearchfollowing.model.ResponseRecentSearchRecord
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class IdSearchViewModel @Inject constructor(

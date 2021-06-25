@@ -1,192 +1,192 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:following="http://schemas.android.com/tools">
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<layout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:following="http://schemas.android.com/tools">-->
 
-    <data>
+<!--    <data>-->
 
-        <import type="android.view.View" />
+<!--        <import type="android.view.View" />-->
 
-        <variable
-            name="otherQuestions"
-            type="com.teambeme.beme.explore.model.ResponseExplorationQuestions.Data.Answer" />
+<!--        <variable-->
+<!--            name="otherQuestions"-->
+<!--            type="com.teambeme.beme.explore.model.ResponseExplorationQuestions.Data.Answer" />-->
 
-        <variable
-            name="myNickName"
-            type="String" />
+<!--        <variable-->
+<!--            name="myNickName"-->
+<!--            type="String" />-->
 
-        <variable
-            name="userNickName"
-            type="String" />
+<!--        <variable-->
+<!--            name="userNickName"-->
+<!--            type="String" />-->
 
-        <variable
-            name="followingViewModel"
-            type="com.teambeme.beme.following.viewmodel.FollowingViewModel" />
-    </data>
+<!--        <variable-->
+<!--            name="followingViewModel"-->
+<!--            type="com.teambeme.beme.following.viewmodel.FollowingViewModel" />-->
+<!--    </data>-->
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_layout_other_questions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/explore_other_questions_shape"
-        android:paddingStart="18dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="18dp">
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/constraint_layout_other_questions"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="12dp"-->
+<!--        android:background="@drawable/explore_other_questions_shape"-->
+<!--        android:paddingStart="18dp"-->
+<!--        android:paddingTop="20dp"-->
+<!--        android:paddingBottom="18dp">-->
 
-        <TextView
-            android:id="@+id/txt_other_questions_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="30dp"
-            android:text="@{otherQuestions.question}"
-            android:textColor="@color/item_other_questions_txt_title_black"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@id/btn_other_questions_show_other_answers"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+<!--        <TextView-->
+<!--            android:id="@+id/txt_other_questions_title"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="0dp"-->
+<!--            android:layout_marginEnd="30dp"-->
+<!--            android:text="@{otherQuestions.question}"-->
+<!--            android:textColor="@color/item_other_questions_txt_title_black"-->
+<!--            android:textSize="16sp"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/btn_other_questions_show_other_answers"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-        <TextView
-            android:id="@+id/txt_other_questions_category"
-            setCategory="@{otherQuestions.category}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/item_other_questions_txt_category_gray"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@id/txt_other_questions_title"
-            app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_title" />
+<!--        <TextView-->
+<!--            android:id="@+id/txt_other_questions_category"-->
+<!--            setCategory="@{otherQuestions.category}"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:textColor="@color/item_other_questions_txt_category_gray"-->
+<!--            android:textSize="12sp"-->
+<!--            app:layout_constraintStart_toStartOf="@id/txt_other_questions_title"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_title" />-->
 
-        <TextView
-            android:id="@+id/txt_other_questions_dot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:text="·"
-            android:textColor="@color/item_other_questions_txt_dot_black"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@id/txt_other_questions_category"
-            app:layout_constraintEnd_toStartOf="@id/txt_other_questions_time"
-            app:layout_constraintStart_toEndOf="@id/txt_other_questions_category"
-            app:layout_constraintTop_toTopOf="@id/txt_other_questions_category" />
+<!--        <TextView-->
+<!--            android:id="@+id/txt_other_questions_dot"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            android:text="·"-->
+<!--            android:textColor="@color/item_other_questions_txt_dot_black"-->
+<!--            android:textSize="10sp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/txt_other_questions_category"-->
+<!--            app:layout_constraintEnd_toStartOf="@id/txt_other_questions_time"-->
+<!--            app:layout_constraintStart_toEndOf="@id/txt_other_questions_category"-->
+<!--            app:layout_constraintTop_toTopOf="@id/txt_other_questions_category" />-->
 
-        <TextView
-            android:id="@+id/txt_other_questions_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:text="@{otherQuestions.answerDate}"
-            android:textColor="@color/item_other_questions_txt_time_gray"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@id/txt_other_questions_category"
-            app:layout_constraintStart_toEndOf="@id/txt_other_questions_dot"
-            app:layout_constraintTop_toTopOf="@id/txt_other_questions_category" />
+<!--        <TextView-->
+<!--            android:id="@+id/txt_other_questions_time"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:layout_marginEnd="5dp"-->
+<!--            android:text="@{otherQuestions.answerDate}"-->
+<!--            android:textColor="@color/item_other_questions_txt_time_gray"-->
+<!--            android:textSize="10sp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/txt_other_questions_category"-->
+<!--            app:layout_constraintStart_toEndOf="@id/txt_other_questions_dot"-->
+<!--            app:layout_constraintTop_toTopOf="@id/txt_other_questions_category" />-->
 
-        <TextView
-            android:id="@+id/txt_other_questions_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingEnd="36dp"
-            android:text="@{otherQuestions.content}"
-            android:textColor="@color/item_other_questions_txt_content_black"
-            android:textSize="14sp"
-            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.GONE}"
-            app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"
-            app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_category" />
+<!--        <TextView-->
+<!--            android:id="@+id/txt_other_questions_content"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:paddingEnd="36dp"-->
+<!--            android:text="@{otherQuestions.content}"-->
+<!--            android:textColor="@color/item_other_questions_txt_content_black"-->
+<!--            android:textSize="14sp"-->
+<!--            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.GONE}"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_category" />-->
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_other_questions_profile"
-            setSrcFromUrl="@{otherQuestions.userProfile}"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:layout_marginTop="9dp"
-            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
-            app:civ_border_color="@color/answers_circle"
-            app:civ_border_width="1dp"
-            app:layout_constraintDimensionRatio="1"
-            app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"
-            app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_content" />
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/img_other_questions_profile"-->
+<!--            setSrcFromUrl="@{otherQuestions.userProfile}"-->
+<!--            android:layout_width="34dp"-->
+<!--            android:layout_height="34dp"-->
+<!--            android:layout_marginTop="9dp"-->
+<!--            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"-->
+<!--            app:civ_border_color="@color/answers_circle"-->
+<!--            app:civ_border_width="1dp"-->
+<!--            app:layout_constraintDimensionRatio="1"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_content" />-->
 
-        <TextView
-            android:id="@+id/txt_other_questions_user_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="@{otherQuestions.userNickname}"
-            android:textColor="@color/item_other_questions_txt_userid_black"
-            android:textSize="14sp"
-            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@id/img_other_questions_profile"
-            app:layout_constraintStart_toEndOf="@+id/img_other_questions_profile"
-            app:layout_constraintTop_toTopOf="@+id/img_other_questions_profile" />
+<!--        <TextView-->
+<!--            android:id="@+id/txt_other_questions_user_id"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="12dp"-->
+<!--            android:text="@{otherQuestions.userNickname}"-->
+<!--            android:textColor="@color/item_other_questions_txt_userid_black"-->
+<!--            android:textSize="14sp"-->
+<!--            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/img_other_questions_profile"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/img_other_questions_profile"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/img_other_questions_profile" />-->
 
-        <ImageButton
-            android:id="@+id/btn_other_questions_show_other_answers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
-            android:background="@android:color/transparent"
-            android:paddingStart="18dp"
-            android:paddingTop="18dp"
-            android:paddingEnd="18dp"
-            android:paddingBottom="4dp"
-            android:src="@drawable/ic_showdetail_black"
-            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="@id/txt_other_questions_title"
-            app:layout_constraintEnd_toEndOf="parent" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/btn_other_questions_show_other_answers"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginEnd="6dp"-->
+<!--            android:background="@android:color/transparent"-->
+<!--            android:paddingStart="18dp"-->
+<!--            android:paddingTop="18dp"-->
+<!--            android:paddingEnd="18dp"-->
+<!--            android:paddingBottom="4dp"-->
+<!--            android:src="@drawable/ic_showdetail_black"-->
+<!--            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.GONE}"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/txt_other_questions_title"-->
+<!--            app:layout_constraintEnd_toEndOf="parent" />-->
 
-        <ImageButton
-            android:id="@+id/btn_other_questions_bookmark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:paddingStart="18dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="18dp"
-            android:paddingBottom="10dp"
-            android:src="@{otherQuestions.isScrapped == true ? @drawable/ic_bookmark_checked : @drawable/ic_bookmark}"
-            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@+id/img_other_questions_profile"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/img_other_questions_profile" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/btn_other_questions_bookmark"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@android:color/transparent"-->
+<!--            android:paddingStart="18dp"-->
+<!--            android:paddingTop="10dp"-->
+<!--            android:paddingEnd="18dp"-->
+<!--            android:paddingBottom="10dp"-->
+<!--            android:src="@{otherQuestions.isScrapped == true ? @drawable/ic_bookmark_checked : @drawable/ic_bookmark}"-->
+<!--            android:visibility="@{otherQuestions.isAnswered == true ? View.VISIBLE : View.INVISIBLE}"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/img_other_questions_profile"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/img_other_questions_profile" />-->
 
-        <TextView
-            android:id="@+id/txt_other_questions_un_answered"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/item_other_questions_txt_content_black"
-            android:textSize="14sp"
-            android:visibility="@{otherQuestions.isAnswered == true ? View.INVISIBLE : View.VISIBLE}"
-            app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"
-            app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_category"
-            following:myNickName="@{myNickName}"
-            following:userNickName="@{userNickName}"/>
+<!--        <TextView-->
+<!--            android:id="@+id/txt_other_questions_un_answered"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:textColor="@color/item_other_questions_txt_content_black"-->
+<!--            android:textSize="14sp"-->
+<!--            android:visibility="@{otherQuestions.isAnswered == true ? View.INVISIBLE : View.VISIBLE}"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/txt_other_questions_title"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/txt_other_questions_category"-->
+<!--            following:myNickName="@{myNickName}"-->
+<!--            following:userNickName="@{userNickName}"/>-->
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_other_questions_do_answer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:backgroundTint="@color/item_following_unanswered_questions_btn_background_black"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:paddingStart="28dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="28dp"
-            android:paddingBottom="8dp"
-            android:text="답변하고 확인하기"
-            android:textColor="@color/item_following_unanswered_questions_btn_txt_white"
-            android:textSize="16sp"
-            android:visibility="@{otherQuestions.isAnswered == true ? View.GONE : View.VISIBLE}"
-            app:cornerRadius="6dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_other_questions_un_answered" />
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btn_other_questions_do_answer"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="26dp"-->
+<!--            android:backgroundTint="@color/item_following_unanswered_questions_btn_background_black"-->
+<!--            android:minWidth="0dp"-->
+<!--            android:minHeight="0dp"-->
+<!--            android:paddingStart="28dp"-->
+<!--            android:paddingTop="8dp"-->
+<!--            android:paddingEnd="28dp"-->
+<!--            android:paddingBottom="8dp"-->
+<!--            android:text="답변하고 확인하기"-->
+<!--            android:textColor="@color/item_following_unanswered_questions_btn_txt_white"-->
+<!--            android:textSize="16sp"-->
+<!--            android:visibility="@{otherQuestions.isAnswered == true ? View.GONE : View.VISIBLE}"-->
+<!--            app:cornerRadius="6dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/txt_other_questions_un_answered" />-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--</layout>-->

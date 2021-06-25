@@ -5,14 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teambeme.beme.answer.model.IntentAnswerData
-import com.teambeme.beme.data.repository.DetailRepository
+import com.teambeme.beme.domain.repository.DetailRepository
 import com.teambeme.beme.detail.model.*
 import com.teambeme.beme.otherpage.model.ResponseScrap
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
@@ -151,24 +151,24 @@ class DetailViewModel @Inject constructor(
             answerId
         )
             .enqueue(object :
-                Callback<ResponseDetail> {
-                override fun onResponse(
-                    call: Call<ResponseDetail>,
-                    response: Response<ResponseDetail>
-                ) {
-                    if (response.isSuccessful) {
-                        copyReplyData = response.body()!!.data?.comment.toMutableList()
-                        _detailData.value = response.body()!!.data
-                        _canReply.value = response.body()!!.data.commentBlockedFlag
-                        _isScrapped.value = response.body()!!.data.isScrapped
-                        _replyParentData.value = copyReplyData
+                    Callback<ResponseDetail> {
+                    override fun onResponse(
+                        call: Call<ResponseDetail>,
+                        response: Response<ResponseDetail>
+                    ) {
+                        if (response.isSuccessful) {
+                            copyReplyData = response.body()!!.data?.comment.toMutableList()
+                            _detailData.value = response.body()!!.data
+                            _canReply.value = response.body()!!.data.commentBlockedFlag
+                            _isScrapped.value = response.body()!!.data.isScrapped
+                            _replyParentData.value = copyReplyData
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<ResponseDetail>, t: Throwable) {
-                    Log.d("Network Fail", t.message.toString())
-                }
-            })
+                    override fun onFailure(call: Call<ResponseDetail>, t: Throwable) {
+                        Log.d("Network Fail", t.message.toString())
+                    }
+                })
     }
 
     private val _isChangeClicked = MutableLiveData<Boolean>()
@@ -192,36 +192,36 @@ class DetailViewModel @Inject constructor(
             copyReplyData[position.value!!].id, answerText.value!!
         )
             .enqueue(object :
-                Callback<ResponsePutReply> {
-                override fun onResponse(
-                    call: Call<ResponsePutReply>,
-                    response: Response<ResponsePutReply>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseData = ResponseDetail.Data.Comment(
-                            response.body()!!.data.answerId,
-                            copyReplyData[position.value!!].children,
-                            response.body()!!.data.content,
-                            response.body()!!.data.createdAt,
-                            response.body()!!.data.id,
-                            response.body()!!.data.isAuthor,
-                            response.body()!!.data.isVisible,
-                            response.body()!!.data.publicFlag,
-                            response.body()!!.data.updatedAt,
-                            response.body()!!.data.userId,
-                            response.body()!!.data.profileImg,
-                            response.body()!!.data.userNickname
-                        )
-                        copyReplyData[position.value!!] = responseData
-                        _replyParentData.value = copyReplyData.toMutableList()
-                        answerText.value = ""
+                    Callback<ResponsePutReply> {
+                    override fun onResponse(
+                        call: Call<ResponsePutReply>,
+                        response: Response<ResponsePutReply>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseData = ResponseDetail.Data.Comment(
+                                response.body()!!.data.answerId,
+                                copyReplyData[position.value!!].children,
+                                response.body()!!.data.content,
+                                response.body()!!.data.createdAt,
+                                response.body()!!.data.id,
+                                response.body()!!.data.isAuthor,
+                                response.body()!!.data.isVisible,
+                                response.body()!!.data.publicFlag,
+                                response.body()!!.data.updatedAt,
+                                response.body()!!.data.userId,
+                                response.body()!!.data.profileImg,
+                                response.body()!!.data.userNickname
+                            )
+                            copyReplyData[position.value!!] = responseData
+                            _replyParentData.value = copyReplyData.toMutableList()
+                            answerText.value = ""
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<ResponsePutReply>, t: Throwable) {
-                    Log.d("Network Fail", t.message.toString())
-                }
-            })
+                    override fun onFailure(call: Call<ResponsePutReply>, t: Throwable) {
+                        Log.d("Network Fail", t.message.toString())
+                    }
+                })
     }
 
     fun changeChildReply() {
@@ -229,32 +229,32 @@ class DetailViewModel @Inject constructor(
             copyReplyData[position.value!!].children[childposition.value!!].id, answerText.value!!
         )
             .enqueue(object :
-                Callback<ResponsePutReply> {
-                override fun onResponse(
-                    call: Call<ResponsePutReply>,
-                    response: Response<ResponsePutReply>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseData = ResponseDetail.Data.Comment.Children(
-                            response.body()!!.data.answerId, response.body()!!.data.content,
-                            response.body()!!.data.createdAt, response.body()!!.data.id,
-                            response.body()!!.data.isAuthor, response.body()!!.data.isVisible,
-                            response.body()!!.data.parentId, response.body()!!.data.publicFlag,
-                            response.body()!!.data.updatedAt, response.body()!!.data.userId,
-                            response.body()!!.data.profileImg, response.body()!!.data.userNickname
-                        )
-                        copyChildData = copyReplyData[position.value!!].children.toMutableList()
-                        copyChildData[childposition.value!!] = responseData
-                        copyReplyData[position.value!!].children = copyChildData
-                        _replyParentData.value = copyReplyData.toMutableList()
-                        answerText.value = ""
+                    Callback<ResponsePutReply> {
+                    override fun onResponse(
+                        call: Call<ResponsePutReply>,
+                        response: Response<ResponsePutReply>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseData = ResponseDetail.Data.Comment.Children(
+                                response.body()!!.data.answerId, response.body()!!.data.content,
+                                response.body()!!.data.createdAt, response.body()!!.data.id,
+                                response.body()!!.data.isAuthor, response.body()!!.data.isVisible,
+                                response.body()!!.data.parentId, response.body()!!.data.publicFlag,
+                                response.body()!!.data.updatedAt, response.body()!!.data.userId,
+                                response.body()!!.data.profileImg, response.body()!!.data.userNickname
+                            )
+                            copyChildData = copyReplyData[position.value!!].children.toMutableList()
+                            copyChildData[childposition.value!!] = responseData
+                            copyReplyData[position.value!!].children = copyChildData
+                            _replyParentData.value = copyReplyData.toMutableList()
+                            answerText.value = ""
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<ResponsePutReply>, t: Throwable) {
-                    Log.d("Network Fail", t.message.toString())
-                }
-            })
+                    override fun onFailure(call: Call<ResponsePutReply>, t: Throwable) {
+                        Log.d("Network Fail", t.message.toString())
+                    }
+                })
     }
 
     fun changeParentReplyComment() {
@@ -342,21 +342,21 @@ class DetailViewModel @Inject constructor(
             commentId
         )
             .enqueue(object :
-                Callback<ResponseDeleteReply> {
-                override fun onResponse(
-                    call: Call<ResponseDeleteReply>,
-                    response: Response<ResponseDeleteReply>
-                ) {
-                    if (response.isSuccessful) {
-                        _isDeleteReply.value = true
+                    Callback<ResponseDeleteReply> {
+                    override fun onResponse(
+                        call: Call<ResponseDeleteReply>,
+                        response: Response<ResponseDeleteReply>
+                    ) {
+                        if (response.isSuccessful) {
+                            _isDeleteReply.value = true
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<ResponseDeleteReply>, t: Throwable) {
-                    _isDeleteReply.value = false
-                    Log.d("Network Fail", t.message.toString())
-                }
-            })
+                    override fun onFailure(call: Call<ResponseDeleteReply>, t: Throwable) {
+                        _isDeleteReply.value = false
+                        Log.d("Network Fail", t.message.toString())
+                    }
+                })
     }
 
     private val _isDeleteAnswer = MutableLiveData<Boolean>()
@@ -372,20 +372,20 @@ class DetailViewModel @Inject constructor(
             detailData.value!!.id
         )
             .enqueue(object :
-                Callback<ResponseDeleteAnswer> {
-                override fun onResponse(
-                    call: Call<ResponseDeleteAnswer>,
-                    response: Response<ResponseDeleteAnswer>
-                ) {
-                    if (response.isSuccessful) {
-                        _isDeleteAnswer.value = true
+                    Callback<ResponseDeleteAnswer> {
+                    override fun onResponse(
+                        call: Call<ResponseDeleteAnswer>,
+                        response: Response<ResponseDeleteAnswer>
+                    ) {
+                        if (response.isSuccessful) {
+                            _isDeleteAnswer.value = true
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<ResponseDeleteAnswer>, t: Throwable) {
-                    Log.d("Network Fail", t.message.toString())
-                }
-            })
+                    override fun onFailure(call: Call<ResponseDeleteAnswer>, t: Throwable) {
+                        Log.d("Network Fail", t.message.toString())
+                    }
+                })
     }
 
     fun deleteChildReply(position: Int, childposition: Int) {
@@ -415,37 +415,37 @@ class DetailViewModel @Inject constructor(
             detailData.value!!.id, answerText.value!!, !isPublic.value!!, null
         )
             .enqueue(object :
-                Callback<ResponsePostReply> {
-                override fun onResponse(
-                    call: Call<ResponsePostReply>,
-                    response: Response<ResponsePostReply>
-                ) {
-                    if (response.isSuccessful) {
-                        reply = ResponseDetail.Data.Comment(
-                            response.body()!!.data.answerId,
-                            listOf(),
-                            response.body()!!.data.content,
-                            response.body()!!.data.createdAt,
-                            response.body()!!.data.id,
-                            response.body()!!.data.isAuthor,
-                            response.body()!!.data.isVisible,
-                            response.body()!!.data.publicFlag,
-                            response.body()!!.data.updatedAt,
-                            response.body()!!.data.userId,
-                            response.body()!!.data.profileImg,
-                            response.body()!!.data.userNickname
-                        )
-                        copyReplyData.add(reply)
-                        _replyParentData.value = copyReplyData.toMutableList()
-                        answerText.value = ""
+                    Callback<ResponsePostReply> {
+                    override fun onResponse(
+                        call: Call<ResponsePostReply>,
+                        response: Response<ResponsePostReply>
+                    ) {
+                        if (response.isSuccessful) {
+                            reply = ResponseDetail.Data.Comment(
+                                response.body()!!.data.answerId,
+                                listOf(),
+                                response.body()!!.data.content,
+                                response.body()!!.data.createdAt,
+                                response.body()!!.data.id,
+                                response.body()!!.data.isAuthor,
+                                response.body()!!.data.isVisible,
+                                response.body()!!.data.publicFlag,
+                                response.body()!!.data.updatedAt,
+                                response.body()!!.data.userId,
+                                response.body()!!.data.profileImg,
+                                response.body()!!.data.userNickname
+                            )
+                            copyReplyData.add(reply)
+                            _replyParentData.value = copyReplyData.toMutableList()
+                            answerText.value = ""
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<ResponsePostReply>, t: Throwable) {
+                    override fun onFailure(call: Call<ResponsePostReply>, t: Throwable) {
 
-                    Log.d("Network Fail", t.message.toString())
-                }
-            })
+                        Log.d("Network Fail", t.message.toString())
+                    }
+                })
     }
 
     fun getReplyFlag(): Boolean {
@@ -469,33 +469,33 @@ class DetailViewModel @Inject constructor(
             copyReplyData[replyPosition.value!!].id
         )
             .enqueue(object :
-                Callback<ResponsePostReply> {
-                override fun onResponse(
-                    call: Call<ResponsePostReply>,
-                    response: Response<ResponsePostReply>
-                ) {
-                    if (response.isSuccessful) {
-                        childrenReply = ResponseDetail.Data.Comment.Children(
-                            response.body()!!.data.answerId, response.body()!!.data.content,
-                            response.body()!!.data.createdAt, response.body()!!.data.id,
-                            response.body()!!.data.isAuthor, response.body()!!.data.isVisible,
-                            response.body()!!.data.parentId, response.body()!!.data.publicFlag,
-                            response.body()!!.data.updatedAt, response.body()!!.data.userId,
-                            response.body()!!.data.profileImg, response.body()!!.data.userNickname
-                        )
-                        copyChildData =
-                            copyReplyData[replyPosition.value!!].children.toMutableList()
-                        copyChildData.add(childrenReply)
-                        copyReplyData[replyPosition.value!!].children = copyChildData
-                        _replyParentData.value = copyReplyData.toMutableList()
-                        answerText.value = ""
+                    Callback<ResponsePostReply> {
+                    override fun onResponse(
+                        call: Call<ResponsePostReply>,
+                        response: Response<ResponsePostReply>
+                    ) {
+                        if (response.isSuccessful) {
+                            childrenReply = ResponseDetail.Data.Comment.Children(
+                                response.body()!!.data.answerId, response.body()!!.data.content,
+                                response.body()!!.data.createdAt, response.body()!!.data.id,
+                                response.body()!!.data.isAuthor, response.body()!!.data.isVisible,
+                                response.body()!!.data.parentId, response.body()!!.data.publicFlag,
+                                response.body()!!.data.updatedAt, response.body()!!.data.userId,
+                                response.body()!!.data.profileImg, response.body()!!.data.userNickname
+                            )
+                            copyChildData =
+                                copyReplyData[replyPosition.value!!].children.toMutableList()
+                            copyChildData.add(childrenReply)
+                            copyReplyData[replyPosition.value!!].children = copyChildData
+                            _replyParentData.value = copyReplyData.toMutableList()
+                            answerText.value = ""
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<ResponsePostReply>, t: Throwable) {
-                    Log.d("Network Fail", t.message.toString())
-                }
-            })
+                    override fun onFailure(call: Call<ResponsePostReply>, t: Throwable) {
+                        Log.d("Network Fail", t.message.toString())
+                    }
+                })
     }
 
     companion object {

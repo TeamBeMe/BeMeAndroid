@@ -57,7 +57,7 @@ class OnBoardingActivity :
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
             }
-            errorMessage.observe(this@OnBoardingActivity) { it.toast() }
+            /* errorMessage.observe(this@OnBoardingActivity) { it.toast() } */
         }
     }
 

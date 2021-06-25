@@ -2,8 +2,8 @@ package com.teambeme.beme.data.remote.datasource
 
 import com.teambeme.beme.data.remote.api.OtherService
 import com.teambeme.beme.otherpage.model.*
-import retrofit2.Call
 import javax.inject.Inject
+import retrofit2.Call
 
 class OtherPageDataSourceImpl @Inject constructor(
     private val service: OtherService

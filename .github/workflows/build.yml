@@ -5,6 +5,8 @@ on:
     branches:
       - develop
       - 'release/**'
+  pull_request:
+      branches: [ develop, 'release/**' ]
 
 defaults:
   run:
@@ -15,11 +17,11 @@ jobs:
   build:
     name: Generate APK
     runs-on: ubuntu-latest
-    
+
     steps:
         - name: Checkout
           uses: actions/checkout@v2
-          
+
         - name: Gradle cache
           uses: actions/cache@v2
           with:
@@ -37,6 +39,9 @@ jobs:
         - name: Change gradlew permissions
           run: chmod +x ./gradlew
 
+        - name: Check Lint
+          run: ./gradlew ktlintCheck
+
         - name: Build with Gradle
           run: ./gradlew assembleDebug
 
@@ -46,3 +51,13 @@ jobs:
           with:
             name: apk
             path: app/build/outputs/apk/debug/
+
+        - name: Build App Bundle with Gradle
+          run: ./gradlew bundleRelease
+
+        - name: Upload Bundle
+          if: ${{ success() }}
+          uses: actions/upload-artifact@v2
+          with:
+            name: aab
+            path: app/build/outputs/bundle/release/

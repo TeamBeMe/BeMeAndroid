@@ -62,7 +62,8 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             }
             txtlayoutLoginPassword.setEndIconOnClickListener { loginViewModel?.setShowPassword() }
         }
-        keyboardVisibilityUtils = KeyboardVisibilityUtils(window,
+        keyboardVisibilityUtils = KeyboardVisibilityUtils(
+            window,
             onShowKeyboard = { keyboardHeight, visibleDisplayFrameHeight ->
                 this.keyboardHeight = keyboardHeight
                 this.visibleDisplayFrameHeight = visibleDisplayFrameHeight

@@ -1,11 +1,12 @@
 package com.teambeme.beme.data.repository
 
 import com.teambeme.beme.data.remote.datasource.OtherPageDataSource
+import com.teambeme.beme.domain.repository.OtherPageRepository
 import com.teambeme.beme.otherpage.model.ResponseFollow
 import com.teambeme.beme.otherpage.model.ResponseOtherInfo
 import com.teambeme.beme.otherpage.model.ResponseScrap
-import retrofit2.Call
 import javax.inject.Inject
+import retrofit2.Call
 
 class OtherPageRepositoryImpl @Inject constructor(
     private val otherDataSource: OtherPageDataSource

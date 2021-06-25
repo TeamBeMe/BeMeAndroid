@@ -1,11 +1,12 @@
 package com.teambeme.beme.data.repository
 
 import com.teambeme.beme.data.remote.datasource.FollowingDataSource
+import com.teambeme.beme.domain.repository.FollowingRepository
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
 import com.teambeme.beme.following.model.*
-import retrofit2.Call
 import javax.inject.Inject
+import retrofit2.Call
 
 class FollowingRepositoryImpl @Inject constructor(
     private val followingDataSource: FollowingDataSource

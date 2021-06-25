@@ -8,11 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.teambeme.beme.answer.model.IntentAnswerData
 import com.teambeme.beme.answer.model.RequestAnswerData
 import com.teambeme.beme.data.local.entity.AnswerData
-import com.teambeme.beme.data.repository.AnswerRepository
+import com.teambeme.beme.domain.repository.AnswerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
-import javax.inject.Inject
 
 @HiltViewModel
 class AnswerViewModel @Inject constructor(

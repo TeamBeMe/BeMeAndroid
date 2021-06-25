@@ -1,6 +1,7 @@
 package com.teambeme.beme.data.repository
 
 import com.teambeme.beme.data.remote.datasource.IdSearchDataSource
+import com.teambeme.beme.domain.repository.IdSearchRepository
 import com.teambeme.beme.idsearchfollowing.model.RequestFollowAndFollowing
 import javax.inject.Inject
 

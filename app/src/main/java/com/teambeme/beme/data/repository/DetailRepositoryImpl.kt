@@ -2,9 +2,10 @@ package com.teambeme.beme.data.repository
 
 import com.teambeme.beme.data.remote.datasource.DetailDataSource
 import com.teambeme.beme.detail.model.*
+import com.teambeme.beme.domain.repository.DetailRepository
 import com.teambeme.beme.otherpage.model.ResponseScrap
-import retrofit2.Call
 import javax.inject.Inject
+import retrofit2.Call
 
 class DetailRepositoryImpl @Inject constructor(
     private val detailDataSource: DetailDataSource

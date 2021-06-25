@@ -25,13 +25,13 @@ import com.teambeme.beme.databinding.ItemBottomProfileBinding
 import com.teambeme.beme.mypage.viewmodel.MyPageViewModel
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.ByteArrayOutputStream
+import java.io.File
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-import java.io.ByteArrayOutputStream
-import java.io.File
 
 @AndroidEntryPoint
 class BottomProfileFragment : BottomSheetDialogFragment() {
@@ -67,10 +67,7 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
 
     private fun addPermission() {
         val permissionListener = object : PermissionListener {
-            override fun onPermissionGranted() {
-                ImagePicker()
-            }
-
+            override fun onPermissionGranted() { imagePicker() }
             override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {}
         }
         TedPermission.with(requireContext())
@@ -79,13 +76,12 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
             .setDeniedMessage("[설정] > [권한]에서 권한을 허용할 수 있습니다")
             .setGotoSettingButton(true)
             .setPermissions(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.READ_EXTERNAL_STORAGE
             )
             .check()
     }
 
-    private fun ImagePicker() {
+    private fun imagePicker() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
@@ -125,17 +121,17 @@ class BottomProfileFragment : BottomSheetDialogFragment() {
                 mypageViewModel.setProfileUri(resultUri)
                 dismiss()
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                val error = result.getError()
+                val error = result.error
                 Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun getImageUri(context: Context, inImage: Bitmap): Uri? {
-        var bytes = ByteArrayOutputStream()
+        val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.PNG, 1, bytes)
         val titlename = Math.random()
-        var path =
+        val path =
             MediaStore.Images.Media.insertImage(context.contentResolver, inImage, "asdsad", null)
         return Uri.parse(path)
     }

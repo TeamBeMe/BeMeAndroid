@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -15,14 +13,14 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import com.teambeme.beme.R
+import com.teambeme.beme.base.BindingFragment
 import com.teambeme.beme.databinding.FragmentTermBinding
 import com.teambeme.beme.signup.viewmodel.SignUpViewModel
 import com.teambeme.beme.util.recordClickEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TermFragment : Fragment() {
-    private lateinit var binding: FragmentTermBinding
+class TermFragment : BindingFragment<FragmentTermBinding>(R.layout.fragment_term) {
     private val signUpViewModel: SignUpViewModel by activityViewModels()
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -37,7 +35,7 @@ class TermFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_term, container, false)
+        super.onCreateView(inflater, container, savedInstanceState)
         binding.viewModel = signUpViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.btnTermBack.setOnClickListener { view ->

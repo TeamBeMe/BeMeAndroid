@@ -14,10 +14,10 @@ import com.teambeme.beme.databinding.FragmentExploreBinding
 import com.teambeme.beme.databinding.ItemExploreOtherQuestionsBinding
 import com.teambeme.beme.explore.adapter.OtherQuestionsRcvAdapter
 import com.teambeme.beme.explore.viewmodel.ExploreViewModel
-import com.teambeme.beme.home.view.HomeFragment
 import com.teambeme.beme.idsearchfollowing.view.FollowingAfterIdSearchActivity
 import com.teambeme.beme.main.viewmodel.EventViewModel
 import com.teambeme.beme.notification.view.NotificationActivity
+import com.teambeme.beme.presentation.home.view.HomeFragment
 import com.teambeme.beme.util.RecordScreenUtil
 import com.teambeme.beme.util.recordClickEvent
 import dagger.hilt.android.AndroidEntryPoint
@@ -127,9 +127,10 @@ class ExploreFragment : BindingFragment<FragmentExploreBinding>(R.layout.fragmen
     private fun setOtherQuestionsObserve() {
         exploreViewModel.otherQuestionsList.observe(viewLifecycleOwner) { otherQuestionsList ->
             otherQuestionsList?.let {
-                if (binding.rcvExploreOtherQuestions.adapter != null) with(binding.rcvExploreOtherQuestions.adapter as OtherQuestionsRcvAdapter<*>) {
-                    submitList(otherQuestionsList)
-                }
+                if (binding.rcvExploreOtherQuestions.adapter != null)
+                    with(binding.rcvExploreOtherQuestions.adapter as OtherQuestionsRcvAdapter<*>) {
+                        submitList(otherQuestionsList)
+                    }
             }
         }
     }

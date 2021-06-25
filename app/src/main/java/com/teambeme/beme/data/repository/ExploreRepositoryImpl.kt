@@ -1,11 +1,12 @@
 package com.teambeme.beme.data.repository
 
 import com.teambeme.beme.data.remote.datasource.ExploreDataSource
+import com.teambeme.beme.domain.repository.ExploreRepository
 import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
-import retrofit2.Call
 import javax.inject.Inject
+import retrofit2.Call
 
 class ExploreRepositoryImpl @Inject constructor(
     private val exploreDataSource: ExploreDataSource

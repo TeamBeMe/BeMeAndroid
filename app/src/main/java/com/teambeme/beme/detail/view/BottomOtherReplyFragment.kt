@@ -36,9 +36,9 @@ class BottomOtherReplyFragment : BottomSheetDialogFragment() {
         intent.putExtra(
             Intent.EXTRA_TEXT,
             "1. 신고 유형  사유 (상업적 광고 및 판매, 음란물/불건전한 대화, 욕설 및 비하, 도배, 부적절한 프로필 이미지, 기타 사유) :  \n" +
-                    "2. 신고할 유저의 닉네임 :\n" +
-                    "\n" +
-                    "신고하신 사항은 BeMe팀이 신속하게 처리하겠습니다. 감사합니다 :)"
+                "2. 신고할 유저의 닉네임 :\n" +
+                "\n" +
+                "신고하신 사항은 BeMe팀이 신속하게 처리하겠습니다. 감사합니다 :)"
         )
         intent.type = "message/rfc822"
         startActivity(intent)

@@ -10,8 +10,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 
-abstract class BindingActivity<T : ViewDataBinding>(@LayoutRes private val layoutResId: Int) :
-    AppCompatActivity() {
+abstract class BindingActivity<T : ViewDataBinding>(
+    @LayoutRes private val layoutResId: Int
+) : AppCompatActivity() {
     protected lateinit var binding: T
 
     override fun onCreate(savedInstanceState: Bundle?) {
