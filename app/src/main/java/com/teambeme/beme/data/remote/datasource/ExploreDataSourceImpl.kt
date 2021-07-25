@@ -4,8 +4,11 @@ import com.teambeme.beme.data.remote.api.ExploreService
 import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import retrofit2.Call
+import retrofit2.awaitResponse
 
 class ExploreDataSourceImpl @Inject constructor(
     private val service: ExploreService
@@ -30,5 +33,11 @@ class ExploreDataSourceImpl @Inject constructor(
 
     override fun putScrap(answerId: Int): Call<ResponseExplorationScrap> {
         return service.putScrap(answerId)
+    }
+
+    override suspend fun changeLikeStatus(answerId: Int) = withContext(Dispatchers.IO) {
+        service.changeLikeStatus(answerId)
+            .awaitResponse()
+            .takeIf { it.isSuccessful }?.body()?.success
     }
 }

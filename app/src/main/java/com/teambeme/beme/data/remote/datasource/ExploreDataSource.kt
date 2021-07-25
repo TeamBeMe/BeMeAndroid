@@ -21,4 +21,6 @@ interface ExploreDataSource {
     fun putScrap(
         answerId: Int
     ): Call<ResponseExplorationScrap>
+
+    suspend fun changeLikeStatus(answerId: Int): Boolean?
 }

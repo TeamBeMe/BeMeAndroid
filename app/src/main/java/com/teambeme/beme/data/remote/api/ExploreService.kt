@@ -1,5 +1,6 @@
 package com.teambeme.beme.data.remote.api
 
+import com.teambeme.beme.data.model.EmptyResponse
 import com.teambeme.beme.explore.model.ResponseExplorationQuestionForFirstAnswer
 import com.teambeme.beme.explore.model.ResponseExplorationQuestions
 import com.teambeme.beme.explore.model.ResponseExplorationScrap
@@ -27,4 +28,9 @@ interface ExploreService {
     fun putScrap(
         @Path("answerId") answerId: Int
     ): Call<ResponseExplorationScrap>
+
+    @PUT("exploration/like/{answerId}")
+    fun changeLikeStatus(
+        @Path("answerId") answerId: Int
+    ): Call<EmptyResponse>
 }
