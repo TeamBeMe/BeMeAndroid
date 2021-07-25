@@ -1,8 +1,8 @@
 <h1 align="center"> BeMe </h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Kotlin-1.4.32-yellowgreen?logo=kotlin"/>
-  <img src="https://img.shields.io/badge/Android-4.1.3-blue?logo=Android+Studio"/>
+  <img src="https://img.shields.io/badge/Kotlin-1.5.10-yellowgreen?logo=kotlin"/>
+  <img src="https://img.shields.io/badge/Android-4.2.2-blue?logo=Android+Studio"/>
   <img src="https://img.shields.io/badge/targetSdk-30-green?logo=Android"/>
   <img src="https://img.shields.io/badge/minSdk-26-green?logo=Android"/>
   <img src="https://github.com/TeamBeMe/BeMeAndroid/actions/workflows/build.yml/badge.svg?branch=develop"/>
@@ -82,40 +82,6 @@
       <p>
         한양대학교 산업공학과(창업융합전공 다중전공) 3학년
       </p>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <ul>
-        <li> 홈 </li>
-        <li> 글쓰기 </li>
-        <li> 로그인 & 회원가입 뷰 구현 </li>
-        <li> 프로젝트 Setting </li>
-        <li> Util 기능 </li>
-      </ul>
-    </td>
-    <td>
-      <ul>
-        <li> 탐색탭 </li>
-        <li> 팔로잉탭 </li>
-        <li> 같은 질문에 대한 다른 답변들 </li>
-        <li> 팔로잉탭 모두보기 </li>
-      </ul>
-    </td>
-    <td>
-      <ul>
-        <li> 마이페이지 </li>
-        <li> 상세페이지 </li>
-        <li> 타인 프로필  </li>
-        <li> 설정 창 </li>
-      </ul>
-    </td>
-    <td>
-      <ul>
-        <li> 알림 뷰 </li>
-        <li> 푸시 알림 </li>
-        <li> 아이디 검색 후 팔로잉 </li>
-      </ul>
     </td>
   </tr>
 </table>
@@ -278,18 +244,3 @@ footer(optional)
 - Firebase/Firebase Cloud Messaging
 
 - StickyNestedScrollView
-
-## 구현 기술
-- [Room을 이용한 글 임시저장 구현](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/RoomDataConnection.md)
-- [BaseViewContoller로 쉬운 DataBinding과 생명주기 관찰](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/BaseViewController.md)
-- [NestedScrollableHost로 중첩 ViewPager2 이슈 해결](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/NestedScrollableHost.md)
-- [Status Bar의 색상 바꾸기](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/StatusBarUtil.md)
-- [BindingAdapter로 View의 속성 정의, 설정](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/BindingAdapter.md)
-- [DiffUtil을 적용한 ListAdapter](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/ListAdapterWithDiffUtil.md)
-- [검색 필터 바텀시트 구성하고 뷰모델을 통해 값을 받아와 봅시다](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/BottomSheetDialogFragment.md)
-- [맨 밑까지 스크롤을 할 때 더보기 버튼 띄우기](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/ScrollAddMoreButton.md)
-- [SnapHelper로 RecyclerView에 ViewPager 효과 주기](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/SnapHelperWithRecyclerView.md)
-- [이미지를 원하는 비율로 잘라봅시다, Image Cropper를 이용해서](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/ImageCropper.md)
-- [MultiPart 서버통신으로 Image 서버로 날려버리기](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/Multipart.md)
-- [이메일 양식받아서 문의 이메일 보내기](https://github.com/TeamBeMe/BeMeAndroid/blob/develop/document/IntentEmail.md)
-
