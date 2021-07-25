@@ -41,12 +41,32 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/btn_detail_heart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_heart_clicked"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_detail_scrap"
+                app:layout_constraintEnd_toStartOf="@+id/txt_detail_like_count"
+                app:layout_constraintTop_toTopOf="@+id/btn_detail_scrap" />
+
+            <TextView
+                android:id="@+id/txt_detail_like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="2"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                app:layout_constraintBottom_toBottomOf="@id/btn_detail_scrap"
+                app:layout_constraintEnd_toStartOf="@+id/btn_detail_scrap"
+                app:layout_constraintTop_toTopOf="@+id/btn_detail_scrap" />
+
             <ImageButton
                 android:id="@+id/btn_detail_scrap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/transparent"
-
                 android:onClick="@{() -> detailViewModel.scrapClicked()}"
                 android:src="@{detailViewModel.detailData.scrapped ? @drawable/ic_scrap_on_detail : @drawable/ic_scrap_off_detail}"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_detail_dot"
