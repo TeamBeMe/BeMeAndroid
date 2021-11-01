@@ -336,12 +336,12 @@ class MyPageViewModel @Inject constructor(
     val mypageScrapData: LiveData<MutableList<ResponseMyScrap.Data.Answer>>
         get() = _mypageScrapData
 
-    private val _profileUri = MutableLiveData<Uri>()
-    val profileUri: LiveData<Uri>
+    private val _profileUri = MutableLiveData<Uri?>()
+    val profileUri: LiveData<Uri?>
         get() = _profileUri
 
     fun setProfileUri(uri: Uri?) {
-        _profileUri.value = uri!!
+        _profileUri.value = uri
     }
 
     fun setProfileNull() {

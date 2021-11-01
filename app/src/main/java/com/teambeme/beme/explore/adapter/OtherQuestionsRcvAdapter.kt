@@ -28,10 +28,10 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     private val myNickname: String,
     private val viewModel: ViewModel
 ) :
-    ListAdapter<ResponseExplorationQuestions.Data.Answer, OtherQuestionsRcvAdapter<B>.OtherQuestionsRcvViewHolder<B>>(
+    ListAdapter<ResponseExplorationQuestions.Data.Answer, OtherQuestionsRcvAdapter<B>.OtherQuestionsRcvViewHolder>(
         OtherQuestionsDiffUtil()
     ) {
-    inner class OtherQuestionsRcvViewHolder<B : ViewDataBinding>(private val binding: B) :
+    inner class OtherQuestionsRcvViewHolder(private val binding: B) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(otherQuestionsData: ResponseExplorationQuestions.Data.Answer) {
             when (binding) {
@@ -79,7 +79,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): OtherQuestionsRcvViewHolder<B> {
+    ): OtherQuestionsRcvViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: B =
             DataBindingUtil.inflate(
@@ -91,7 +91,7 @@ class OtherQuestionsRcvAdapter<B : ViewDataBinding>(
         return OtherQuestionsRcvViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: OtherQuestionsRcvViewHolder<B>, position: Int) {
+    override fun onBindViewHolder(holder: OtherQuestionsRcvViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
